@@ -44,6 +44,15 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
           </div>
         </section>
 
+      <section className="border-b border-line bg-paper">
+        <div className="mx-auto max-w-6xl px-5 py-5 sm:px-8 lg:px-10">
+          <div className="rounded-md border border-line bg-panel px-5 py-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">Key Takeaway</p>
+            <p className="mt-2 text-base leading-7 text-ink">{story.hero.keyTakeaway}</p>
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-line">
         <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
           <StorySectionHeader eyebrow="Executive Snapshot" title="The decision in one page" />
@@ -130,7 +139,7 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
                 {story.decisionFramework.criteria.map((criterion) => (
                   <div key={criterion.label} className="flex items-center justify-between gap-4 border-b border-line pb-4 last:border-b-0 last:pb-0">
                     <p className="font-semibold text-ink">{criterion.label}</p>
-                    <ScoreStars score={criterion.score} />
+                    <RatingBar score={criterion.score} />
                   </div>
                 ))}
               </div>
@@ -280,13 +289,25 @@ function StorySectionHeader({
   );
 }
 
-function ScoreStars({ score }: { score: number }) {
+function RatingBar({ score }: { score: number }) {
   const maxScore = 5;
+  const clampedScore = Math.max(0, Math.min(score, maxScore));
+  const percentage = `${(clampedScore / maxScore) * 100}%`;
+
   return (
-    <span className="whitespace-nowrap text-lg leading-none text-accent" aria-label={`${score} out of ${maxScore}`}>
-      {"★".repeat(score)}
-      <span className="text-line">{"☆".repeat(maxScore - score)}</span>
-    </span>
+    <div
+      className="flex min-w-[128px] items-center gap-3"
+      role="meter"
+      aria-label={`Rating: ${clampedScore} out of ${maxScore}`}
+      aria-valuemin={0}
+      aria-valuemax={maxScore}
+      aria-valuenow={clampedScore}
+    >
+      <div className="h-2 flex-1 overflow-hidden rounded-full bg-line">
+        <div className="h-full rounded-full bg-accent" style={{ width: percentage }} />
+      </div>
+      <span className="w-8 text-right text-sm font-semibold text-ink">{clampedScore}/5</span>
+    </div>
   );
 }
 

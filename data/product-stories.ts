@@ -7,6 +7,7 @@ export type ProductStory = {
     role: string;
     metric: string;
     summary: string;
+    keyTakeaway: string;
   };
   snapshot: Array<{
     label: string;
@@ -67,7 +68,9 @@ export const simplilearnJobGuaranteeGrowthStory: ProductStory = {
     role: "Product Manager, Growth & Monetization",
     metric: "₹1M → ₹10M",
     summary:
-      "I owned the product growth diagnosis and helped turn a promising Job Guarantee motion into a repeatable revenue system by tightening the funnel, improving referral loops, and measuring product-led monetization bets."
+      "I owned the product growth diagnosis and helped turn a promising Job Guarantee motion into a repeatable revenue system by tightening the funnel, improving referral loops, and measuring product-led monetization bets.",
+    keyTakeaway:
+      "I increased confidence in growth decisions by fixing the product system before scaling acquisition."
   },
   snapshot: [
     {
