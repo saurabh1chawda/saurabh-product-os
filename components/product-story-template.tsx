@@ -117,6 +117,31 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
         </div>
       </section>
 
+      <section className="border-b border-line bg-panel">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+          <StorySectionHeader
+            eyebrow="Decision Framework"
+            title="How I evaluated the path forward"
+            description={story.decisionFramework.explanation}
+          />
+          <div className="mt-8">
+            <div className="rounded-md border border-line bg-paper p-5">
+              <div className="grid gap-4">
+                {story.decisionFramework.criteria.map((criterion) => (
+                  <div key={criterion.label} className="flex items-center justify-between gap-4 border-b border-line pb-4 last:border-b-0 last:pb-0">
+                    <p className="font-semibold text-ink">{criterion.label}</p>
+                    <ScoreStars score={criterion.score} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-5">
+              <DecisionFlow steps={story.decisionFlow} />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <StoryTextSection eyebrow="My Decision" title="Why I chose the conversion system first">
         {story.decision.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
@@ -177,6 +202,13 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
         </div>
       </section>
 
+      <StoryTextSection
+        eyebrow="Why This Matters Beyond This Project"
+        title="The principle I still use when evaluating growth"
+      >
+        <p>{story.beyondProject}</p>
+      </StoryTextSection>
+
       <section className="border-b border-line">
         <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
           <StorySectionHeader
@@ -189,6 +221,9 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
               <article key={item.title} className="rounded-md border border-dashed border-line bg-panel p-5">
                 <FileText className="h-6 w-6 text-accent" aria-hidden="true" />
                 <h3 className="mt-4 font-semibold text-ink">{item.title}</h3>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                  Representative artifact — to be published
+                </p>
                 <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
               </article>
             ))}
@@ -242,6 +277,52 @@ function StorySectionHeader({
       <h2 className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">{title}</h2>
       {description ? <p className="mt-4 text-base leading-7 text-muted">{description}</p> : null}
     </div>
+  );
+}
+
+function ScoreStars({ score }: { score: number }) {
+  const maxScore = 5;
+  return (
+    <span className="whitespace-nowrap text-lg leading-none text-accent" aria-label={`${score} out of ${maxScore}`}>
+      {"★".repeat(score)}
+      <span className="text-line">{"☆".repeat(maxScore - score)}</span>
+    </span>
+  );
+}
+
+function DecisionFlow({ steps }: { steps: string[] }) {
+  return (
+    <div className="rounded-md border border-line bg-paper p-5">
+      <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-center">
+        {steps.map((step, index) => (
+          <FragmentWithArrow key={step} showArrow={index < steps.length - 1}>
+            <div className="rounded-md border border-line bg-panel px-4 py-3 text-center text-sm font-semibold text-ink">
+              {step}
+            </div>
+          </FragmentWithArrow>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FragmentWithArrow({
+  children,
+  showArrow
+}: {
+  children: ReactNode;
+  showArrow: boolean;
+}) {
+  return (
+    <>
+      {children}
+      {showArrow ? (
+        <div className="flex justify-center text-accent sm:px-1" aria-hidden="true">
+          <span className="sm:hidden">↓</span>
+          <span className="hidden sm:inline">→</span>
+        </div>
+      ) : null}
+    </>
   );
 }
 
