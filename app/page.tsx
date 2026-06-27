@@ -8,43 +8,64 @@ import { ButtonLink } from "@/components/ui/button-link";
 
 const metrics = [
   {
-    value: "Metric 01",
-    label: "Business outcome",
-    evidence: "Evidence link placeholder"
+    title: "10× Revenue Growth",
+    subtitle: "₹1M → ₹10M in 4 months"
   },
   {
-    value: "Metric 02",
-    label: "Customer or user outcome",
-    evidence: "Evidence link placeholder"
+    title: "10M+ Monthly Transactions",
+    subtitle: "Payments platform scale"
   },
   {
-    value: "Metric 03",
-    label: "Execution or operating outcome",
-    evidence: "Evidence link placeholder"
+    title: "94% CSAT",
+    subtitle: "Wallet/payment user experience"
+  },
+  {
+    title: "25% Profit Growth",
+    subtitle: "SaaS product portfolio impact"
+  },
+  {
+    title: "40% Query Latency Reduction",
+    subtitle: "Platform modernization"
+  },
+  {
+    title: "15+ Enterprise Deployments",
+    subtitle: "B2B product delivery"
   }
 ];
 
 const problems = [
-  "Turn ambiguous customer pain into a prioritized product bet.",
-  "Align teams around evidence, tradeoffs, and a clear launch path.",
-  "Improve an existing product motion without adding avoidable complexity."
+  {
+    title: "Build AI and platform products",
+    description: "For teams hiring PMs who can connect AI, technical systems, and product strategy."
+  },
+  {
+    title: "Drive growth and monetization",
+    description: "For teams looking for product leaders who can move revenue, conversion, retention, and adoption."
+  },
+  {
+    title: "Improve customer and product experience",
+    description: "For teams solving customer pain points across complex product journeys."
+  }
 ];
 
 const stories = [
   {
-    title: "Product Story 01",
-    question: "How did Saurabh define the right problem?",
-    summary: "Placeholder for a story with context, decision, evidence, and measurable outcome."
+    title: "How I helped grow Job Guarantee revenue 10×",
+    tag: "Simplilearn · Growth & monetization",
+    summary:
+      "Used funnel optimization, referral loops, and product-led growth decisions to grow revenue from ₹1M to ₹10M."
   },
   {
-    title: "Product Story 02",
-    question: "How did Saurabh make tradeoffs under constraints?",
-    summary: "Placeholder for a story that shows judgment, sequencing, and stakeholder alignment."
+    title: "How I supported payments reliability at 10M+ monthly transaction scale",
+    tag: "Comviva · Payments platform",
+    summary:
+      "Worked on wallet and payment platform experiences focused on reliability, customer experience, and enterprise-scale deployments."
   },
   {
-    title: "Product Story 03",
-    question: "How did Saurabh learn from the market?",
-    summary: "Placeholder for a story grounded in customer signals and shipped product impact."
+    title: "How I scaled SaaS product engagement and biopharma revenue",
+    tag: "JoVE · SaaS product strategy",
+    summary:
+      "Improved engagement, portfolio performance, and biopharma revenue through roadmap strategy, analytics, and product discovery."
   }
 ];
 
@@ -54,25 +75,25 @@ export default function Home() {
       <SiteHeader />
 
       <section className="border-b border-line bg-panel">
-        <div className="mx-auto flex min-h-[78svh] max-w-6xl flex-col justify-center px-5 py-16 sm:px-8 lg:px-10">
+        <div className="mx-auto flex min-h-[68svh] max-w-6xl flex-col justify-center px-5 py-12 sm:px-8 sm:py-14 lg:min-h-[62svh] lg:px-10 lg:py-12">
           <div className="max-w-3xl">
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-line bg-paper px-3 py-1 text-sm font-medium text-muted">
               <Sparkles className="h-4 w-4 text-accent" aria-hidden="true" />
               Evidence-backed Product Manager portfolio
             </p>
             <h1 className="text-4xl font-semibold leading-tight tracking-normal text-ink sm:text-5xl lg:text-6xl">
-              Decide whether Saurabh is the Product Manager your team should interview.
+              Product judgment you can evaluate before the interview.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
-              A portfolio designed around hiring decisions: product judgment, measurable impact, and the operating habits behind the work.
+              I&apos;m Saurabh Chawda, a Lead Product Manager with 8+ years across AI, platforms, payments, SaaS, and growth. This portfolio shows the product decisions, trade-offs, and outcomes behind my work.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/stories">
-                View product stories
+                Explore product judgment
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
               <ButtonLink href="/resume" variant="secondary">
-                Open resume center
+                View Resume
               </ButtonLink>
             </div>
           </div>
@@ -84,11 +105,11 @@ export default function Home() {
           <SectionHeader
             eyebrow="Impact Metrics"
             title="What outcomes can the work point to?"
-            description="Metrics will connect to supporting evidence as stories are added."
+            description="A quick read on the scale, growth, and customer outcomes behind the product stories."
           />
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {metrics.map((metric) => (
-              <MetricCard key={metric.label} {...metric} />
+              <MetricCard key={metric.title} {...metric} />
             ))}
           </div>
         </div>
@@ -101,11 +122,14 @@ export default function Home() {
             title="What problem are you hiring someone to solve?"
             description="Start from the job-to-be-done, then map the evidence to the role."
           />
-          <div className="mt-8 grid gap-3">
+          <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {problems.map((problem) => (
-              <div key={problem} className="flex gap-3 rounded-md border border-line bg-paper p-4">
+              <div key={problem.title} className="flex gap-3 rounded-md border border-line bg-paper p-5">
                 <BarChart3 className="mt-1 h-5 w-5 flex-none text-accent" aria-hidden="true" />
-                <p className="text-base leading-7 text-ink">{problem}</p>
+                <div>
+                  <h3 className="font-semibold leading-7 text-ink">{problem.title}</h3>
+                  <p className="mt-2 leading-7 text-muted">{problem.description}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -117,13 +141,13 @@ export default function Home() {
           <SectionHeader
             eyebrow="Explore How I Think"
             title="How does Saurabh make product decisions?"
-            description="A structured view into problem framing, customer evidence, prioritization, and launch judgment."
+            description="A structured view into problem framing, customer evidence, prioritization, trade-offs, and launch judgment."
           />
           <div className="rounded-md border border-line bg-panel p-5 shadow-soft">
             <BriefcaseBusiness className="h-6 w-6 text-accent" aria-hidden="true" />
             <h3 className="mt-5 text-xl font-semibold">Product judgment, shown through decisions.</h3>
             <p className="mt-3 leading-7 text-muted">
-              Placeholder for principles, operating rituals, and examples that help a hiring team understand how Saurabh thinks before the first conversation.
+              A hiring-team view into how I frame ambiguous problems, choose what not to build, and move from evidence to product decisions.
             </p>
             <ButtonLink href="/how-i-think" variant="inline" className="mt-5">
               Explore the decision system
@@ -138,7 +162,7 @@ export default function Home() {
           <SectionHeader
             eyebrow="Featured Product Stories"
             title="What evidence supports the claims?"
-            description="Each story will connect context, decisions, artifacts, and outcomes."
+            description="Three stories that connect product context, decisions, trade-offs, and measurable outcomes."
           />
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {stories.map((story) => (
@@ -154,10 +178,10 @@ export default function Home() {
             <FileText className="h-6 w-6 text-accent" aria-hidden="true" />
             <h2 className="mt-5 text-2xl font-semibold">Resume Center</h2>
             <p className="mt-3 leading-7 text-muted">
-              Role-specific resume, proof points, and supporting materials in one focused place.
+              Resume, role context, proof points, and supporting materials in one focused place.
             </p>
             <ButtonLink href="/resume" variant="inline" className="mt-5">
-              View resume center
+              View Resume
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>
