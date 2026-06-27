@@ -53,19 +53,22 @@ const stories = [
     title: "How I helped grow Job Guarantee revenue 10×",
     tag: "Simplilearn · Growth & monetization",
     summary:
-      "Used funnel optimization, referral loops, and product-led growth decisions to grow revenue from ₹1M to ₹10M."
+      "Used funnel optimization, referral loops, and product-led growth decisions to grow revenue from ₹1M to ₹10M.",
+    href: "/stories/simplilearn-job-guarantee-growth"
   },
   {
     title: "How I supported payments reliability at 10M+ monthly transaction scale",
     tag: "Comviva · Payments platform",
     summary:
-      "Worked on wallet and payment platform experiences focused on reliability, customer experience, and enterprise-scale deployments."
+      "Worked on wallet and payment platform experiences focused on reliability, customer experience, and enterprise-scale deployments.",
+    href: "/stories/comviva-payments-reliability"
   },
   {
     title: "How I scaled SaaS product engagement and biopharma revenue",
     tag: "JoVE · SaaS product strategy",
     summary:
-      "Improved engagement, portfolio performance, and biopharma revenue through roadmap strategy, analytics, and product discovery."
+      "Improved engagement, portfolio performance, and biopharma revenue through roadmap strategy, analytics, and product discovery.",
+    href: "/stories/jove-biopharma-saas-growth"
   }
 ];
 
@@ -88,7 +91,7 @@ export default function Home() {
               I&apos;m Saurabh Chawda, a Lead Product Manager with 8+ years across AI, platforms, payments, SaaS, and growth. This portfolio shows the product decisions, trade-offs, and outcomes behind my work.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/stories">
+              <ButtonLink href="/how-i-think">
                 Explore product judgment
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
@@ -96,6 +99,9 @@ export default function Home() {
                 View Resume
               </ButtonLink>
             </div>
+            <p className="mt-5 max-w-2xl text-sm leading-6 text-muted sm:text-base sm:leading-7">
+              Built for hiring teams who want to evaluate how I think, not just where I worked.
+            </p>
           </div>
         </div>
       </section>
