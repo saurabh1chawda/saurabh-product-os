@@ -1,12 +1,15 @@
 import {
   BadgeCheck,
   Beaker,
+  CalendarDays,
   FileText,
   GitBranch,
   LayoutTemplate,
+  ListChecks,
   Map,
   Monitor,
-  Network
+  Network,
+  NotebookText
 } from "lucide-react";
 
 import type { EvidenceArtifactStatus, EvidenceArtifactType, ProductStory } from "@/data/product-stories";
@@ -23,7 +26,10 @@ const artifactIcons: Record<EvidenceArtifactType, typeof FileText> = {
   Dashboard: Monitor,
   Experiment: Beaker,
   "User Journey": Map,
-  "Architecture Diagram": Network
+  "Architecture Diagram": Network,
+  "Prioritization Matrix": ListChecks,
+  "Release Timeline": CalendarDays,
+  "Stakeholder Memo": NotebookText
 };
 
 const statusStyles: Record<EvidenceArtifactStatus, string> = {

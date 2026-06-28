@@ -17,7 +17,10 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
       <StoryHero story={story} />
       <KeyTakeaway>{story.hero.keyTakeaway}</KeyTakeaway>
       <ExecutiveSnapshot items={story.snapshot} />
-      <StoryTextSection eyebrow="Why This Problem Mattered" title="The job was bigger than a conversion lift">
+      <StoryTextSection
+        eyebrow={story.sectionLabels?.whyEyebrow ?? "Why This Problem Mattered"}
+        title={story.sectionLabels?.whyTitle ?? "The job was bigger than a conversion lift"}
+      >
         {story.whyItMattered.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
@@ -25,12 +28,20 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
       <ContextGrid items={story.context} />
       <OptionsConsidered options={story.options} />
       <DecisionFramework framework={story.decisionFramework} flowSteps={story.decisionFlow} />
-      <StoryTextSection eyebrow="My Decision" title="Why I chose the conversion system first">
+      <StoryTextSection
+        eyebrow="My Decision"
+        title={story.sectionLabels?.decisionTitle ?? "Why I chose the conversion system first"}
+      >
         {story.decision.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </StoryTextSection>
-      <ExecutionTimeline items={story.timeline} />
+      {story.stakeholderAlignment ? <StakeholderAlignment items={story.stakeholderAlignment} /> : null}
+      <ExecutionTimeline
+        eyebrow={story.sectionLabels?.executionEyebrow ?? "Execution Timeline"}
+        items={story.timeline}
+        title={story.sectionLabels?.executionTitle ?? "How the work moved from diagnosis to scale"}
+      />
       <ResultsGrid groups={story.results} />
       <Reflection items={story.reflection} />
       <ProductPrinciple
@@ -72,8 +83,20 @@ function StoryHero({ story }: { story: ProductStory }) {
             <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">{story.hero.summary}</p>
           </div>
           <aside className="rounded-md border border-line bg-paper p-5" aria-label="Story details">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">Hero metric</p>
-            <p className="mt-3 text-3xl font-semibold text-ink">{story.hero.metric}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">
+              {story.hero.metrics ? "Hero metrics" : "Hero metric"}
+            </p>
+            {story.hero.metrics ? (
+              <ul className="mt-3 grid gap-3">
+                {story.hero.metrics.map((metric) => (
+                  <li key={metric} className="border-b border-line pb-3 text-2xl font-semibold leading-tight text-ink last:border-b-0 last:pb-0">
+                    {metric}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-3 text-3xl font-semibold text-ink">{story.hero.metric}</p>
+            )}
             <dl className="mt-6 grid gap-4 text-sm">
               <StoryFact label="Company" value={story.hero.company} />
               <StoryFact label="Timeline" value={story.hero.timeline} />
@@ -235,14 +258,44 @@ export function DecisionFlow({ steps }: { steps: ProductStory["decisionFlow"] })
   );
 }
 
-function ExecutionTimeline({ items }: { items: ProductStory["timeline"] }) {
+function StakeholderAlignment({ items }: { items: NonNullable<ProductStory["stakeholderAlignment"]> }) {
+  return (
+    <section className="border-b border-line" aria-labelledby="stakeholder-alignment-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          id="stakeholder-alignment-title"
+          eyebrow="Stakeholder Alignment"
+          title="How I kept momentum while trade-offs stayed visible"
+        />
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {items.map((item) => (
+            <article key={item.label} className="rounded-md border border-line bg-panel p-5">
+              <h3 className="text-xl font-semibold text-ink">{item.label}</h3>
+              <p className="mt-3 leading-7 text-muted">{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ExecutionTimeline({
+  eyebrow,
+  items,
+  title
+}: {
+  eyebrow: string;
+  items: ProductStory["timeline"];
+  title: string;
+}) {
   return (
     <section className="border-b border-line bg-panel" aria-labelledby="execution-timeline-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
         <StorySectionHeader
           id="execution-timeline-title"
-          eyebrow="Execution Timeline"
-          title="How the work moved from diagnosis to scale"
+          eyebrow={eyebrow}
+          title={title}
         />
         <div className="mt-8 grid gap-4">
           {items.map((item) => (
