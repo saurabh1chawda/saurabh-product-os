@@ -15,7 +15,12 @@ export type EvidenceArtifactType =
   | "Transaction Funnel"
   | "Reliability Dashboard"
   | "Failure Analysis"
-  | "Sequence Diagram";
+  | "Sequence Diagram"
+  | "User Interview Summary"
+  | "Discovery Notes"
+  | "Opportunity Solution Tree"
+  | "Experiment Plan"
+  | "Product Metrics Dashboard";
 
 export type EvidenceArtifactStatus = "Published" | "Representative" | "Coming Soon";
 

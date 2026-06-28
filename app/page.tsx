@@ -64,11 +64,11 @@ const stories = [
     href: "/stories/payments-reliability-comviva"
   },
   {
-    title: "How I scaled SaaS product engagement and biopharma revenue",
+    title: "How We Discovered the Right Product Before Building It",
     tag: "JoVE · SaaS product strategy",
     summary:
-      "Improved engagement, product performance, and biopharma revenue through roadmap strategy, analytics, and product discovery.",
-    href: "/stories/jove-biopharma-saas-growth"
+      "Scaffolded discovery story focused on customer evidence, opportunity framing, and choosing the right product before build.",
+    href: "/stories/product-discovery-jove"
   }
 ];
 

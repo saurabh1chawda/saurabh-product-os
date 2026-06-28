@@ -4,6 +4,10 @@ export const capabilities = [
     description: "Revenue growth, pricing, conversion, retention, and product-led monetization."
   },
   {
+    name: "SaaS Product Strategy",
+    description: "SaaS engagement, product analytics, roadmap choices, and enterprise value creation."
+  },
+  {
     name: "Platform Strategy",
     description: "Technical systems, internal leverage, architecture trade-offs, and scalable foundations."
   },

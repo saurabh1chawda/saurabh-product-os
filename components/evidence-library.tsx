@@ -3,16 +3,20 @@ import {
   Beaker,
   CalendarDays,
   CircleAlert,
+  ClipboardList,
   FileText,
   GitBranch,
+  GitFork,
   LayoutTemplate,
   ListChecks,
   Map,
   Monitor,
   Network,
   NotebookText,
+  SearchCheck,
   Route,
   ShieldCheck,
+  SquarePen,
   Workflow
 } from "lucide-react";
 
@@ -40,7 +44,12 @@ const artifactIcons: Record<EvidenceArtifactType, typeof FileText> = {
   "Transaction Funnel": Workflow,
   "Reliability Dashboard": ShieldCheck,
   "Failure Analysis": CircleAlert,
-  "Sequence Diagram": Network
+  "Sequence Diagram": Network,
+  "User Interview Summary": ClipboardList,
+  "Discovery Notes": SquarePen,
+  "Opportunity Solution Tree": GitFork,
+  "Experiment Plan": Beaker,
+  "Product Metrics Dashboard": SearchCheck
 };
 
 const statusStyles: Record<EvidenceArtifactStatus, string> = {
