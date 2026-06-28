@@ -44,7 +44,11 @@ export type ProductStory = {
   sectionLabels?: {
     whyEyebrow?: string;
     whyTitle?: string;
+    contextEyebrow?: string;
+    contextTitle?: string;
     decisionTitle?: string;
+    stakeholderEyebrow?: string;
+    stakeholderTitle?: string;
     executionEyebrow?: string;
     executionTitle?: string;
   };

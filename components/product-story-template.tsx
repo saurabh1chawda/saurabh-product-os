@@ -25,7 +25,11 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </StoryTextSection>
-      <ContextGrid items={story.context} />
+      <ContextGrid
+        eyebrow={story.sectionLabels?.contextEyebrow ?? "Context"}
+        items={story.context}
+        title={story.sectionLabels?.contextTitle ?? "What shaped the product decision"}
+      />
       <OptionsConsidered options={story.options} />
       <DecisionFramework framework={story.decisionFramework} flowSteps={story.decisionFlow} />
       <StoryTextSection
@@ -36,7 +40,13 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </StoryTextSection>
-      {story.stakeholderAlignment ? <StakeholderAlignment items={story.stakeholderAlignment} /> : null}
+      {story.stakeholderAlignment ? (
+        <StakeholderAlignment
+          eyebrow={story.sectionLabels?.stakeholderEyebrow ?? "Stakeholder Alignment"}
+          items={story.stakeholderAlignment}
+          title={story.sectionLabels?.stakeholderTitle ?? "How I kept momentum while trade-offs stayed visible"}
+        />
+      ) : null}
       <ExecutionTimeline
         eyebrow={story.sectionLabels?.executionEyebrow ?? "Execution Timeline"}
         items={story.timeline}
@@ -146,11 +156,19 @@ export function ExecutiveSnapshot({ items }: { items: ProductStory["snapshot"] }
   );
 }
 
-function ContextGrid({ items }: { items: ProductStory["context"] }) {
+function ContextGrid({
+  eyebrow,
+  items,
+  title
+}: {
+  eyebrow: string;
+  items: ProductStory["context"];
+  title: string;
+}) {
   return (
     <section className="border-b border-line bg-panel" aria-labelledby="context-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-        <StorySectionHeader id="context-title" eyebrow="Context" title="What shaped the product decision" />
+        <StorySectionHeader id="context-title" eyebrow={eyebrow} title={title} />
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {items.map((item) => (
             <article key={item.label} className="rounded-md border border-line bg-paper p-5">
@@ -258,14 +276,22 @@ export function DecisionFlow({ steps }: { steps: ProductStory["decisionFlow"] })
   );
 }
 
-function StakeholderAlignment({ items }: { items: NonNullable<ProductStory["stakeholderAlignment"]> }) {
+function StakeholderAlignment({
+  eyebrow,
+  items,
+  title
+}: {
+  eyebrow: string;
+  items: NonNullable<ProductStory["stakeholderAlignment"]>;
+  title: string;
+}) {
   return (
     <section className="border-b border-line" aria-labelledby="stakeholder-alignment-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
         <StorySectionHeader
           id="stakeholder-alignment-title"
-          eyebrow="Stakeholder Alignment"
-          title="How I kept momentum while trade-offs stayed visible"
+          eyebrow={eyebrow}
+          title={title}
         />
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {items.map((item) => (
