@@ -21,7 +21,7 @@ const metrics = [
   },
   {
     title: "25% Profit Growth",
-    subtitle: "SaaS product portfolio impact"
+    subtitle: "SaaS product strategy impact"
   },
   {
     title: "40% Query Latency Reduction",
@@ -67,7 +67,7 @@ const stories = [
     title: "How I scaled SaaS product engagement and biopharma revenue",
     tag: "JoVE · SaaS product strategy",
     summary:
-      "Improved engagement, portfolio performance, and biopharma revenue through roadmap strategy, analytics, and product discovery.",
+      "Improved engagement, product performance, and biopharma revenue through roadmap strategy, analytics, and product discovery.",
     href: "/stories/jove-biopharma-saas-growth"
   }
 ];
@@ -82,13 +82,13 @@ export default function Home() {
           <div className="max-w-3xl">
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-line bg-paper px-3 py-1 text-sm font-medium text-muted">
               <Sparkles className="h-4 w-4 text-accent" aria-hidden="true" />
-              Evidence-backed Product Manager portfolio
+              Evidence-backed Product Decisions
             </p>
             <h1 className="text-4xl font-semibold leading-tight tracking-normal text-ink sm:text-5xl lg:text-6xl">
               Product judgment you can evaluate before the interview.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
-              I&apos;m Saurabh Chawda, a Lead Product Manager with 8+ years across AI, platforms, payments, SaaS, and growth. This portfolio shows the product decisions, trade-offs, and outcomes behind my work.
+              I&apos;m Saurabh Chawda, a Lead Product Manager with 8+ years across AI, platforms, payments, SaaS, and growth. This product decision library shows the trade-offs, evidence, and outcomes behind my work.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/how-i-think">

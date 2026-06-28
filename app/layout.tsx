@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s | Saurabh Product OS"
   },
   description:
-    "An evidence-backed Product Manager portfolio designed to help hiring teams evaluate product judgment, impact, and operating style.",
+    "An evidence-backed product decision library designed to help hiring teams evaluate product judgment, impact, and operating style.",
   metadataBase: new URL("https://saurabh-product-os.vercel.app")
 };
 
