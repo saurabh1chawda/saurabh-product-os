@@ -33,12 +33,12 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
       <ExecutionTimeline items={story.timeline} />
       <ResultsGrid groups={story.results} />
       <Reflection items={story.reflection} />
-      <StoryTextSection
-        eyebrow="Why This Matters Beyond This Project"
-        title="The principle I still use when evaluating growth"
-      >
-        <p>{story.beyondProject}</p>
-      </StoryTextSection>
+      <ProductPrinciple
+        category={story.principleCategory}
+        relatedHref="#related-by-capability"
+        summary={story.principleSummary}
+        title={story.productPrinciple}
+      />
       <EvidenceLibrary artifacts={story.evidence} />
       <StoryDemonstrates story={story} />
       <RelatedByCapability stories={story.relatedByCapability} />
@@ -309,6 +309,39 @@ export function Reflection({ items }: { items: ProductStory["reflection"] }) {
   );
 }
 
+export function ProductPrinciple({
+  category,
+  relatedHref,
+  summary,
+  title
+}: {
+  category: ProductStory["principleCategory"];
+  relatedHref: string;
+  summary: string;
+  title: string;
+}) {
+  return (
+    <section className="border-b border-line" aria-labelledby="product-principle-title">
+      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
+        <StorySectionHeader
+          eyebrow="Principle System"
+          id="product-principle-title"
+          title="Product Principle"
+        />
+        <article className="rounded-md border border-line bg-panel p-5 shadow-soft">
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{category}</p>
+          <h3 className="mt-4 text-2xl font-semibold leading-tight text-ink">{title}</h3>
+          <p className="mt-4 text-lg leading-8 text-muted">{summary}</p>
+          <ButtonLink href={relatedHref} variant="inline" className="mt-5">
+            View related stories
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </ButtonLink>
+        </article>
+      </div>
+    </section>
+  );
+}
+
 export function StoryDemonstrates({ story }: { story: ProductStory }) {
   return (
     <section className="border-b border-line bg-panel" aria-labelledby="story-demonstrates-title">
@@ -329,7 +362,8 @@ export function StoryDemonstrates({ story }: { story: ProductStory }) {
           </article>
           <article className="rounded-md border border-line bg-paper p-5 lg:col-span-2">
             <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">Product Principle</h3>
-            <p className="mt-4 leading-7 text-muted">{story.productPrinciple}</p>
+            <p className="mt-4 font-semibold leading-7 text-ink">{story.productPrinciple}</p>
+            <p className="mt-2 leading-7 text-muted">{story.principleSummary}</p>
           </article>
           <article className="rounded-md border border-line bg-paper p-5 lg:col-span-4">
             <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">
@@ -352,7 +386,11 @@ export function StoryDemonstrates({ story }: { story: ProductStory }) {
 
 export function RelatedByCapability({ stories }: { stories: ProductStory["relatedByCapability"] }) {
   return (
-    <section className="border-b border-line bg-panel" aria-labelledby="related-stories-title">
+    <section
+      id="related-by-capability"
+      className="scroll-mt-20 border-b border-line bg-panel"
+      aria-labelledby="related-stories-title"
+    >
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
         <StorySectionHeader
           eyebrow="Related by Capability"

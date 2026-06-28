@@ -19,6 +19,8 @@ export type ProductStory = {
   primaryCapability: CapabilityName;
   secondaryCapability: CapabilityName;
   productPrinciple: string;
+  principleSummary: string;
+  principleCategory: CapabilityName;
   keyDecision: string;
   hiringQuestionsAnswered: string[];
   hero: {
@@ -68,7 +70,6 @@ export type ProductStory = {
     question: string;
     answer: string;
   }>;
-  beyondProject: string;
   evidence: Array<{
     type: EvidenceArtifactType;
     title: string;
