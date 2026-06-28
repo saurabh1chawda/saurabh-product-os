@@ -10,7 +10,12 @@ export type EvidenceArtifactType =
   | "Architecture Diagram"
   | "Prioritization Matrix"
   | "Release Timeline"
-  | "Stakeholder Memo";
+  | "Stakeholder Memo"
+  | "Payment Journey"
+  | "Transaction Funnel"
+  | "Reliability Dashboard"
+  | "Failure Analysis"
+  | "Sequence Diagram";
 
 export type EvidenceArtifactStatus = "Published" | "Representative" | "Coming Soon";
 

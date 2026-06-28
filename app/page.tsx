@@ -61,7 +61,7 @@ const stories = [
     tag: "Comviva · Payments platform",
     summary:
       "Worked on wallet and payment platform experiences focused on reliability, customer experience, and enterprise-scale deployments.",
-    href: "/stories/comviva-payments-reliability"
+    href: "/stories/payments-reliability-comviva"
   },
   {
     title: "How I scaled SaaS product engagement and biopharma revenue",

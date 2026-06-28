@@ -2,6 +2,7 @@ import {
   BadgeCheck,
   Beaker,
   CalendarDays,
+  CircleAlert,
   FileText,
   GitBranch,
   LayoutTemplate,
@@ -9,7 +10,10 @@ import {
   Map,
   Monitor,
   Network,
-  NotebookText
+  NotebookText,
+  Route,
+  ShieldCheck,
+  Workflow
 } from "lucide-react";
 
 import type { EvidenceArtifactStatus, EvidenceArtifactType, ProductStory } from "@/data/product-stories";
@@ -29,7 +33,12 @@ const artifactIcons: Record<EvidenceArtifactType, typeof FileText> = {
   "Architecture Diagram": Network,
   "Prioritization Matrix": ListChecks,
   "Release Timeline": CalendarDays,
-  "Stakeholder Memo": NotebookText
+  "Stakeholder Memo": NotebookText,
+  "Payment Journey": Route,
+  "Transaction Funnel": Workflow,
+  "Reliability Dashboard": ShieldCheck,
+  "Failure Analysis": CircleAlert,
+  "Sequence Diagram": Network
 };
 
 const statusStyles: Record<EvidenceArtifactStatus, string> = {

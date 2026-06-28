@@ -8,6 +8,10 @@ export const capabilities = [
     description: "Technical systems, internal leverage, architecture trade-offs, and scalable foundations."
   },
   {
+    name: "Platform Scale",
+    description: "High-volume systems, operating resilience, scalability constraints, and platform performance."
+  },
+  {
     name: "Payments & Reliability",
     description: "Payment journeys, transaction scale, operational resilience, and trust-critical products."
   },
