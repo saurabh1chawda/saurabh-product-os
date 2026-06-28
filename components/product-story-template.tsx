@@ -12,253 +12,347 @@ type ProductStoryTemplateProps = {
 
 export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
   return (
-    <>
-      <SiteHeader />
-      <main>
-        <section className="border-b border-line bg-panel">
-          <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
-            <ButtonLink href="/" variant="inline">
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Back to Product OS
-            </ButtonLink>
-            <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_320px] lg:items-end">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">
-                  Product Story
-                </p>
-                <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight text-ink sm:text-5xl lg:text-6xl">
-                  {story.hero.title}
-                </h1>
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">{story.hero.summary}</p>
-              </div>
-              <aside className="rounded-md border border-line bg-paper p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">Hero metric</p>
-                <p className="mt-3 text-3xl font-semibold text-ink">{story.hero.metric}</p>
-                <dl className="mt-6 grid gap-4 text-sm">
-                  <StoryFact label="Company" value={story.hero.company} />
-                  <StoryFact label="Timeline" value={story.hero.timeline} />
-                  <StoryFact label="Role" value={story.hero.role} />
-                </dl>
-              </aside>
-            </div>
-          </div>
-        </section>
-
-      <section className="border-b border-line bg-paper">
-        <div className="mx-auto max-w-6xl px-5 py-5 sm:px-8 lg:px-10">
-          <div className="rounded-md border border-line bg-panel px-5 py-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">Key Takeaway</p>
-            <p className="mt-2 text-base leading-7 text-ink">{story.hero.keyTakeaway}</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader eyebrow="Executive Snapshot" title="The decision in one page" />
-          <div className="mt-8 grid gap-4 lg:grid-cols-4">
-            {story.snapshot.map((item) => (
-              <article key={item.label} className="rounded-md border border-line bg-panel p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{item.label}</p>
-                <p className="mt-4 leading-7 text-muted">{item.value}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
+    <StoryLayout>
+      <StoryHero story={story} />
+      <KeyTakeaway>{story.hero.keyTakeaway}</KeyTakeaway>
+      <ExecutiveSnapshot items={story.snapshot} />
       <StoryTextSection eyebrow="Why This Problem Mattered" title="The job was bigger than a conversion lift">
         {story.whyItMattered.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </StoryTextSection>
-
-      <section className="border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader eyebrow="Context" title="What shaped the product decision" />
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {story.context.map((item) => (
-              <article key={item.label} className="rounded-md border border-line bg-paper p-5">
-                <h3 className="text-xl font-semibold text-ink">{item.label}</h3>
-                <p className="mt-3 leading-7 text-muted">{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader
-            eyebrow="Options Considered"
-            title="The trade-offs before choosing a path"
-            description="The decision was not whether to grow. It was which growth lever gave the team the best odds of durable revenue."
-          />
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {story.options.map((option) => (
-              <article
-                key={option.label}
-                className={cn(
-                  "rounded-md border bg-panel p-5",
-                  option.chosen ? "border-accent shadow-soft" : "border-line"
-                )}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">
-                    {option.label}
-                  </p>
-                  {option.chosen ? (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-semibold text-accent">
-                      <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-                      Chosen
-                    </span>
-                  ) : null}
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-ink">{option.title}</h3>
-                <p className="mt-3 leading-7 text-muted">{option.description}</p>
-                <p className="mt-5 border-t border-line pt-4 text-sm leading-6 text-muted">
-                  <span className="font-semibold text-ink">Trade-off: </span>
-                  {option.tradeoff}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader
-            eyebrow="Decision Framework"
-            title="How I evaluated the path forward"
-            description={story.decisionFramework.explanation}
-          />
-          <div className="mt-8">
-            <div className="rounded-md border border-line bg-paper p-5">
-              <div className="grid gap-4">
-                {story.decisionFramework.criteria.map((criterion) => (
-                  <div key={criterion.label} className="flex items-center justify-between gap-4 border-b border-line pb-4 last:border-b-0 last:pb-0">
-                    <p className="font-semibold text-ink">{criterion.label}</p>
-                    <RatingBar score={criterion.score} />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="mt-5">
-              <DecisionFlow steps={story.decisionFlow} />
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <ContextGrid items={story.context} />
+      <OptionsConsidered options={story.options} />
+      <DecisionFramework framework={story.decisionFramework} flowSteps={story.decisionFlow} />
       <StoryTextSection eyebrow="My Decision" title="Why I chose the conversion system first">
         {story.decision.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </StoryTextSection>
-
-      <section className="border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader eyebrow="Execution Timeline" title="How the work moved from diagnosis to scale" />
-          <div className="mt-8 grid gap-4">
-            {story.timeline.map((item) => (
-              <article key={item.step} className="grid gap-4 rounded-md border border-line bg-paper p-5 sm:grid-cols-[72px_1fr]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-sm font-semibold text-white">
-                  {item.step}
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-ink">{item.title}</h3>
-                  <p className="mt-2 leading-7 text-muted">{item.description}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader eyebrow="Results" title="What changed for customers, the business, and the product" />
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {story.results.map((group) => (
-              <article key={group.label} className="rounded-md border border-line bg-panel p-5">
-                <h3 className="text-xl font-semibold text-ink">{group.label}</h3>
-                <ul className="mt-4 space-y-3">
-                  {group.outcomes.map((outcome) => (
-                    <li key={outcome} className="flex gap-3 leading-7 text-muted">
-                      <CheckCircle2 className="mt-1 h-5 w-5 flex-none text-accent" aria-hidden="true" />
-                      <span>{outcome}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader eyebrow="Reflection" title="What I learned from the work" />
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {story.reflection.map((item) => (
-              <article key={item.question} className="rounded-md border border-line bg-paper p-5">
-                <h3 className="text-xl font-semibold text-ink">{item.question}</h3>
-                <p className="mt-3 leading-7 text-muted">{item.answer}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      <ExecutionTimeline items={story.timeline} />
+      <ResultsGrid groups={story.results} />
+      <Reflection items={story.reflection} />
       <StoryTextSection
         eyebrow="Why This Matters Beyond This Project"
         title="The principle I still use when evaluating growth"
       >
         <p>{story.beyondProject}</p>
       </StoryTextSection>
+      <SupportingEvidence items={story.evidence} />
+      <RelatedStories stories={story.relatedStories} />
+    </StoryLayout>
+  );
+}
 
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader
-            eyebrow="Supporting Evidence"
-            title="Artifacts to attach as the evidence library matures"
-            description="These placeholders define the proof system future stories should use."
-          />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {story.evidence.map((item) => (
-              <article key={item.title} className="rounded-md border border-dashed border-line bg-panel p-5">
-                <FileText className="h-6 w-6 text-accent" aria-hidden="true" />
-                <h3 className="mt-4 font-semibold text-ink">{item.title}</h3>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-accent">
-                  Representative artifact — to be published
-                </p>
-                <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-          <StorySectionHeader eyebrow="Related Stories" title="More product judgment to evaluate" />
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {story.relatedStories.map((related) => (
-              <article key={related.href} className="rounded-md border border-line bg-paper p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{related.tag}</p>
-                <h3 className="mt-4 text-xl font-semibold leading-tight text-ink">{related.title}</h3>
-                <ButtonLink href={related.href} variant="inline" className="mt-5">
-                  View story
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </ButtonLink>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      </main>
+export function StoryLayout({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <SiteHeader />
+      <main>{children}</main>
     </>
+  );
+}
+
+function StoryHero({ story }: { story: ProductStory }) {
+  return (
+    <section className="border-b border-line bg-panel" aria-labelledby="story-title">
+      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
+        <ButtonLink href="/" variant="inline">
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          Back to Product OS
+        </ButtonLink>
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_320px] lg:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Product Story</p>
+            <h1 id="story-title" className="mt-4 max-w-4xl text-4xl font-semibold leading-tight text-ink sm:text-5xl lg:text-6xl">
+              {story.hero.title}
+            </h1>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">{story.hero.summary}</p>
+          </div>
+          <aside className="rounded-md border border-line bg-paper p-5" aria-label="Story details">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">Hero metric</p>
+            <p className="mt-3 text-3xl font-semibold text-ink">{story.hero.metric}</p>
+            <dl className="mt-6 grid gap-4 text-sm">
+              <StoryFact label="Company" value={story.hero.company} />
+              <StoryFact label="Timeline" value={story.hero.timeline} />
+              <StoryFact label="Role" value={story.hero.role} />
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function KeyTakeaway({ children }: { children: ReactNode }) {
+  return (
+    <section className="border-b border-line bg-paper" aria-labelledby="key-takeaway-title">
+      <div className="mx-auto max-w-6xl px-5 py-5 sm:px-8 lg:px-10">
+        <div className="rounded-md border border-line bg-panel px-5 py-4">
+          <h2 id="key-takeaway-title" className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+            Key Takeaway
+          </h2>
+          <p className="mt-2 text-base leading-7 text-ink">{children}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function ExecutiveSnapshot({ items }: { items: ProductStory["snapshot"] }) {
+  return (
+    <section className="border-b border-line" aria-labelledby="executive-snapshot-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          id="executive-snapshot-title"
+          eyebrow="Executive Snapshot"
+          title="The decision in one page"
+        />
+        <div className="mt-8 grid gap-4 lg:grid-cols-4">
+          {items.map((item) => (
+            <article key={item.label} className="rounded-md border border-line bg-panel p-5">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{item.label}</h3>
+              <p className="mt-4 leading-7 text-muted">{item.value}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContextGrid({ items }: { items: ProductStory["context"] }) {
+  return (
+    <section className="border-b border-line bg-panel" aria-labelledby="context-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader id="context-title" eyebrow="Context" title="What shaped the product decision" />
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {items.map((item) => (
+            <article key={item.label} className="rounded-md border border-line bg-paper p-5">
+              <h3 className="text-xl font-semibold text-ink">{item.label}</h3>
+              <p className="mt-3 leading-7 text-muted">{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OptionsConsidered({ options }: { options: ProductStory["options"] }) {
+  return (
+    <section className="border-b border-line" aria-labelledby="options-considered-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          id="options-considered-title"
+          eyebrow="Options Considered"
+          title="The trade-offs before choosing a path"
+          description="The decision was not whether to grow. It was which growth lever gave the team the best odds of durable revenue."
+        />
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {options.map((option) => (
+            <article
+              key={option.label}
+              className={cn("rounded-md border bg-panel p-5", option.chosen ? "border-accent shadow-soft" : "border-line")}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{option.label}</p>
+                {option.chosen ? (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-semibold text-accent">
+                    <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+                    Chosen
+                  </span>
+                ) : null}
+              </div>
+              <h3 className="mt-4 text-xl font-semibold text-ink">{option.title}</h3>
+              <p className="mt-3 leading-7 text-muted">{option.description}</p>
+              <p className="mt-5 border-t border-line pt-4 text-sm leading-6 text-muted">
+                <span className="font-semibold text-ink">Trade-off: </span>
+                {option.tradeoff}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function DecisionFramework({
+  framework,
+  flowSteps
+}: {
+  framework: ProductStory["decisionFramework"];
+  flowSteps: ProductStory["decisionFlow"];
+}) {
+  return (
+    <section className="border-b border-line bg-panel" aria-labelledby="decision-framework-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          id="decision-framework-title"
+          eyebrow="Decision Framework"
+          title="How I evaluated the path forward"
+          description={framework.explanation}
+        />
+        <div className="mt-8">
+          <div className="rounded-md border border-line bg-paper p-5">
+            <div className="grid gap-4">
+              {framework.criteria.map((criterion) => (
+                <div
+                  key={criterion.label}
+                  className="flex items-center justify-between gap-4 border-b border-line pb-4 last:border-b-0 last:pb-0"
+                >
+                  <h3 className="font-semibold text-ink">{criterion.label}</h3>
+                  <RatingBar label={criterion.label} score={criterion.score} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-5">
+            <DecisionFlow steps={flowSteps} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function DecisionFlow({ steps }: { steps: ProductStory["decisionFlow"] }) {
+  return (
+    <div className="rounded-md border border-line bg-paper p-5" aria-label="Decision flow">
+      <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-center" role="list">
+        {steps.map((step, index) => (
+          <FragmentWithArrow key={step} showArrow={index < steps.length - 1}>
+            <div className="rounded-md border border-line bg-panel px-4 py-3 text-center text-sm font-semibold text-ink" role="listitem">
+              {step}
+            </div>
+          </FragmentWithArrow>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ExecutionTimeline({ items }: { items: ProductStory["timeline"] }) {
+  return (
+    <section className="border-b border-line bg-panel" aria-labelledby="execution-timeline-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          id="execution-timeline-title"
+          eyebrow="Execution Timeline"
+          title="How the work moved from diagnosis to scale"
+        />
+        <div className="mt-8 grid gap-4">
+          {items.map((item) => (
+            <article key={item.step} className="grid gap-4 rounded-md border border-line bg-paper p-5 sm:grid-cols-[72px_1fr]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-sm font-semibold text-white">
+                {item.step}
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-ink">{item.title}</h3>
+                <p className="mt-2 leading-7 text-muted">{item.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function ResultsGrid({ groups }: { groups: ProductStory["results"] }) {
+  return (
+    <section className="border-b border-line" aria-labelledby="results-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          id="results-title"
+          eyebrow="Results"
+          title="What changed for customers, the business, and the product"
+        />
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {groups.map((group) => (
+            <article key={group.label} className="rounded-md border border-line bg-panel p-5">
+              <h3 className="text-xl font-semibold text-ink">{group.label}</h3>
+              <ul className="mt-4 space-y-3">
+                {group.outcomes.map((outcome) => (
+                  <li key={outcome} className="flex gap-3 leading-7 text-muted">
+                    <CheckCircle2 className="mt-1 h-5 w-5 flex-none text-accent" aria-hidden="true" />
+                    <span>{outcome}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Reflection({ items }: { items: ProductStory["reflection"] }) {
+  return (
+    <section className="border-b border-line bg-panel" aria-labelledby="reflection-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader id="reflection-title" eyebrow="Reflection" title="What I learned from the work" />
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {items.map((item) => (
+            <article key={item.question} className="rounded-md border border-line bg-paper p-5">
+              <h3 className="text-xl font-semibold text-ink">{item.question}</h3>
+              <p className="mt-3 leading-7 text-muted">{item.answer}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function SupportingEvidence({ items }: { items: ProductStory["evidence"] }) {
+  return (
+    <section className="border-b border-line" aria-labelledby="supporting-evidence-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          id="supporting-evidence-title"
+          eyebrow="Supporting Evidence"
+          title="Artifacts to attach as the evidence library matures"
+          description="These placeholders define the proof system future stories should use."
+        />
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {items.map((item) => (
+            <article key={item.title} className="rounded-md border border-dashed border-line bg-panel p-5">
+              <FileText className="h-6 w-6 text-accent" aria-hidden="true" />
+              <h3 className="mt-4 font-semibold text-ink">{item.title}</h3>
+              <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                Representative artifact — to be published
+              </p>
+              <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function RelatedStories({ stories }: { stories: ProductStory["relatedStories"] }) {
+  return (
+    <section className="border-b border-line bg-panel" aria-labelledby="related-stories-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader eyebrow="Related Stories" id="related-stories-title" title="More product judgment to evaluate" />
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {stories.map((related) => (
+            <article key={related.href} className="rounded-md border border-line bg-paper p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{related.tag}</p>
+              <h3 className="mt-4 text-xl font-semibold leading-tight text-ink">{related.title}</h3>
+              <ButtonLink href={related.href} variant="inline" className="mt-5">
+                View story
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </ButtonLink>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -274,22 +368,26 @@ function StoryFact({ label, value }: { label: string; value: string }) {
 function StorySectionHeader({
   eyebrow,
   title,
-  description
+  description,
+  id
 }: {
   eyebrow: string;
   title: string;
   description?: string;
+  id?: string;
 }) {
   return (
     <div className="max-w-3xl">
       <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">{eyebrow}</p>
-      <h2 className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">{title}</h2>
+      <h2 id={id} className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
+        {title}
+      </h2>
       {description ? <p className="mt-4 text-base leading-7 text-muted">{description}</p> : null}
     </div>
   );
 }
 
-function RatingBar({ score }: { score: number }) {
+function RatingBar({ label, score }: { label: string; score: number }) {
   const maxScore = 5;
   const clampedScore = Math.max(0, Math.min(score, maxScore));
   const percentage = `${(clampedScore / maxScore) * 100}%`;
@@ -298,7 +396,7 @@ function RatingBar({ score }: { score: number }) {
     <div
       className="flex min-w-[128px] items-center gap-3"
       role="meter"
-      aria-label={`Rating: ${clampedScore} out of ${maxScore}`}
+      aria-label={`${label} rating: ${clampedScore} out of ${maxScore}`}
       aria-valuemin={0}
       aria-valuemax={maxScore}
       aria-valuenow={clampedScore}
@@ -307,22 +405,6 @@ function RatingBar({ score }: { score: number }) {
         <div className="h-full rounded-full bg-accent" style={{ width: percentage }} />
       </div>
       <span className="w-8 text-right text-sm font-semibold text-ink">{clampedScore}/5</span>
-    </div>
-  );
-}
-
-function DecisionFlow({ steps }: { steps: string[] }) {
-  return (
-    <div className="rounded-md border border-line bg-paper p-5">
-      <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-center">
-        {steps.map((step, index) => (
-          <FragmentWithArrow key={step} showArrow={index < steps.length - 1}>
-            <div className="rounded-md border border-line bg-panel px-4 py-3 text-center text-sm font-semibold text-ink">
-              {step}
-            </div>
-          </FragmentWithArrow>
-        ))}
-      </div>
     </div>
   );
 }
@@ -356,10 +438,12 @@ function StoryTextSection({
   title: string;
   children: ReactNode;
 }) {
+  const headingId = `${eyebrow.toLowerCase().replaceAll(" ", "-")}-title`;
+
   return (
-    <section className="border-b border-line">
+    <section className="border-b border-line" aria-labelledby={headingId}>
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
-        <StorySectionHeader eyebrow={eyebrow} title={title} />
+        <StorySectionHeader id={headingId} eyebrow={eyebrow} title={title} />
         <div className="space-y-5 text-lg leading-8 text-muted">{children}</div>
       </div>
     </section>
