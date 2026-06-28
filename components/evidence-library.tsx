@@ -114,6 +114,14 @@ function EvidenceArtifactCard({ artifact }: { artifact: ProductStory["evidence"]
         <p className="mt-2 text-sm leading-6 text-muted">{artifact.preview}</p>
       </div>
       <p className="mt-4 text-sm leading-6 text-muted">{artifact.description}</p>
+      {artifact.href ? (
+        <a
+          href={artifact.href}
+          className="mt-5 inline-flex text-sm font-semibold text-accent underline-offset-4 hover:underline"
+        >
+          View artifact
+        </a>
+      ) : null}
     </article>
   );
 }

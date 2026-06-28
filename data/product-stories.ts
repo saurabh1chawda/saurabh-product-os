@@ -119,6 +119,7 @@ export type ProductStory = {
     preview: string;
     status: EvidenceArtifactStatus;
     description: string;
+    href?: string;
   }>;
   relatedByCapability: Array<{
     title: string;
