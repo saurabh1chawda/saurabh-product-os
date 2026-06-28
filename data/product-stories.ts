@@ -42,15 +42,28 @@ export type ProductStory = {
     keyTakeaway: string;
   };
   sectionLabels?: {
+    snapshotEyebrow?: string;
+    snapshotTitle?: string;
     whyEyebrow?: string;
     whyTitle?: string;
     contextEyebrow?: string;
     contextTitle?: string;
+    optionsEyebrow?: string;
+    optionsTitle?: string;
+    optionsDescription?: string;
+    roleEyebrow?: string;
+    roleTitle?: string;
     decisionTitle?: string;
     stakeholderEyebrow?: string;
     stakeholderTitle?: string;
     executionEyebrow?: string;
     executionTitle?: string;
+    resultsEyebrow?: string;
+    resultsTitle?: string;
+    reflectionEyebrow?: string;
+    reflectionTitle?: string;
+    evidenceEyebrow?: string;
+    evidenceTitle?: string;
   };
   snapshot: Array<{
     label: string;
@@ -76,6 +89,7 @@ export type ProductStory = {
     }>;
   };
   decisionFlow: string[];
+  role?: string[];
   decision: string[];
   stakeholderAlignment?: Array<{
     label: string;

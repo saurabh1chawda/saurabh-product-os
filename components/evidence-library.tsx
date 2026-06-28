@@ -21,6 +21,8 @@ import { cn } from "@/lib/utils";
 
 type EvidenceLibraryProps = {
   artifacts: ProductStory["evidence"];
+  eyebrow?: string;
+  title?: string;
 };
 
 const artifactIcons: Record<EvidenceArtifactType, typeof FileText> = {
@@ -47,15 +49,15 @@ const statusStyles: Record<EvidenceArtifactStatus, string> = {
   "Coming Soon": "border-line bg-panel text-muted"
 };
 
-export function EvidenceLibrary({ artifacts }: EvidenceLibraryProps) {
+export function EvidenceLibrary({ artifacts, eyebrow = "Supporting Evidence", title = "Evidence Library" }: EvidenceLibraryProps) {
   return (
     <section className="border-b border-line" aria-labelledby="evidence-library-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
         <div className="flex max-w-3xl flex-col gap-4">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Supporting Evidence</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">{eyebrow}</p>
             <h2 id="evidence-library-title" className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
-              Evidence Library
+              {title}
             </h2>
             <p className="mt-4 text-base leading-7 text-muted">
               Artifacts that connect the narrative to product decisions, trade-offs, and operating evidence.

@@ -16,7 +16,11 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
     <StoryLayout>
       <StoryHero story={story} />
       <KeyTakeaway>{story.hero.keyTakeaway}</KeyTakeaway>
-      <ExecutiveSnapshot items={story.snapshot} />
+      <ExecutiveSnapshot
+        eyebrow={story.sectionLabels?.snapshotEyebrow ?? "Executive Snapshot"}
+        items={story.snapshot}
+        title={story.sectionLabels?.snapshotTitle ?? "The decision in one page"}
+      />
       <StoryTextSection
         eyebrow={story.sectionLabels?.whyEyebrow ?? "Why This Problem Mattered"}
         title={story.sectionLabels?.whyTitle ?? "The job was bigger than a conversion lift"}
@@ -30,8 +34,23 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
         items={story.context}
         title={story.sectionLabels?.contextTitle ?? "What shaped the product decision"}
       />
-      <OptionsConsidered options={story.options} />
+      <OptionsConsidered
+        description={story.sectionLabels?.optionsDescription}
+        eyebrow={story.sectionLabels?.optionsEyebrow ?? "Options Considered"}
+        options={story.options}
+        title={story.sectionLabels?.optionsTitle ?? "The trade-offs before choosing a path"}
+      />
       <DecisionFramework framework={story.decisionFramework} flowSteps={story.decisionFlow} />
+      {story.role ? (
+        <StoryTextSection
+          eyebrow={story.sectionLabels?.roleEyebrow ?? "My Role"}
+          title={story.sectionLabels?.roleTitle ?? "How I contributed to the decision"}
+        >
+          {story.role.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </StoryTextSection>
+      ) : null}
       <StoryTextSection
         eyebrow="My Decision"
         title={story.sectionLabels?.decisionTitle ?? "Why I chose the conversion system first"}
@@ -52,15 +71,27 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
         items={story.timeline}
         title={story.sectionLabels?.executionTitle ?? "How the work moved from diagnosis to scale"}
       />
-      <ResultsGrid groups={story.results} />
-      <Reflection items={story.reflection} />
+      <ResultsGrid
+        eyebrow={story.sectionLabels?.resultsEyebrow ?? "Results"}
+        groups={story.results}
+        title={story.sectionLabels?.resultsTitle ?? "What changed for customers, the business, and the product"}
+      />
+      <Reflection
+        eyebrow={story.sectionLabels?.reflectionEyebrow ?? "Reflection"}
+        items={story.reflection}
+        title={story.sectionLabels?.reflectionTitle ?? "What I learned from the work"}
+      />
       <ProductPrinciple
         category={story.principleCategory}
         relatedHref="#related-by-capability"
         summary={story.principleSummary}
         title={story.productPrinciple}
       />
-      <EvidenceLibrary artifacts={story.evidence} />
+      <EvidenceLibrary
+        artifacts={story.evidence}
+        eyebrow={story.sectionLabels?.evidenceEyebrow}
+        title={story.sectionLabels?.evidenceTitle}
+      />
       <StoryDemonstrates story={story} />
       <RelatedByCapability stories={story.relatedByCapability} />
     </StoryLayout>
@@ -134,14 +165,22 @@ function KeyTakeaway({ children }: { children: ReactNode }) {
   );
 }
 
-export function ExecutiveSnapshot({ items }: { items: ProductStory["snapshot"] }) {
+export function ExecutiveSnapshot({
+  eyebrow,
+  items,
+  title
+}: {
+  eyebrow: string;
+  items: ProductStory["snapshot"];
+  title: string;
+}) {
   return (
     <section className="border-b border-line" aria-labelledby="executive-snapshot-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
         <StorySectionHeader
           id="executive-snapshot-title"
-          eyebrow="Executive Snapshot"
-          title="The decision in one page"
+          eyebrow={eyebrow}
+          title={title}
         />
         <div className="mt-8 grid gap-4 lg:grid-cols-4">
           {items.map((item) => (
@@ -182,15 +221,28 @@ function ContextGrid({
   );
 }
 
-function OptionsConsidered({ options }: { options: ProductStory["options"] }) {
+function OptionsConsidered({
+  description,
+  eyebrow,
+  options,
+  title
+}: {
+  description?: string;
+  eyebrow: string;
+  options: ProductStory["options"];
+  title: string;
+}) {
   return (
     <section className="border-b border-line" aria-labelledby="options-considered-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
         <StorySectionHeader
           id="options-considered-title"
-          eyebrow="Options Considered"
-          title="The trade-offs before choosing a path"
-          description="The decision was not whether to grow. It was which growth lever gave the team the best odds of durable revenue."
+          eyebrow={eyebrow}
+          title={title}
+          description={
+            description ??
+            "The decision was not whether to grow. It was which growth lever gave the team the best odds of durable revenue."
+          }
         />
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {options.map((option) => (
@@ -341,14 +393,22 @@ function ExecutionTimeline({
   );
 }
 
-export function ResultsGrid({ groups }: { groups: ProductStory["results"] }) {
+export function ResultsGrid({
+  eyebrow,
+  groups,
+  title
+}: {
+  eyebrow: string;
+  groups: ProductStory["results"];
+  title: string;
+}) {
   return (
     <section className="border-b border-line" aria-labelledby="results-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
         <StorySectionHeader
           id="results-title"
-          eyebrow="Results"
-          title="What changed for customers, the business, and the product"
+          eyebrow={eyebrow}
+          title={title}
         />
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {groups.map((group) => (
@@ -370,11 +430,19 @@ export function ResultsGrid({ groups }: { groups: ProductStory["results"] }) {
   );
 }
 
-export function Reflection({ items }: { items: ProductStory["reflection"] }) {
+export function Reflection({
+  eyebrow,
+  items,
+  title
+}: {
+  eyebrow: string;
+  items: ProductStory["reflection"];
+  title: string;
+}) {
   return (
     <section className="border-b border-line bg-panel" aria-labelledby="reflection-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-        <StorySectionHeader id="reflection-title" eyebrow="Reflection" title="What I learned from the work" />
+        <StorySectionHeader id="reflection-title" eyebrow={eyebrow} title={title} />
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {items.map((item) => (
             <article key={item.question} className="rounded-md border border-line bg-paper p-5">

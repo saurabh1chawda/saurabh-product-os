@@ -57,10 +57,10 @@ const stories = [
     href: "/stories/simplilearn-job-guarantee-growth"
   },
   {
-    title: "How I supported payments reliability at 10M+ monthly transaction scale",
+    title: "How We Improved Payment Reliability at 10M+ Monthly Transaction Scale",
     tag: "Comviva · Payments platform",
     summary:
-      "Worked on wallet and payment platform experiences focused on reliability, customer experience, and enterprise-scale deployments.",
+      "Prioritized payment reliability, recovery paths, and customer trust across 10M+ monthly transactions and 15+ enterprise clients.",
     href: "/stories/payments-reliability-comviva"
   },
   {
