@@ -39,7 +39,8 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
         <p>{story.beyondProject}</p>
       </StoryTextSection>
       <SupportingEvidence items={story.evidence} />
-      <RelatedStories stories={story.relatedStories} />
+      <StoryDemonstrates story={story} />
+      <RelatedByCapability stories={story.relatedByCapability} />
     </StoryLayout>
   );
 }
@@ -334,16 +335,64 @@ export function SupportingEvidence({ items }: { items: ProductStory["evidence"] 
   );
 }
 
-export function RelatedStories({ stories }: { stories: ProductStory["relatedStories"] }) {
+export function StoryDemonstrates({ story }: { story: ProductStory }) {
+  return (
+    <section className="border-b border-line bg-panel" aria-labelledby="story-demonstrates-title">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <StorySectionHeader
+          eyebrow="Capability Signal"
+          id="story-demonstrates-title"
+          title="What This Story Demonstrates"
+        />
+        <div className="mt-8 grid gap-4 lg:grid-cols-4">
+          <article className="rounded-md border border-line bg-paper p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">Primary Capability</h3>
+            <p className="mt-4 leading-7 text-muted">{story.primaryCapability}</p>
+          </article>
+          <article className="rounded-md border border-line bg-paper p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">Secondary Capability</h3>
+            <p className="mt-4 leading-7 text-muted">{story.secondaryCapability}</p>
+          </article>
+          <article className="rounded-md border border-line bg-paper p-5 lg:col-span-2">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">Product Principle</h3>
+            <p className="mt-4 leading-7 text-muted">{story.productPrinciple}</p>
+          </article>
+          <article className="rounded-md border border-line bg-paper p-5 lg:col-span-4">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">
+              Hiring Questions Answered
+            </h3>
+            <ul className="mt-4 grid gap-3 lg:grid-cols-2">
+              {story.hiringQuestionsAnswered.map((question) => (
+                <li key={question} className="flex gap-3 leading-7 text-muted">
+                  <CheckCircle2 className="mt-1 h-5 w-5 flex-none text-accent" aria-hidden="true" />
+                  <span>{question}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function RelatedByCapability({ stories }: { stories: ProductStory["relatedByCapability"] }) {
   return (
     <section className="border-b border-line bg-panel" aria-labelledby="related-stories-title">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-        <StorySectionHeader eyebrow="Related Stories" id="related-stories-title" title="More product judgment to evaluate" />
+        <StorySectionHeader
+          eyebrow="Related by Capability"
+          id="related-stories-title"
+          title="More product judgment to evaluate"
+        />
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {stories.map((related) => (
             <article key={related.href} className="rounded-md border border-line bg-paper p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{related.tag}</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">
+                {related.capability}
+              </p>
               <h3 className="mt-4 text-xl font-semibold leading-tight text-ink">{related.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted">{related.tag}</p>
               <ButtonLink href={related.href} variant="inline" className="mt-5">
                 View story
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />

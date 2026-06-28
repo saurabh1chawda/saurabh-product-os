@@ -145,7 +145,7 @@ export default function Home() {
       <section className="border-b border-line">
         <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
           <SectionHeader
-            eyebrow="Explore How I Think"
+            eyebrow="Explore the decisions that shaped my product philosophy."
             title="How does Saurabh make product decisions?"
             description="A structured view into problem framing, customer evidence, prioritization, trade-offs, and launch judgment."
           />

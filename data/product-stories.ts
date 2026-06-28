@@ -1,8 +1,15 @@
+import type { CapabilityName } from "@/data/capabilities";
+
 export type ProductStory = {
   slug: string;
   metadata: {
     description: string;
   };
+  primaryCapability: CapabilityName;
+  secondaryCapability: CapabilityName;
+  productPrinciple: string;
+  keyDecision: string;
+  hiringQuestionsAnswered: string[];
   hero: {
     title: string;
     company: string;
@@ -55,9 +62,10 @@ export type ProductStory = {
     title: string;
     description: string;
   }>;
-  relatedStories: Array<{
+  relatedByCapability: Array<{
     title: string;
     tag: string;
+    capability: CapabilityName;
     href: string;
   }>;
 };
