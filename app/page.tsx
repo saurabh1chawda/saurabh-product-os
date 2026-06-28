@@ -72,6 +72,39 @@ const stories = [
   }
 ];
 
+const capabilities = [
+  {
+    name: "Growth & Monetization",
+    description: "Revenue, conversion, retention, and product-led growth decisions.",
+    storyCount: "2 stories"
+  },
+  {
+    name: "Platform Strategy",
+    description: "Technical systems, scale, latency, and architecture trade-offs.",
+    storyCount: "1 story"
+  },
+  {
+    name: "Payments & Reliability",
+    description: "Trust-critical payment journeys and reliability at transaction scale.",
+    storyCount: "1 story"
+  },
+  {
+    name: "SaaS Product Strategy",
+    description: "Engagement, roadmap choices, analytics, and enterprise value creation.",
+    storyCount: "1 story"
+  },
+  {
+    name: "AI Product Strategy",
+    description: "AI product judgment, workflow design, and responsible adoption.",
+    storyCount: "Coming soon"
+  },
+  {
+    name: "Leadership & Execution",
+    description: "Cross-functional prioritization, delivery rhythm, and outcome ownership.",
+    storyCount: "2 stories"
+  }
+];
+
 export default function Home() {
   return (
     <main>
@@ -164,6 +197,34 @@ export default function Home() {
       </section>
 
       <section className="border-b border-line bg-panel">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+          <SectionHeader
+            eyebrow="Capability Overview"
+            title="Capabilities Demonstrated"
+            description="A concise map of the product judgment areas supported by the story library."
+          />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {capabilities.map((capability) => (
+              <a
+                key={capability.name}
+                href="#featured-product-stories"
+                className="rounded-md border border-line bg-paper p-5 shadow-soft"
+                aria-label={`View product stories related to ${capability.name}`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="font-semibold leading-7 text-ink">{capability.name}</h3>
+                  <span className="rounded-full border border-line bg-panel px-2.5 py-1 text-xs font-semibold text-muted">
+                    {capability.storyCount}
+                  </span>
+                </div>
+                <p className="mt-3 leading-7 text-muted">{capability.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="featured-product-stories" className="scroll-mt-20 border-b border-line bg-panel">
         <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
           <SectionHeader
             eyebrow="Featured Product Stories"
