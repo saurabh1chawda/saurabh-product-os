@@ -1,6 +1,7 @@
-import { ArrowLeft, ArrowRight, CheckCircle2, FileText } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { EvidenceLibrary } from "@/components/evidence-library";
 import type { ProductStory } from "@/data/product-stories";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -38,7 +39,7 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
       >
         <p>{story.beyondProject}</p>
       </StoryTextSection>
-      <SupportingEvidence items={story.evidence} />
+      <EvidenceLibrary artifacts={story.evidence} />
       <StoryDemonstrates story={story} />
       <RelatedByCapability stories={story.relatedByCapability} />
     </StoryLayout>
@@ -300,33 +301,6 @@ export function Reflection({ items }: { items: ProductStory["reflection"] }) {
             <article key={item.question} className="rounded-md border border-line bg-paper p-5">
               <h3 className="text-xl font-semibold text-ink">{item.question}</h3>
               <p className="mt-3 leading-7 text-muted">{item.answer}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function SupportingEvidence({ items }: { items: ProductStory["evidence"] }) {
-  return (
-    <section className="border-b border-line" aria-labelledby="supporting-evidence-title">
-      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-        <StorySectionHeader
-          id="supporting-evidence-title"
-          eyebrow="Supporting Evidence"
-          title="Artifacts to attach as the evidence library matures"
-          description="These placeholders define the proof system future stories should use."
-        />
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {items.map((item) => (
-            <article key={item.title} className="rounded-md border border-dashed border-line bg-panel p-5">
-              <FileText className="h-6 w-6 text-accent" aria-hidden="true" />
-              <h3 className="mt-4 font-semibold text-ink">{item.title}</h3>
-              <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-accent">
-                Representative artifact — to be published
-              </p>
-              <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
             </article>
           ))}
         </div>

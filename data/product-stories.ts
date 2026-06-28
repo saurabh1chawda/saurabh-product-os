@@ -1,5 +1,16 @@
 import type { CapabilityName } from "@/data/capabilities";
 
+export type EvidenceArtifactType =
+  | "PRD"
+  | "Roadmap"
+  | "Wireframe"
+  | "Dashboard"
+  | "Experiment"
+  | "User Journey"
+  | "Architecture Diagram";
+
+export type EvidenceArtifactStatus = "Published" | "Representative" | "Coming Soon";
+
 export type ProductStory = {
   slug: string;
   metadata: {
@@ -59,7 +70,10 @@ export type ProductStory = {
   }>;
   beyondProject: string;
   evidence: Array<{
+    type: EvidenceArtifactType;
     title: string;
+    preview: string;
+    status: EvidenceArtifactStatus;
     description: string;
   }>;
   relatedByCapability: Array<{
