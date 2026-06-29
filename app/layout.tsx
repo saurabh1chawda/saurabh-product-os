@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "@/styles/globals.css";
@@ -9,6 +10,7 @@ const siteTitle = "Saurabh Chawda | Lead AI Product Manager | Product Operating 
 const siteDescription =
   "Lead Product Manager with 8+ years building AI products, platform strategy, payments, enterprise SaaS, and growth systems. Explore my Product Operating System, real product decisions, frameworks, case studies, and interview readiness resources.";
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
 export const metadata: Metadata = {
   title: {
@@ -52,6 +54,25 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="bg-paper font-sans text-ink antialiased">{children}</body>
       {gaMeasurementId ? <GoogleAnalytics gaId={gaMeasurementId} /> : null}
+      {process.env.NODE_ENV === "production" && clarityProjectId ? (
+        <Script
+          id="microsoft-clarity"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: getClarityScript(clarityProjectId)
+          }}
+        />
+      ) : null}
     </html>
   );
+}
+
+function getClarityScript(projectId: string) {
+  return `
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", ${JSON.stringify(projectId)});
+  `;
 }
