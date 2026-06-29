@@ -17,7 +17,7 @@ const operatingPrinciples = [
     explanation: "Strong product judgment starts with visible evidence, not confident storytelling.",
     stories: [
       { title: "Job Guarantee revenue growth", href: "/stories/simplilearn-job-guarantee-growth" },
-      { title: "Customer discovery before build", href: "/stories/product-discovery-jove" }
+      { title: "Workflow-led customer discovery", href: "/stories/product-discovery-jove" }
     ]
   },
   {
@@ -46,7 +46,7 @@ const operatingPrinciples = [
     title: "Discovery protects delivery",
     explanation: "The fastest team is the one that spends less time building the wrong thing.",
     stories: [
-      { title: "Customer discovery before build", href: "/stories/product-discovery-jove" }
+      { title: "Workflow-led customer discovery", href: "/stories/product-discovery-jove" }
     ]
   },
   {
@@ -70,7 +70,7 @@ const operatingPrinciples = [
     explanation: "Product leadership turns ambiguity into a decision path that teams can understand, challenge, and execute.",
     stories: [
       { title: "Platform modernization", href: "/stories/platform-modernization-logix" },
-      { title: "Customer discovery before build", href: "/stories/product-discovery-jove" }
+      { title: "Workflow-led customer discovery", href: "/stories/product-discovery-jove" }
     ]
   }
 ];
@@ -120,7 +120,7 @@ const relatedStories = [
     href: "/stories/platform-modernization-logix"
   },
   {
-    title: "How We Discovered the Right Product Before Building It",
+    title: "Why We Stopped Building More Content and Started Building Better Workflows",
     tag: "Customer Discovery",
     href: "/stories/product-discovery-jove"
   }

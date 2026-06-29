@@ -21,8 +21,8 @@ const relatedCapabilityLinks = [
   },
   {
     label: "Story",
-    title: "JoVE Discovery Story",
-    description: "Placeholder flagship story for customer discovery and SaaS product strategy.",
+    title: "Workflow Discovery Story",
+    description: "Flagship story showing how discovery reframed an adoption challenge around workflow fit.",
     href: "/stories/product-discovery-jove"
   },
   {

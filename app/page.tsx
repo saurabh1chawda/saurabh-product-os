@@ -64,10 +64,10 @@ const stories = [
     href: "/stories/payments-reliability-comviva"
   },
   {
-    title: "How We Discovered the Right Product Before Building It",
+    title: "Why We Stopped Building More Content and Started Building Better Workflows",
     tag: "JoVE · SaaS product strategy",
     summary:
-      "Scaffolded discovery story focused on customer evidence, opportunity framing, and choosing the right product before build.",
+      "Used customer discovery to reframe an adoption challenge from content volume to workflow fit before committing more build capacity.",
     href: "/stories/product-discovery-jove"
   }
 ];
