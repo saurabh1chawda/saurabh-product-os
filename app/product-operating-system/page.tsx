@@ -76,19 +76,20 @@ const operatingPrinciples = [
 ];
 
 const decisionFrameworks = [
-  "Build vs Buy AI",
-  "RAG vs Agent",
-  "Product Prioritization",
-  "Experiment Framework",
-  "Product Health Scorecard"
+  { title: "Build vs Buy AI" },
+  { title: "RAG vs Agent" },
+  { title: "Product Prioritization", href: "/frameworks/product-prioritization" },
+  { title: "Product Discovery", href: "/frameworks/product-discovery" },
+  { title: "Experiment Framework" },
+  { title: "Product Health Scorecard" }
 ];
 
 const mentalModels = [
-  "Systems Thinking",
-  "Customer Trust",
-  "Opportunity Cost",
-  "Learning Velocity",
-  "Second-order Effects"
+  { title: "Systems Thinking" },
+  { title: "Customer Trust" },
+  { title: "Opportunity Cost" },
+  { title: "Learning Velocity" },
+  { title: "Second-order Effects" }
 ];
 
 const checklist = [
@@ -272,7 +273,10 @@ function CardGrid({
   background?: "panel";
   eyebrow: string;
   icon: ReactNode;
-  items: string[];
+  items: Array<{
+    href?: string;
+    title: string;
+  }>;
   title: string;
 }) {
   return (
@@ -281,12 +285,18 @@ function CardGrid({
         <SectionHeader eyebrow={eyebrow} id={`${eyebrow.toLowerCase().replaceAll(" ", "-")}-title`} title={title} />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
-            <article key={item} className={`rounded-md border border-line p-5 ${background === "panel" ? "bg-paper" : "bg-panel"}`}>
+            <article key={item.title} className={`rounded-md border border-line p-5 ${background === "panel" ? "bg-paper" : "bg-panel"}`}>
               <div className="flex h-10 w-10 items-center justify-center rounded-md border border-line bg-paper">
                 {icon}
               </div>
-              <h3 className="mt-5 text-xl font-semibold text-ink">{item}</h3>
+              <h3 className="mt-5 text-xl font-semibold text-ink">{item.title}</h3>
               <p className="mt-3 leading-7 text-muted">Placeholder framework to be expanded with examples, prompts, and representative evidence.</p>
+              {item.href ? (
+                <ButtonLink href={item.href} variant="inline" className="mt-5">
+                  Open framework
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </ButtonLink>
+              ) : null}
             </article>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import type { CapabilityName } from "@/data/capabilities";
+import type { RelatedCapabilityLink } from "@/data/capability-links";
 
 export type EvidenceArtifactType =
   | "PRD"
@@ -121,6 +122,7 @@ export type ProductStory = {
     description: string;
     href?: string;
   }>;
+  relatedCapability?: RelatedCapabilityLink[];
   relatedByCapability: Array<{
     title: string;
     tag: string;

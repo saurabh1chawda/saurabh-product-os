@@ -1,3 +1,5 @@
+import type { RelatedCapabilityLink } from "@/data/capability-links";
+
 export type ArtifactType =
   | "Product Requirements Document (PRD)"
   | "Roadmap"
@@ -32,5 +34,10 @@ export type EvidenceArtifact = {
     title: string;
     href: string;
   };
+  operatingSystem?: {
+    title: string;
+    href: string;
+  };
+  relatedCapability?: RelatedCapabilityLink[];
   disclaimer: string;
 };

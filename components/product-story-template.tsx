@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { EvidenceLibrary } from "@/components/evidence-library";
 import type { ProductStory } from "@/data/product-stories";
+import { RelatedCapabilityNav } from "@/components/related-capability-nav";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
 import { cn } from "@/lib/utils";
@@ -92,6 +93,7 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
         eyebrow={story.sectionLabels?.evidenceEyebrow}
         title={story.sectionLabels?.evidenceTitle}
       />
+      {story.relatedCapability ? <RelatedCapabilityNav links={story.relatedCapability} /> : null}
       <StoryDemonstrates story={story} />
       <RelatedByCapability stories={story.relatedByCapability} />
     </StoryLayout>

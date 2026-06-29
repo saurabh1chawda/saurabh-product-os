@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight, Download, FileText, ShieldCheck } from "lucide-r
 import type { ReactNode } from "react";
 
 import type { EvidenceArtifact } from "@/data/artifacts";
+import { RelatedCapabilityNav } from "@/components/related-capability-nav";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
 
@@ -24,6 +25,7 @@ export function ArtifactTemplate({ artifact }: ArtifactTemplateProps) {
         <KeyDecisions decisions={artifact.keyDecisions} />
         <DownloadSection artifact={artifact} />
         <RelatedStory artifact={artifact} />
+        {artifact.relatedCapability ? <RelatedCapabilityNav links={artifact.relatedCapability} /> : null}
       </main>
     </>
   );
@@ -140,6 +142,12 @@ function RelatedStory({ artifact }: ArtifactTemplateProps) {
         <div className="rounded-md border border-line bg-panel p-5">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Disclaimer</p>
           <p className="mt-4 leading-7 text-muted">{artifact.disclaimer}</p>
+          {artifact.operatingSystem ? (
+            <ButtonLink href={artifact.operatingSystem.href} variant="inline" className="mt-5">
+              {artifact.operatingSystem.title}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </ButtonLink>
+          ) : null}
         </div>
       </div>
     </section>
