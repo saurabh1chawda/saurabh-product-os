@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "@/styles/globals.css";
 
@@ -7,6 +8,7 @@ const siteUrl = "https://saurabh-product-os.vercel.app";
 const siteTitle = "Saurabh Chawda | Lead AI Product Manager | Product Operating System";
 const siteDescription =
   "Lead Product Manager with 8+ years building AI products, platform strategy, payments, enterprise SaaS, and growth systems. Explore my Product Operating System, real product decisions, frameworks, case studies, and interview readiness resources.";
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 export const metadata: Metadata = {
   title: {
@@ -49,6 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-paper font-sans text-ink antialiased">{children}</body>
+      {gaMeasurementId ? <GoogleAnalytics gaId={gaMeasurementId} /> : null}
     </html>
   );
 }
