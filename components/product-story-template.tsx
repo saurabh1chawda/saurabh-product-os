@@ -96,6 +96,7 @@ export function ProductStoryTemplate({ story }: ProductStoryTemplateProps) {
       {story.relatedCapability ? <RelatedCapabilityNav links={story.relatedCapability} /> : null}
       <StoryDemonstrates story={story} />
       <RelatedByCapability stories={story.relatedByCapability} />
+      <HiringConfidence story={story} />
     </StoryLayout>
   );
 }
@@ -563,6 +564,74 @@ export function RelatedByCapability({ stories }: { stories: ProductStory["relate
         </div>
       </div>
     </section>
+  );
+}
+
+function HiringConfidence({ story }: { story: ProductStory }) {
+  return (
+    <>
+      <section className="border-b border-line" aria-labelledby="why-experience-matters-title">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+          <StorySectionHeader
+            eyebrow="Hiring Confidence"
+            id="why-experience-matters-title"
+            title="Why This Experience Matters"
+          />
+          <ul className="mt-8 grid gap-3 lg:grid-cols-2">
+            {story.hiringConfidence.whyExperienceMatters.map((item) => (
+              <li key={item} className="flex gap-3 rounded-md border border-line bg-panel p-5 leading-7 text-muted">
+                <CheckCircle2 className="mt-1 h-5 w-5 flex-none text-accent" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="border-b border-line bg-panel" aria-labelledby="capabilities-demonstrated-title">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+          <StorySectionHeader
+            eyebrow="Capability Signal"
+            id="capabilities-demonstrated-title"
+            title="Capabilities Demonstrated"
+          />
+          <div className="mt-8 flex flex-wrap gap-3">
+            {story.hiringConfidence.capabilities.map((capability) => (
+              <span
+                key={capability}
+                className="rounded-full border border-line bg-paper px-3 py-1.5 text-sm font-semibold text-muted"
+              >
+                {capability}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <StoryTextSection
+        eyebrow="Future Application"
+        title="If I Joined Your Team Tomorrow"
+      >
+        <p>{story.hiringConfidence.futureApplication}</p>
+      </StoryTextSection>
+
+      <section className="border-b border-line bg-panel" aria-labelledby="questions-discuss-title">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+          <StorySectionHeader
+            eyebrow="Interview Conversation"
+            id="questions-discuss-title"
+            title="Questions I'd Love to Discuss"
+          />
+          <div className="mt-8 grid gap-4 lg:grid-cols-2">
+            {story.hiringConfidence.discussionPrompts.map((question) => (
+              <article key={question} className="rounded-md border border-line bg-paper p-5">
+                <h3 className="text-xl font-semibold leading-tight text-ink">{question}</h3>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 

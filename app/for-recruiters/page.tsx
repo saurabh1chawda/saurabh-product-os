@@ -148,6 +148,28 @@ export default function ForRecruitersPage() {
           </div>
         </section>
 
+        <section className="border-b border-line bg-panel" aria-labelledby="why-interview-title">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+            <SectionHeader eyebrow="Why Interview Me?" id="why-interview-title" title="A strong fit for Senior and Lead Product roles" />
+            <div className="mt-8 rounded-md border border-line bg-paper p-5">
+              <BriefcaseBusiness className="h-6 w-6 text-accent" aria-hidden="true" />
+              <p className="mt-5 max-w-4xl text-lg leading-8 text-muted">
+                I bring senior product judgment across AI, platforms, enterprise SaaS, payments, and growth: the ability to clarify ambiguous problems, make trade-offs visible, align technical and business stakeholders, and connect product decisions to measurable customer and commercial outcomes.
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href="/product-operating-system" variant="inline">
+                  View Product Operating System
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </ButtonLink>
+                <ButtonLink href="/stories/simplilearn-job-guarantee-growth" variant="inline">
+                  Explore flagship stories
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </ButtonLink>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="border-b border-line bg-panel" aria-labelledby="path-title">
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
             <SectionHeader eyebrow="Recommended Evaluation Path" id="path-title" title="A practical review sequence" />

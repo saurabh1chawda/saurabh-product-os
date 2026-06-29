@@ -122,6 +122,12 @@ export type ProductStory = {
     description: string;
     href?: string;
   }>;
+  hiringConfidence: {
+    whyExperienceMatters: string[];
+    capabilities: string[];
+    futureApplication: string;
+    discussionPrompts: string[];
+  };
   relatedCapability?: RelatedCapabilityLink[];
   relatedByCapability: Array<{
     title: string;
