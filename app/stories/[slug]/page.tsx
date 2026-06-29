@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { AnalyticsRouteEvent } from "@/components/analytics-route-event";
 import { ProductStoryTemplate } from "@/components/product-story-template";
 import { getProductStoryBySlug, getProductStorySlugs } from "@/lib/product-stories";
 
@@ -36,5 +37,10 @@ export default async function ProductStoryPage({ params }: ProductStoryPageProps
     notFound();
   }
 
-  return <ProductStoryTemplate story={story} />;
+  return (
+    <>
+      <AnalyticsRouteEvent eventName="story_open" storyName={story.hero.title} />
+      <ProductStoryTemplate story={story} />
+    </>
+  );
 }

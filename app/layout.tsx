@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
+import { AnalyticsLinkTracker } from "@/components/analytics-link-tracker";
 import "@/styles/globals.css";
 
 const siteUrl = "https://saurabh-product-os.vercel.app";
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-paper font-sans text-ink antialiased">{children}</body>
+      <AnalyticsLinkTracker />
       {gaMeasurementId ? <GoogleAnalytics gaId={gaMeasurementId} /> : null}
       {process.env.NODE_ENV === "production" && clarityProjectId ? (
         <Script

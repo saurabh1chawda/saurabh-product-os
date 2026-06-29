@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { ArrowRight, ClipboardCheck, GitBranch, SearchCheck } from "lucide-react";
 
+import { AnalyticsRouteEvent } from "@/components/analytics-route-event";
 import { RelatedCapabilityNav } from "@/components/related-capability-nav";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -57,6 +58,7 @@ const frameworkSteps = [
 export default function ProductDiscoveryFrameworkPage() {
   return (
     <>
+      <AnalyticsRouteEvent eventName="framework_open" frameworkName="Product Discovery Framework" />
       <SiteHeader />
       <main>
         <section className="border-b border-line bg-panel" aria-labelledby="discovery-framework-title">

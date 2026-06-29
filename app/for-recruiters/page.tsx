@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { ArrowRight, BriefcaseBusiness, Clock3, FileText, Mail, Sparkles, UserRound } from "lucide-react";
 
+import { AnalyticsRouteEvent } from "@/components/analytics-route-event";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
 
@@ -137,6 +138,7 @@ const contactActions = [
 export default function ForRecruitersPage() {
   return (
     <>
+      <AnalyticsRouteEvent eventName="for_recruiters_view" />
       <SiteHeader />
       <main>
         <section className="border-b border-line bg-panel" aria-labelledby="recruiters-title">

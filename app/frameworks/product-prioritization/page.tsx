@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { ArrowRight, CheckCircle2, GitBranch, Layers, ListChecks } from "lucide-react";
 
+import { AnalyticsRouteEvent } from "@/components/analytics-route-event";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
 
@@ -76,6 +77,7 @@ const relatedFrameworks = [
 export default function ProductPrioritizationFrameworkPage() {
   return (
     <>
+      <AnalyticsRouteEvent eventName="framework_open" frameworkName="Product Prioritization Framework" />
       <SiteHeader />
       <main>
         <section className="border-b border-line bg-panel" aria-labelledby="framework-title">

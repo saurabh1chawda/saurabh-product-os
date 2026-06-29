@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { ArrowDown, ArrowRight, BookOpen, FileText, GitBranch, MessageSquare, Route } from "lucide-react";
 
+import { AnalyticsRouteEvent } from "@/components/analytics-route-event";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
 
@@ -84,6 +85,7 @@ const conversationCards = [
 export default function StartHerePage() {
   return (
     <>
+      <AnalyticsRouteEvent eventName="start_here_view" />
       <SiteHeader />
       <main>
         <section className="border-b border-line bg-panel" aria-labelledby="start-here-title">
