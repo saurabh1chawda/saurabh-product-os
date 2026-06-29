@@ -86,11 +86,31 @@ const differentiators = [
 ];
 
 const faqs = [
-  "Why AI Product Management?",
-  "Why now?",
-  "IC vs Leadership",
-  "Relocation",
-  "Working style"
+  {
+    question: "Why AI Product Management?",
+    answer:
+      "AI Product Management is the natural next step in my product career because my work has consistently sat at the intersection of customer problems, technical systems, data, and business outcomes. I am especially interested in building AI products where the value is not the model itself, but how intelligently it improves user workflows, decision-making, automation, and measurable business impact."
+  },
+  {
+    question: "Why now?",
+    answer:
+      "Over the last eight years, I have built products across growth, platforms, payments, enterprise SaaS, and technical modernization. The common thread has been identifying high-leverage product decisions under uncertainty. AI now amplifies that kind of product judgment, and I want to apply my experience to products where AI meaningfully changes how users work, decide, and create value."
+  },
+  {
+    question: "IC vs Leadership",
+    answer:
+      "I am targeting Senior or Lead Product Manager roles where I can operate as a strong individual contributor while also bringing leadership through influence, mentoring, roadmap clarity, and cross-functional alignment. I am comfortable leading teams and mentoring PMs, but my current focus is on high-impact product ownership close to strategy, customers, data, and execution."
+  },
+  {
+    question: "Relocation",
+    answer:
+      "I am open to relocation for the right Senior or Lead Product Manager opportunity, especially where the role offers strong product scope, technical depth, and long-term growth potential. I am also comfortable working with distributed teams across geographies and time zones."
+  },
+  {
+    question: "Working style",
+    answer:
+      "My working style is structured, evidence-driven, and collaborative. I prefer writing before debating, making trade-offs explicit, aligning stakeholders around clear product decisions, and translating ambiguity into execution. I work closely with engineering, design, data, sales, customer success, and leadership to keep product decisions grounded in customer value and business outcomes."
+  }
 ];
 
 const contactActions = [
@@ -219,10 +239,10 @@ export default function ForRecruitersPage() {
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
             <SectionHeader eyebrow="Frequently Asked Questions" id="faq-title" title="Conversation prompts for screening calls" />
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              {faqs.map((question) => (
-                <article key={question} className="rounded-md border border-line bg-paper p-5">
-                  <h2 className="text-xl font-semibold leading-tight text-ink">{question}</h2>
-                  <p className="mt-3 leading-7 text-muted">Placeholder answer to be expanded with recruiter-ready detail.</p>
+              {faqs.map((item) => (
+                <article key={item.question} className="rounded-md border border-line bg-paper p-5">
+                  <h2 className="text-xl font-semibold leading-tight text-ink">{item.question}</h2>
+                  <p className="mt-3 leading-7 text-muted">{item.answer}</p>
                 </article>
               ))}
             </div>
