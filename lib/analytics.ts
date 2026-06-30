@@ -27,7 +27,13 @@ export type AnalyticsEventName =
   | "validation_confidence_meter_interaction"
   | "validation_decision_quality_score_checked"
   | "validation_stop_criteria_viewed"
-  | "validation_review_started";
+  | "validation_review_started"
+  | "ai_prioritization_viewed"
+  | "ai_matrix_interacted"
+  | "ai_question_expanded"
+  | "ai_scorecard_completed"
+  | "ai_example_clicked"
+  | "ai_next_module_clicked";
 
 type AnalyticsEventParams = {
   confidence_level?: string;
@@ -35,10 +41,13 @@ type AnalyticsEventParams = {
   decision_journal_name?: string;
   example_name?: string;
   framework_name?: string;
+  matrix_quadrant?: string;
   module_name?: string;
   question_group?: string;
+  recommendation?: string;
   scorecard_item?: string;
   scorecard_value?: string;
+  score_total?: number;
   stop_criteria_name?: string;
   story_name?: string;
   tour_step?: number;
