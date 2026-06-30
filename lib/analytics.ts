@@ -43,7 +43,13 @@ export type AnalyticsEventName =
   | "build_buy_matrix_interacted"
   | "build_buy_scorecard_completed"
   | "build_buy_example_clicked"
-  | "build_buy_next_module_clicked";
+  | "build_buy_next_module_clicked"
+  | "rag_agent_viewed"
+  | "rag_agent_question_expanded"
+  | "rag_agent_matrix_interacted"
+  | "rag_agent_scorecard_completed"
+  | "rag_agent_example_clicked"
+  | "rag_agent_next_module_clicked";
 
 type AnalyticsEventParams = {
   confidence_level?: string;
