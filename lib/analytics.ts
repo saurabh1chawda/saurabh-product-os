@@ -7,11 +7,19 @@ export type AnalyticsEventName =
   | "linkedin_click"
   | "email_click"
   | "contact_click"
-  | "external_link_click";
+  | "external_link_click"
+  | "decision_system_viewed"
+  | "decision_questions_expanded"
+  | "framework_example_clicked"
+  | "next_module_clicked";
 
 type AnalyticsEventParams = {
-  story_name?: string;
+  decision_system_name?: string;
+  example_name?: string;
   framework_name?: string;
+  module_name?: string;
+  question_group?: string;
+  story_name?: string;
   link_url?: string;
   link_text?: string;
 };
