@@ -16,6 +16,11 @@ type DecisionSystemViewedProps = {
   name: string;
 };
 
+type AnalyticsViewedProps = {
+  eventName: "decision_system_viewed" | "dos_home_viewed";
+  name: string;
+};
+
 type DecisionQuestionGroupProps = {
   questions: string[];
   title: string;
@@ -24,7 +29,15 @@ type DecisionQuestionGroupProps = {
 type TrackedDecisionLinkProps = {
   children: ReactNode;
   className?: string;
-  eventName: "framework_example_clicked" | "next_module_clicked";
+  eventName:
+    | "framework_example_clicked"
+    | "next_module_clicked"
+    | "decision_system_clicked"
+    | "decision_journal_clicked"
+    | "for_recruiters_clicked"
+    | "resume_download"
+    | "linkedin_click"
+    | "email_click";
   href: string;
   label: string;
   variant?: "primary" | "secondary" | "inline";
@@ -64,6 +77,17 @@ export function DecisionSystemViewed({ name }: DecisionSystemViewedProps) {
       decision_system_name: name
     });
   }, [name]);
+
+  return null;
+}
+
+export function AnalyticsViewed({ eventName, name }: AnalyticsViewedProps) {
+  useEffect(() => {
+    trackAnalyticsEvent(eventName, {
+      ...(eventName === "decision_system_viewed" ? { decision_system_name: name } : {}),
+      ...(eventName === "dos_home_viewed" ? { module_name: name } : {})
+    });
+  }, [eventName, name]);
 
   return null;
 }
@@ -114,6 +138,9 @@ export function TrackedDecisionLink({ children, className, eventName, href, labe
     trackAnalyticsEvent(eventName, {
       ...(eventName === "framework_example_clicked" ? { example_name: label } : {}),
       ...(eventName === "next_module_clicked" ? { module_name: label } : {}),
+      ...(eventName === "decision_system_clicked" ? { decision_system_name: label } : {}),
+      ...(eventName === "decision_journal_clicked" ? { decision_journal_name: label } : {}),
+      ...(eventName === "for_recruiters_clicked" ? { link_text: label } : {}),
       link_url: href
     });
   }

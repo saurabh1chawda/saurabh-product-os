@@ -11,15 +11,25 @@ export type AnalyticsEventName =
   | "decision_system_viewed"
   | "decision_questions_expanded"
   | "framework_example_clicked"
-  | "next_module_clicked";
+  | "next_module_clicked"
+  | "dos_home_viewed"
+  | "tour_started"
+  | "tour_step_viewed"
+  | "tour_completed"
+  | "decision_system_clicked"
+  | "decision_journal_clicked"
+  | "for_recruiters_clicked";
 
 type AnalyticsEventParams = {
   decision_system_name?: string;
+  decision_journal_name?: string;
   example_name?: string;
   framework_name?: string;
   module_name?: string;
   question_group?: string;
   story_name?: string;
+  tour_step?: number;
+  tour_step_name?: string;
   link_url?: string;
   link_text?: string;
 };
