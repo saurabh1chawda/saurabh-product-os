@@ -37,7 +37,13 @@ export type AnalyticsEventName =
   | "ai_principles_viewed"
   | "principle_expanded"
   | "principle_example_clicked"
-  | "continue_learning_clicked";
+  | "continue_learning_clicked"
+  | "build_buy_viewed"
+  | "build_buy_question_expanded"
+  | "build_buy_matrix_interacted"
+  | "build_buy_scorecard_completed"
+  | "build_buy_example_clicked"
+  | "build_buy_next_module_clicked";
 
 type AnalyticsEventParams = {
   confidence_level?: string;
