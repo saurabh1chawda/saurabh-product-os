@@ -8,27 +8,33 @@ import { ButtonLink } from "@/components/ui/button-link";
 
 const metrics = [
   {
-    title: "10× Revenue Growth",
+    metric: "10×",
+    title: "Revenue Growth",
     subtitle: "₹1M → ₹10M in 4 months"
   },
   {
-    title: "10M+ Monthly Transactions",
+    metric: "10M+",
+    title: "Monthly Transactions",
     subtitle: "Payments platform scale"
   },
   {
-    title: "94% CSAT",
+    metric: "94%",
+    title: "CSAT",
     subtitle: "Wallet/payment user experience"
   },
   {
-    title: "25% Profit Growth",
+    metric: "25%",
+    title: "Profit Growth",
     subtitle: "SaaS product strategy impact"
   },
   {
-    title: "40% Query Latency Reduction",
+    metric: "40%",
+    title: "Query Latency Reduction",
     subtitle: "Platform modernization"
   },
   {
-    title: "15+ Enterprise Deployments",
+    metric: "15+",
+    title: "Enterprise Deployments",
     subtitle: "B2B product delivery"
   }
 ];
@@ -53,54 +59,60 @@ const stories = [
     title: "How I helped grow Job Guarantee revenue 10×",
     tag: "Simplilearn · Growth & monetization",
     summary:
-      "Used funnel optimization, referral loops, and product-led growth decisions to grow revenue from ₹1M to ₹10M.",
-    href: "/stories/simplilearn-job-guarantee-growth"
+      "Improved funnel quality, referrals, and product-led growth to move revenue from ₹1M to ₹10M.",
+    href: "/stories/simplilearn-job-guarantee-growth",
+    outcome: "10× Revenue",
+    readingTime: "8 min read"
   },
   {
     title: "How We Improved Payment Reliability at 10M+ Monthly Transaction Scale",
     tag: "Comviva · Payments platform",
     summary:
-      "Prioritized payment reliability, recovery paths, and customer trust across 10M+ monthly transactions and 15+ enterprise clients.",
-    href: "/stories/payments-reliability-comviva"
+      "Prioritized reliability, recovery paths, and trust across 10M+ monthly transactions.",
+    href: "/stories/payments-reliability-comviva",
+    outcome: "10M+ Transactions",
+    readingTime: "9 min read"
   },
   {
     title: "Why We Stopped Building More Content and Started Building Better Workflows",
     tag: "JoVE · SaaS product strategy",
     summary:
-      "Used customer discovery to reframe an adoption challenge from content volume to workflow fit before committing more build capacity.",
-    href: "/stories/product-discovery-jove"
+      "Used discovery to reframe adoption from content volume to workflow fit before building more.",
+    href: "/stories/product-discovery-jove",
+    outcome: "25% Profit Growth",
+    readingTime: "7 min read"
   }
 ];
 
 const capabilities = [
   {
     name: "Growth & Monetization",
-    description: "Revenue, conversion, retention, and product-led growth decisions.",
+    description: "Revenue, conversion, and product-led growth decisions.",
     storyCount: "2 stories"
   },
   {
     name: "Platform Strategy",
-    description: "Technical systems, scale, latency, and architecture trade-offs.",
+    description: "Scale, latency, and architecture trade-offs.",
     storyCount: "1 story"
   },
   {
     name: "Payments & Reliability",
-    description: "Trust-critical payment journeys and reliability at transaction scale.",
+    description: "Trust-critical journeys at transaction scale.",
     storyCount: "1 story"
   },
   {
     name: "SaaS Product Strategy",
-    description: "Engagement, roadmap choices, analytics, and enterprise value creation.",
+    description: "Engagement, roadmap, and enterprise value creation.",
     storyCount: "1 story"
   },
   {
     name: "AI Product Strategy",
-    description: "AI product judgment, workflow design, and responsible adoption.",
+    description: "AI judgment, workflow design, and adoption.",
     storyCount: "Coming soon"
   },
   {
     name: "Leadership & Execution",
-    description: "Cross-functional prioritization, delivery rhythm, and outcome ownership.",
+    description: "Prioritization, delivery rhythm, and ownership.",
     storyCount: "2 stories"
   }
 ];
@@ -111,7 +123,7 @@ export default function Home() {
       <SiteHeader />
 
       <section className="border-b border-line bg-panel">
-        <div className="mx-auto flex min-h-[68svh] max-w-6xl flex-col justify-center px-5 py-12 sm:px-8 sm:py-14 lg:min-h-[62svh] lg:px-10 lg:py-12">
+        <div className="mx-auto flex min-h-[62svh] max-w-6xl flex-col justify-center px-5 py-10 sm:px-8 sm:py-12 lg:min-h-[58svh] lg:px-10 lg:py-10">
           <div className="max-w-3xl">
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-line bg-paper px-3 py-1 text-sm font-medium text-muted">
               <Sparkles className="h-4 w-4 text-accent" aria-hidden="true" />
@@ -121,7 +133,7 @@ export default function Home() {
               Product judgment you can evaluate before the interview.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
-              I&apos;m Saurabh Chawda, a Lead Product Manager with 8+ years across AI, platforms, payments, SaaS, and growth. This product decision library shows the trade-offs, evidence, and outcomes behind my work.
+              I&apos;m Saurabh Chawda, a Lead PM across AI, platforms, payments, SaaS, and growth. See the trade-offs, evidence, and outcomes behind my work.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/how-i-think">
@@ -140,7 +152,7 @@ export default function Home() {
       </section>
 
       <section className="border-b border-line">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14 lg:px-10">
           <SectionHeader
             eyebrow="Impact Metrics"
             title="What outcomes can the work point to?"
@@ -155,7 +167,7 @@ export default function Home() {
       </section>
 
       <section className="border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14 lg:px-10">
           <SectionHeader
             eyebrow="Hiring Question"
             title="What problem are you hiring someone to solve?"
@@ -163,7 +175,7 @@ export default function Home() {
           />
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {problems.map((problem) => (
-              <div key={problem.title} className="flex gap-3 rounded-md border border-line bg-paper p-5">
+              <div key={problem.title} className="flex min-h-11 gap-3 rounded-md border border-line bg-paper p-5">
                 <BarChart3 className="mt-1 h-5 w-5 flex-none text-accent" aria-hidden="true" />
                 <div>
                   <h3 className="font-semibold leading-7 text-ink">{problem.title}</h3>
@@ -176,7 +188,7 @@ export default function Home() {
       </section>
 
       <section className="border-b border-line">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
+        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-12 sm:px-8 sm:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 lg:px-10">
           <SectionHeader
             eyebrow="Explore the decisions that shaped my product philosophy."
             title="How does Saurabh make product decisions?"
@@ -197,7 +209,7 @@ export default function Home() {
       </section>
 
       <section className="border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14 lg:px-10">
           <SectionHeader
             eyebrow="Capability Overview"
             title="Capabilities Demonstrated"
@@ -208,7 +220,7 @@ export default function Home() {
               <a
                 key={capability.name}
                 href="#featured-product-stories"
-                className="rounded-md border border-line bg-paper p-5 shadow-soft"
+                className="min-h-11 rounded-md border border-line bg-paper p-5 shadow-soft"
                 aria-label={`View product stories related to ${capability.name}`}
               >
                 <div className="flex items-start justify-between gap-4">
@@ -225,7 +237,7 @@ export default function Home() {
       </section>
 
       <section id="featured-product-stories" className="scroll-mt-20 border-b border-line bg-panel">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14 lg:px-10">
           <SectionHeader
             eyebrow="Featured Product Stories"
             title="What evidence supports the claims?"

@@ -11,7 +11,7 @@ type ButtonLinkProps = ComponentPropsWithoutRef<typeof Link> & {
 const variants = {
   primary: "bg-accent text-white hover:bg-ink",
   secondary: "border border-line bg-panel text-ink hover:border-accent",
-  inline: "p-0 text-accent hover:text-ink"
+  inline: "min-h-11 p-0 text-accent hover:text-ink"
 };
 
 export function ButtonLink({ children, className, variant = "primary", ...props }: ButtonLinkProps) {

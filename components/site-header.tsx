@@ -10,12 +10,12 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-panel/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:px-10">
-        <Link href="/" className="text-sm font-semibold uppercase tracking-[0.14em] text-ink">
+        <Link href="/" className="flex min-h-11 items-center text-sm font-semibold uppercase tracking-[0.14em] text-ink">
           Saurabh Product OS
         </Link>
         <nav aria-label="Primary navigation" className="hidden items-center gap-6 text-sm font-medium text-muted sm:flex">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="transition hover:text-ink">
+            <Link key={item.href} href={item.href} className="flex min-h-11 items-center transition hover:text-ink">
               {item.label}
             </Link>
           ))}
