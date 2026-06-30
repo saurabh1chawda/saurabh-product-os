@@ -18,15 +18,28 @@ export type AnalyticsEventName =
   | "tour_completed"
   | "decision_system_clicked"
   | "decision_journal_clicked"
-  | "for_recruiters_clicked";
+  | "for_recruiters_clicked"
+  | "validation_system_viewed"
+  | "validation_question_expanded"
+  | "validation_scorecard_interaction"
+  | "validation_example_clicked"
+  | "validation_next_module_clicked"
+  | "validation_confidence_meter_interaction"
+  | "validation_decision_quality_score_checked"
+  | "validation_stop_criteria_viewed"
+  | "validation_review_started";
 
 type AnalyticsEventParams = {
+  confidence_level?: string;
   decision_system_name?: string;
   decision_journal_name?: string;
   example_name?: string;
   framework_name?: string;
   module_name?: string;
   question_group?: string;
+  scorecard_item?: string;
+  scorecard_value?: string;
+  stop_criteria_name?: string;
   story_name?: string;
   tour_step?: number;
   tour_step_name?: string;
