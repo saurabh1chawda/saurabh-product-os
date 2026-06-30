@@ -18,16 +18,6 @@ const metrics = [
     subtitle: "Payments platform scale"
   },
   {
-    metric: "94%",
-    title: "CSAT",
-    subtitle: "Wallet/payment user experience"
-  },
-  {
-    metric: "25%",
-    title: "Profit Growth",
-    subtitle: "SaaS product strategy impact"
-  },
-  {
     metric: "40%",
     title: "Query Latency Reduction",
     subtitle: "Platform modernization"
