@@ -49,7 +49,13 @@ export type AnalyticsEventName =
   | "rag_agent_matrix_interacted"
   | "rag_agent_scorecard_completed"
   | "rag_agent_example_clicked"
-  | "rag_agent_next_module_clicked";
+  | "rag_agent_next_module_clicked"
+  | "ai_metrics_viewed"
+  | "ai_metrics_question_expanded"
+  | "ai_metrics_matrix_interacted"
+  | "ai_metrics_scorecard_completed"
+  | "ai_metrics_example_clicked"
+  | "ai_metrics_next_module_clicked";
 
 type AnalyticsEventParams = {
   confidence_level?: string;
