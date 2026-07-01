@@ -17,7 +17,7 @@ type DecisionSystemViewedProps = {
 };
 
 type AnalyticsViewedProps = {
-  eventName: "decision_system_viewed" | "dos_home_viewed";
+  eventName: "decision_system_viewed" | "dos_home_viewed" | "v1_release_viewed";
   name: string;
 };
 
@@ -35,11 +35,15 @@ type TrackedDecisionLinkProps = {
     | "decision_system_clicked"
     | "decision_journal_clicked"
     | "for_recruiters_clicked"
+    | "learning_path_clicked"
+    | "module_clicked_from_release"
+    | "recruiter_path_clicked"
     | "resume_download"
     | "linkedin_click"
     | "email_click";
   href: string;
   label: string;
+  pathName?: string;
   variant?: "primary" | "secondary" | "inline";
 };
 
@@ -85,7 +89,8 @@ export function AnalyticsViewed({ eventName, name }: AnalyticsViewedProps) {
   useEffect(() => {
     trackAnalyticsEvent(eventName, {
       ...(eventName === "decision_system_viewed" ? { decision_system_name: name } : {}),
-      ...(eventName === "dos_home_viewed" ? { module_name: name } : {})
+      ...(eventName === "dos_home_viewed" ? { module_name: name } : {}),
+      ...(eventName === "v1_release_viewed" ? { page_name: name } : {})
     });
   }, [eventName, name]);
 
@@ -133,7 +138,7 @@ export function DecisionQuestionGroup({ questions, title }: DecisionQuestionGrou
   );
 }
 
-export function TrackedDecisionLink({ children, className, eventName, href, label, variant = "inline" }: TrackedDecisionLinkProps) {
+export function TrackedDecisionLink({ children, className, eventName, href, label, pathName, variant = "inline" }: TrackedDecisionLinkProps) {
   function trackClick() {
     trackAnalyticsEvent(eventName, {
       ...(eventName === "framework_example_clicked" ? { example_name: label } : {}),
@@ -141,6 +146,10 @@ export function TrackedDecisionLink({ children, className, eventName, href, labe
       ...(eventName === "decision_system_clicked" ? { decision_system_name: label } : {}),
       ...(eventName === "decision_journal_clicked" ? { decision_journal_name: label } : {}),
       ...(eventName === "for_recruiters_clicked" ? { link_text: label } : {}),
+      ...(eventName === "learning_path_clicked" ? { module_name: label } : {}),
+      ...(eventName === "module_clicked_from_release" ? { module_name: label } : {}),
+      ...(eventName === "recruiter_path_clicked" ? { module_name: label } : {}),
+      ...(pathName ? { path_name: pathName } : {}),
       link_url: href
     });
   }

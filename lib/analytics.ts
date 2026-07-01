@@ -55,7 +55,11 @@ export type AnalyticsEventName =
   | "ai_metrics_matrix_interacted"
   | "ai_metrics_scorecard_completed"
   | "ai_metrics_example_clicked"
-  | "ai_metrics_next_module_clicked";
+  | "ai_metrics_next_module_clicked"
+  | "v1_release_viewed"
+  | "learning_path_clicked"
+  | "module_clicked_from_release"
+  | "recruiter_path_clicked";
 
 type AnalyticsEventParams = {
   confidence_level?: string;
@@ -66,6 +70,7 @@ type AnalyticsEventParams = {
   matrix_quadrant?: string;
   module_name?: string;
   page_name?: string;
+  path_name?: string;
   principle_name?: string;
   question_group?: string;
   recommendation?: string;

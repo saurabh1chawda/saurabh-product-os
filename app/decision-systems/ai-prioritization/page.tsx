@@ -28,6 +28,7 @@ import {
   AiTrackedLink
 } from "@/components/ai-prioritization-interactions";
 import { ReadingProgress } from "@/components/decision-system-interactions";
+import { DecisionSystemFooterLinks } from "@/components/decision-system-footer-links";
 import { SiteHeader } from "@/components/site-header";
 
 const pageTitle = "AI Prioritization";
@@ -812,6 +813,8 @@ export default function AiPrioritizationDecisionSystemPage() {
                 ))}
               </div>
             </DocSection>
+
+            <DecisionSystemFooterLinks />
 
             <section id="continue-learning" className="scroll-mt-24 border-b border-line py-12 sm:py-14" aria-labelledby="continue-learning-title">
               <div className="rounded-md border border-line bg-panel p-6">

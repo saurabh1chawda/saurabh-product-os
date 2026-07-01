@@ -1,23 +1,33 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { ArrowDown, ArrowRight, Boxes, ClipboardList, Compass, FileText, GitBranch, Layers3, Route } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  Boxes,
+  CheckCircle2,
+  Compass,
+  FileText,
+  GitBranch,
+  Layers3,
+  Route
+} from "lucide-react";
 
 import { AnalyticsViewed, TrackedDecisionLink } from "@/components/decision-system-interactions";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
 
 const pageDescription =
-  "Explore the Decision Operating System—a living collection of Decision Systems, Decision Journals and Operating Principles that document how I build AI-powered products and make product decisions under uncertainty.";
+  "AI Product Operating System v1 is complete: an end-to-end decision system for evaluating, validating, prioritizing, architecting, and measuring AI products.";
 const pageUrl = "https://saurabh-product-os.vercel.app/decision-operating-system";
 
 export const metadata: Metadata = {
-  title: "Decision Operating System | Product Decision Frameworks by Saurabh Chawda",
+  title: "AI Product Operating System v1 | Product Decision Systems by Saurabh Chawda",
   description: pageDescription,
   alternates: {
     canonical: "/decision-operating-system"
   },
   openGraph: {
-    title: "Decision Operating System | Product Decision Frameworks by Saurabh Chawda",
+    title: "AI Product Operating System v1 | Product Decision Systems by Saurabh Chawda",
     description: pageDescription,
     url: pageUrl,
     type: "website",
@@ -33,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Decision Operating System | Product Decision Frameworks by Saurabh Chawda",
+    title: "AI Product Operating System v1 | Product Decision Systems by Saurabh Chawda",
     description: pageDescription,
     images: ["/og-image.png"]
   }
@@ -64,34 +74,131 @@ const pillars = [
   },
   {
     title: "Decision Toolkit",
-    description: "Practical canvases, scorecards and templates.",
-    badge: "Coming Soon",
-    icon: <ClipboardList className="h-5 w-5 text-accent" aria-hidden="true" />
+    description: "Practical canvases, scorecards and templates that support the operating system.",
+    icon: <CheckCircle2 className="h-5 w-5 text-accent" aria-hidden="true" />
+  }
+];
+
+const completedModules = [
+  {
+    title: "AI Product Principles",
+    href: "/ai-product-principles",
+    description: "The executive philosophy behind the AI Product Operating System."
+  },
+  {
+    title: "Customer Discovery",
+    href: "/decision-systems/customer-discovery",
+    description: "Start with the customer and let evidence determine whether AI belongs in the solution."
+  },
+  {
+    title: "Validation & Experimentation",
+    href: "/decision-systems/validation-experimentation",
+    description: "Build evidence before confidence and reduce the most expensive uncertainty."
+  },
+  {
+    title: "AI Prioritization",
+    href: "/decision-systems/ai-prioritization",
+    description: "Prioritize AI where customer value, business value and execution readiness intersect."
+  },
+  {
+    title: "Build vs Buy AI",
+    href: "/decision-systems/build-vs-buy-ai",
+    description: "Own what differentiates you and buy what does not."
+  },
+  {
+    title: "RAG vs Agent",
+    href: "/decision-systems/rag-vs-agent",
+    description: "Choose the simplest architecture that reliably solves the customer problem."
+  },
+  {
+    title: "AI Success Metrics",
+    href: "/decision-systems/ai-success-metrics",
+    description: "Measure customer outcomes first and AI performance second."
   }
 ];
 
 const journey = [
-  { title: "Understand", href: "/decision-systems/customer-discovery" },
   { title: "Discover", href: "/decision-systems/customer-discovery" },
   { title: "Validate", href: "/decision-systems/validation-experimentation" },
-  { title: "Prioritize", href: "/frameworks/product-prioritization" },
-  { title: "Architect", href: "/decision-systems/build-vs-buy-ai" },
+  { title: "Prioritize", href: "/decision-systems/ai-prioritization" },
+  { title: "Own", href: "/decision-systems/build-vs-buy-ai" },
+  { title: "Architect", href: "/decision-systems/rag-vs-agent" },
   { title: "Measure", href: "/decision-systems/ai-success-metrics" }
 ];
 
 const releaseStats = [
   { label: "Version", value: "v1.0" },
-  { label: "Decision Systems", value: "1 / 6 Published" },
-  { label: "Decision Journals", value: "4 Planned" },
-  { label: "Toolkit", value: "Coming Soon" },
-  { label: "Release Status", value: "Active Development" }
+  { label: "Release Status", value: "v1 complete" },
+  { label: "Completed Modules", value: "7 / 7" },
+  { label: "Decision Systems", value: "6 complete" },
+  { label: "Core Philosophy", value: "Customer value before AI novelty" },
+  { label: "Audience", value: "Recruiters, hiring managers and product leaders" }
 ];
 
-const roadmap = [
-  { label: "Now", items: ["Customer Discovery"] },
-  { label: "Next", items: ["Validation & Experimentation"] },
-  { label: "Upcoming", items: ["AI Prioritization", "Build vs Buy AI", "RAG vs Agent", "AI Success Metrics"] },
-  { label: "Toolkit", items: ["Canvases", "Scorecards", "Templates"] }
+const releaseNotes = [
+  {
+    area: "Philosophy",
+    modules: [{ title: "AI Product Principles", href: "/ai-product-principles" }]
+  },
+  {
+    area: "Discovery",
+    modules: [{ title: "Customer Discovery", href: "/decision-systems/customer-discovery" }]
+  },
+  {
+    area: "Validation",
+    modules: [{ title: "Validation & Experimentation", href: "/decision-systems/validation-experimentation" }]
+  },
+  {
+    area: "Strategy",
+    modules: [
+      { title: "AI Prioritization", href: "/decision-systems/ai-prioritization" },
+      { title: "Build vs Buy AI", href: "/decision-systems/build-vs-buy-ai" }
+    ]
+  },
+  {
+    area: "Architecture",
+    modules: [{ title: "RAG vs Agent", href: "/decision-systems/rag-vs-agent" }]
+  },
+  {
+    area: "Measurement",
+    modules: [{ title: "AI Success Metrics", href: "/decision-systems/ai-success-metrics" }]
+  }
+];
+
+const learningPaths = [
+  {
+    title: "AI PM in 15 minutes",
+    description: "A fast review of the AI product judgment behind the operating system.",
+    eventName: "learning_path_clicked" as const,
+    links: [
+      { title: "AI Product Principles", href: "/ai-product-principles" },
+      { title: "AI Prioritization", href: "/decision-systems/ai-prioritization" },
+      { title: "RAG vs Agent", href: "/decision-systems/rag-vs-agent" },
+      { title: "AI Success Metrics", href: "/decision-systems/ai-success-metrics" }
+    ]
+  },
+  {
+    title: "Lead PM / Senior PM Review",
+    description: "A deeper path through discovery, validation, ownership and measurement.",
+    eventName: "learning_path_clicked" as const,
+    links: [
+      { title: "Customer Discovery", href: "/decision-systems/customer-discovery" },
+      { title: "Validation & Experimentation", href: "/decision-systems/validation-experimentation" },
+      { title: "Build vs Buy AI", href: "/decision-systems/build-vs-buy-ai" },
+      { title: "AI Success Metrics", href: "/decision-systems/ai-success-metrics" }
+    ]
+  },
+  {
+    title: "Recruiter Quick Review",
+    description: "The shortest path to evaluate scope, fit, resume and contact readiness.",
+    eventName: "recruiter_path_clicked" as const,
+    links: [
+      { title: "Recruiter Tour", href: "/recruiter-tour" },
+      { title: "AI Product Principles", href: "/ai-product-principles" },
+      { title: "For Recruiters", href: "/for-recruiters" },
+      { title: "Resume", href: "/resume" }
+    ]
+  }
 ];
 
 const breadcrumbs = [
@@ -114,6 +221,7 @@ export default function DecisionOperatingSystemPage() {
   return (
     <>
       <AnalyticsViewed eventName="dos_home_viewed" name="Decision Operating System" />
+      <AnalyticsViewed eventName="v1_release_viewed" name="AI Product Operating System v1" />
       <SiteHeader />
       <main>
         <script
@@ -134,26 +242,26 @@ export default function DecisionOperatingSystemPage() {
               ))}
             </nav>
             <div className="mt-8 max-w-4xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Decision Operating System</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">AI Product Operating System v1</p>
               <h1 id="dos-title" className="mt-4 text-4xl font-semibold leading-tight text-ink sm:text-5xl lg:text-6xl">
-                Decision Operating System
+                Decision quality for AI products, made explicit.
               </h1>
               <p className="mt-6 max-w-3xl text-xl leading-8 text-ink">
-                A living collection of Decision Systems, Decision Journals and Operating Principles that document how I make high-quality product decisions under uncertainty.
+                A completed v1 decision system for evaluating, validating, prioritizing, architecting and measuring AI products without chasing novelty.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <TrackedDecisionLink href="/recruiter-tour" eventName="next_module_clicked" label="Recruiter Guided Tour" variant="primary">
+                <TrackedDecisionLink href="/recruiter-tour" eventName="recruiter_path_clicked" label="Recruiter Guided Tour" pathName="Recruiter Quick Review" variant="primary">
                   Start the 5-Minute Tour
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </TrackedDecisionLink>
-                <ButtonLink href="#decision-systems" variant="secondary">
-                  Browse Decision Systems
+                <ButtonLink href="#start-here-paths" variant="secondary">
+                  Choose a Learning Path
                 </ButtonLink>
               </div>
               <dl className="mt-8 grid gap-3 sm:grid-cols-3">
                 <MetaItem label="Reading Time" value="5 minutes" />
-                <MetaItem label="Version" value="v1.0" />
-                <MetaItem label="Status" value="Living Product" />
+                <MetaItem label="Version" value="v1 complete" />
+                <MetaItem label="Modules" value="7 complete" />
               </dl>
             </div>
           </div>
@@ -164,17 +272,103 @@ export default function DecisionOperatingSystemPage() {
             <div className="sticky top-24 py-10">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">Decision OS</p>
               <nav aria-label="Decision Operating System sections" className="mt-4 grid gap-2 text-sm text-muted">
+                <a href="#v1-complete" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">v1 Complete</a>
+                <a href="#release-notes" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Release Notes</a>
+                <a href="#start-here-paths" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Start Here</a>
                 <a href="#why-this-exists" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Why This Exists</a>
                 <a href="#four-pillars" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">The Four Pillars</a>
-                <a href="#learning-journey" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Learning Journey</a>
-                <a href="#current-release" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Current Release</a>
-                <a href="#roadmap" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Roadmap</a>
+                <a href="#learning-journey" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Decision Flow</a>
+                <a href="#current-release" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Release Status</a>
                 <a href="#recruiter-tour" className="rounded-md px-3 py-2 transition hover:bg-panel hover:text-ink">Recruiter Tour</a>
               </nav>
             </div>
           </aside>
 
           <article className="min-w-0">
+            <DocSection id="v1-complete" eyebrow="Release Complete" title="AI Product Operating System v1 is complete" background="panel">
+              <div className="rounded-md border border-line bg-paper p-6">
+                <Layers3 className="h-6 w-6 text-accent" aria-hidden="true" />
+                <p className="mt-5 text-lg leading-8 text-ink">
+                  This version documents the end-to-end decision system I use to evaluate, validate, prioritize, architect, and measure AI products.
+                </p>
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {completedModules.map((module) => (
+                    <article key={module.title} className="rounded-md border border-line bg-panel p-4">
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="mt-1 h-5 w-5 flex-none text-accent" aria-hidden="true" />
+                        <div>
+                          <h3 className="font-semibold leading-6 text-ink">{module.title}</h3>
+                          <p className="mt-2 text-sm leading-6 text-muted">{module.description}</p>
+                          <TrackedDecisionLink
+                            href={module.href}
+                            eventName="module_clicked_from_release"
+                            label={module.title}
+                            className="mt-3 text-sm"
+                          >
+                            Open module
+                            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                          </TrackedDecisionLink>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </DocSection>
+
+            <DocSection id="release-notes" eyebrow="Release Notes" title="AI Product Operating System v1">
+              <div className="grid gap-4">
+                {releaseNotes.map((note) => (
+                  <article key={note.area} className="rounded-md border border-line bg-panel p-5">
+                    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">{note.area}</p>
+                    <div className="mt-4 grid gap-3">
+                      {note.modules.map((module) => (
+                        <TrackedDecisionLink
+                          key={module.title}
+                          href={module.href}
+                          eventName="module_clicked_from_release"
+                          label={module.title}
+                          className="w-full rounded-md border border-line bg-paper p-4 text-left font-semibold text-ink hover:bg-panel"
+                        >
+                          {module.title}
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </TrackedDecisionLink>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </DocSection>
+
+            <DocSection id="start-here-paths" eyebrow="Start Here" title="Recruiter-friendly learning paths" background="panel">
+              <div className="grid gap-4">
+                {learningPaths.map((path) => (
+                  <article key={path.title} className="rounded-md border border-line bg-paper p-5">
+                    <h3 className="text-xl font-semibold leading-tight text-ink">{path.title}</h3>
+                    <p className="mt-3 leading-7 text-muted">{path.description}</p>
+                    <div className="mt-5 grid gap-3">
+                      {path.links.map((link, index) => (
+                        <TrackedDecisionLink
+                          key={link.title}
+                          href={link.href}
+                          eventName={path.eventName}
+                          label={link.title}
+                          pathName={path.title}
+                          className="w-full rounded-md border border-line bg-panel p-4 text-left font-semibold text-ink hover:bg-paper"
+                        >
+                          <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-line bg-paper text-sm text-accent">
+                            {index + 1}
+                          </span>
+                          {link.title}
+                          <ArrowRight className="ml-auto h-4 w-4" aria-hidden="true" />
+                        </TrackedDecisionLink>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </DocSection>
+
             <DocSection id="why-this-exists" eyebrow="Why This Exists" title="Decision quality is the durable advantage">
               <div className="rounded-md border border-line bg-panel p-5">
                 <div className="grid gap-3">
@@ -200,13 +394,8 @@ export default function DecisionOperatingSystemPage() {
               <div id="decision-systems" className="grid gap-4 sm:grid-cols-2">
                 {pillars.map((pillar) => (
                   <article key={pillar.title} className="rounded-md border border-line bg-paper p-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-md border border-line bg-panel">
-                        {pillar.icon}
-                      </div>
-                      {pillar.badge ? (
-                        <span className="rounded-full border border-line bg-panel px-2.5 py-1 text-xs font-semibold text-muted">{pillar.badge}</span>
-                      ) : null}
+                    <div className="flex h-10 w-10 items-center justify-center rounded-md border border-line bg-panel">
+                      {pillar.icon}
                     </div>
                     <h3 className="mt-5 text-xl font-semibold text-ink">{pillar.title}</h3>
                     <p className="mt-3 leading-7 text-muted">{pillar.description}</p>
@@ -215,13 +404,13 @@ export default function DecisionOperatingSystemPage() {
               </div>
             </DocSection>
 
-            <DocSection id="learning-journey" eyebrow="Learning Journey" title="A roadmap for product decision quality">
+            <DocSection id="learning-journey" eyebrow="Decision Flow" title="The v1 system from problem to measurement">
               <div className="grid gap-3">
                 {journey.map((stage, index) => (
                   <div key={stage.title}>
                     <TrackedDecisionLink
                       href={stage.href}
-                      eventName="decision_system_clicked"
+                      eventName="module_clicked_from_release"
                       label={stage.title}
                       className="w-full rounded-md border border-line bg-panel p-4 text-left text-lg font-semibold text-ink hover:bg-paper"
                     >
@@ -238,11 +427,11 @@ export default function DecisionOperatingSystemPage() {
               </div>
             </DocSection>
 
-            <DocSection id="current-release" eyebrow="Current Release" title="Decision Operating System v1.0" background="panel">
+            <DocSection id="current-release" eyebrow="Release Status" title="v1 complete" background="panel">
               <div className="rounded-md border border-line bg-paper p-5">
                 <div className="flex items-center gap-3">
                   <Layers3 className="h-6 w-6 text-accent" aria-hidden="true" />
-                  <h3 className="text-2xl font-semibold text-ink">Decision Operating System</h3>
+                  <h3 className="text-2xl font-semibold text-ink">AI Product Operating System</h3>
                 </div>
                 <dl className="mt-6 grid gap-3 sm:grid-cols-2">
                   {releaseStats.map((item) => (
@@ -252,23 +441,6 @@ export default function DecisionOperatingSystemPage() {
                     </div>
                   ))}
                 </dl>
-              </div>
-            </DocSection>
-
-            <DocSection id="roadmap" eyebrow="Roadmap" title="Public roadmap">
-              <div className="grid gap-4">
-                {roadmap.map((group) => (
-                  <article key={group.label} className="rounded-md border border-line bg-panel p-5">
-                    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">{group.label}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {group.items.map((item) => (
-                        <span key={item} className="rounded-full border border-line bg-paper px-3 py-1.5 text-sm font-semibold text-muted">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </article>
-                ))}
               </div>
             </DocSection>
 
@@ -282,7 +454,7 @@ export default function DecisionOperatingSystemPage() {
                 <p className="mt-3 max-w-2xl leading-7 text-muted">
                   Take a guided five-minute tour designed specifically for recruiters and hiring managers.
                 </p>
-                <TrackedDecisionLink href="/recruiter-tour" eventName="next_module_clicked" label="Recruiter Guided Tour" variant="primary" className="mt-6">
+                <TrackedDecisionLink href="/recruiter-tour" eventName="recruiter_path_clicked" label="Recruiter Guided Tour" pathName="Recruiter Quick Review" variant="primary" className="mt-6">
                   Start Tour
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </TrackedDecisionLink>
