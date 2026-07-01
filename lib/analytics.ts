@@ -59,12 +59,17 @@ export type AnalyticsEventName =
   | "v1_release_viewed"
   | "learning_path_clicked"
   | "module_clicked_from_release"
-  | "recruiter_path_clicked";
+  | "recruiter_path_clicked"
+  | "executive_summary_viewed"
+  | "executive_summary_section_viewed"
+  | "executive_summary_cta_clicked";
 
 type AnalyticsEventParams = {
+  cta_name?: string;
   confidence_level?: string;
   decision_system_name?: string;
   decision_journal_name?: string;
+  destination?: string;
   example_name?: string;
   framework_name?: string;
   matrix_quadrant?: string;
@@ -77,6 +82,7 @@ type AnalyticsEventParams = {
   scorecard_item?: string;
   scorecard_value?: string;
   score_total?: number;
+  section_name?: string;
   stop_criteria_name?: string;
   story_name?: string;
   tour_step?: number;
