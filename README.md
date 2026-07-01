@@ -1,31 +1,104 @@
 # Saurabh Product OS
 
-An evidence-backed Product Decision Library documenting how I approach Product Strategy, Customer Discovery, Platform Modernization, Payments, AI Products, Prioritization, and Product Leadership.
+Evidence-backed Product Decision Library for evaluating Saurabh Chawda as a Senior or Lead Product Manager across AI, platforms, payments, enterprise SaaS, and growth systems.
 
-## For Recruiters
+Live site: https://saurabh-product-os.vercel.app
 
-Coming soon after deployment.
+## Product OS v1 Overview
 
-## Live Site
+Saurabh Product OS is not a traditional portfolio site. It is a recruiter-facing decision-support product that shows how product judgment turns into strategy, trade-offs, execution, evidence, and measurable outcomes.
 
-Coming soon after deployment.
+Product OS v1 includes:
 
-## Analytics
+- AI Product Operating System v1
+- Flagship Product Stories
+- Representative Product Artifacts
+- Recruiter Tour
+- For Recruiters landing page
+- Interview Readiness Kit
 
-Google Analytics 4 is loaded globally through `@next/third-parties/google`. Microsoft Clarity is loaded globally in production only.
+## AI Product Operating System v1
 
-Create a local `.env.local` file and configure:
+AI Product Operating System v1 documents the end-to-end decision system I use to evaluate, validate, prioritize, architect, and measure AI products.
+
+Completed modules:
+
+- AI Product Principles
+- Customer Discovery
+- Validation & Experimentation
+- AI Prioritization
+- Build vs Buy AI
+- RAG vs Agent
+- AI Success Metrics
+
+## Tech Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- MDX
+- Lucide icons
+- Google Analytics 4
+- Microsoft Clarity
+- Vercel-ready deployment
+
+## Setup
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Start the local development server:
+
+```bash
+pnpm dev
+```
+
+Run lint:
+
+```bash
+pnpm lint
+```
+
+Run TypeScript checks:
+
+```bash
+pnpm typecheck
+```
+
+Create a production build:
+
+```bash
+pnpm build
+```
+
+## Environment Variables
+
+Create a local `.env.local` file using `.env.example` as the reference.
 
 ```bash
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-8K7TJ088G0
 NEXT_PUBLIC_CLARITY_PROJECT_ID=xemq5rsgrr
 ```
 
-Set the same environment variables in Vercel for production so page views and Clarity sessions are tracked automatically.
+Set the same variables in Vercel for production.
 
-## Built With
+## Analytics
 
-- Next.js
-- TypeScript
-- Tailwind CSS
-- Vercel
+Google Analytics 4 is integrated through `@next/third-parties/google` and reads the measurement ID from `NEXT_PUBLIC_GA_MEASUREMENT_ID`.
+
+Microsoft Clarity loads globally in production only and reads the project ID from `NEXT_PUBLIC_CLARITY_PROJECT_ID`.
+
+Recruiter-focused events track key Product OS behaviors such as recruiter views, story opens, framework opens, Decision System interactions, learning path clicks, resume clicks, LinkedIn clicks, email clicks, and external link clicks.
+
+## Useful Commands
+
+```bash
+pnpm install
+pnpm dev
+pnpm lint
+pnpm typecheck
+pnpm build
+```
