@@ -62,7 +62,13 @@ export type AnalyticsEventName =
   | "recruiter_path_clicked"
   | "executive_summary_viewed"
   | "executive_summary_section_viewed"
-  | "executive_summary_cta_clicked";
+  | "executive_summary_cta_clicked"
+  | "hiring_manager_page_viewed"
+  | "hiring_manager_section_viewed"
+  | "hiring_manager_story_clicked"
+  | "hiring_manager_decision_system_clicked"
+  | "working_together_viewed"
+  | "contact_cta_clicked";
 
 type AnalyticsEventParams = {
   cta_name?: string;
