@@ -208,9 +208,9 @@ const workingTogether = [
 
 const resources = [
   {
-    title: "Resume",
+    title: "Professional Profile",
     description: "Review professional scope, leadership, and measurable achievements.",
-    href: "/resume",
+    href: "/profile",
     icon: <BriefcaseBusiness className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
@@ -290,7 +290,7 @@ export default function InterviewCompanionPage() {
                 Interview Companion
               </h1>
               <p className="mt-6 max-w-3xl text-xl leading-8 text-ink">
-                Thank you for taking the time to meet with me. Rather than asking you to infer how I think from a resume alone, this page summarizes the principles, decision systems, and real product work that shape how I approach product management.
+                Thank you for taking the time to meet with me. Rather than asking you to infer how I think from a profile alone, this page summarizes the principles, decision systems, and real product work that shape how I approach product management.
               </p>
               <dl className="mt-8 grid gap-3 sm:grid-cols-5">
                 {metadataItems.map((item) => (
@@ -302,8 +302,8 @@ export default function InterviewCompanionPage() {
                   Decision Operating System
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </InterviewTrackedLink>
-                <InterviewTrackedLink href="/resume" eventName="interview_resource_clicked" label="Resume" variant="secondary">
-                  Resume
+                <InterviewTrackedLink href="/profile" eventName="interview_resource_clicked" label="Professional Profile" variant="secondary">
+                  Professional Profile
                 </InterviewTrackedLink>
               </div>
             </div>
@@ -427,7 +427,7 @@ export default function InterviewCompanionPage() {
                 Product OS is meant to make the interview more useful.
               </h2>
               <p className="mt-4 max-w-4xl text-lg leading-8 text-muted">
-                Thank you again for taking the time to meet with me. My hope is that Product OS gives us a stronger starting point: less time reconstructing background from a resume, and more time discussing product judgment, trade-offs, customer problems, AI opportunities, and how I can help your team build better products.
+                Thank you again for taking the time to meet with me. My hope is that Product OS gives us a stronger starting point: less time reconstructing background from a profile, and more time discussing product judgment, trade-offs, customer problems, AI opportunities, and how I can help your team build better products.
               </p>
             </div>
           </div>

@@ -83,9 +83,9 @@ const finalLinks = [
     icon: <FileText className="h-4 w-4" aria-hidden="true" />
   },
   {
-    label: "Download Resume",
-    href: "/resume",
-    eventName: "resume_download" as const,
+    label: "Professional Profile",
+    href: "/profile",
+    eventName: "contact_click" as const,
     icon: <FileText className="h-4 w-4" aria-hidden="true" />
   },
   {

@@ -130,8 +130,8 @@ export default function Home() {
                 Explore product judgment
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
-              <ButtonLink href="/resume" variant="secondary">
-                View Resume
+              <ButtonLink href="/profile" variant="secondary">
+                Professional Profile
               </ButtonLink>
             </div>
             <p className="mt-5 max-w-2xl text-sm leading-6 text-muted sm:text-base sm:leading-7">
@@ -245,12 +245,12 @@ export default function Home() {
         <div className="mx-auto grid max-w-6xl gap-4 px-5 py-14 sm:px-8 lg:grid-cols-2 lg:px-10">
           <div className="rounded-md border border-line bg-panel p-6">
             <FileText className="h-6 w-6 text-accent" aria-hidden="true" />
-            <h2 className="mt-5 text-2xl font-semibold">Resume Center</h2>
+            <h2 className="mt-5 text-2xl font-semibold">Professional Profile</h2>
             <p className="mt-3 leading-7 text-muted">
-              Resume, role context, proof points, and supporting materials in one focused place.
+              Career context, product capabilities, proof points, and supporting materials in one focused place.
             </p>
-            <ButtonLink href="/resume" variant="inline" className="mt-5">
-              View Resume
+            <ButtonLink href="/profile" variant="inline" className="mt-5">
+              View Professional Profile
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>

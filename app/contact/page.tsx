@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact | Saurabh Chawda",
     description:
-      "Reach Saurabh Chawda by email, LinkedIn, GitHub, resume, or Product OS.",
+      "Reach Saurabh Chawda by email, LinkedIn, GitHub, Professional Profile, or Product OS.",
     url: "https://saurabh-product-os.vercel.app/contact",
     type: "website",
     siteName: "Product Operating System",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact | Saurabh Chawda",
     description:
-      "Reach Saurabh Chawda by email, LinkedIn, GitHub, resume, or Product OS.",
+      "Reach Saurabh Chawda by email, LinkedIn, GitHub, Professional Profile, or Product OS.",
     images: ["/og-image.png"]
   }
 };
@@ -67,10 +67,10 @@ const contactLinks = [
     icon: <Route className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
-    title: "Resume",
-    description: "Open the resume center for positioning, strengths, metrics, and experience summary.",
-    href: "/resume",
-    value: "Resume Center",
+    title: "Professional Profile",
+    description: "Open the career profile for positioning, capabilities, metrics, and experience context.",
+    href: "/profile",
+    value: "Professional Profile",
     icon: <UserRound className="h-5 w-5 text-accent" aria-hidden="true" />
   }
 ];

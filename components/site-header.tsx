@@ -4,7 +4,7 @@ const navItems = [
   { href: "/decision-operating-system", label: "Decision OS" },
   { href: "/recruiter-tour", label: "Recruiter Tour" },
   { href: "/for-recruiters", label: "For Recruiters" },
-  { href: "/resume", label: "Resume" },
+  { href: "/profile", label: "Professional Profile" },
   { href: "/contact", label: "Contact" }
 ];
 

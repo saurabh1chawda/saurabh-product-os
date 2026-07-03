@@ -97,10 +97,10 @@ const findItems = [
     icon: <Route className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
-    title: "Resume",
+    title: "Professional Profile",
     description: "Professional experience, leadership, and measurable achievements.",
-    href: "/resume",
-    cta: "View Resume",
+    href: "/profile",
+    cta: "View Profile",
     icon: <BriefcaseBusiness className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
@@ -160,10 +160,10 @@ const exploreItems = [
     cta: "Open Decision OS"
   },
   {
-    title: "Resume",
+    title: "Professional Profile",
     description: "Review experience, scope, and measurable impact.",
-    href: "/resume",
-    cta: "View Resume"
+    href: "/profile",
+    cta: "View Profile"
   }
 ];
 
@@ -245,11 +245,11 @@ export default function ExecutiveSummaryPage() {
           </div>
         </section>
 
-        <BriefSection id="why-product-os-exists" sectionName="Why Product OS Exists" eyebrow="Why Product OS Exists" title="Resumes show history. Product OS shows judgment.">
+        <BriefSection id="why-product-os-exists" sectionName="Why Product OS Exists" eyebrow="Why Product OS Exists" title="Profiles show history. Product OS shows judgment.">
           <div className="rounded-md border border-line bg-panel p-5">
             <Sparkles className="h-6 w-6 text-accent" aria-hidden="true" />
             <p className="mt-5 max-w-4xl text-lg leading-8 text-muted">
-              Traditional resumes explain where someone worked. Interviews reveal how someone thinks. Product OS closes that gap. It documents the principles, decision systems, product stories, and AI frameworks that guide how I make product decisions across customer discovery, validation, prioritization, platform strategy, and AI products.
+              Traditional profiles explain where someone worked. Interviews reveal how someone thinks. Product OS closes that gap. It documents the principles, decision systems, product stories, and AI frameworks that guide how I make product decisions across customer discovery, validation, prioritization, platform strategy, and AI products.
             </p>
           </div>
         </BriefSection>

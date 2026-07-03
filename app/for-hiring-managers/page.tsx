@@ -279,8 +279,8 @@ export default function ForHiringManagersPage() {
                   Decision Operating System
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </HiringManagerTrackedLink>
-                <HiringManagerTrackedLink href="/resume" eventName="contact_cta_clicked" label="Resume" variant="secondary">
-                  Resume
+                <HiringManagerTrackedLink href="/profile" eventName="contact_cta_clicked" label="Professional Profile" variant="secondary">
+                  Professional Profile
                 </HiringManagerTrackedLink>
               </div>
             </div>
@@ -422,8 +422,8 @@ export default function ForHiringManagersPage() {
                   Decision Operating System
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </HiringManagerTrackedLink>
-                <HiringManagerTrackedLink href="/resume" eventName="contact_cta_clicked" label="Resume" variant="secondary">
-                  Resume
+                <HiringManagerTrackedLink href="/profile" eventName="contact_cta_clicked" label="Professional Profile" variant="secondary">
+                  Professional Profile
                 </HiringManagerTrackedLink>
                 <HiringManagerTrackedLink href="/contact" eventName="contact_cta_clicked" label="LinkedIn" variant="secondary">
                   LinkedIn

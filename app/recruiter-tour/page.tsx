@@ -45,7 +45,7 @@ export default function RecruiterTourPage() {
             <div className="max-w-4xl">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">5-Minute Recruiter Guided Tour</p>
               <h1 id="recruiter-tour-title" className="mt-4 text-4xl font-semibold leading-tight text-ink sm:text-5xl lg:text-6xl">
-                Understand how I think before you review my resume.
+                Understand how I think before you review my profile.
               </h1>
               <p className="mt-6 max-w-3xl text-xl leading-8 text-ink">
                 A short guided path through my product philosophy, Decision Systems, Decision Journals and career impact.

@@ -74,6 +74,11 @@ export type AnalyticsEventName =
   | "interview_story_clicked"
   | "interview_resource_clicked"
   | "interview_decision_system_clicked"
+  | "professional_profile_viewed"
+  | "career_timeline_viewed"
+  | "business_outcome_clicked"
+  | "contact_clicked"
+  | "product_os_journey_viewed"
   | "resume_page_viewed"
   | "resume_download_clicked"
   | "contact_page_viewed"
@@ -92,6 +97,7 @@ type AnalyticsEventParams = {
   page_name?: string;
   path_name?: string;
   principle_name?: string;
+  outcome_name?: string;
   question_group?: string;
   recommendation?: string;
   scorecard_item?: string;

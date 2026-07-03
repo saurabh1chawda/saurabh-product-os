@@ -93,9 +93,9 @@ const topics = [
 
 const downloads = [
   {
-    title: "Resume",
-    description: "Open the resume center for role context and recruiter-ready materials.",
-    href: "/resume",
+    title: "Professional Profile",
+    description: "Open the career profile for role context, capabilities, and measurable outcomes.",
+    href: "/profile",
     icon: <FileText className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {

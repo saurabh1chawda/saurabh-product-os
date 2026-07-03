@@ -34,9 +34,9 @@ const snapshotItems = [
 const evaluationPath = [
   {
     step: "1",
-    title: "Resume",
+    title: "Professional Profile",
     time: "2 min",
-    href: "/resume"
+    href: "/profile"
   },
   {
     step: "2",
@@ -128,9 +128,9 @@ const contactActions = [
     icon: <Mail className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
-    title: "Resume download",
-    description: "Open the resume center for the recruiter-ready resume.",
-    href: "/resume",
+    title: "Professional Profile",
+    description: "Open the career profile for positioning, capabilities, and measurable outcomes.",
+    href: "/profile",
     icon: <FileText className="h-5 w-5 text-accent" aria-hidden="true" />
   }
 ];

@@ -190,13 +190,13 @@ const learningPaths = [
   },
   {
     title: "Recruiter Quick Review",
-    description: "The shortest path to evaluate scope, fit, resume and contact readiness.",
+    description: "The shortest path to evaluate scope, fit, profile and contact readiness.",
     eventName: "recruiter_path_clicked" as const,
     links: [
       { title: "Recruiter Tour", href: "/recruiter-tour" },
       { title: "AI Product Principles", href: "/ai-product-principles" },
       { title: "For Recruiters", href: "/for-recruiters" },
-      { title: "Resume", href: "/resume" }
+      { title: "Professional Profile", href: "/profile" }
     ]
   }
 ];
