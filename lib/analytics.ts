@@ -80,6 +80,11 @@ export type AnalyticsEventName =
   | "contact_clicked"
   | "certification_link_clicked"
   | "product_os_journey_viewed"
+  | "visitor_journey_viewed"
+  | "visitor_journey_selected"
+  | "journey_destination_opened"
+  | "continue_exploring_clicked"
+  | "future_content_clicked"
   | "resume_page_viewed"
   | "resume_download_clicked"
   | "contact_page_viewed"
@@ -93,6 +98,9 @@ type AnalyticsEventParams = {
   destination?: string;
   example_name?: string;
   framework_name?: string;
+  future_content_name?: string;
+  journey_id?: string;
+  journey_title?: string;
   matrix_quadrant?: string;
   module_name?: string;
   page_name?: string;

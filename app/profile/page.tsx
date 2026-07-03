@@ -21,6 +21,8 @@ import {
 } from "@/components/professional-profile-interactions";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
+import { ContinueExploring, JourneyGrid, JourneySectionViewed } from "@/components/visitor-journeys";
+import { profileContinueExploring, visitorJourneys } from "@/data/journeys";
 
 export const metadata: Metadata = {
   title: "Professional Profile | Saurabh Chawda",
@@ -378,6 +380,24 @@ export default function ProfessionalProfilePage() {
           </div>
         </section>
 
+        <section className="border-b border-line" aria-labelledby="visitor-journeys-title">
+          <JourneySectionViewed />
+          <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14 lg:px-10">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Guided Visitor Journeys</p>
+              <h2 id="visitor-journeys-title" className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
+                Start with what matters to you
+              </h2>
+              <p className="mt-4 leading-7 text-muted">
+                Different visitors evaluate product leaders differently. Choose the path that best matches what you&apos;re looking for, and Product OS will guide you through the most relevant content.
+              </p>
+            </div>
+            <div className="mt-8">
+              <JourneyGrid journeys={visitorJourneys} />
+            </div>
+          </div>
+        </section>
+
         <ProfileSection eyebrow="Current Positioning" id="current-positioning" title="Where I create product leverage today">
           <div className="grid gap-4 lg:grid-cols-3">
             {positioningCards.map((card) => (
@@ -568,6 +588,8 @@ export default function ProfessionalProfilePage() {
             ))}
           </div>
         </ProfileSection>
+
+        <ContinueExploring items={profileContinueExploring} title="Continue from profile into product judgment" />
       </main>
     </>
   );

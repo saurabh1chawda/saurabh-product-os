@@ -15,6 +15,8 @@ import {
 import { AnalyticsViewed, TrackedDecisionLink } from "@/components/decision-system-interactions";
 import { SiteHeader } from "@/components/site-header";
 import { ButtonLink } from "@/components/ui/button-link";
+import { ContinueExploring } from "@/components/visitor-journeys";
+import { decisionOsContinueExploring } from "@/data/journeys";
 
 const pageDescription =
   "AI Product Operating System v1 is complete: an end-to-end decision system for evaluating, validating, prioritizing, architecting, and measuring AI products.";
@@ -462,6 +464,8 @@ export default function DecisionOperatingSystemPage() {
             </section>
           </article>
         </div>
+
+        <ContinueExploring items={decisionOsContinueExploring} title="Continue from the decision system into practical playbooks" />
       </main>
     </>
   );
