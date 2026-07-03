@@ -48,8 +48,8 @@ const contactLinks = [
   {
     title: "LinkedIn",
     description: "Connect or message me on LinkedIn.",
-    href: "https://www.linkedin.com/in/saurabhchawda5",
-    value: "linkedin.com/in/saurabhchawda5",
+    href: "https://www.linkedin.com/in/chawdasaurabh/",
+    value: "linkedin.com/in/chawdasaurabh",
     icon: <ExternalLink className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
@@ -102,7 +102,7 @@ export default function ContactPage() {
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </RecruiterJourneyTrackedLink>
                 <RecruiterJourneyTrackedLink
-                  href="https://www.linkedin.com/in/saurabhchawda5"
+                  href="https://www.linkedin.com/in/chawdasaurabh/"
                   eventName="contact_link_clicked"
                   label="View LinkedIn"
                   variant="secondary"

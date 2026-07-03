@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import {
   ArrowDown,
   ArrowRight,
-  Award,
   BriefcaseBusiness,
   Building2,
   CheckCircle2,
@@ -99,34 +98,63 @@ const buildAreas = [
 
 const careerJourney = [
   {
-    role: "Data Analyst",
-    company: "Analytics foundation",
-    duration: "Early career",
-    impact: "Built the analytical base for translating customer behavior and business signals into product decisions."
+    role: "Data Analyst - Product & Business Analytics",
+    company: "Logix Built Solutions Limited",
+    duration: "June 2016 - May 2017",
+    location: "Surat, Gujarat, India",
+    theme: "Analytics Foundation",
+    impact:
+      "Built analytics, SQL, customer insight, and performance optimization foundations that supported product and business decision-making.",
+    outcomes: ["Churn Prediction", "SQL Optimization", "Customer Insights"]
   },
   {
-    role: "Product Manager",
-    company: "Comviva",
-    duration: "Payments platform",
-    impact: "Worked on payment and wallet experiences where reliability, trust, and transaction success shaped customer value."
+    role: "Product Manager - Core Product & Platform",
+    company: "Mahindra Comviva",
+    duration: "May 2019 - April 2021",
+    location: "Bengaluru Area, India",
+    theme: "Enterprise Product",
+    impact:
+      "Owned MVP strategy, platform modules, customer-facing features, and customer-centric product experiences for enterprise B2B software.",
+    outcomes: ["15+ Customers", "83% Engagement", "94% CSAT"]
   },
   {
-    role: "Senior Product Manager",
+    role: "Product Consultant - Product & Business Strategy",
+    company: "Freelancer.com",
+    duration: "April 2021 - September 2021",
+    location: "Bengaluru, Karnataka, India",
+    theme: "Client Advisory",
+    impact:
+      "Advised 15+ clients on product strategy, system optimization, customer feedback systems, and cross-functional execution.",
+    outcomes: ["15+ Clients", "20% Efficiency", "15% CSAT Lift"]
+  },
+  {
+    role: "Senior Product Manager - Growth, Conversion & Digital Platforms",
+    company: "Simplilearn",
+    duration: "September 2021 - December 2022",
+    location: "Bengaluru, Karnataka, India",
+    theme: "Growth Products",
+    impact: "Owned growth, conversion, acquisition, referral, and monetization initiatives across web and mobile platforms.",
+    outcomes: ["10× Revenue Growth", "62% Traffic-to-Lead", "40% Lead-to-Customer"]
+  },
+  {
+    role: "Senior Product Manager - Product Strategy, Growth & Portfolio Management",
     company: "JoVE",
-    duration: "Enterprise SaaS",
-    impact: "Used discovery, roadmap strategy, and analytics to improve engagement and strengthen enterprise product adoption."
+    duration: "January 2023 - May 2025",
+    location: "Mumbai, Maharashtra, India",
+    theme: "Portfolio Strategy",
+    impact:
+      "Owned product strategy and execution for Research and Biopharma portfolios, improving engagement, content discovery, and revenue outcomes.",
+    outcomes: ["30% Portfolio Revenue", "40% Session Duration", "15% Page Views"]
   },
   {
-    role: "Head of Product",
-    company: "Logix",
-    duration: "Platform products",
-    impact: "Sequenced modernization around customer value, release velocity, latency, and operational reliability."
-  },
-  {
-    role: "Lead Product Manager",
-    company: "Product OS",
-    duration: "AI + platform strategy",
-    impact: "Focuses on AI product judgment, platform strategy, experimentation, analytics, and measurable business outcomes."
+    role: "Lead Product Manager - AI Products, Platform Strategy & Growth",
+    company: "Logix Built Solutions Limited",
+    duration: "May 2025 - Present",
+    location: "Surat, Gujarat, India",
+    theme: "AI + Platform Strategy",
+    impact:
+      "Leads AI product strategy, platform modernization, product-led growth, and cross-functional execution across product, engineering, design, and data.",
+    outcomes: ["₹1M+ ARR", "20% MRR Growth", "25% Engagement"]
   }
 ];
 
@@ -169,43 +197,52 @@ const businessOutcomes = [
   {
     value: "₹1M+",
     title: "ARR",
-    description: "Revenue foundation connected to product-led growth and portfolio performance.",
-    href: "/stories/simplilearn-job-guarantee-growth"
+    source: "Logix",
+    description: "Generated within nine months of launching zero-to-one platform products.",
+    href: "/stories/platform-modernization-logix"
   },
   {
     value: "20%",
     title: "MRR Growth",
-    description: "Subscription growth influenced by product strategy, discovery, and adoption quality.",
-    href: "/stories/product-discovery-jove"
+    source: "Logix",
+    description: "Driven through product-led growth, personalization, conversion optimization, and GTM alignment.",
+    href: "/stories/platform-modernization-logix"
   },
   {
     value: "10×",
     title: "Revenue Growth",
-    description: "Growth from ₹1M to ₹10M through funnel, pricing, referral, and conversion decisions.",
+    source: "Simplilearn",
+    description: "Scaled the Job Guarantee portfolio from ₹1M to ₹10M through funnel and customer experience optimization.",
     href: "/stories/simplilearn-job-guarantee-growth"
   },
   {
     value: "40%",
     title: "Session Time Increase",
-    description: "Engagement improvement connected to workflow fit and better product usage loops.",
+    source: "JoVE",
+    description:
+      "Improved average session duration through better content discovery, workflows, and engagement-focused product experiences.",
     href: "/stories/product-discovery-jove"
   },
   {
     value: "25%",
     title: "Engagement Increase",
-    description: "Product adoption lift through clearer customer problem framing and roadmap choices.",
-    href: "/stories/product-discovery-jove"
+    source: "Logix",
+    description: "Achieved through a mobile-first customer experience transformation.",
+    href: "/stories/platform-modernization-logix"
   },
   {
     value: "10M+",
     title: "Monthly Transactions",
-    description: "Transaction-scale payment product experience shaped by reliability and trust.",
+    source: "Mahindra Comviva",
+    description: "Supported transaction-scale product experiences across mobile money and payment systems.",
     href: "/stories/payments-reliability-comviva"
   },
   {
     value: "15+",
     title: "Enterprise Deployments",
-    description: "B2B delivery across complex product, customer, and implementation environments.",
+    source: "Mahindra Comviva / Freelancer.com",
+    description:
+      "Delivered enterprise product, client advisory, and platform implementation work across multiple organizations.",
     href: "/stories/payments-reliability-comviva"
   }
 ];
@@ -221,11 +258,41 @@ const education = [
   },
   {
     title: "Continuous Learning",
-    detail: "Generative AI, AI Product Management, Agentic Systems"
+    detail: "Generative AI, Product Leadership, Project Management, Scrum, and Product-led Growth.",
+    href: "https://www.linkedin.com/in/chawdasaurabh/details/certifications/"
   }
 ];
 
-const awards = ["Game Changer", "Best Performer", "Credo Cap", "Best Contributor"];
+const awards = [
+  {
+    title: "The Game Changer",
+    period: "January 2022 - March 2022",
+    organization: "Simplilearn",
+    description:
+      "Recognized for driving high-impact product initiatives across multiple product teams and delivering measurable business outcomes through strong cross-functional execution."
+  },
+  {
+    title: "Best Performer",
+    period: "October 2021 - December 2021",
+    organization: "Simplilearn",
+    description:
+      "Awarded within the first two months for exceeding expectations through rapid ownership, execution discipline, and early product impact."
+  },
+  {
+    title: "Credo Cap",
+    period: "October 2020 - December 2020",
+    organization: "Mahindra Comviva",
+    description:
+      "Recognized for customer-centric product thinking and strong performance within the Mobile Business Solutions department."
+  },
+  {
+    title: "Best Contributor",
+    period: "October 2016 - December 2016",
+    organization: "Logix Built Solutions Limited",
+    description:
+      "Awarded among a 25-member team for consistently delivering high-quality analytical work and strong ownership of business-critical insights."
+  }
+];
 
 const contactLinks = [
   {
@@ -235,8 +302,8 @@ const contactLinks = [
   },
   {
     label: "LinkedIn",
-    value: "linkedin.com/in/saurabhchawda5",
-    href: "https://www.linkedin.com/in/saurabhchawda5"
+    value: "linkedin.com/in/chawdasaurabh",
+    href: "https://www.linkedin.com/in/chawdasaurabh/"
   },
   {
     label: "GitHub",
@@ -252,7 +319,7 @@ const personJsonLd = {
   jobTitle: "Lead Product Manager",
   url: "https://saurabh-product-os.vercel.app/profile",
   email: "mailto:saurabh1chawda@gmail.com",
-  sameAs: ["https://www.linkedin.com/in/saurabhchawda5", "https://github.com/saurabh1chawda"],
+  sameAs: ["https://www.linkedin.com/in/chawdasaurabh/", "https://github.com/saurabh1chawda"],
   alumniOf: [
     {
       "@type": "CollegeOrUniversity",
@@ -290,7 +357,7 @@ export default function ProfessionalProfilePage() {
                 Professional Profile
               </p>
               <h1 id="profile-title" className="mt-5 text-4xl font-semibold leading-tight text-ink sm:text-5xl lg:text-6xl">
-                Lead Product Manager | AI Products, Platform Strategy & Business Growth
+                Lead Product Manager building AI-powered platforms, scalable product systems, and measurable business outcomes.
               </h1>
               <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">
                 I am Saurabh Chawda, a Lead Product Manager with 8+ years of experience building AI products, platform capabilities, growth initiatives, experimentation systems, analytics-driven products, and customer-centric experiences across B2B SaaS, enterprise platforms, fintech, and digital products. Product OS shows the product judgment behind that work.
@@ -340,7 +407,7 @@ export default function ProfessionalProfilePage() {
           </div>
         </ProfileSection>
 
-        <ProfileSection eyebrow="Career Journey" id="career-journey" title="A path from analytics to product ownership">
+        <ProfileSection eyebrow="Career Journey" id="career-journey" title="A capability progression from analytics foundation to AI/platform leadership">
           <ProfessionalProfileSectionViewed eventName="career_timeline_viewed" sectionName="Career Journey" />
           <div className="grid gap-4">
             {careerJourney.map((item, index) => (
@@ -348,14 +415,26 @@ export default function ProfessionalProfilePage() {
                 <article className="rounded-md border border-line bg-panel p-5">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{item.role}</p>
+                      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{item.theme}</p>
                       <h3 className="mt-3 text-xl font-semibold leading-tight text-ink">{item.company}</h3>
+                      <p className="mt-2 font-semibold leading-7 text-ink">{item.role}</p>
+                      <p className="mt-1 text-sm leading-6 text-muted">{item.location}</p>
                     </div>
                     <span className="inline-flex min-h-11 items-center rounded-full border border-line bg-paper px-3 text-sm font-semibold text-muted">
                       {item.duration}
                     </span>
                   </div>
                   <p className="mt-4 leading-7 text-muted">{item.impact}</p>
+                  <div className="mt-5 flex flex-wrap gap-2" aria-label={`${item.role} outcome highlights`}>
+                    {item.outcomes.map((outcome) => (
+                      <span
+                        key={outcome}
+                        className="inline-flex min-h-11 items-center rounded-full border border-line bg-paper px-3 text-sm font-semibold text-ink"
+                      >
+                        {outcome}
+                      </span>
+                    ))}
+                  </div>
                   <p className="mt-4 text-sm font-semibold text-accent">Detailed case study coming soon.</p>
                 </article>
                 {index < careerJourney.length - 1 ? (
@@ -385,6 +464,9 @@ export default function ProfessionalProfilePage() {
               <article key={`${outcome.value}-${outcome.title}`} className="rounded-md border border-line bg-panel p-5">
                 <p className="text-4xl font-semibold leading-none text-ink">{outcome.value}</p>
                 <h3 className="mt-4 text-lg font-semibold leading-tight text-ink">{outcome.title}</h3>
+                <p className="mt-3 inline-flex rounded-full border border-line bg-paper px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                  {outcome.source}
+                </p>
                 <p className="mt-3 leading-7 text-muted">{outcome.description}</p>
                 <ProfessionalProfileTrackedLink
                   destination={outcome.href}
@@ -413,7 +495,20 @@ export default function ProfessionalProfilePage() {
                     <p className="mt-3 leading-7 text-muted">{item.detail}</p>
                   </div>
                 </div>
-                {index < education.length - 1 ? <p className="mt-5 text-sm font-semibold text-accent">Continued into the next stage</p> : null}
+                {item.href ? (
+                  <ProfessionalProfileTrackedLink
+                    destination={item.href}
+                    eventName="certification_link_clicked"
+                    label="View certifications"
+                    variant="inline"
+                    className="mt-5"
+                  >
+                    View certifications
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </ProfessionalProfileTrackedLink>
+                ) : index < education.length - 1 ? (
+                  <p className="mt-5 text-sm font-semibold text-accent">Continued into the next stage</p>
+                ) : null}
               </article>
             ))}
           </div>
@@ -422,9 +517,11 @@ export default function ProfessionalProfilePage() {
         <ProfileSection eyebrow="Awards & Recognition" id="awards" title="Recognition for contribution, ownership, and impact">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {awards.map((award) => (
-              <article key={award} className="rounded-md border border-line bg-panel p-5">
-                <Award className="h-5 w-5 text-accent" aria-hidden="true" />
-                <h3 className="mt-5 text-xl font-semibold leading-tight text-ink">{award}</h3>
+              <article key={award.title} className="rounded-md border border-line bg-panel p-5">
+                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{award.organization}</p>
+                <h3 className="mt-4 text-xl font-semibold leading-tight text-ink">{award.title}</h3>
+                <p className="mt-3 text-sm font-semibold text-muted">{award.period}</p>
+                <p className="mt-4 leading-7 text-muted">{award.description}</p>
               </article>
             ))}
           </div>

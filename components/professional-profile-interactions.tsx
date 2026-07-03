@@ -10,7 +10,7 @@ type ProfileTrackedLinkProps = {
   children: ReactNode;
   className?: string;
   destination: string;
-  eventName: "business_outcome_clicked" | "contact_clicked" | "contact_link_clicked";
+  eventName: "business_outcome_clicked" | "certification_link_clicked" | "contact_clicked" | "contact_link_clicked";
   label: string;
   outcomeName?: string;
   variant?: "primary" | "secondary" | "inline";

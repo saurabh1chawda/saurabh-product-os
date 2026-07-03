@@ -78,6 +78,7 @@ export type AnalyticsEventName =
   | "career_timeline_viewed"
   | "business_outcome_clicked"
   | "contact_clicked"
+  | "certification_link_clicked"
   | "product_os_journey_viewed"
   | "resume_page_viewed"
   | "resume_download_clicked"
