@@ -4,7 +4,8 @@ const navItems = [
   { href: "/decision-operating-system", label: "Decision OS" },
   { href: "/recruiter-tour", label: "Recruiter Tour" },
   { href: "/for-recruiters", label: "For Recruiters" },
-  { href: "/resume", label: "Resume" }
+  { href: "/resume", label: "Resume" },
+  { href: "/contact", label: "Contact" }
 ];
 
 export function SiteHeader() {
