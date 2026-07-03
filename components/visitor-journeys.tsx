@@ -87,8 +87,9 @@ export function ContinueExploring({
                   href={item.destination.href}
                   className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 text-sm font-semibold text-accent transition hover:text-ink"
                   onClick={() => trackContinueClick(item)}
+                  aria-label={`Continue the journey to ${item.destination.label}`}
                 >
-                  Continue to {item.destination.label}
+                  Continue the journey
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               ) : (

@@ -170,7 +170,7 @@ const releaseNotes = [
 const learningPaths = [
   {
     title: "AI PM in 15 minutes",
-    description: "A fast review of the AI product judgment behind the operating system.",
+    description: "A focused introduction to the AI Product Operating System and the decision principles behind it.",
     eventName: "learning_path_clicked" as const,
     links: [
       { title: "AI Product Principles", href: "/ai-product-principles" },
@@ -181,7 +181,7 @@ const learningPaths = [
   },
   {
     title: "Lead PM / Senior PM Review",
-    description: "A deeper path through discovery, validation, ownership and measurement.",
+    description: "Want to understand how I approach product strategy, discovery, validation, execution, and measurement?",
     eventName: "learning_path_clicked" as const,
     links: [
       { title: "Customer Discovery", href: "/decision-systems/customer-discovery" },
@@ -192,7 +192,7 @@ const learningPaths = [
   },
   {
     title: "Recruiter Quick Review",
-    description: "The shortest path to evaluate scope, fit, profile and contact readiness.",
+    description: "Short on time? These pages provide the quickest overview of my experience, product thinking, and business impact.",
     eventName: "recruiter_path_clicked" as const,
     links: [
       { title: "Recruiter Tour", href: "/recruiter-tour" },
@@ -201,6 +201,13 @@ const learningPaths = [
       { title: "Professional Profile", href: "/profile" }
     ]
   }
+];
+
+const roadmapPreview = [
+  { title: "AI Product Playbook", status: "In Progress" },
+  { title: "Flagship Case Studies", status: "Next Release" },
+  { title: "Decision Journal", status: "Planned" },
+  { title: "AI Product Experiments", status: "Future" }
 ];
 
 const breadcrumbs = [
@@ -253,11 +260,11 @@ export default function DecisionOperatingSystemPage() {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <TrackedDecisionLink href="/recruiter-tour" eventName="recruiter_path_clicked" label="Recruiter Guided Tour" pathName="Recruiter Quick Review" variant="primary">
-                  Start the 5-Minute Tour
+                  Start recruiter tour
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </TrackedDecisionLink>
                 <ButtonLink href="#start-here-paths" variant="secondary">
-                  Choose a Learning Path
+                  Choose your review path
                 </ButtonLink>
               </div>
               <dl className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -307,7 +314,7 @@ export default function DecisionOperatingSystemPage() {
                             label={module.title}
                             className="mt-3 text-sm"
                           >
-                            Open module
+                            Explore module
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                           </TrackedDecisionLink>
                         </div>
@@ -457,13 +464,53 @@ export default function DecisionOperatingSystemPage() {
                   Take a guided five-minute tour designed specifically for recruiters and hiring managers.
                 </p>
                 <TrackedDecisionLink href="/recruiter-tour" eventName="recruiter_path_clicked" label="Recruiter Guided Tour" pathName="Recruiter Quick Review" variant="primary" className="mt-6">
-                  Start Tour
+                  Start recruiter tour
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </TrackedDecisionLink>
               </div>
             </section>
           </article>
         </div>
+
+        <section className="border-b border-line" aria-labelledby="why-built-os-title">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Reflection</p>
+              <h2 id="why-built-os-title" className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
+                Why I built this operating system
+              </h2>
+              <div className="mt-6 space-y-5 text-lg leading-8 text-muted">
+                <p>This operating system did not emerge from theory.</p>
+                <p>
+                  It evolved through years of prioritizing roadmaps, validating assumptions, working through engineering trade-offs, aligning stakeholders, and learning that product quality is determined long before implementation begins.
+                </p>
+                <p>AI changes technology.</p>
+                <p className="font-semibold text-ink">It does not change the importance of disciplined product thinking.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-line bg-panel" aria-labelledby="coming-next-title">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Roadmap Preview</p>
+              <h2 id="coming-next-title" className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
+                Coming Next
+              </h2>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {roadmapPreview.map((item) => (
+                <article key={item.title} className="rounded-md border border-line bg-paper p-5">
+                  <h3 className="text-xl font-semibold leading-tight text-ink">{item.title}</h3>
+                  <p className="mt-5 inline-flex rounded-full border border-line bg-panel px-3 py-1 text-sm font-semibold text-muted">
+                    {item.status}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <ContinueExploring items={decisionOsContinueExploring} title="Continue from the decision system into practical playbooks" />
       </main>

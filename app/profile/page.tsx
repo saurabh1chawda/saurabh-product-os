@@ -366,7 +366,7 @@ export default function ProfessionalProfilePage() {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink href="/decision-operating-system">
-                  Explore Product OS
+                  Explore the decision system
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </ButtonLink>
                 <span
@@ -555,11 +555,33 @@ export default function ProfessionalProfilePage() {
               Traditional professional profiles summarize outcomes. Product OS complements those outcomes by documenting the thinking, product decisions, customer discovery, experimentation, trade-offs, and execution approaches behind them. Think of Product OS as the evidence behind the Professional Profile rather than a replacement for tailored application materials.
             </p>
             <ButtonLink href="/decision-operating-system" variant="inline" className="mt-5">
-              Continue into Product OS
+              Explore the decision system
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>
         </ProfileSection>
+
+        <section className="border-b border-line" aria-labelledby="career-constant-title">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Reflection</p>
+              <h2 id="career-constant-title" className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
+                What has stayed constant throughout my career
+              </h2>
+              <div className="mt-6 space-y-5 text-lg leading-8 text-muted">
+                <p>
+                  Across analytics, enterprise software, growth products, AI platforms, and product leadership roles, one thing has remained consistent: I enjoy solving ambiguous customer problems through structured thinking, close collaboration, continuous experimentation, and measurable business outcomes.
+                </p>
+                <p>Technologies evolve.</p>
+                <p>Markets evolve.</p>
+                <p>AI evolves.</p>
+                <p className="font-semibold text-ink">
+                  The product principles that create great customer experiences remain remarkably consistent.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <ProfileSection eyebrow="Contact" id="contact" title="The fastest way to start a conversation">
           <div className="grid gap-4 lg:grid-cols-3">
@@ -581,7 +603,7 @@ export default function ProfessionalProfilePage() {
                   variant="inline"
                   className="mt-5"
                 >
-                  Open {link.label}
+                  {link.label === "Email" ? "Email me" : link.label === "LinkedIn" ? "View LinkedIn" : "View GitHub"}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </ProfessionalProfileTrackedLink>
               </article>
