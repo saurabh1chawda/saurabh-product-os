@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { AIProductStudio } from "@/components/ai-product-studio";
 import { PlaybookViewed } from "@/components/ai-product-playbook-interactions";
 import {
   ContinueExploring,
@@ -11,6 +12,7 @@ import {
 } from "@/components/ai-product-playbook";
 import { SiteHeader } from "@/components/site-header";
 import { aiProductPlaybook } from "@/data/ai-product-playbook";
+import { aiProductStudio } from "@/data/ai-product-playbook/studio";
 
 const pageDescription =
   "A practical AI Product Playbook by Saurabh Chawda for identifying AI opportunities, validating workflows, designing trustworthy AI experiences, measuring success, and scaling AI products responsibly.";
@@ -98,6 +100,8 @@ export default function AiProductPlaybookPage() {
             </div>
           </div>
         </section>
+
+        <AIProductStudio studio={aiProductStudio} />
 
         <div id="playbook-parts" className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
           {aiProductPlaybook.parts.map((part) => (
