@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const navItems = [
   { href: "/decision-operating-system", label: "Decision OS" },
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/recruiter-tour", label: "Recruiter Tour" },
   { href: "/for-recruiters", label: "For Recruiters" },
   { href: "/profile", label: "Professional Profile" },
