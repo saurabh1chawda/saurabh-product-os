@@ -63,7 +63,8 @@ export const visitorJourneys: VisitorJourney[] = [
     },
     futureDestination: {
       label: "AI Product Playbook",
-      status: "Coming Soon"
+      href: "/ai-product-playbook",
+      status: "In Progress"
     },
     status: "Available"
   },
@@ -94,16 +95,26 @@ export const profileContinueExploring: ContinueExploringItem[] = [
       href: "/decision-operating-system",
       status: "Available"
     }
+  },
+  {
+    title: "AI Product Playbook",
+    description: "Move from professional context into the operating guide for AI product execution.",
+    destination: {
+      label: "AI Product Playbook",
+      href: "/ai-product-playbook",
+      status: "In Progress"
+    }
   }
 ];
 
 export const decisionOsContinueExploring: ContinueExploringItem[] = [
   {
     title: "AI Product Playbook",
-    description: "A future companion for practical AI product execution patterns and decision memos.",
+    description: "Translate the decision system into practical AI product execution patterns.",
     destination: {
       label: "AI Product Playbook",
-      status: "Coming Soon"
+      href: "/ai-product-playbook",
+      status: "In Progress"
     }
   }
 ];

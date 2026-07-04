@@ -98,9 +98,9 @@ const continueLinks = [
   },
   {
     title: "AI Product Playbook",
-    description: "A future companion for practical AI product execution.",
-    href: "/decision-operating-system",
-    status: "Coming Soon"
+    description: "A practical operating guide for AI product execution.",
+    href: "/ai-product-playbook",
+    status: "In Progress"
   }
 ];
 
