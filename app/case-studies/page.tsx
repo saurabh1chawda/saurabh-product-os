@@ -53,7 +53,8 @@ const upcomingBriefs = [
   {
     company: "Logix",
     decision: "Platform Modernization > Feature Expansion",
-    status: "In Progress"
+    href: "/case-studies/logix",
+    status: "Available"
   },
   {
     company: "Simplilearn",
@@ -163,21 +164,28 @@ export default function CaseStudiesPage() {
             <SectionHeader eyebrow="Upcoming Product Leadership Briefs" id="upcoming-title" title="Additional evidence being shaped" />
             <div className="mt-8 grid gap-4 lg:grid-cols-3">
               {upcomingBriefs.map((brief) => (
-                <CaseStudiesHubTrackedButton
-                  key={brief.company}
-                  className="min-h-11 rounded-md border border-line bg-paper p-5 text-left"
-                  eventName="upcoming_brief_clicked"
-                  label={brief.company}
-                  aria-label={`${brief.company} brief ${brief.status}`}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <BriefcaseBusiness className="h-5 w-5 text-accent" aria-hidden="true" />
-                    <span className="rounded-full border border-line bg-panel px-3 py-1 text-xs font-semibold text-muted">{brief.status}</span>
-                  </div>
-                  <h3 className="mt-5 text-xl font-semibold leading-tight text-ink">{brief.company}</h3>
-                  <p className="mt-4 text-sm font-semibold uppercase tracking-[0.14em] text-accent">Decision</p>
-                  <p className="mt-2 leading-7 text-muted">{brief.decision}</p>
-                </CaseStudiesHubTrackedButton>
+                brief.href ? (
+                  <CaseStudiesHubTrackedLink
+                    key={brief.company}
+                    href={brief.href}
+                    className="min-h-11 rounded-md border border-line bg-paper p-5 text-left transition hover:border-accent"
+                    eventName="upcoming_brief_clicked"
+                    label={brief.company}
+                    aria-label={`${brief.company} brief ${brief.status}`}
+                  >
+                    <UpcomingBriefCard brief={brief} />
+                  </CaseStudiesHubTrackedLink>
+                ) : (
+                  <CaseStudiesHubTrackedButton
+                    key={brief.company}
+                    className="min-h-11 rounded-md border border-line bg-paper p-5 text-left"
+                    eventName="upcoming_brief_clicked"
+                    label={brief.company}
+                    aria-label={`${brief.company} brief ${brief.status}`}
+                  >
+                    <UpcomingBriefCard brief={brief} />
+                  </CaseStudiesHubTrackedButton>
+                )
               ))}
             </div>
           </div>
@@ -250,6 +258,20 @@ export default function CaseStudiesPage() {
           </div>
         </section>
       </main>
+    </>
+  );
+}
+
+function UpcomingBriefCard({ brief }: { brief: { company: string; decision: string; status: string } }) {
+  return (
+    <>
+      <div className="flex items-start justify-between gap-4">
+        <BriefcaseBusiness className="h-5 w-5 text-accent" aria-hidden="true" />
+        <span className="rounded-full border border-line bg-panel px-3 py-1 text-xs font-semibold text-muted">{brief.status}</span>
+      </div>
+      <h3 className="mt-5 text-xl font-semibold leading-tight text-ink">{brief.company}</h3>
+      <p className="mt-4 text-sm font-semibold uppercase tracking-[0.14em] text-accent">Decision</p>
+      <p className="mt-2 leading-7 text-muted">{brief.decision}</p>
     </>
   );
 }

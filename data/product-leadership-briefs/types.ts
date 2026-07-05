@@ -1,4 +1,4 @@
-export type ProductLeadershipBriefStatus = "Available" | "Coming Soon";
+export type ProductLeadershipBriefStatus = "Available" | "Coming Soon" | "In Progress";
 
 export type BriefMetric = {
   label: string;
@@ -25,7 +25,10 @@ export type BriefPanel = {
 export type DecisionOption = {
   label: string;
   title: string;
+  benefits?: string[];
+  decision?: string;
   description: string;
+  risks?: string[];
   tradeoff: string;
   selected?: boolean;
 };
@@ -34,6 +37,25 @@ export type ImpactCategory = {
   title: string;
   metrics: BriefMetric[];
   note: string;
+};
+
+export type ConstraintMapItem = {
+  constraint: string;
+  businessImpact: string;
+  decision: string;
+};
+
+export type VisualFlow = {
+  eyebrow: string;
+  id: string;
+  title: string;
+  description: string;
+  steps: string[];
+};
+
+export type SignaturePrinciple = {
+  quote: string;
+  supportingCopy?: string;
 };
 
 export type ProductLeadershipBrief = BriefSummary & {
@@ -52,8 +74,11 @@ export type ProductLeadershipBrief = BriefSummary & {
   question: BriefPanel;
   discovery: BriefPanel;
   strategicOptions: DecisionOption[];
+  constraintMapping?: ConstraintMapItem[];
   productDecision: BriefPanel;
   productStrategy: BriefPanel;
+  architectureEvolution?: VisualFlow;
+  platformFlywheel?: VisualFlow;
   execution: BriefPanel;
   tradeoffs: Array<{
     decision: string;
@@ -61,10 +86,12 @@ export type ProductLeadershipBrief = BriefSummary & {
     leadershipSignal: string;
   }>;
   impactDashboard: ImpactCategory[];
+  stakeholderAlignment?: BriefPanel;
   reflection: Array<{
     prompt: string;
     response: string;
   }>;
+  signaturePrinciple?: SignaturePrinciple;
   productPrinciples: Array<{
     title: string;
     description: string;

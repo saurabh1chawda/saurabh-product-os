@@ -1,7 +1,8 @@
 import { joveBrief } from "./jove";
+import { logixBrief } from "./logix";
 import type { BriefSummary, ProductLeadershipBrief } from "./types";
 
-export const productLeadershipBriefs: ProductLeadershipBrief[] = [joveBrief];
+export const productLeadershipBriefs: ProductLeadershipBrief[] = [joveBrief, logixBrief];
 
 export const productLeadershipBriefSummaries: BriefSummary[] = [
   {
@@ -16,10 +17,11 @@ export const productLeadershipBriefSummaries: BriefSummary[] = [
   {
     company: "Logix",
     domain: "AI products and platform strategy",
-    coreDecision: "Modernization and growth system brief.",
-    businessImpact: "₹1M+ ARR and platform engagement outcomes.",
-    readingTime: "Coming soon",
-    status: "Coming Soon"
+    coreDecision: "Modernized the platform before expanding visible AI capability.",
+    businessImpact: "₹1M+ ARR, +20% MRR, +25% engagement, 3× delivery velocity.",
+    readingTime: "12 min read",
+    status: "Available",
+    href: "/case-studies/logix"
   },
   {
     company: "Simplilearn",
@@ -43,4 +45,14 @@ export function getProductLeadershipBrief(slug: string) {
   return productLeadershipBriefs.find((brief) => brief.slug === slug);
 }
 
-export type { BriefMetric, BriefPanel, BriefSummary, DecisionOption, ImpactCategory, ProductLeadershipBrief } from "./types";
+export type {
+  BriefMetric,
+  BriefPanel,
+  BriefSummary,
+  ConstraintMapItem,
+  DecisionOption,
+  ImpactCategory,
+  ProductLeadershipBrief,
+  SignaturePrinciple,
+  VisualFlow
+} from "./types";

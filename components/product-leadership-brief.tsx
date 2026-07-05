@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight, BarChart3, CheckCircle2, Compass, GitBranch, Layers3 } from "lucide-react";
 
@@ -6,9 +5,12 @@ import { PlbSectionViewed, PlbTrackedLink } from "@/components/product-leadershi
 import type {
   BriefMetric,
   BriefPanel,
+  ConstraintMapItem,
   DecisionOption,
   ImpactCategory,
-  ProductLeadershipBrief
+  ProductLeadershipBrief,
+  SignaturePrinciple,
+  VisualFlow
 } from "@/data/product-leadership-briefs";
 
 export function DecisionHero({ brief }: { brief: ProductLeadershipBrief }) {
@@ -85,10 +87,98 @@ export function DecisionMatrix({ options }: { options: DecisionOption[] }) {
             </div>
             <h3 className="mt-4 text-xl font-semibold leading-tight text-ink">{option.title}</h3>
             <p className="mt-3 leading-7 text-muted">{option.description}</p>
-            <p className="mt-5 text-sm font-semibold uppercase tracking-[0.14em] text-accent">Trade-off</p>
-            <p className="mt-2 leading-7 text-muted">{option.tradeoff}</p>
+            {option.benefits ? (
+              <OptionList title="Benefits" items={option.benefits} />
+            ) : null}
+            {option.risks ? (
+              <OptionList title="Risks" items={option.risks} />
+            ) : null}
+            {option.decision ? (
+              <>
+                <p className="mt-5 text-sm font-semibold uppercase tracking-[0.14em] text-accent">Decision</p>
+                <p className="mt-2 font-semibold leading-7 text-ink">{option.decision}</p>
+              </>
+            ) : (
+              <>
+                <p className="mt-5 text-sm font-semibold uppercase tracking-[0.14em] text-accent">Trade-off</p>
+                <p className="mt-2 leading-7 text-muted">{option.tradeoff}</p>
+              </>
+            )}
           </article>
         ))}
+      </div>
+    </BriefSection>
+  );
+}
+
+function OptionList({ items, title }: { items: string[]; title: string }) {
+  return (
+    <div className="mt-5">
+      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{title}</p>
+      <ul className="mt-2 grid gap-2">
+        {items.map((item) => (
+          <li key={item} className="leading-7 text-muted">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function ConstraintMapping({ items }: { items: ConstraintMapItem[] }) {
+  return (
+    <BriefSection eyebrow="Constraint Mapping" title="The product decision was shaped by business constraints, not preference." id="constraint-mapping">
+      <PlbSectionViewed eventName="constraint_mapping_viewed" sectionName="Constraint Mapping" />
+      <div className="overflow-hidden rounded-md border border-line bg-panel shadow-soft">
+        <div className="hidden grid-cols-3 border-b border-line bg-paper text-xs font-semibold uppercase tracking-[0.14em] text-accent md:grid">
+          <div className="p-4">Constraint</div>
+          <div className="border-l border-line p-4">Business Impact</div>
+          <div className="border-l border-line p-4">Decision</div>
+        </div>
+        <div className="divide-y divide-line">
+          {items.map((item) => (
+            <article key={item.constraint} className="grid gap-4 p-5 md:grid-cols-3 md:gap-0 md:p-0">
+              <div className="md:p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent md:hidden">Constraint</p>
+                <p className="mt-1 font-semibold leading-7 text-ink md:mt-0">{item.constraint}</p>
+              </div>
+              <div className="md:border-l md:border-line md:p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent md:hidden">Business Impact</p>
+                <p className="mt-1 leading-7 text-muted md:mt-0">{item.businessImpact}</p>
+              </div>
+              <div className="md:border-l md:border-line md:p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent md:hidden">Decision</p>
+                <p className="mt-1 font-semibold leading-7 text-ink md:mt-0">{item.decision}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </BriefSection>
+  );
+}
+
+export function VisualFlowSection({ flow, variant = "linear" }: { flow: VisualFlow; variant?: "linear" | "cycle" }) {
+  const eventName = flow.id === "architecture-evolution" ? "architecture_evolution_viewed" : "flywheel_viewed";
+
+  return (
+    <BriefSection eyebrow={flow.eyebrow} title={flow.title} id={flow.id} background={variant === "cycle" ? "panel" : undefined}>
+      <PlbSectionViewed eventName={eventName} sectionName={flow.eyebrow} />
+      <div className="rounded-md border border-line bg-paper p-6">
+        <p className="max-w-3xl leading-7 text-muted">{flow.description}</p>
+        <div className={variant === "cycle" ? "mt-8 grid gap-3 lg:grid-cols-3" : "mt-8 grid gap-3"}>
+          {flow.steps.map((step, index) => (
+            <div key={step}>
+              <div className="rounded-md border border-line bg-panel p-4 text-center font-semibold leading-7 text-ink">{step}</div>
+              {index < flow.steps.length - 1 ? (
+                <div className="flex justify-center py-2 text-accent" aria-hidden="true">
+                  <ArrowRight className={variant === "cycle" ? "h-4 w-4 rotate-90 lg:rotate-0" : "h-4 w-4 rotate-90"} />
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </div>
       </div>
     </BriefSection>
   );
@@ -167,19 +257,38 @@ export function ProductPrinciples({ principles }: { principles: ProductLeadershi
 export function RelatedResources({ resources }: { resources: ProductLeadershipBrief["relatedResources"] }) {
   return (
     <BriefSection eyebrow="Related Product OS" title="Where this decision connects to the broader system" id="related-product-os" background="panel">
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-4">
         {resources.map((resource) => (
           <article key={resource.title} className="rounded-md border border-line bg-paper p-5">
             <GitBranch className="h-5 w-5 text-accent" aria-hidden="true" />
             <h3 className="mt-5 text-xl font-semibold leading-tight text-ink">{resource.title}</h3>
             <p className="mt-3 leading-7 text-muted">{resource.description}</p>
-            <Link href={resource.href} className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-accent transition hover:text-ink">
+            <PlbTrackedLink
+              href={resource.href}
+              eventName="related_resource_clicked"
+              label={resource.title}
+              className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-accent transition hover:text-ink"
+            >
               Open resource
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </PlbTrackedLink>
           </article>
         ))}
       </div>
+    </BriefSection>
+  );
+}
+
+export function SignaturePrincipleSection({ principle }: { principle: SignaturePrinciple }) {
+  return (
+    <BriefSection eyebrow="Signature Product Principle" title="The product leadership principle behind the decision" id="signature-principle" background="panel">
+      <PlbSectionViewed eventName="signature_principle_viewed" sectionName="Signature Product Principle" />
+      <figure className="rounded-md border border-line bg-paper p-6 shadow-soft">
+        <blockquote className="text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+          “{principle.quote}”
+        </blockquote>
+        {principle.supportingCopy ? <figcaption className="mt-6 max-w-3xl leading-7 text-muted">{principle.supportingCopy}</figcaption> : null}
+      </figure>
     </BriefSection>
   );
 }

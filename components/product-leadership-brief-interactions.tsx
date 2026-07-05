@@ -12,14 +12,21 @@ type PlbViewedProps = {
 };
 
 type PlbSectionViewedProps = {
-  eventName: "decision_section_viewed" | "impact_dashboard_viewed" | "reflection_viewed";
+  eventName:
+    | "decision_section_viewed"
+    | "impact_dashboard_viewed"
+    | "reflection_viewed"
+    | "constraint_mapping_viewed"
+    | "architecture_evolution_viewed"
+    | "flywheel_viewed"
+    | "signature_principle_viewed";
   sectionName: string;
 };
 
 type PlbTrackedLinkProps = {
   children: ReactNode;
   className?: string;
-  eventName: "continue_exploring_clicked";
+  eventName: "continue_exploring_clicked" | "related_resource_clicked";
   href: string;
   label: string;
 };
@@ -30,6 +37,13 @@ export function PlbViewed({ company, slug }: PlbViewedProps) {
       page_name: `${company} Product Leadership Brief`,
       story_name: slug
     });
+
+    if (slug === "logix") {
+      trackAnalyticsEvent("plb_logix_viewed", {
+        page_name: `${company} Product Leadership Brief`,
+        story_name: slug
+      });
+    }
   }, [company, slug]);
 
   return null;
