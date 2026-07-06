@@ -103,6 +103,12 @@ const continueLinks = [
     description: "A practical operating guide for AI product execution.",
     href: "/ai-product-playbook",
     status: "In Progress"
+  },
+  {
+    title: "Product Leadership Operating Principles",
+    description: "See the operating philosophy that connects every Product Leadership Brief.",
+    href: "/product-leadership-operating-principles",
+    status: "Available"
   }
 ];
 
@@ -163,7 +169,7 @@ export default function CaseStudiesPage() {
         <section className="border-b border-line bg-panel" aria-labelledby="upcoming-title">
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
             <SectionHeader eyebrow="Upcoming Product Leadership Briefs" id="upcoming-title" title="Additional evidence being shaped" />
-            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {upcomingBriefs.map((brief) => (
                 brief.href ? (
                   <CaseStudiesHubTrackedLink

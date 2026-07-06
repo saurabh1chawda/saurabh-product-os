@@ -317,6 +317,11 @@ export const logixBrief: ProductLeadershipBrief = {
       title: "Decision Operating System",
       description: "Explore the broader decision systems that support product sequencing and evidence-backed strategy.",
       href: "/decision-operating-system"
+    },
+    {
+      title: "Product Leadership Operating Principles",
+      description: "Connect platform-before-intelligence to the operating philosophy behind Product OS.",
+      href: "/product-leadership-operating-principles"
     }
   ]
 };

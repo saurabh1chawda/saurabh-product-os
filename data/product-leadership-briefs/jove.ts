@@ -238,6 +238,11 @@ export const joveBrief: ProductLeadershipBrief = {
       title: "Professional Profile",
       description: "Understand the career context and business outcomes behind the work.",
       href: "/profile"
+    },
+    {
+      title: "Product Leadership Operating Principles",
+      description: "See how this brief contributes to the broader product leadership philosophy.",
+      href: "/product-leadership-operating-principles"
     }
   ]
 };

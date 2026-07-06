@@ -252,6 +252,12 @@ export const aiProductPlaybook: AiProductPlaybook = {
       description: "Career context, business outcomes, and product capabilities.",
       cta: "View profile",
       href: "/profile"
+    },
+    {
+      title: "Product Leadership Operating Principles",
+      description: "The leadership heuristics connecting AI product thinking to real product decisions.",
+      cta: "Explore operating principles",
+      href: "/product-leadership-operating-principles"
     }
   ],
   continueExploring: [
@@ -269,6 +275,11 @@ export const aiProductPlaybook: AiProductPlaybook = {
       title: "Professional Profile",
       description: "Review career context, business outcomes, and product capabilities.",
       href: "/profile"
+    },
+    {
+      title: "Product Leadership Operating Principles",
+      description: "See the product leadership philosophy that connects the playbook, case studies, and decision systems.",
+      href: "/product-leadership-operating-principles"
     }
   ]
 };

@@ -332,6 +332,11 @@ export const simplilearnBrief: ProductLeadershipBrief = {
       title: "Decision Operating System",
       description: "Explore the broader decision systems that support growth strategy and product judgment.",
       href: "/decision-operating-system"
+    },
+    {
+      title: "Product Leadership Operating Principles",
+      description: "Connect optimization-before-scale to the broader product leadership philosophy.",
+      href: "/product-leadership-operating-principles"
     }
   ]
 };

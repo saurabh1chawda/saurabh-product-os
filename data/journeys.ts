@@ -104,6 +104,15 @@ export const profileContinueExploring: ContinueExploringItem[] = [
       href: "/ai-product-playbook",
       status: "In Progress"
     }
+  },
+  {
+    title: "Product Leadership Operating Principles",
+    description: "See the leadership heuristics that connect career outcomes, case studies, and decision systems.",
+    destination: {
+      label: "Product Leadership Operating Principles",
+      href: "/product-leadership-operating-principles",
+      status: "Available"
+    }
   }
 ];
 
@@ -115,6 +124,15 @@ export const decisionOsContinueExploring: ContinueExploringItem[] = [
       label: "AI Product Playbook",
       href: "/ai-product-playbook",
       status: "In Progress"
+    }
+  },
+  {
+    title: "Product Leadership Operating Principles",
+    description: "Connect the decision systems to the operating philosophy behind real product leadership decisions.",
+    destination: {
+      label: "Product Leadership Operating Principles",
+      href: "/product-leadership-operating-principles",
+      status: "Available"
     }
   }
 ];
