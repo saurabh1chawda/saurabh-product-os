@@ -1,48 +1,78 @@
-# Saurabh Product OS
+# Product OS
 
-Evidence-backed Product Decision Library for evaluating Saurabh Chawda as a Senior or Lead Product Manager across AI, platforms, payments, enterprise SaaS, and growth systems.
-
+Status: Production reference implementation  
+Last updated: July 2026  
 Live site: https://saurabh-product-os.vercel.app
 
-## Product OS v1 Overview
+Product OS is an evidence-backed product leadership system for evaluating Saurabh Chawda as a Senior or Lead Product Manager across AI products, enterprise SaaS, platform strategy, payments, and growth systems.
 
-Saurabh Product OS is not a traditional portfolio site. It is a recruiter-facing decision-support product that shows how product judgment turns into strategy, trade-offs, execution, evidence, and measurable outcomes.
+It is not a traditional portfolio. It is a decision-support product that makes product judgment visible through executive briefings, decision systems, product leadership briefs, operating principles, measurable outcomes, and reusable product artifacts.
 
-Product OS v1 includes:
+## Executive Summary
 
-- AI Product Operating System v1
-- Flagship Product Stories
-- Representative Product Artifacts
-- Recruiter Tour
-- For Recruiters landing page
-- Interview Readiness Kit
+Product OS helps recruiters, hiring managers, and product leaders answer a practical question quickly:
 
-## AI Product Operating System v1
+Can this person make high-quality product decisions under uncertainty?
 
-AI Product Operating System v1 documents the end-to-end decision system I use to evaluate, validate, prioritize, architect, and measure AI products.
+The site does this by connecting career context, product philosophy, decision frameworks, flagship product decisions, and business outcomes into one navigable operating system. GitHub extends that system by making the underlying product architecture, documentation standards, and reusable artifacts inspectable.
 
-Completed modules:
+## Problem Statement
 
-- AI Product Principles
-- Customer Discovery
-- Validation & Experimentation
-- AI Prioritization
-- Build vs Buy AI
-- RAG vs Agent
-- AI Success Metrics
+Resumes summarize roles and outcomes, but they rarely show how a product leader thinks. Case studies often show narrative, but not the decision structure behind the work. Product OS closes that gap by documenting the principles, trade-offs, evidence, and execution patterns behind product leadership decisions.
 
-## Tech Stack
+## Target Audience
 
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- MDX
-- Lucide icons
-- Google Analytics 4
-- Microsoft Clarity
-- Vercel-ready deployment
+**Primary**
 
-## Setup
+- Recruiters evaluating Senior, Lead, or AI Product Manager candidates
+- Hiring managers assessing product judgment and operating maturity
+- Directors and VPs of Product evaluating leadership signals
+
+**Secondary**
+
+- Product managers studying portfolio and case-study architecture
+- Engineering leaders assessing cross-functional product partnership
+- Founders and operators interested in AI product decision systems
+
+## Key Capabilities
+
+- Executive Briefing Center for a five-minute product leadership overview
+- Professional Profile with career context, business outcomes, and product capabilities
+- Decision Operating System covering AI product discovery, validation, prioritization, architecture, ownership, and measurement
+- AI Product Playbook with a guided AI Product Studio
+- Product Leadership Briefs for JoVE, Logix, Mahindra Comviva, and Simplilearn
+- Product Leadership Operating Principles that synthesize patterns across briefs
+- Recruiter and hiring manager paths designed to reduce time-to-conviction
+- Production metadata, Open Graph support, analytics instrumentation, and responsive design
+
+## Screenshots
+
+Screenshots should be added before a public repository launch.
+
+Recommended captures:
+
+- Executive Briefing Center
+- Professional Profile
+- Decision Operating System
+- AI Product Playbook
+- Product Leadership Brief: JoVE
+- Product Leadership Brief: Logix
+
+## Repository Structure
+
+```text
+/
+  app/                 Next.js App Router routes and metadata
+  components/          Reusable UI, analytics, and page-level components
+  content/             Structured content assets where applicable
+  data/                Structured page, playbook, journey, and brief data
+  docs/                Repository strategy, architecture, governance, and launch docs
+  lib/                 Analytics helpers, utilities, and shared product data access
+  public/              Static assets including Open Graph image
+  styles/              Global CSS and design tokens
+```
+
+## Local Development
 
 Install dependencies:
 
@@ -50,7 +80,7 @@ Install dependencies:
 pnpm install
 ```
 
-Start the local development server:
+Start the development server:
 
 ```bash
 pnpm dev
@@ -76,7 +106,7 @@ pnpm build
 
 ## Environment Variables
 
-Create a local `.env.local` file using `.env.example` as the reference.
+Create `.env.local` from `.env.example`.
 
 ```bash
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-8K7TJ088G0
@@ -85,20 +115,107 @@ NEXT_PUBLIC_CLARITY_PROJECT_ID=xemq5rsgrr
 
 Set the same variables in Vercel for production.
 
-## Analytics
+## High-Level Architecture
 
-Google Analytics 4 is integrated through `@next/third-parties/google` and reads the measurement ID from `NEXT_PUBLIC_GA_MEASUREMENT_ID`.
+Product OS is a Next.js App Router application built with TypeScript and Tailwind CSS.
 
-Microsoft Clarity loads globally in production only and reads the project ID from `NEXT_PUBLIC_CLARITY_PROJECT_ID`.
+- Routes in `app/` define the executive, recruiter, decision-system, playbook, profile, and case-study experiences.
+- Structured content in `data/` powers repeatable page systems such as journeys, Product Leadership Briefs, and playbook sections.
+- Reusable components in `components/` maintain a consistent Product OS visual language.
+- Analytics helpers in `lib/analytics.ts` support recruiter-focused and product-experience events.
+- Global metadata, Open Graph, Twitter card, robots, and canonical behavior are managed through the App Router Metadata API.
+- The project is designed for Vercel deployment.
 
-Recruiter-focused events track key Product OS behaviors such as recruiter views, story opens, framework opens, Decision System interactions, learning path clicks, resume clicks, LinkedIn clicks, email clicks, and external link clicks.
+For more detail, see [Product OS Architecture](docs/architecture/product-os-architecture.md).
 
-## Useful Commands
+## Product OS <-> GitHub Relationship
 
-```bash
-pnpm install
-pnpm dev
-pnpm lint
-pnpm typecheck
-pnpm build
+Product OS is the executive narrative layer. It explains the product leadership system, shows the evidence, and guides visitors through the strongest material.
+
+GitHub is the implementation and artifact layer. It should expose how Product OS is structured, how flagship repositories are maintained, and how reusable product frameworks can be adopted independently.
+
+The long-term GitHub Product Leadership Hub is organized around flagship products:
+
+- Product OS
+- AI Product Playbook
+- Product Leadership Briefs
+- AI Prioritization Framework
+- Product Discovery Toolkit
+- Decision Memo Template
+
+See [Flagship Product Specifications](docs/flagship-product-specifications.md) for the product definitions behind these repositories.
+
+## Documentation
+
+Current documentation:
+
+- [GitHub Product Leadership Hub Strategy](docs/github-product-leadership-hub-strategy.md)
+- [GitHub Repository Audit](docs/github-repository-audit.md)
+- [Flagship Product Specifications](docs/flagship-product-specifications.md)
+- [Repository Metadata Checklist](docs/repository-metadata.md)
+- [Product OS Architecture](docs/architecture/product-os-architecture.md)
+- [Repository Launch Checklist](docs/repository-launch-checklist.md)
+- [Repository Governance](docs/governance.md)
+
+Recommended scalable documentation hierarchy:
+
+```text
+docs/
+  architecture/        System architecture and implementation notes
+  roadmap/             Product and repository roadmap docs
+  decisions/           Repository and product decision records
+  contributing/        Contribution and maintenance guidance
+  assets/              Screenshots, diagrams, and launch assets
+  releases/            Release notes and launch records
 ```
+
+Existing documentation is intentionally not moved yet. The hierarchy above should guide future cleanup once the flagship repository set is stable.
+
+## Roadmap
+
+**Version 1**
+
+- Production Product OS website
+- Executive and recruiter journeys
+- Decision Operating System v1
+- AI Product Playbook foundation
+- Product Leadership Brief framework
+
+**Version 2**
+
+- Modernized GitHub Product Leadership Hub
+- Standalone flagship repositories
+- Reusable templates and product artifacts
+- Stronger repo-to-site evidence links
+
+**Version 3**
+
+- Portable Product OS kits
+- Expanded Product Leadership Brief library
+- Downloadable and workshop-ready product tools
+- Public framework examples for AI, platform, growth, discovery, and decision documentation
+
+## Contributing
+
+This repository is currently maintained as Saurabh Chawda's canonical Product OS implementation. External contributions are not open yet.
+
+Future contribution model:
+
+- Documentation corrections
+- Accessibility improvements
+- Framework template improvements
+- Issue-based suggestions for reusable artifacts
+
+Before opening contributions, the repository should add a contributor guide, code of conduct decision, issue templates, and pull request template.
+
+## License
+
+License is not yet finalized.
+
+Before a public open-source launch, add a license file and clarify which parts of the repository are reusable code, reusable documentation, personal career content, and protected brand/content assets.
+
+## Status
+
+Production reference implementation for the GitHub Product Leadership Hub.
+
+Launch readiness is tracked in [Repository Launch Checklist](docs/repository-launch-checklist.md).
