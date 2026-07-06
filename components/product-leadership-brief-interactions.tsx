@@ -18,7 +18,11 @@ type PlbSectionViewedProps = {
     | "reflection_viewed"
     | "constraint_mapping_viewed"
     | "architecture_evolution_viewed"
+    | "experimentation_loop_viewed"
     | "flywheel_viewed"
+    | "growth_constraint_mapping_viewed"
+    | "growth_flywheel_viewed"
+    | "growth_metrics_viewed"
     | "signature_principle_viewed";
   sectionName: string;
 };
@@ -40,6 +44,13 @@ export function PlbViewed({ company, slug }: PlbViewedProps) {
 
     if (slug === "logix") {
       trackAnalyticsEvent("plb_logix_viewed", {
+        page_name: `${company} Product Leadership Brief`,
+        story_name: slug
+      });
+    }
+
+    if (slug === "simplilearn") {
+      trackAnalyticsEvent("plb_simplilearn_viewed", {
         page_name: `${company} Product Leadership Brief`,
         story_name: slug
       });

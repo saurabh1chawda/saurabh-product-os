@@ -59,7 +59,8 @@ const upcomingBriefs = [
   {
     company: "Simplilearn",
     decision: "Conversion Optimization > Acquisition Spend",
-    status: "Planned"
+    href: "/case-studies/simplilearn",
+    status: "Available"
   },
   {
     company: "Mahindra Comviva",

@@ -126,10 +126,22 @@ function OptionList({ items, title }: { items: string[]; title: string }) {
   );
 }
 
-export function ConstraintMapping({ items }: { items: ConstraintMapItem[] }) {
+export function ConstraintMapping({
+  eventName = "constraint_mapping_viewed",
+  eyebrow = "Constraint Mapping",
+  id = "constraint-mapping",
+  items,
+  title = "The product decision was shaped by business constraints, not preference."
+}: {
+  eventName?: "constraint_mapping_viewed" | "growth_constraint_mapping_viewed";
+  eyebrow?: string;
+  id?: string;
+  items: ConstraintMapItem[];
+  title?: string;
+}) {
   return (
-    <BriefSection eyebrow="Constraint Mapping" title="The product decision was shaped by business constraints, not preference." id="constraint-mapping">
-      <PlbSectionViewed eventName="constraint_mapping_viewed" sectionName="Constraint Mapping" />
+    <BriefSection eyebrow={eyebrow} title={title} id={id}>
+      <PlbSectionViewed eventName={eventName} sectionName={eyebrow} />
       <div className="overflow-hidden rounded-md border border-line bg-panel shadow-soft">
         <div className="hidden grid-cols-3 border-b border-line bg-paper text-xs font-semibold uppercase tracking-[0.14em] text-accent md:grid">
           <div className="p-4">Constraint</div>
@@ -160,11 +172,13 @@ export function ConstraintMapping({ items }: { items: ConstraintMapItem[] }) {
 }
 
 export function VisualFlowSection({ flow, variant = "linear" }: { flow: VisualFlow; variant?: "linear" | "cycle" }) {
-  const eventName = flow.id === "architecture-evolution" ? "architecture_evolution_viewed" : "flywheel_viewed";
+  const eventName =
+    flow.eventName ??
+    (flow.id === "architecture-evolution" ? "architecture_evolution_viewed" : flow.id.includes("flywheel") ? "flywheel_viewed" : undefined);
 
   return (
     <BriefSection eyebrow={flow.eyebrow} title={flow.title} id={flow.id} background={variant === "cycle" ? "panel" : undefined}>
-      <PlbSectionViewed eventName={eventName} sectionName={flow.eyebrow} />
+      {eventName ? <PlbSectionViewed eventName={eventName} sectionName={flow.eyebrow} /> : null}
       <div className="rounded-md border border-line bg-paper p-6">
         <p className="max-w-3xl leading-7 text-muted">{flow.description}</p>
         <div className={variant === "cycle" ? "mt-8 grid gap-3 lg:grid-cols-3" : "mt-8 grid gap-3"}>
@@ -200,10 +214,22 @@ export function TradeoffSection({ tradeoffs }: { tradeoffs: ProductLeadershipBri
   );
 }
 
-export function ImpactDashboard({ categories }: { categories: ImpactCategory[] }) {
+export function ImpactDashboard({
+  categories,
+  eventName = "impact_dashboard_viewed",
+  eyebrow = "Impact Dashboard",
+  id = "impact-dashboard",
+  title = "What changed after the decision"
+}: {
+  categories: ImpactCategory[];
+  eventName?: "growth_metrics_viewed" | "impact_dashboard_viewed";
+  eyebrow?: string;
+  id?: string;
+  title?: string;
+}) {
   return (
-    <BriefSection eyebrow="Impact Dashboard" title="What changed after the decision" id="impact-dashboard">
-      <PlbSectionViewed eventName="impact_dashboard_viewed" sectionName="Impact Dashboard" />
+    <BriefSection eyebrow={eyebrow} title={title} id={id}>
+      <PlbSectionViewed eventName={eventName} sectionName={eyebrow} />
       <div className="grid gap-4 lg:grid-cols-3">
         {categories.map((category) => (
           <article key={category.title} className="rounded-md border border-line bg-panel p-5">

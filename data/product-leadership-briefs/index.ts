@@ -1,8 +1,9 @@
 import { joveBrief } from "./jove";
 import { logixBrief } from "./logix";
+import { simplilearnBrief } from "./simplilearn";
 import type { BriefSummary, ProductLeadershipBrief } from "./types";
 
-export const productLeadershipBriefs: ProductLeadershipBrief[] = [joveBrief, logixBrief];
+export const productLeadershipBriefs: ProductLeadershipBrief[] = [joveBrief, logixBrief, simplilearnBrief];
 
 export const productLeadershipBriefSummaries: BriefSummary[] = [
   {
@@ -26,10 +27,11 @@ export const productLeadershipBriefSummaries: BriefSummary[] = [
   {
     company: "Simplilearn",
     domain: "Growth and monetization",
-    coreDecision: "Job Guarantee revenue growth brief.",
-    businessImpact: "10× revenue growth.",
-    readingTime: "Coming soon",
-    status: "Coming Soon"
+    coreDecision: "Optimized the funnel before scaling acquisition.",
+    businessImpact: "10× revenue growth, 62% traffic-to-lead, 40% lead-to-customer.",
+    readingTime: "12 min read",
+    status: "Available",
+    href: "/case-studies/simplilearn"
   },
   {
     company: "Mahindra Comviva",

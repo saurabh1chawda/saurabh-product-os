@@ -47,6 +47,11 @@ export type ConstraintMapItem = {
 
 export type VisualFlow = {
   eyebrow: string;
+  eventName?:
+    | "architecture_evolution_viewed"
+    | "experimentation_loop_viewed"
+    | "flywheel_viewed"
+    | "growth_flywheel_viewed";
   id: string;
   title: string;
   description: string;
@@ -79,6 +84,7 @@ export type ProductLeadershipBrief = BriefSummary & {
   productStrategy: BriefPanel;
   architectureEvolution?: VisualFlow;
   platformFlywheel?: VisualFlow;
+  visualSections?: VisualFlow[];
   execution: BriefPanel;
   tradeoffs: Array<{
     decision: string;
@@ -87,6 +93,7 @@ export type ProductLeadershipBrief = BriefSummary & {
   }>;
   impactDashboard: ImpactCategory[];
   stakeholderAlignment?: BriefPanel;
+  leadershipToday?: BriefPanel;
   reflection: Array<{
     prompt: string;
     response: string;
