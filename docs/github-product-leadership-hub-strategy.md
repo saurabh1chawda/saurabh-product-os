@@ -12,17 +12,30 @@ Product OS should remain the executive narrative layer. GitHub should become the
 
 1. GitHub should reinforce Product OS, not duplicate it.
 2. Every public repository should answer a clear visitor question.
-3. Pinned repositories should represent flagship product leadership signals.
+3. Product Collections should represent flagship product leadership signals.
 4. Repository names should be clear, executive-readable, and consistent.
 5. README files should explain product intent before technical setup.
 6. Public repositories should demonstrate judgment, structure, and communication quality.
 7. Experiments are allowed, but they must be clearly labeled as experiments.
+8. Every repository should leave another Product Manager better than they arrived.
+
+## GitHub Operating Principle
+
+Every repository should leave another Product Manager better than they arrived.
+
+This principle replaces repository-first thinking with teaching-first thinking. A repository should not merely show that work exists. It should teach the visitor how to think about the problem, why the decision matters, what trade-offs were considered, and how the artifact can be reused.
+
+This affects three operating choices:
+
+- Documentation quality: explain product judgment before implementation detail.
+- Repository scope: keep each repository focused on a teachable product decision, framework, toolkit, or artifact.
+- Maintenance: update repositories when the learning value, Product OS link, or status changes.
 
 ## Visitor Jobs To Be Done
 
 | Visitor | What They Need | GitHub Should Show |
 | --- | --- | --- |
-| Recruiter | Fast confidence that Saurabh is credible and current | Clean profile, pinned flagship repositories, Product OS links |
+| Recruiter | Fast confidence that Saurabh is credible and current | Clean profile, Product Collections, flagship repository entry points, Product OS links |
 | Hiring Manager | Evidence of structured product thinking | Frameworks, briefs, toolkits, documentation quality |
 | Product Leader | How Saurabh approaches AI, platforms, growth, and trade-offs | Decision systems, operating principles, artifacts |
 | Engineering Leader | Whether Saurabh can partner with technical teams | Clear specs, architecture notes, implementation hygiene |
@@ -30,7 +43,168 @@ Product OS should remain the executive narrative layer. GitHub should become the
 
 ## Repository Information Architecture
 
-GitHub should be organized into seven repository categories.
+GitHub should be organized around Product Collections, Product Families, repository categories, and repository maturity.
+
+Product Collections are the visitor-facing entry points. Product Families are the scalable taxonomy. Repository categories describe the artifact type. Maturity levels describe readiness.
+
+## GitHub Product Map
+
+This product map should act as the onboarding model for GitHub.
+
+```text
+Executive Brief
+↓
+Product OS
+↓
+AI Product Playbook
+↓
+Frameworks
+↓
+Templates
+↓
+Experiments
+↓
+Public Assets
+```
+
+The map teaches visitors where to start and how to move from executive context into deeper product artifacts. It also prevents GitHub from feeling like a flat list of repositories. Each repository should have a clear location in this map.
+
+## Product Collections
+
+GitHub should be organized around products rather than isolated repositories.
+
+A Product Collection is a curated group of repositories that work together to teach one product leadership theme. This creates a more scalable mental model than pinning unrelated repositories. It also allows one product idea to contain multiple implementation layers: app, framework, templates, examples, and assets.
+
+### AI Product Collection
+
+Purpose: Demonstrate how Saurabh evaluates, validates, designs, measures, and scales AI products.
+
+Examples:
+
+- AI Product Playbook
+- AI Product Studio
+- AI Prioritization Framework
+- AI Metrics Framework
+- RAG vs Agent Framework
+
+Primary Product OS links:
+
+- `/ai-product-playbook`
+- `/decision-systems/ai-prioritization`
+- `/decision-systems/rag-vs-agent`
+- `/decision-systems/ai-success-metrics`
+
+### Product Leadership Collection
+
+Purpose: Demonstrate product leadership judgment through operating principles, decision systems, and executive evidence.
+
+Examples:
+
+- Product OS
+- Product Leadership Briefs
+- Executive Brief
+- Decision Operating System
+
+Primary Product OS links:
+
+- `/executive`
+- `/product-leadership-operating-principles`
+- `/case-studies`
+- `/decision-operating-system`
+
+### Product Toolkit Collection
+
+Purpose: Provide reusable templates, tools, and frameworks that other product teams can apply.
+
+Examples:
+
+- Product Discovery Toolkit
+- PRD Templates
+- Prioritization Frameworks
+- Decision Memo Templates
+
+Primary Product OS links:
+
+- `/decision-systems/customer-discovery`
+- `/decision-systems/validation-experimentation`
+- `/frameworks/product-prioritization`
+- `/product-leadership-operating-principles`
+
+## Product Families
+
+Every repository must belong to exactly one Product Family.
+
+Product Families improve scalability because they make repository ownership, naming, linking, and roadmap decisions unambiguous. A GitHub ecosystem with 50+ repositories needs a stable taxonomy; otherwise, repositories drift into overlapping concepts and unclear visitor paths.
+
+| Product Family | Purpose | Example Repositories |
+| --- | --- | --- |
+| Product Leadership | Executive product judgment and operating philosophy | `product-os`, `product-leadership-briefs` |
+| AI Product Management | AI product strategy, prioritization, architecture, and measurement | `ai-product-playbook`, `ai-prioritization-framework` |
+| Platform Strategy | Platform modernization, architecture strategy, and technical leverage | `platform-modernization-toolkit` |
+| Product Discovery | Customer discovery, problem validation, and workflow understanding | `product-discovery-toolkit` |
+| Growth | Funnel optimization, experimentation, referral loops, and monetization | `growth-experimentation-toolkit` |
+| Payments | Reliability, trust, transaction scale, and fintech product systems | `payments-reliability-toolkit` |
+| Templates | Reusable product documents and decision artifacts | `prd-template`, `decision-memo-template` |
+| Experiments | Early prototypes and learning projects | `experiment-rag-evaluator` |
+
+Rules:
+
+- Each repository has one primary Product Family.
+- Secondary themes can appear in README metadata, but not as primary classification.
+- Product Family should influence repository naming, README links, and Product OS cross-links.
+- If a repository appears to fit multiple families equally, it should probably be merged, split, or renamed.
+
+## Repository Lifecycle
+
+Every repository should progress through a clear lifecycle.
+
+```text
+Idea
+↓
+Experiment
+↓
+Framework
+↓
+Toolkit
+↓
+Flagship
+↓
+Reference
+```
+
+| Stage | Meaning | Graduation Criteria |
+| --- | --- | --- |
+| Idea | A concept worth tracking but not yet public-ready | Clear problem, audience, Product Family, and Product OS fit |
+| Experiment | A prototype or spike used to learn | Documented hypothesis, learnings, limitations, and next decision |
+| Framework | A repeatable decision model or mental model | Clear criteria, use cases, examples, and related Product OS link |
+| Toolkit | A reusable set of templates, examples, or workflows | Usable artifacts, quick start, examples, and maintenance owner |
+| Flagship | A polished repository that can represent Saurabh publicly | Executive README, diagrams, screenshots, quality checklist complete |
+| Reference | A mature repository used as the standard for future work | Stable structure, durable value, versioned docs, clear governance |
+
+Lifecycle rules:
+
+- Experiments should not be pinned.
+- Flagship repositories must meet the repository quality checklist.
+- Reference repositories should become templates for future repositories.
+- A repository can move backward if it becomes outdated or unsupported.
+
+## Repository Maturity Levels
+
+Every repository should display a maturity badge.
+
+| Badge | Meaning | Expectations |
+| --- | --- | --- |
+| Production | Public-facing, polished, actively maintained | Live demo or usable artifact, complete docs, current links |
+| Stable | Useful and maintained, but not a flagship surface | Clear README, working examples, known limitations |
+| Active | In progress and intentionally evolving | Status notes, roadmap, visible next steps |
+| Experimental | Learning-oriented prototype | Hypothesis, constraints, learning goals, no overclaiming |
+| Archived | Historical or no longer maintained | Archive notice, reason, replacement link if available |
+
+Maturity should be visible in the README and, where useful, in repository topics or descriptions.
+
+## Repository Categories
+
+GitHub should still use repository categories for artifact type. Categories sit underneath Product Collections and Product Families.
 
 ### 1. Core Products
 
@@ -304,6 +478,73 @@ Names should be lowercase, hyphenated, descriptive, and audience-readable.
 
 The GitHub profile should act like an executive landing page.
 
+## Audience-Based Navigation
+
+GitHub should be designed around visitor intent, not repository chronology.
+
+### If You're A Recruiter
+
+Start here:
+
+1. Executive Brief
+2. Product OS
+3. Product Leadership Briefs
+4. Professional Profile
+
+What this path proves:
+
+- Who Saurabh is
+- What level he operates at
+- What outcomes support the positioning
+- How to continue the conversation
+
+### If You're A Product Manager
+
+Start here:
+
+1. Decision Operating System
+2. AI Product Playbook
+3. Product Discovery Toolkit
+4. Decision Memo Template
+
+What this path proves:
+
+- How product decisions are structured
+- How discovery, validation, prioritization, and measurement connect
+- How frameworks become reusable PM practice
+
+### If You're An Engineering Leader
+
+Start here:
+
+1. Product OS
+2. Platform Modernization Toolkit
+3. RAG vs Agent Framework
+4. AI Product Studio
+
+What this path proves:
+
+- How Saurabh partners with technical teams
+- How product strategy connects to architecture and platform leverage
+- How AI decisions are grounded in operational readiness
+
+### If You're Exploring AI Product Management
+
+Start here:
+
+1. AI Product Playbook
+2. AI Prioritization Framework
+3. RAG vs Agent Framework
+4. AI Success Metrics Framework
+
+What this path proves:
+
+- How AI opportunities are evaluated
+- When AI should not be built
+- How architecture, trust, metrics, and business outcomes connect
+
+This complements Product OS reading paths by making GitHub the artifact path. Product OS tells the executive story. GitHub gives visitors the working materials behind the story.
+
 ### What Visitors Should See First
 
 1. One-line positioning:
@@ -319,8 +560,8 @@ The GitHub profile should act like an executive landing page.
    - Product Leadership Briefs
    - Professional Profile
 
-4. Pinned repositories:
-   Six repositories that represent the strongest evidence.
+4. Product Collections:
+   Three curated collections that represent the strongest evidence: AI Product, Product Leadership, and Product Toolkit.
 
 ### What Visitors Should Click Next
 
@@ -370,9 +611,24 @@ This GitHub is the engineering and artifact layer behind Product OS.
 - Growth Systems
 ```
 
-## Featured Repository Strategy
+## Product Collection Strategy
 
-Six repositories should be pinned. These should represent breadth, depth, and credibility.
+Product Collections replace repository-first pinning as the primary organizing model.
+
+The profile may still use GitHub pins as entry points because the platform supports them, but the strategy should communicate collections. A collection-based model scales better because it organizes related work into product systems instead of treating every repository as a standalone artifact.
+
+Each Product Collection should include:
+
+- Collection purpose
+- Primary audience
+- Flagship repositories
+- Supporting repositories
+- Related Product OS pages
+- Maturity level for each repository
+
+## Flagship Repository Recommendations
+
+Six repositories should still be pinned as entry points into the Product Collections. These should represent breadth, depth, and credibility.
 
 ### 1. `product-os`
 
@@ -522,12 +778,37 @@ Product OS and GitHub should reinforce each other through clear division of labo
 
 Every public repository should use a consistent README structure.
 
+## Repository Design Standards
+
+Every flagship repository should feel like a product artifact, not a folder of files.
+
+Required sections:
+
+- Executive Summary
+- Problem Statement
+- Product Decision
+- Business Value
+- Architecture or Process Diagram
+- Screenshots when applicable
+- Quick Start
+- Related Resources
+- Product OS Links
+- License
+- Status Badge
+- Last Updated
+
+Consistency matters because visitors often inspect repositories quickly. A repeatable structure reduces cognitive load, signals product maturity, and makes it easier to compare repositories across Product Families. It also teaches a consistent product operating style: define the problem, explain the decision, show the value, provide the artifact, and link to the broader system.
+
 ### Reusable README Template
 
-```md
+````md
 # Repository Name
 
 One-sentence explanation of what this repository is and why it matters.
+
+Status: Production | Stable | Active | Experimental | Archived
+
+Last Updated: Month Year
 
 ## Executive Summary
 
@@ -543,6 +824,18 @@ This should answer:
 ## Why This Exists
 
 Describe the product problem, decision, framework, or artifact this repository supports.
+
+## Problem Statement
+
+What customer, product, business, or team problem does this repository address?
+
+## Product Decision
+
+What product decision, framework, template, or implementation does this repository document?
+
+## Business Value
+
+Why does this matter for customer outcomes, business outcomes, product quality, or team execution?
 
 ## Who It Is For
 
@@ -572,6 +865,14 @@ pnpm dev
 
 If this is not an application, replace setup instructions with usage instructions.
 
+## Architecture Or Process Diagram
+
+Add a simple diagram when it helps visitors understand the system, workflow, or decision model.
+
+## Screenshots
+
+Add screenshots for product experiences, tools, and visual artifacts.
+
 ## Related Resources
 
 - Product OS:
@@ -595,20 +896,40 @@ Current status:
 ## License
 
 MIT unless otherwise noted.
-```
+````
 
 ## Repository Quality Standards
 
 A repository is production-ready when it meets the following standards.
 
+## Repository Quality Checklist
+
+Every flagship repository must include:
+
+- [ ] Executive Summary
+- [ ] Problem Statement
+- [ ] Product Decision
+- [ ] Business Value
+- [ ] Architecture Diagram
+- [ ] Quick Start
+- [ ] Related Resources
+- [ ] Product OS Links
+- [ ] License
+- [ ] Status Badge
+- [ ] Last Updated
+
 ### Documentation
 
 - Clear README
 - Executive summary
+- Problem statement
+- Product decision
+- Business value
 - Purpose and audience
 - Setup or usage instructions
 - Related Product OS links
 - Current status
+- Last updated date
 
 ### Structure
 
@@ -681,6 +1002,28 @@ Recommended actions:
 - 3-4: Archive
 - 0-2: Delete
 
+## Repository Decision Framework
+
+Whenever creating a repository, answer these questions before making it public:
+
+1. What problem does this solve?
+2. Who is it for?
+3. Is it reusable?
+4. Which Product Family does it belong to?
+5. Which Product Collection does it support?
+6. Which Product OS page does it reinforce?
+7. Could this be merged into an existing repository?
+
+Decision rules:
+
+- If the problem is unclear, keep it as an internal note.
+- If the audience is unclear, do not publish yet.
+- If it is not reusable, consider adding it to an existing repository as an example.
+- If the Product Family is ambiguous, refine the scope or split the repository.
+- If it supports no Product Collection, it likely does not belong in the public GitHub ecosystem.
+- If it reinforces no Product OS page, create the Product OS context first or keep the repository private.
+- If it overlaps an existing repository, merge unless there is a strong visitor reason to separate it.
+
 ## Future Repository Roadmap
 
 ### Near-term Flagship Repositories
@@ -724,7 +1067,7 @@ Definition of done:
 
 - Profile explains who Saurabh is in under 30 seconds.
 - Product OS is the primary call-to-action.
-- Pinned repositories have a clear narrative.
+- Product Collections and their flagship repository entry points have a clear narrative.
 
 ### SPR-011.3: Repository Audit And Cleanup
 
@@ -745,7 +1088,7 @@ Definition of done:
 
 Scope:
 
-- Modernize the six pinned repositories.
+- Modernize the six flagship repository entry points.
 - Apply README standard.
 - Add Product OS cross-links.
 - Add screenshots, diagrams, or artifact previews.
@@ -753,7 +1096,7 @@ Scope:
 
 Definition of done:
 
-- Six pinned repositories are executive-ready.
+- Six flagship repository entry points are executive-ready.
 - Each repository answers a clear hiring question.
 - Product OS and GitHub reinforce each other.
 
@@ -777,12 +1120,29 @@ Definition of done:
 Every new public repository should answer these questions before launch:
 
 1. What hiring question does this repository answer?
-2. Which Product OS page does it support?
-3. Is this repository a product, framework, toolkit, template, note, experiment, or asset?
-4. Is the README executive-ready?
-5. Is the repository name clear to a non-engineering visitor?
-6. Should this be public, private, merged, or archived?
-7. Does it improve or dilute the GitHub profile?
+2. What problem does this solve?
+3. Who is it for?
+4. Is it reusable?
+5. Which Product Family does it belong to?
+6. Which Product Collection does it support?
+7. Which Product OS page does it reinforce?
+8. Could this be merged into an existing repository?
+9. Is this repository a product, framework, toolkit, template, note, experiment, or asset?
+10. Is the README executive-ready?
+11. Is the repository name clear to a non-engineering visitor?
+12. Should this be public, private, merged, or archived?
+13. Does it improve or dilute the GitHub profile?
+
+## Architecture Validation
+
+This strategy should be evaluated against four questions before implementation begins.
+
+| Question | Validation |
+| --- | --- |
+| Can this architecture scale to 50+ repositories? | Yes. Product Collections organize visitor journeys, Product Families create one primary taxonomy, repository categories define artifact type, and maturity levels clarify readiness. |
+| Can a new repository be categorized without ambiguity? | Yes. Each repository must have exactly one Product Family, one category, one lifecycle stage, one maturity level, and at least one Product OS link. |
+| Does every repository reinforce Product OS? | Yes, if the repository decision framework is enforced before publishing. Repositories without Product OS alignment should remain private, be merged, or be archived. |
+| Is GitHub positioned as a Product Leadership Hub rather than a code archive? | Yes. The operating principle, audience navigation, product map, collections, README standards, and quality checklist all orient GitHub around teaching product judgment. |
 
 ## Final Target State
 
@@ -790,9 +1150,9 @@ The ideal GitHub experience should feel like this:
 
 1. Visitor lands on the profile.
 2. They understand Saurabh's product leadership positioning immediately.
-3. They see six curated flagship repositories.
-4. Each repository has a clear product purpose.
-5. GitHub reinforces Product OS with implementation, templates, artifacts, and examples.
-6. Product OS reinforces GitHub with executive narrative, evidence, and context.
-7. The combined system makes Saurabh look like a product leader who can think, build, document, and ship with clarity.
-
+3. They see curated Product Collections, not a random repository list.
+4. They can choose an audience path based on intent.
+5. Each repository has a clear Product Family, maturity level, and product purpose.
+6. GitHub reinforces Product OS with implementation, templates, artifacts, and examples.
+7. Product OS reinforces GitHub with executive narrative, evidence, and context.
+8. The combined system makes Saurabh look like a product leader who can think, build, document, teach, and ship with clarity.
