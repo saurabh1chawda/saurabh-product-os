@@ -1,8 +1,12 @@
-# Saurabh Chawda
+# Hi, I'm Saurabh Chawda.
 
-Lead Product Manager building AI-powered platforms, product decision systems, and reusable product leadership artifacts.
+I build AI products, product decision systems, and reusable frameworks that help teams make better product decisions.
 
-This GitHub is the working layer behind [Product OS](https://saurabh-product-os.vercel.app): code, frameworks, templates, and examples that make product judgment inspectable.
+This GitHub exists to share the working artifacts behind that practice.
+
+Welcome to my Open Product Lab.
+
+This is where I publish the frameworks, templates, decision systems, and reusable product artifacts behind [Product OS](https://saurabh-product-os.vercel.app).
 
 ## Executive Positioning
 
@@ -34,53 +38,40 @@ Use it to inspect the implementation layer behind Product OS: frameworks, templa
 ## Product Collections
 
 ### AI Product Collection
+🧠 Use this collection to evaluate how I approach AI product opportunities.
 
-Use this collection to evaluate how I approach AI product opportunities.
-
-- AI Product Playbook
-- AI Product Studio
-- AI Prioritization Framework
-- AI Metrics Framework
-- RAG vs Agent Framework
+Working artifacts focus on opportunity scoring, prioritization, architecture choices, trust, and AI success metrics.
 
 Start here: [AI Product Playbook](https://saurabh-product-os.vercel.app/ai-product-playbook)
 
 ### Product Leadership Collection
+🏗 Use this collection to understand how I make product decisions under ambiguity.
 
-Use this collection to understand how I make product decisions under ambiguity.
-
-- Product OS
-- Product Leadership Briefs
-- Executive Brief
-- Decision Operating System
+Working artifacts include Product OS implementation, Product Leadership Brief structures, decision notes, and evidence maps.
 
 Start here: [Product Leadership Briefs](https://saurabh-product-os.vercel.app/case-studies)
 
 ### Product Toolkit Collection
+🛠 Coming soon.
 
-Use this collection to find reusable product artifacts.
-
-- Product Discovery Toolkit
-- PRD Templates
-- Prioritization Frameworks
-- Decision Memo Templates
+This collection will hold reusable discovery, prioritization, PRD, and decision memo artifacts.
 
 Start here: [Customer Discovery](https://saurabh-product-os.vercel.app/decision-systems/customer-discovery)
 
-## Featured Products
+## Start Here
 
 | Product | Use it for |
 | --- | --- |
 | [Product OS](https://saurabh-product-os.vercel.app) | Executive overview of my product judgment |
 | [AI Product Playbook](https://saurabh-product-os.vercel.app/ai-product-playbook) | Practical AI product operating model |
 | [Product Leadership Briefs](https://saurabh-product-os.vercel.app/case-studies) | Evidence-backed product decisions |
-| Product Toolkit | Reusable discovery, prioritization, and decision artifacts |
+| Product Toolkit | Coming soon: reusable discovery, prioritization, and decision artifacts |
 
 ## Product OS
 
 [Product OS](https://saurabh-product-os.vercel.app) is the executive overview.
 
-GitHub is the implementation layer: source code, frameworks, templates, product tools, and representative artifacts.
+GitHub is where the reusable assets live.
 
 ## Explore by Audience
 
@@ -117,3 +108,9 @@ GitHub is the implementation layer: source code, frameworks, templates, product 
 - Product OS: [saurabh-product-os.vercel.app](https://saurabh-product-os.vercel.app)
 - LinkedIn: [linkedin.com/in/chawdasaurabh](https://www.linkedin.com/in/chawdasaurabh/)
 - Email: [saurabh1chawda@gmail.com](mailto:saurabh1chawda@gmail.com)
+
+Looking for the executive overview? Start with [Product OS](https://saurabh-product-os.vercel.app).
+
+Looking for reusable product frameworks? Explore the repositories.
+
+Looking to discuss AI Product Management or Product Leadership? Connect on [LinkedIn](https://www.linkedin.com/in/chawdasaurabh/).
