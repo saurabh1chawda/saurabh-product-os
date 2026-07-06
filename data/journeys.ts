@@ -88,6 +88,15 @@ export const visitorJourneys: VisitorJourney[] = [
 
 export const profileContinueExploring: ContinueExploringItem[] = [
   {
+    title: "Executive Brief",
+    description: "Start with the five-minute executive overview of Product OS, evidence, and business impact.",
+    destination: {
+      label: "Executive Brief",
+      href: "/executive",
+      status: "Available"
+    }
+  },
+  {
     title: "Decision Operating System",
     description: "Continue from career context into the decision systems behind the work.",
     destination: {
@@ -117,6 +126,15 @@ export const profileContinueExploring: ContinueExploringItem[] = [
 ];
 
 export const decisionOsContinueExploring: ContinueExploringItem[] = [
+  {
+    title: "Executive Brief",
+    description: "Return to the concise executive overview of Product OS and its strongest evidence.",
+    destination: {
+      label: "Executive Brief",
+      href: "/executive",
+      status: "Available"
+    }
+  },
   {
     title: "AI Product Playbook",
     description: "Translate the decision system into practical AI product execution patterns.",

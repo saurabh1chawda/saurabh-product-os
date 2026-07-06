@@ -236,6 +236,12 @@ export const aiProductPlaybook: AiProductPlaybook = {
   ],
   relatedResources: [
     {
+      title: "Executive Brief",
+      description: "The five-minute overview for recruiters, hiring managers, and product leaders.",
+      cta: "Open executive brief",
+      href: "/executive"
+    },
+    {
       title: "Decision Operating System",
       description: "The decision frameworks behind Product OS.",
       cta: "Explore decision systems",
@@ -261,6 +267,11 @@ export const aiProductPlaybook: AiProductPlaybook = {
     }
   ],
   continueExploring: [
+    {
+      title: "Executive Brief",
+      description: "Return to the concise executive overview of Product OS, evidence, and business impact.",
+      href: "/executive"
+    },
     {
       title: "Product Leadership Brief: JoVE",
       description: "See how workflow adoption became the stronger product decision than content expansion.",

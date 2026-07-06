@@ -324,6 +324,11 @@ export const simplilearnBrief: ProductLeadershipBrief = {
   ],
   continueExploring: [
     {
+      title: "Executive Brief",
+      description: "Return to the five-minute overview of Product OS and its strongest evidence.",
+      href: "/executive"
+    },
+    {
       title: "AI Product Playbook",
       description: "Review the operating guide behind experimentation, metrics, and evidence-driven prioritization.",
       href: "/ai-product-playbook"

@@ -204,6 +204,7 @@ export const principleMatrix: PrincipleMatrixRow[] = [
 ];
 
 export const operatingPrinciplesContinue = [
+  { title: "Executive Brief", href: "/executive", description: "The five-minute briefing center for Product OS." },
   { title: "Professional Profile", href: "/profile", description: "Career context, outcomes, and product leadership signals." },
   { title: "Decision Operating System", href: "/decision-operating-system", description: "The decision systems behind these principles." },
   { title: "AI Product Playbook", href: "/ai-product-playbook", description: "The practical AI product operating guide." },

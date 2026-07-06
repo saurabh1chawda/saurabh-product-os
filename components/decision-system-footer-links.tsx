@@ -4,6 +4,11 @@ import { ButtonLink } from "@/components/ui/button-link";
 
 const links = [
   {
+    title: "Executive Brief",
+    href: "/executive",
+    description: "Start with the fastest overview of Product OS, evidence, and business impact."
+  },
+  {
     title: "Decision Operating System",
     href: "/decision-operating-system",
     description: "Return to the completed AI Product Operating System v1."
@@ -29,7 +34,7 @@ export function DecisionSystemFooterLinks() {
         <h2 id="decision-system-footer-links-title" className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
           Explore the complete AI Product Operating System
         </h2>
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {links.map((link) => (
             <article key={link.title} className="rounded-md border border-line bg-paper p-4">
               <h3 className="font-semibold leading-6 text-ink">{link.title}</h3>

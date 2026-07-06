@@ -309,6 +309,11 @@ export const logixBrief: ProductLeadershipBrief = {
   ],
   continueExploring: [
     {
+      title: "Executive Brief",
+      description: "Return to the five-minute overview of Product OS and its strongest evidence.",
+      href: "/executive"
+    },
+    {
       title: "AI Product Playbook",
       description: "Review the operating guide behind AI opportunity, automation depth, and trust decisions.",
       href: "/ai-product-playbook"

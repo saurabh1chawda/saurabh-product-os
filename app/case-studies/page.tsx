@@ -87,6 +87,12 @@ const careerOutcomes = [
 
 const continueLinks = [
   {
+    title: "Executive Brief",
+    description: "Start with the five-minute overview of Product OS and its strongest evidence.",
+    href: "/executive",
+    status: "Available"
+  },
+  {
     title: "Professional Profile",
     description: "Review career context, capabilities, and business outcomes.",
     href: "/profile",

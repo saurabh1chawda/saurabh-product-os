@@ -230,6 +230,11 @@ export const joveBrief: ProductLeadershipBrief = {
   ],
   continueExploring: [
     {
+      title: "Executive Brief",
+      description: "Return to the five-minute overview of Product OS and its strongest evidence.",
+      href: "/executive"
+    },
+    {
       title: "Decision Operating System",
       description: "Review the operating principles and decision systems behind Product OS.",
       href: "/decision-operating-system"
