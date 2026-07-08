@@ -1,16 +1,19 @@
 # Experiment Canvas
 
-Status: v1 template  
+Status: v1 production template  
 Last updated: July 2026
 
 Use this canvas to design an experiment that answers one product decision.
 
 ## Experiment Summary
 
-- Experiment name:
-- Opportunity:
-- Owner:
-- Date:
+| Field | Response |
+| --- | --- |
+| Experiment name |  |
+| Opportunity |  |
+| Owner |  |
+| Date |  |
+| Decision this informs |  |
 
 ## Decision
 
@@ -28,11 +31,16 @@ We will know this is true if:
 
 ## Riskiest Assumption
 
-Assumption:
-
-Why it matters:
+| Field | Response |
+| --- | --- |
+| Assumption |  |
+| Why it matters |  |
+| Current evidence |  |
+| What would change if false |  |
 
 ## Method
+
+Choose one:
 
 - Interview
 - Prototype
@@ -41,22 +49,42 @@ Why it matters:
 - Usability test
 - Data analysis
 - Fake door
+- Pilot
 - Other:
+
+## Experiment Design
+
+| Field | Response |
+| --- | --- |
+| Participants / segment |  |
+| Duration |  |
+| Primary signal |  |
+| Secondary signals |  |
+| Required setup |  |
+| Risk / guardrail |  |
 
 ## Success Criteria
 
-- Primary signal:
-- Threshold:
-- Time period:
+| Signal | Threshold | Decision if Met |
+| --- | --- | --- |
+|  |  |  |
 
 ## Failure Criteria
 
-What result would cause the team to stop, reframe, or change direction?
+| Signal | Threshold | Decision if Met |
+| --- | --- | --- |
+|  |  |  |
 
 ## Decision Rules
 
-If success:
+| Result | Action |
+| --- | --- |
+| Success |  |
+| Failure |  |
+| Mixed |  |
 
-If failure:
+## Learning Summary
 
-If mixed:
+- What we learned:
+- What remains uncertain:
+- Next decision:

@@ -1,48 +1,72 @@
 # Discovery Canvas
 
-Status: v1 template  
+Status: v1 production template  
 Last updated: July 2026
 
-Use this canvas to summarize a discovery opportunity before deciding whether to validate, prioritize, reframe, or stop.
+Use this canvas to summarize a discovery opportunity before deciding whether to prioritize, validate further, prototype, reframe, or stop.
 
 ## Opportunity Summary
 
-- Opportunity name:
-- Customer segment:
-- Product area:
-- Decision owner:
-- Review date:
+| Field | Response |
+| --- | --- |
+| Opportunity name |  |
+| Customer segment |  |
+| Product area |  |
+| Decision owner |  |
+| Review date |  |
+| Decision needed |  |
 
 ## Customer Problem
 
-- Who has the problem?
-- What workflow is affected?
-- What pain appears?
-- How often does it happen?
-- What is the cost of failure?
+| Question | Response |
+| --- | --- |
+| Who has the problem? |  |
+| What workflow is affected? |  |
+| What pain appears? |  |
+| How often does it happen? |  |
+| What is the cost of failure? |  |
+| What behavior should change? |  |
 
 ## Current Behavior
 
-- What do customers do today?
-- What workarounds exist?
-- What tools or processes are involved?
-- Where does friction appear?
+| Area | Notes |
+| --- | --- |
+| Current workaround |  |
+| Tools involved |  |
+| People involved |  |
+| Failure point |  |
+| Decision trigger |  |
 
-## Evidence
+## Evidence Inventory
 
-- Interview signals:
-- Behavioral signals:
-- Support / sales signals:
-- Analytics signals:
-- Prototype or experiment signals:
+| Evidence Source | Signal | Confidence |
+| --- | --- | --- |
+| Customer interviews |  |  |
+| Observed workflow |  |  |
+| Product analytics |  |  |
+| Support / sales patterns |  |  |
+| Prototype / experiment |  |  |
+| Internal stakeholder input |  |  |
 
 ## Assumptions
 
-- Customer assumption:
-- Business assumption:
-- Product assumption:
-- Technical assumption:
-- GTM assumption:
+| Assumption | Type | Risk | Validation Method |
+| --- | --- | --- | --- |
+|  | Customer |  |  |
+|  | Business |  |  |
+|  | Product |  |  |
+|  | Technical |  |  |
+|  | GTM |  |  |
+
+## Opportunity Assessment
+
+| Dimension | Rating | Evidence |
+| --- | --- | --- |
+| Customer pain | Low / Medium / High |  |
+| Workflow frequency | Low / Medium / High |  |
+| Business impact | Low / Medium / High |  |
+| Evidence quality | Weak / Moderate / Strong |  |
+| Readiness | Not ready / Validate / Prioritize |  |
 
 ## Decision
 
@@ -56,7 +80,10 @@ Choose one:
 
 ## Next Step
 
-- Next action:
-- Owner:
-- Due date:
-- Success criteria:
+| Field | Response |
+| --- | --- |
+| Next action |  |
+| Owner |  |
+| Due date |  |
+| Success criteria |  |
+| Review date |  |

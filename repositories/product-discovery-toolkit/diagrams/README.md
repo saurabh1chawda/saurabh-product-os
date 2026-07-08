@@ -1,19 +1,31 @@
 # Diagram Inventory
 
-Status: Planned visual layer  
+Status: v1 visual source layer  
 Last updated: July 2026
 
-This directory will hold diagrams that make discovery workflows easier to understand and facilitate.
+This directory holds Mermaid source files that make discovery workflows easier to understand and facilitate.
 
-Planned diagrams:
+Available diagrams:
 
-- Discovery Process
-- Evidence Ladder
-- Opportunity Assessment
-- Assumption Map
-- Opportunity Solution Tree
-- Prioritization Readiness
-- Discovery Anti-Pattern Map
+- [Discovery Flow](discovery-flow.mmd)
+- [Evidence Ladder](evidence-ladder.mmd)
+- [Opportunity Assessment Canvas](opportunity-assessment-canvas.mmd)
+- [Discovery Decision Tree](discovery-decision-tree.mmd)
+
+## Rendering Guidance
+
+These files use Mermaid syntax and can render in:
+
+- GitHub Markdown previews.
+- Mermaid Live Editor.
+- Documentation sites with Mermaid enabled.
+- Internal wiki tools that support Mermaid.
+
+Recommended export formats:
+
+- SVG for documentation.
+- PNG for presentations.
+- Mermaid source for repository maintenance.
 
 Diagram standards:
 

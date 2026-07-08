@@ -1,0 +1,12 @@
+flowchart TD
+    A["Opportunity"] --> B["Customer segment clear?"]
+    B -->|No| R["Reframe"]
+    B -->|Yes| C["Workflow understood?"]
+    C -->|No| V["Validate further"]
+    C -->|Yes| D["Repeated evidence exists?"]
+    D -->|No| V
+    D -->|Yes| E["Business impact measurable?"]
+    E -->|No| V
+    E -->|Yes| F["Riskiest assumption tested?"]
+    F -->|No| P["Prototype"]
+    F -->|Yes| G["Prioritize"]

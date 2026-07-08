@@ -14,9 +14,9 @@ Product Discovery Toolkit is a documentation-first product repository. It is org
 | `frameworks/` | Discovery process, opportunity assessment, evidence ladder, readiness, and anti-patterns |
 | `templates/` | Copyable interview, canvas, mapping, experiment, scorecard, and stakeholder templates |
 | `examples/` | Concise examples showing how discovery influences product decisions |
-| `diagrams/` | Planned visual models for workshops and documentation |
+| `diagrams/` | Mermaid visual models for workshops and documentation |
 | `assets/` | Public screenshots, exports, and supporting assets |
-| `docs/` | Architecture, governance, roadmap, and product specification |
+| `docs/` | Architecture, governance, roadmap, product specification, downloads, and playbooks |
 
 ## Content Model
 

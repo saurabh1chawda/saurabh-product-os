@@ -90,12 +90,47 @@ Start with:
 
 ## Examples
 
-- [JoVE](examples/jove.md)
+- [JoVE Worked Example](examples/jove.md)
 - [Logix](examples/logix.md)
 - [Simplilearn](examples/simplilearn.md)
 - [Generic Product](examples/generic-product.md)
+- [JoVE Discovery Card](examples/discovery-cards/jove-workflow-adoption.md)
 
 Examples focus on discovery influence, not implementation detail.
+
+## Visual Assets
+
+- [Discovery Flow](diagrams/discovery-flow.mmd)
+- [Evidence Ladder](diagrams/evidence-ladder.mmd)
+- [Opportunity Assessment Canvas](diagrams/opportunity-assessment-canvas.mmd)
+- [Discovery Decision Tree](diagrams/discovery-decision-tree.mmd)
+
+Diagram rendering guidance is documented in [Diagrams](diagrams/README.md).
+
+## Discovery Playbooks
+
+- [First Discovery Sprint](docs/playbooks/first-discovery-sprint.md)
+- [Customer Interview Session](docs/playbooks/customer-interview-session.md)
+- [Opportunity Assessment Workshop](docs/playbooks/opportunity-assessment-workshop.md)
+- [Weekly Discovery Review](docs/playbooks/weekly-discovery-review.md)
+
+## Downloads
+
+Supported source formats are documented in [Downloads](docs/downloads.md).
+
+Current formats:
+
+- Markdown templates.
+- Mermaid diagram sources.
+- Markdown discovery cards.
+
+Future formats:
+
+- CSV.
+- Excel.
+- Google Sheets.
+- Notion.
+- Miro.
 
 ## Product OS Relationship
 
@@ -108,6 +143,38 @@ Relevant Product OS pages:
 - Customer Discovery Decision System: `https://saurabh-product-os.vercel.app/decision-systems/customer-discovery`
 - Product Discovery Framework: `https://saurabh-product-os.vercel.app/frameworks/product-discovery`
 - JoVE Product Leadership Brief: `https://saurabh-product-os.vercel.app/case-studies/jove`
+
+## Related Products
+
+- AI Prioritization Framework: `../ai-prioritization-framework/README.md`
+- Decision Memo Template: `../decision-memo-template/README.md`
+- Product Leadership Briefs: `../product-leadership-briefs/README.md`
+- AI Product Playbook: `../ai-product-playbook/README.md`
+- Product OS: `../../README.md`
+
+## Recommended Learning Paths
+
+### First Discovery Sprint
+
+1. Discovery Process
+2. Customer Interview Guide
+3. Discovery Canvas
+4. Evidence Ladder
+5. Validation Scorecard
+
+### Roadmap Planning
+
+1. Opportunity Assessment
+2. Prioritization Readiness
+3. AI Prioritization Framework
+4. Decision Memo Template
+
+### Executive Discovery Review
+
+1. JoVE Discovery Card
+2. Opportunity Assessment Canvas
+3. Product Leadership Briefs
+4. Product OS
 
 ## Roadmap
 
