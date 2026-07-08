@@ -13,12 +13,12 @@ The repository should help visitors understand how product judgment can be docum
 
 | Folder | Responsibility |
 | --- | --- |
-| `briefs/` | Brief navigation, brief stubs, and decision index |
-| `frameworks/` | Product Decision Framework and future reusable decision models |
+| `briefs/` | Brief navigation, expanded flagship briefs, and decision index |
+| `frameworks/` | Product Decision Framework, Brief Scorecard, Decision Reusability, and reusable decision models |
 | `templates/` | Leadership Brief template and future brief variants |
 | `assets/` | Public screenshots, exports, and supporting assets |
-| `diagrams/` | Visual models that clarify product decisions |
-| `docs/` | Architecture, governance, roadmap, and product specification |
+| `diagrams/` | Mermaid visual models that clarify product decisions |
+| `docs/` | Architecture, governance, roadmap, product specification, downloads, and playbooks |
 
 ## Content Model
 

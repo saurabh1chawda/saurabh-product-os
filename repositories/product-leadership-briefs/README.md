@@ -70,10 +70,19 @@ Would I trust this person to lead a difficult product decision?
 | --- | --- | --- | --- |
 | [JoVE](briefs/jove.md) | Workflow adoption over content expansion | Customer Experience, AI | Available in Product OS |
 | [Logix](briefs/logix.md) | Platform modernization before advanced AI expansion | Platform Modernization, AI | Available in Product OS |
-| [Mahindra Comviva](briefs/mahindra-comviva.md) | Reliability and trust before platform expansion | Reliability, Payments | Planned Product OS evidence |
+| [Mahindra Comviva](briefs/mahindra-comviva.md) | Reliability and trust before platform expansion | Reliability, Payments | Product OS evidence |
 | [Simplilearn](briefs/simplilearn.md) | Funnel optimization before scaling growth | Growth | Available in Product OS |
 
 Start with the [Decision Index](briefs/decision-index.md) to browse briefs by decision category rather than employer.
+
+## Leadership Cards
+
+- [JoVE](examples/leadership-cards/jove.md)
+- [Logix](examples/leadership-cards/logix.md)
+- [Mahindra Comviva](examples/leadership-cards/mahindra-comviva.md)
+- [Simplilearn](examples/leadership-cards/simplilearn.md)
+
+Leadership cards provide one-page summaries for coaching, interviews, executive reviews, and product strategy workshops.
 
 ## Product Decision Framework
 
@@ -90,6 +99,46 @@ Every Product Leadership Brief follows a consistent structure:
 9. Reusable Principle
 
 See [Product Decision Framework](frameworks/product-decision-framework.md).
+
+Additional reusable frameworks:
+
+- [Brief Scorecard](frameworks/brief-scorecard.md)
+- [Decision Reusability](frameworks/decision-reusability.md)
+
+## Visual Assets
+
+- [Decision Timeline](diagrams/decision-timeline.mmd)
+- [Stakeholder Map](diagrams/stakeholder-map.mmd)
+- [Trade-off Matrix](diagrams/trade-off-matrix.mmd)
+- [Decision Evolution](diagrams/decision-evolution.mmd)
+
+Diagram rendering guidance is documented in [Diagrams](diagrams/README.md).
+
+## Leadership Playbooks
+
+- [Executive Roadmap Review](docs/playbooks/executive-roadmap-review.md)
+- [Product Strategy Review](docs/playbooks/product-strategy-review.md)
+- [Platform Modernization Decision](docs/playbooks/platform-modernization-decision.md)
+- [Reliability Review](docs/playbooks/reliability-review.md)
+- [Growth Review](docs/playbooks/growth-review.md)
+
+## Downloads
+
+Supported source and export formats are documented in [Downloads](docs/downloads.md).
+
+Current source formats:
+
+- Markdown briefs.
+- Markdown leadership cards.
+- Mermaid diagram sources.
+
+Future export targets:
+
+- PDF.
+- Google Docs.
+- PowerPoint.
+- Notion.
+- Executive Brief.
 
 ## Repository Structure
 
@@ -118,6 +167,37 @@ Relevant Product OS pages:
 - Logix Brief: `https://saurabh-product-os.vercel.app/case-studies/logix`
 - Simplilearn Brief: `https://saurabh-product-os.vercel.app/case-studies/simplilearn`
 - Operating Principles: `https://saurabh-product-os.vercel.app/product-leadership-operating-principles`
+
+## Related Products
+
+- Product Discovery Toolkit: `../product-discovery-toolkit/README.md`
+- AI Prioritization Framework: `../ai-prioritization-framework/README.md`
+- Decision Memo Template: `../decision-memo-template/README.md`
+- AI Product Playbook: `../ai-product-playbook/README.md`
+- Product OS: `../../README.md`
+
+## Recommended Learning Paths
+
+### PM Coaching
+
+1. Leadership Cards
+2. Brief Scorecard
+3. Decision Reusability
+4. Product Strategy Review
+
+### Executive Product Review
+
+1. Product Decision Framework
+2. Flagship Briefs
+3. Decision Memo Template
+4. Product OS
+
+### AI Product Leadership
+
+1. Logix Brief
+2. JoVE Brief
+3. AI Prioritization Framework
+4. AI Product Playbook
 
 ## Roadmap
 

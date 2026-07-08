@@ -10,7 +10,7 @@ This index organizes Product Leadership Briefs by decision category rather than 
 | Brief | Decision | Status |
 | --- | --- | --- |
 | [Logix](logix.md) | Modernize the platform before teaching it to think | Available in Product OS |
-| [Mahindra Comviva](mahindra-comviva.md) | Strengthen reliability before expanding the platform surface | Planned Product OS evidence |
+| [Mahindra Comviva](mahindra-comviva.md) | Strengthen reliability before expanding the platform surface | Product OS evidence |
 
 ## AI
 
@@ -29,7 +29,7 @@ This index organizes Product Leadership Briefs by decision category rather than 
 
 | Brief | Decision | Status |
 | --- | --- | --- |
-| [Mahindra Comviva](mahindra-comviva.md) | Reliability and trust before platform expansion | Planned Product OS evidence |
+| [Mahindra Comviva](mahindra-comviva.md) | Reliability and trust before platform expansion | Product OS evidence |
 
 ## Customer Experience
 
