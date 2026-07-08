@@ -7,13 +7,13 @@ Product Collection: AI Product Collection
 
 AI Product Playbook is a practical operating guide for identifying, validating, designing, measuring, and scaling AI products based on customer value, trust, and measurable outcomes.
 
-It helps Product Managers avoid starting with model novelty and instead make disciplined product decisions around workflows, evidence, automation depth, trust, readiness, and business value.
+It acts as the orchestration layer for the Product Leadership Platform, helping Product Managers move from discovery to prioritization, architecture, decision communication, execution, measurement, and reusable leadership evidence.
 
 ## Executive Summary
 
 AI products do not succeed because they use advanced models. They succeed when they solve meaningful customer problems with enough reliability, trust, and business value to change real workflows.
 
-This repository is designed as a reusable product resource for Product Managers, AI Product Managers, product leaders, and cross-functional teams who need to evaluate whether AI belongs in a product, how much automation is appropriate, and what evidence should guide investment.
+This repository is designed as a reusable product resource for Product Managers, AI Product Managers, product leaders, and cross-functional teams who need to evaluate whether AI belongs in a product, how much automation is appropriate, what evidence should guide investment, and which repository provides the next artifact.
 
 ## Problem Statement
 
@@ -67,23 +67,51 @@ That approach often creates products with weak adoption, unclear business impact
 
 ## Getting Started
 
-Start with the framework index:
+Start with the lifecycle:
 
-- [Frameworks](frameworks/README.md)
+- [AI Product Lifecycle](docs/ai-product-lifecycle.md)
+- [AI Product Operating System](docs/ai-product-operating-system.md)
 
 Then explore:
 
+- [Learning Paths](docs/learning-paths.md)
 - [Templates](templates/README.md)
 - [Examples](examples/README.md)
+- [Downloads](docs/downloads.md)
+- [Frameworks](frameworks/README.md)
 - [Roadmap](docs/roadmap.md)
 - [Product Specification](docs/product-specification.md)
 
 Recommended first path:
 
-1. Read the AI Prioritization framework placeholder.
-2. Review the Trust Before Automation placeholder.
-3. Scan the Logix and JoVE examples.
-4. Use the planned AI Opportunity Assessment template as the first reusable artifact to build.
+1. Read the AI Product Lifecycle.
+2. Review the AI Product Operating System.
+3. Scan the Logix end-to-end example.
+4. Choose the learning path that matches your role.
+5. Follow the repository handoff model instead of copying detailed content into one document.
+
+## Capstone Guides
+
+- [AI Product Lifecycle](docs/ai-product-lifecycle.md)
+- [AI Product Operating System](docs/ai-product-operating-system.md)
+- [Learning Paths](docs/learning-paths.md)
+- [Downloads](docs/downloads.md)
+
+## Complete Worked Example
+
+- [Logix AI Product Lifecycle Example](examples/logix.md)
+
+This example shows how discovery, prioritization, architecture, decision memo, leadership brief, business outcomes, and lessons connect across the Product Leadership Platform.
+
+## Visual Assets
+
+- [AI Product Lifecycle](diagrams/ai-product-lifecycle.mmd)
+- [Decision Systems Map](diagrams/decision-systems-map.mmd)
+- [Repository Ecosystem](diagrams/repository-ecosystem.mmd)
+- [Product Judgment Loop](diagrams/product-judgment-loop.mmd)
+- [AI Product Operating Model](diagrams/ai-product-operating-model.mmd)
+
+Diagram rendering guidance is documented in [Diagrams](diagrams/README.md).
 
 ## Product OS Relationship
 
@@ -100,14 +128,25 @@ Relevant Product OS pages:
 - RAG vs Agent Decision System: `https://saurabh-product-os.vercel.app/decision-systems/rag-vs-agent`
 - AI Success Metrics Decision System: `https://saurabh-product-os.vercel.app/decision-systems/ai-success-metrics`
 
+## Related Flagship Repositories
+
+- Product Discovery Toolkit: `../product-discovery-toolkit/README.md`
+- AI Prioritization Framework: `../ai-prioritization-framework/README.md`
+- Decision Memo Template: `../decision-memo-template/README.md`
+- Product Leadership Briefs: `../product-leadership-briefs/README.md`
+- Product OS: `../../README.md`
+
 ## Roadmap
 
-**Version 1: Core Frameworks**
+**Version 1: Core Frameworks and Capstone Navigation**
 
 - Repository foundation
 - Framework index
 - Template index
 - Example structure
+- AI Product Lifecycle
+- AI Product Operating System
+- Learning paths
 - Product specification
 - Governance and roadmap docs
 
@@ -149,4 +188,4 @@ Before public open-source launch, clarify which parts of this repository are reu
 
 ## Status
 
-This repository is in v1 foundation state. It is launch-ready as a product definition and navigation structure, but individual frameworks and templates are intentionally not fully implemented yet.
+This repository is GA-ready as the capstone orchestration layer for the Product Leadership Platform. It coordinates the lifecycle, operating model, learning paths, examples, diagrams, and repository handoffs while leaving detailed artifacts in their owning flagship repositories.

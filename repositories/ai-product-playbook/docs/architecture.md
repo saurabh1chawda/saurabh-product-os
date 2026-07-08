@@ -13,12 +13,12 @@ The repository should help visitors move from AI product philosophy to practical
 
 | Folder | Responsibility |
 | --- | --- |
-| `frameworks/` | Planned decision frameworks and reusable product models |
+| `frameworks/` | Decision frameworks and reusable product models |
 | `templates/` | Reusable canvases, checklists, and product documents |
-| `examples/` | Concise examples showing how frameworks apply in real product contexts |
-| `diagrams/` | Visual models that clarify product decisions |
+| `examples/` | Concise examples and lifecycle applications showing how repositories work together |
+| `diagrams/` | Mermaid visual models that clarify product decisions and ecosystem navigation |
 | `assets/` | Public screenshots, exports, and supporting assets |
-| `docs/` | Architecture, governance, roadmap, and product specification |
+| `docs/` | Architecture, governance, roadmap, product specification, lifecycle, learning paths, downloads, and operating model |
 
 ## Content Model
 
