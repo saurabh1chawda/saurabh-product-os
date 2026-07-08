@@ -13,10 +13,10 @@ Decision Memo Template is a documentation-first product repository. It is organi
 | --- | --- |
 | `frameworks/` | Decision writing, executive summary, stakeholder alignment, evidence, and mistake-avoidance frameworks |
 | `templates/` | Copyable memo templates for executive, product, AI, platform, roadmap, and one-page decisions |
-| `examples/` | Placeholder examples showing communication structure |
-| `diagrams/` | Planned visual models for teaching decision writing |
+| `examples/` | Communication examples and compact decision cards |
+| `diagrams/` | Mermaid visual models for teaching decision writing |
 | `assets/` | Public previews, exports, and supporting assets |
-| `docs/` | Architecture, governance, roadmap, and product specification |
+| `docs/` | Architecture, governance, roadmap, product specification, downloads, and playbooks |
 
 ## Content Model
 

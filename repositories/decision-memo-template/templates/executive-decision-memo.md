@@ -1,35 +1,64 @@
 # Executive Decision Memo
 
-Status: v1 template  
+Status: v1 production template  
 Last updated: July 2026
 
-Use this template when a senior stakeholder needs to approve, reject, fund, or redirect a product decision.
+Use this template when a senior stakeholder needs to approve, reject, fund, pause, or redirect a product decision.
+
+## How To Use This Template
+
+Write the recommendation first. Keep the memo short enough for an executive to inspect the decision in one sitting.
+
+Expected output: a decision-ready memo with a clear ask, evidence, alternatives, trade-offs, risks, and success criteria.
 
 ## Decision Request
 
-What decision do you need?
+Prompt: What decision do you need from the reader?
+
+Expected output:
+
+- Approve / reject / fund / pause / redirect:
+- Decision owner:
+- Decision date:
+- Reversibility: one-way / two-way / partially reversible
 
 ## Recommendation
 
-What do you recommend?
+Prompt: What do you recommend and why?
+
+Expected output: 2 to 4 sentences that state the recommendation, primary evidence, and trade-off.
 
 ## Executive Summary
 
-In 100 to 150 words, summarize the decision, rationale, evidence, trade-off, and next step.
+Prompt: Summarize the decision in 100 to 150 words.
+
+Include:
+
+- Recommendation.
+- Why now.
+- Strongest evidence.
+- Main trade-off.
+- Requested next step.
 
 ## Evidence
 
-| Evidence | What It Shows | Confidence |
-| --- | --- | --- |
-|  |  |  |
+Prompt: What evidence would change a reasonable executive's mind?
+
+| Evidence | Source | What It Shows | Confidence |
+| --- | --- | --- | --- |
+|  |  |  | Low / Medium / High |
 
 ## Options Considered
 
-| Option | Benefit | Risk | Recommendation |
+Prompt: What credible alternatives were considered?
+
+| Option | Benefit | Risk | Decision |
 | --- | --- | --- | --- |
-|  |  |  |  |
+|  |  |  | Chosen / Rejected / Parked |
 
 ## Trade-offs
+
+Prompt: What does this recommendation cost?
 
 - What we accept:
 - What we delay:
@@ -38,18 +67,25 @@ In 100 to 150 words, summarize the decision, rationale, evidence, trade-off, and
 
 ## Risks and Assumptions
 
-| Risk / Assumption | Impact | Mitigation |
-| --- | --- | --- |
-|  |  |  |
+Prompt: What could make this recommendation wrong?
+
+| Risk / Assumption | Impact | Mitigation | Owner |
+| --- | --- | --- | --- |
+|  |  |  |  |
 
 ## Success Criteria
 
-- Metric:
-- Target:
-- Review date:
+Prompt: How will we know the decision worked?
 
-## Next Step
+| Metric | Baseline | Target | Review Date |
+| --- | --- | --- | --- |
+|  |  |  |  |
 
-- Owner:
-- Action:
+## Final Decision
+
+Prompt: Capture the decision after review.
+
+- Decision:
+- Approved by:
 - Date:
+- Follow-up:

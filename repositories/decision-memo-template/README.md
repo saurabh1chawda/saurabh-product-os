@@ -86,6 +86,7 @@ Specialized templates:
 | [Executive Summary Guide](frameworks/executive-summary-guide.md) | Write crisp summaries that clarify the decision request |
 | [Stakeholder Alignment](frameworks/stakeholder-alignment.md) | Communicate competing priorities without flattening disagreement |
 | [Evidence Standards](frameworks/evidence-standards.md) | Separate evidence, assumptions, risks, and opinions |
+| [Decision Confidence](frameworks/decision-confidence.md) | Match recommendation strength to evidence quality |
 | [Common Memo Mistakes](frameworks/common-memo-mistakes.md) | Avoid communication failures that weaken decisions |
 
 ## Examples
@@ -94,8 +95,43 @@ Specialized templates:
 - [Logix](examples/logix.md)
 - [Mahindra Comviva](examples/mahindra-comviva.md)
 - [Simplilearn](examples/simplilearn.md)
+- [Mahindra Comviva Decision Card](examples/decision-cards/mahindra-comviva-reliability.md)
 
 Examples focus on communication structure, not historical narrative.
+
+## Visual Assets
+
+- [Decision Writing Pyramid](diagrams/decision-writing-pyramid.mmd)
+- [Decision Flow](diagrams/decision-flow.mmd)
+- [Stakeholder Alignment Map](diagrams/stakeholder-alignment-map.mmd)
+
+Diagram rendering guidance is documented in [Diagrams](diagrams/README.md).
+
+## Decision Playbooks
+
+- [Executive Review Meeting](docs/playbooks/executive-review-meeting.md)
+- [Architecture Review](docs/playbooks/architecture-review.md)
+- [Quarterly Planning](docs/playbooks/quarterly-planning.md)
+- [Investment Committee](docs/playbooks/investment-committee.md)
+- [Product Council](docs/playbooks/product-council.md)
+
+## Downloads
+
+Supported source and export formats are documented in [Downloads](docs/downloads.md).
+
+Current source formats:
+
+- Markdown memo templates.
+- Markdown decision cards.
+- Mermaid diagram sources.
+
+Future export targets:
+
+- Google Docs.
+- Microsoft Word.
+- PDF.
+- Notion.
+- Confluence.
 
 ## Product OS Relationship
 
@@ -108,6 +144,37 @@ Relevant Product OS pages:
 - Product Leadership Operating Principles: `https://saurabh-product-os.vercel.app/product-leadership-operating-principles`
 - Decision Operating System: `https://saurabh-product-os.vercel.app/decision-operating-system`
 - Executive Briefing Center: `https://saurabh-product-os.vercel.app/executive`
+
+## Related Products
+
+- Product Discovery Toolkit: `../product-discovery-toolkit/README.md`
+- AI Prioritization Framework: `../ai-prioritization-framework/README.md`
+- Product Leadership Briefs: `../product-leadership-briefs/README.md`
+- AI Product Playbook: `../ai-product-playbook/README.md`
+- Product OS: `../../README.md`
+
+## Recommended Learning Paths
+
+### Executive Product Decision
+
+1. Executive Decision Memo
+2. Decision Confidence
+3. Stakeholder Alignment
+4. Executive Review Meeting
+
+### AI Investment Proposal
+
+1. Product Discovery Toolkit
+2. AI Prioritization Framework
+3. AI Investment Memo
+4. AI Product Playbook
+
+### Product Leadership Evidence
+
+1. Mahindra Comviva Worked Example
+2. Mahindra Comviva Decision Card
+3. Product Leadership Briefs
+4. Product OS
 
 ## Roadmap
 
