@@ -36,13 +36,13 @@ Score each criterion from 1 to 5.
 
 ## Recommendation Bands
 
-| Recommendation | When to Use |
-| --- | --- |
-| Build Now | Strong customer value, strong business value, high readiness, manageable trust risk |
-| Prototype | Strong upside but meaningful feasibility, trust, or adoption uncertainty |
-| Validate Further | Problem may matter, but evidence is not strong enough to increase investment |
-| Park | Opportunity is interesting but weak timing, readiness, or strategic fit |
-| Reject | AI adds complexity without enough customer or business value |
+| Score | Recommendation | When to Use |
+| ---: | --- | --- |
+| 85-100 | Build Now | Strong customer value, strong business value, high readiness, manageable trust risk |
+| 70-84 | Prototype | Strong upside but meaningful feasibility, trust, or adoption uncertainty |
+| 55-69 | Validate Further | Problem may matter, but evidence is not strong enough to increase investment |
+| 40-54 | Park | Opportunity is interesting but weak timing, readiness, or strategic fit |
+| 0-39 | Reject | AI adds complexity without enough customer or business value |
 
 ## Weighting Guidance
 
@@ -62,3 +62,5 @@ Teams may adjust weights for regulated, enterprise, consumer, or platform contex
 If customer value is weak, do not prioritize the opportunity even if technical feasibility is high.
 
 If trust risk is unacceptable, do not prioritize automation until safeguards are improved.
+
+See [Recommendation Guide](recommendation-guide.md) for threshold details and gating rules.

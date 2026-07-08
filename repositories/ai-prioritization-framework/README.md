@@ -90,7 +90,7 @@ Recommended actions:
 - Park
 - Reject
 
-See [Scoring Model](framework/scoring-model.md).
+See [Scoring Model](framework/scoring-model.md) and [Recommendation Guide](framework/recommendation-guide.md).
 
 ## Templates
 
@@ -101,11 +101,37 @@ See [Scoring Model](framework/scoring-model.md).
 ## Examples
 
 - [JoVE](examples/jove.md)
-- [Logix](examples/logix.md)
+- [Logix Worked Example](examples/logix.md)
 - [Simplilearn](examples/simplilearn.md)
 - [Generic AI Product](examples/generic-ai-product.md)
+- [Logix Opportunity Card](examples/opportunity-cards/logix-ai-ready-platform.md)
 
 Examples focus on framework application. They do not duplicate Product Leadership Briefs.
+
+## Visual Assets
+
+- [AI Prioritization Flow](diagrams/ai-prioritization-flow.mmd)
+- [AI Decision Matrix](diagrams/ai-decision-matrix.mmd)
+- [Scoring Worksheet](diagrams/scoring-worksheet.mmd)
+
+Diagram rendering guidance is documented in [Diagrams](diagrams/README.md).
+
+## Downloads
+
+Supported source formats are documented in [Downloads](docs/downloads.md).
+
+Current formats:
+
+- Markdown templates.
+- Mermaid diagram sources.
+- Markdown opportunity cards.
+
+Future formats:
+
+- CSV.
+- Excel.
+- Google Sheets.
+- Notion.
 
 ## Product OS Relationship
 
@@ -116,6 +142,40 @@ Product OS explains the philosophy. This repository helps teams run the prioriti
 Relevant Product OS page:
 
 - `https://saurabh-product-os.vercel.app/decision-systems/ai-prioritization`
+
+## Related Products
+
+- AI Product Playbook: `../ai-product-playbook/README.md`
+- Product Discovery Toolkit: `../product-discovery-toolkit/README.md`
+- Decision Memo Template: `../decision-memo-template/README.md`
+- Product Leadership Briefs: `../product-leadership-briefs/README.md`
+- Product OS: `../../README.md`
+
+## Recommended Learning Paths
+
+### Roadmap Workshop
+
+1. Product Discovery Toolkit
+2. AI Opportunity Canvas
+3. Scoring Sheet
+4. Recommendation Guide
+5. Decision Memo Template
+
+### AI Investment Review
+
+1. AI Product Playbook
+2. AI Prioritization Framework
+3. Logix Worked Example
+4. AI Decision Matrix
+5. Executive Decision Memo
+
+### Executive Presentation
+
+1. Logix Opportunity Card
+2. AI Decision Matrix
+3. Scoring Worksheet
+4. Product Leadership Briefs
+5. Product OS
 
 ## Roadmap
 

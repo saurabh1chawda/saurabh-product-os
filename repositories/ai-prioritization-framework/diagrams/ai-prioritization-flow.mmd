@@ -1,0 +1,14 @@
+flowchart TD
+    A["AI Opportunity"] --> B["Customer problem clear?"]
+    B -->|No| R["Reject or reframe"]
+    B -->|Yes| C["Customer value meaningful?"]
+    C -->|No| R
+    C -->|Yes| D["Business value measurable?"]
+    D -->|No| V["Validate Further"]
+    D -->|Yes| E["Execution readiness sufficient?"]
+    E -->|No| P["Prototype or Validate Further"]
+    E -->|Yes| F["Trust risk manageable?"]
+    F -->|No| S["Add safeguards or Park"]
+    F -->|Yes| G["Score opportunity"]
+    G --> H["Apply anti-pattern checks"]
+    H --> I["Build Now / Prototype / Validate Further / Park / Reject"]
