@@ -200,15 +200,31 @@ export default function ExecutiveBriefingCenterPage() {
                   <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{decision.title}</p>
                   <h3 className="mt-4 text-2xl font-semibold leading-tight text-ink">{decision.decision}</h3>
                   <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+                    <DetailBlock label="Role Fit" value={decision.roleFit} />
                     <DetailBlock label="Business Impact" value={decision.businessImpact} />
                     <DetailBlock label="Product Principle" value={decision.principle} />
                   </dl>
                   <p className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-accent">
-                    Read Product Leadership Brief
+                    Review role-fit evidence
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </p>
                 </ExecutiveTrackedLink>
               ))}
+            </div>
+            <div className="mt-8 rounded-md border border-line bg-paper p-6">
+              <h3 className="text-xl font-semibold leading-tight text-ink">Ready to discuss role fit?</h3>
+              <p className="mt-3 max-w-3xl leading-7 text-muted">
+                If this evidence maps to a Senior / Lead PM, AI PM, platform, growth, or enterprise product role, the fastest next step is LinkedIn or email.
+              </p>
+              <ExecutiveTrackedLink
+                href="/contact"
+                eventName="contact_cta_clicked"
+                label="Start interview conversation"
+                className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-accent px-4 text-sm font-semibold text-white transition hover:bg-ink"
+              >
+                Start an interview conversation
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </ExecutiveTrackedLink>
             </div>
           </div>
         </section>

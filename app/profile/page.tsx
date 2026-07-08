@@ -365,17 +365,17 @@ export default function ProfessionalProfilePage() {
                 I am Saurabh Chawda, a Lead Product Manager with 8+ years of experience building AI products, platform capabilities, growth initiatives, experimentation systems, analytics-driven products, and customer-centric experiences across B2B SaaS, enterprise platforms, fintech, and digital products. Product OS shows the product judgment behind that work.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href="/decision-operating-system">
-                  Explore the decision system
+                <ButtonLink href="/executive">
+                  Read the Executive Brief
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </ButtonLink>
-                <span
-                  aria-disabled="true"
-                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-line bg-paper px-4 text-sm font-semibold text-muted"
-                >
-                  View Case Studies: Coming Soon
-                </span>
+                <ButtonLink href="/case-studies" variant="secondary">
+                  Review Product Leadership Briefs
+                </ButtonLink>
               </div>
+              <p className="mt-5 max-w-3xl text-sm leading-6 text-muted">
+                This Professional Profile is Product OS career context. Tailored resumes remain application-specific and can be shared through the hiring process.
+              </p>
             </div>
           </div>
         </section>
@@ -552,7 +552,7 @@ export default function ProfessionalProfilePage() {
           <div className="rounded-md border border-line bg-paper p-6">
             <TrendingUp className="h-6 w-6 text-accent" aria-hidden="true" />
             <p className="mt-5 max-w-4xl text-lg leading-8 text-muted">
-              Traditional professional profiles summarize outcomes. Product OS complements those outcomes by documenting the thinking, product decisions, customer discovery, experimentation, trade-offs, and execution approaches behind them. Think of Product OS as the evidence behind the Professional Profile rather than a replacement for tailored application materials.
+              Traditional professional profiles summarize outcomes. Product OS complements those outcomes by documenting the thinking, product decisions, customer discovery, experimentation, trade-offs, and execution approaches behind them. Think of Product OS as the evidence behind the Professional Profile rather than a replacement for tailored application-specific resumes.
             </p>
             <ButtonLink href="/decision-operating-system" variant="inline" className="mt-5">
               Explore the decision system
@@ -584,6 +584,9 @@ export default function ProfessionalProfilePage() {
         </section>
 
         <ProfileSection eyebrow="Contact" id="contact" title="The fastest way to start a conversation">
+          <p className="mb-6 max-w-3xl leading-7 text-muted">
+            For Senior / Lead PM, AI Product Manager, platform, growth, or enterprise product opportunities, LinkedIn or email is the fastest way to start an interview conversation.
+          </p>
           <div className="grid gap-4 lg:grid-cols-3">
             {contactLinks.map((link) => (
               <article key={link.label} className="rounded-md border border-line bg-panel p-5">

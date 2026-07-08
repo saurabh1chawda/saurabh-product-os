@@ -352,7 +352,7 @@ export default function InterviewCompanionPage() {
                 <h2 className="mt-5 text-xl font-semibold leading-tight text-ink">{story.title}</h2>
                 <p className="mt-3 leading-7 text-muted">{story.description}</p>
                 <InterviewTrackedLink href={story.href} eventName="interview_story_clicked" label={story.title} className="mt-5">
-                  Read story
+                  Review brief
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </InterviewTrackedLink>
               </article>

@@ -14,7 +14,7 @@ I build products and decision systems across AI, platforms, enterprise SaaS, pay
 
 Product OS explains how I think. GitHub shows the reusable assets behind that thinking.
 
-Start with the [Executive Brief](https://saurabh-product-os.vercel.app/executive), then explore the repositories and product artifacts that support it.
+Start with the [Executive Brief](https://saurabh-product-os.vercel.app/executive), continue into Product OS, inspect the flagship repositories, then contact me if the evidence maps to your role.
 
 ## Operating Principle
 
@@ -52,11 +52,11 @@ Working artifacts include Product OS implementation, Product Leadership Brief st
 Start here: [Product Leadership Briefs](https://saurabh-product-os.vercel.app/case-studies)
 
 ### Product Toolkit Collection
-🛠 Coming soon.
+🛠 Use this collection to reuse practical product artifacts.
 
-This collection will hold reusable discovery, prioritization, PRD, and decision memo artifacts.
+Working artifacts include discovery templates, AI prioritization tools, decision memo templates, and product leadership brief structures.
 
-Start here: [Customer Discovery](https://saurabh-product-os.vercel.app/decision-systems/customer-discovery)
+Start here: [Product Discovery Toolkit](https://saurabh-product-os.vercel.app/decision-systems/customer-discovery)
 
 ## Start Here
 
@@ -65,13 +65,20 @@ Start here: [Customer Discovery](https://saurabh-product-os.vercel.app/decision-
 | [Product OS](https://saurabh-product-os.vercel.app) | Executive overview of my product judgment |
 | [AI Product Playbook](https://saurabh-product-os.vercel.app/ai-product-playbook) | Practical AI product operating model |
 | [Product Leadership Briefs](https://saurabh-product-os.vercel.app/case-studies) | Evidence-backed product decisions |
-| Product Toolkit | Coming soon: reusable discovery, prioritization, and decision artifacts |
+| Product Toolkit | Reusable discovery, prioritization, decision memo, and leadership brief artifacts |
 
 ## Product OS
 
 [Product OS](https://saurabh-product-os.vercel.app) is the executive overview.
 
 GitHub is where the reusable assets live.
+
+Recommended path:
+
+1. [Executive Brief](https://saurabh-product-os.vercel.app/executive)
+2. [Product OS](https://saurabh-product-os.vercel.app)
+3. Flagship repositories and reusable artifacts
+4. [Contact](https://saurabh-product-os.vercel.app/contact)
 
 ## Explore by Audience
 

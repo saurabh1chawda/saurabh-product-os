@@ -46,31 +46,40 @@ const problems = [
 
 const stories = [
   {
-    title: "How I helped grow Job Guarantee revenue 10×",
-    tag: "Simplilearn · Growth & monetization",
+    title: "Scaling Growth Through Product-Led Optimization",
+    tag: "Simplilearn · Growth & Product-Led Growth",
     summary:
-      "Improved funnel quality, referrals, and product-led growth to move revenue from ₹1M to ₹10M.",
-    href: "/stories/simplilearn-job-guarantee-growth",
+      "Optimized funnel quality, referrals, and product-led growth before scaling acquisition.",
+    href: "/case-studies/simplilearn",
     outcome: "10× Revenue",
-    readingTime: "8 min read"
+    readingTime: "12 min read"
   },
   {
-    title: "How We Improved Payment Reliability at 10M+ Monthly Transaction Scale",
-    tag: "Comviva · Payments platform",
+    title: "Improving Reliability at Transaction Scale",
+    tag: "Mahindra Comviva · Payments & Reliability",
     summary:
-      "Prioritized reliability, recovery paths, and trust across 10M+ monthly transactions.",
-    href: "/stories/payments-reliability-comviva",
+      "Prioritized reliability, recovery paths, and customer trust across payments-scale systems.",
+    href: "/case-studies",
     outcome: "10M+ Transactions",
-    readingTime: "9 min read"
+    readingTime: "Planned"
   },
   {
-    title: "Why We Stopped Building More Content and Started Building Better Workflows",
-    tag: "JoVE · SaaS product strategy",
+    title: "Workflow Adoption Before Content Expansion",
+    tag: "JoVE · Discovery & Enterprise SaaS",
     summary:
-      "Used discovery to reframe adoption from content volume to workflow fit before building more.",
-    href: "/stories/product-discovery-jove",
-    outcome: "25% Profit Growth",
-    readingTime: "7 min read"
+      "Used discovery to reframe adoption from content volume to workflow execution.",
+    href: "/case-studies/jove",
+    outcome: "+30% Portfolio Revenue",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Building an AI-Ready Platform",
+    tag: "Logix · AI Platforms & Modernization",
+    summary:
+      "Modernized the platform before scaling AI capability, release velocity, and product-led growth.",
+    href: "/case-studies/logix",
+    outcome: "₹1M+ ARR",
+    readingTime: "12 min read"
   }
 ];
 
@@ -126,8 +135,8 @@ export default function Home() {
               I&apos;m Saurabh Chawda, a Lead PM across AI, platforms, payments, SaaS, and growth. See the trade-offs, evidence, and outcomes behind my work.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/how-i-think">
-                Explore product judgment
+              <ButtonLink href="/executive">
+                Read the Executive Brief
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
               <ButtonLink href="/profile" variant="secondary">
@@ -181,17 +190,17 @@ export default function Home() {
         <div className="mx-auto grid max-w-6xl gap-6 px-5 py-12 sm:px-8 sm:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 lg:px-10">
           <SectionHeader
             eyebrow="Explore the decisions that shaped my product philosophy."
-            title="How does Saurabh make product decisions?"
-            description="A structured view into problem framing, customer evidence, prioritization, trade-offs, and launch judgment."
+            title="Need the fastest overview first?"
+            description="Start with the Executive Brief, then use the deeper decision systems when you want to inspect how the work was done."
           />
           <div className="rounded-md border border-line bg-panel p-5 shadow-soft">
             <BriefcaseBusiness className="h-6 w-6 text-accent" aria-hidden="true" />
-            <h3 className="mt-5 text-xl font-semibold">Product judgment, shown through decisions.</h3>
+            <h3 className="mt-5 text-xl font-semibold">Five-minute recruiter briefing.</h3>
             <p className="mt-3 leading-7 text-muted">
-              A hiring-team view into how I frame ambiguous problems, choose what not to build, and move from evidence to product decisions.
+              A hiring-team view of who I am, what I have delivered, how I think, and which evidence is worth reviewing next.
             </p>
-            <ButtonLink href="/how-i-think" variant="inline" className="mt-5">
-              Explore the decision system
+            <ButtonLink href="/executive" variant="inline" className="mt-5">
+              Read the Executive Brief
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>
@@ -229,9 +238,9 @@ export default function Home() {
       <section id="featured-product-stories" className="scroll-mt-20 border-b border-line bg-panel">
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-14 lg:px-10">
           <SectionHeader
-            eyebrow="Featured Product Stories"
+            eyebrow="Featured Product Leadership Briefs"
             title="What evidence supports the claims?"
-            description="Three stories that connect product context, decisions, trade-offs, and measurable outcomes."
+            description="Decision-first evidence that connects product context, trade-offs, execution, and measurable outcomes."
           />
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {stories.map((story) => (
@@ -261,7 +270,7 @@ export default function Home() {
               Clear next steps for recruiters and hiring managers who want to start a conversation.
             </p>
             <ButtonLink href="/contact" variant="inline" className="mt-5">
-              Start a conversation
+              Start an interview conversation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>

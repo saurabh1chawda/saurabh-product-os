@@ -34,27 +34,27 @@ const snapshotItems = [
 const evaluationPath = [
   {
     step: "1",
+    title: "Executive Brief",
+    time: "5 min",
+    href: "/executive"
+  },
+  {
+    step: "2",
     title: "Professional Profile",
     time: "2 min",
     href: "/profile"
   },
   {
-    step: "2",
-    title: "Product Operating System",
-    time: "5 min",
-    href: "/product-operating-system"
-  },
-  {
     step: "3",
-    title: "Three Flagship Stories",
-    time: "12 min",
-    href: "/stories/simplilearn-job-guarantee-growth"
+    title: "Role-fit Briefs",
+    time: "8 min",
+    href: "/case-studies"
   },
   {
     step: "4",
-    title: "Representative PRD",
-    time: "5 min",
-    href: "/artifacts/simplilearn-growth-prd"
+    title: "Contact",
+    time: "1 min",
+    href: "/contact"
   }
 ];
 
@@ -183,8 +183,8 @@ export default function ForRecruitersPage() {
                   View Product Operating System
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </ButtonLink>
-                <ButtonLink href="/stories/simplilearn-job-guarantee-growth" variant="inline">
-                  Explore flagship stories
+                <ButtonLink href="/executive" variant="inline">
+                  Read the Executive Brief
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </ButtonLink>
               </div>

@@ -324,6 +324,11 @@ export const simplilearnBrief: ProductLeadershipBrief = {
   ],
   continueExploring: [
     {
+      title: "Contact Saurabh",
+      description: "Discuss how this growth and product-led optimization evidence maps to your open role.",
+      href: "/contact"
+    },
+    {
       title: "Executive Brief",
       description: "Return to the five-minute overview of Product OS and its strongest evidence.",
       href: "/executive"

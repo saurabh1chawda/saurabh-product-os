@@ -32,6 +32,7 @@ export type FeaturedDecision = {
   decision: string;
   href: string;
   principle: string;
+  roleFit: string;
   title: string;
 };
 
@@ -153,6 +154,7 @@ export const featuredDecisions: FeaturedDecision[] = [
     decision: "Workflow adoption over content expansion.",
     businessImpact: "+30% portfolio revenue, +40% session duration.",
     principle: "Adoption Before Expansion",
+    roleFit: "Discovery & Enterprise SaaS",
     href: "/case-studies/jove"
   },
   {
@@ -160,6 +162,7 @@ export const featuredDecisions: FeaturedDecision[] = [
     decision: "Platform modernization before visible AI expansion.",
     businessImpact: "₹1M+ ARR, +20% MRR, 3× delivery velocity.",
     principle: "Platform Before Intelligence",
+    roleFit: "AI Platforms & Modernization",
     href: "/case-studies/logix"
   },
   {
@@ -167,6 +170,7 @@ export const featuredDecisions: FeaturedDecision[] = [
     decision: "Reliability before platform expansion.",
     businessImpact: "10M+ monthly transactions, 94% CSAT.",
     principle: "Trust Before Innovation",
+    roleFit: "Payments & Reliability",
     href: "/stories/payments-reliability-comviva"
   },
   {
@@ -174,6 +178,7 @@ export const featuredDecisions: FeaturedDecision[] = [
     decision: "Funnel optimization before acquisition scale.",
     businessImpact: "10× revenue growth, +62% traffic-to-lead.",
     principle: "Optimization Before Scale",
+    roleFit: "Growth & Product-Led Growth",
     href: "/case-studies/simplilearn"
   }
 ];
@@ -221,9 +226,9 @@ export const recruiterResources: RecruiterResource[] = [
     href: "/profile"
   },
   {
-    title: "Resume",
-    description: "Canonical Product OS profile that complements role-specific application resumes.",
-    cta: "Open profile",
+    title: "Profile Context",
+    description: "Product OS career context. Tailored resumes remain application-specific.",
+    cta: "Review context",
     href: "/profile"
   },
   {
@@ -256,7 +261,7 @@ export const readingPaths: ReadingPath[] = [
   {
     audience: "Recruiter",
     time: "5 Minutes",
-    href: "/profile",
+    href: "/contact",
     steps: ["Executive Brief", "Professional Profile", "Contact"]
   },
   {

@@ -12,6 +12,7 @@ export type BriefSummary = {
   domain: string;
   href?: string;
   readingTime: string;
+  roleFit?: string;
   status: ProductLeadershipBriefStatus;
 };
 

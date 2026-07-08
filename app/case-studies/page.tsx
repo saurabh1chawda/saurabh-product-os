@@ -44,6 +44,7 @@ const featuredBrief = {
   title: "Workflow Adoption > Content Expansion",
   company: "JoVE",
   businessOutcome: "+30% Portfolio Revenue",
+  roleFit: "Discovery & Enterprise SaaS",
   competencies: ["Discovery", "Product Strategy", "AI", "Stakeholder Leadership"],
   readingTime: "~12 minutes",
   href: "/case-studies/jove"
@@ -52,18 +53,21 @@ const featuredBrief = {
 const upcomingBriefs = [
   {
     company: "Logix",
+    roleFit: "AI Platforms & Modernization",
     decision: "Platform Modernization > Feature Expansion",
     href: "/case-studies/logix",
     status: "Available"
   },
   {
     company: "Simplilearn",
+    roleFit: "Growth & Product-Led Growth",
     decision: "Conversion Optimization > Acquisition Spend",
     href: "/case-studies/simplilearn",
     status: "Available"
   },
   {
     company: "Mahindra Comviva",
+    roleFit: "Payments & Reliability",
     decision: "Reliability > Platform Expansion",
     status: "Planned"
   }
@@ -147,6 +151,7 @@ export default function CaseStudiesPage() {
                   <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">{featuredBrief.company}</p>
                   <h2 className="mt-4 text-3xl font-semibold leading-tight text-ink">{featuredBrief.title}</h2>
                   <dl className="mt-6 grid gap-4 sm:grid-cols-2">
+                    <DetailBlock label="Role Fit" value={featuredBrief.roleFit} />
                     <DetailBlock label="Business Outcome" value={featuredBrief.businessOutcome} />
                     <DetailBlock label="Reading Time" value={featuredBrief.readingTime} />
                   </dl>
@@ -164,7 +169,7 @@ export default function CaseStudiesPage() {
                   label={featuredBrief.title}
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-accent px-4 text-sm font-semibold text-white transition hover:bg-ink"
                 >
-                  Read Product Leadership Brief
+                  Review role-fit evidence
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </CaseStudiesHubTrackedLink>
               </div>
@@ -174,7 +179,7 @@ export default function CaseStudiesPage() {
 
         <section className="border-b border-line bg-panel" aria-labelledby="upcoming-title">
           <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
-            <SectionHeader eyebrow="Upcoming Product Leadership Briefs" id="upcoming-title" title="Additional evidence being shaped" />
+            <SectionHeader eyebrow="Role-Fit Product Leadership Briefs" id="upcoming-title" title="Choose the evidence that maps to the role" />
             <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {upcomingBriefs.map((brief) => (
                 brief.href ? (
@@ -270,12 +275,32 @@ export default function CaseStudiesPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-b border-line bg-panel" aria-labelledby="contact-title">
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-10">
+            <SectionHeader eyebrow="Recruiter Next Step" id="contact-title" title="Ready to continue the conversation?" />
+            <div className="mt-8 rounded-md border border-line bg-paper p-6 shadow-soft">
+              <p className="max-w-3xl leading-7 text-muted">
+                If one of these briefs maps to your role, email or LinkedIn is the fastest way to discuss fit, availability, and next steps.
+              </p>
+              <CaseStudiesHubTrackedLink
+                href="/contact"
+                eventName="continue_exploring_clicked"
+                label="Start interview conversation"
+                className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-accent px-4 text-sm font-semibold text-white transition hover:bg-ink"
+              >
+                Start an interview conversation
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </CaseStudiesHubTrackedLink>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
 }
 
-function UpcomingBriefCard({ brief }: { brief: { company: string; decision: string; status: string } }) {
+function UpcomingBriefCard({ brief }: { brief: { company: string; decision: string; roleFit: string; status: string } }) {
   return (
     <>
       <div className="flex items-start justify-between gap-4">
@@ -283,6 +308,9 @@ function UpcomingBriefCard({ brief }: { brief: { company: string; decision: stri
         <span className="rounded-full border border-line bg-panel px-3 py-1 text-xs font-semibold text-muted">{brief.status}</span>
       </div>
       <h3 className="mt-5 text-xl font-semibold leading-tight text-ink">{brief.company}</h3>
+      <p className="mt-4 inline-flex rounded-full border border-line bg-panel px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+        {brief.roleFit}
+      </p>
       <p className="mt-4 text-sm font-semibold uppercase tracking-[0.14em] text-accent">Decision</p>
       <p className="mt-2 leading-7 text-muted">{brief.decision}</p>
     </>

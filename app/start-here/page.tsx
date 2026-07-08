@@ -9,7 +9,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 export const metadata: Metadata = {
   title: "Start Here",
   description:
-    "A 15-minute onboarding path for hiring teams evaluating Saurabh Chawda's product judgment, flagship stories, frameworks, and representative artifacts."
+    "A 15-minute onboarding path for hiring teams evaluating Saurabh Chawda's product judgment, executive evidence, flagship decisions, and business outcomes."
 };
 
 const learningCards = [
@@ -24,13 +24,13 @@ const learningCards = [
     icon: <GitBranch className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
-    title: "Three Flagship Stories",
-    description: "Evidence-backed product decisions across growth, platform modernization, and payment reliability.",
+    title: "Role-Fit Product Leadership Briefs",
+    description: "Evidence-backed decisions mapped to AI platforms, payments reliability, growth, and enterprise SaaS roles.",
     icon: <BookOpen className="h-5 w-5 text-accent" aria-hidden="true" />
   },
   {
-    title: "Representative Product Artifacts",
-    description: "Reconstructed artifacts that show product thinking while respecting confidentiality.",
+    title: "Interview Next Step",
+    description: "Clear contact paths for recruiters and hiring managers ready to discuss role fit.",
     icon: <FileText className="h-5 w-5 text-accent" aria-hidden="true" />
   }
 ];
@@ -38,39 +38,39 @@ const learningCards = [
 const journeySteps = [
   {
     step: "Step 1",
-    title: "Operating System",
+    title: "Executive Brief",
     detail: "5 min",
-    href: "/product-operating-system"
+    href: "/executive"
   },
   {
     step: "Step 2",
-    title: "Growth Story",
-    detail: "Simplilearn",
-    href: "/stories/simplilearn-job-guarantee-growth"
-  },
-  {
-    step: "Step 2",
-    title: "Platform Story",
-    detail: "Logix",
-    href: "/stories/platform-modernization-logix"
-  },
-  {
-    step: "Step 2",
-    title: "Payments Story",
-    detail: "Comviva",
-    href: "/stories/payments-reliability-comviva"
+    title: "Professional Profile",
+    detail: "Career context",
+    href: "/profile"
   },
   {
     step: "Step 3",
-    title: "Representative PRD",
-    detail: "Evidence artifact",
-    href: "/artifacts/simplilearn-growth-prd"
+    title: "AI Platforms",
+    detail: "Logix",
+    href: "/case-studies/logix"
   },
   {
     step: "Step 4",
-    title: "Frameworks",
-    detail: "Prioritization",
-    href: "/frameworks/product-prioritization"
+    title: "Role-Fit Briefs",
+    detail: "Choose evidence",
+    href: "/case-studies"
+  },
+  {
+    step: "Step 5",
+    title: "Operating Principles",
+    detail: "How I think",
+    href: "/product-leadership-operating-principles"
+  },
+  {
+    step: "Step 6",
+    title: "Contact",
+    detail: "Interview next step",
+    href: "/contact"
   }
 ];
 
@@ -96,7 +96,7 @@ export default function StartHerePage() {
                 Start Here
               </h1>
               <p className="mt-6 max-w-3xl text-xl leading-8 text-ink">
-                If you&apos;re evaluating me for a Product role, this page will help you understand how I think in about 15 minutes.
+                If you&apos;re evaluating me for a Product role, this page will help you reach the fastest evidence first: executive context, business impact, product judgment, and contact.
               </p>
             </div>
           </div>
@@ -149,10 +149,10 @@ export default function StartHerePage() {
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Continue</p>
               <h2 id="start-cta-title" className="mt-3 text-2xl font-semibold leading-tight text-ink sm:text-3xl">
-                Begin with the system behind the stories.
+                Begin with the five-minute executive overview.
               </h2>
-              <ButtonLink href="/product-operating-system" className="mt-6">
-                Continue to Product Operating System
+              <ButtonLink href="/executive" className="mt-6">
+                Read the Executive Brief
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </ButtonLink>
             </div>

@@ -26,7 +26,7 @@ export function StoryCard({ title, tag, summary, href, outcome, readingTime }: S
       <h3 className="mt-3 text-xl font-semibold leading-tight text-ink">{title}</h3>
       <p className="mt-3 flex-1 leading-7 text-muted">{summary}</p>
       <ButtonLink href={href} variant="inline" className="mt-5">
-        Read story
+        Review brief
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </ButtonLink>
     </article>
