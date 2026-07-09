@@ -6,7 +6,7 @@ import type { AnalyticsEventName } from "@/lib/analytics";
 import { trackRouteView } from "@/lib/analytics";
 
 type AnalyticsRouteEventProps = {
-  eventName: Extract<AnalyticsEventName, "for_recruiters_view" | "start_here_view" | "story_open" | "framework_open">;
+  eventName: AnalyticsEventName;
   frameworkName?: string;
   storyName?: string;
 };

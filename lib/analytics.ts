@@ -1,4 +1,5 @@
 export type AnalyticsEventName =
+  | "homepage_viewed"
   | "for_recruiters_view"
   | "start_here_view"
   | "story_open"
@@ -133,7 +134,9 @@ export type AnalyticsEventName =
   | "resume_page_viewed"
   | "resume_download_clicked"
   | "contact_page_viewed"
-  | "contact_link_clicked";
+  | "contact_link_clicked"
+  | "github_outbound_clicked"
+  | "recruiter_journey_completed";
 
 type AnalyticsEventParams = {
   cta_name?: string;
@@ -164,6 +167,7 @@ type AnalyticsEventParams = {
   tour_step_name?: string;
   link_url?: string;
   link_text?: string;
+  current_path?: string;
 };
 
 declare global {
@@ -187,7 +191,7 @@ export function trackRouteView({
   frameworkName,
   storyName
 }: {
-  eventName: Extract<AnalyticsEventName, "for_recruiters_view" | "start_here_view" | "story_open" | "framework_open">;
+  eventName: AnalyticsEventName;
   frameworkName?: string;
   storyName?: string;
 }) {
@@ -201,16 +205,24 @@ export function trackLinkClick({ href, text }: { href: string; text?: string }) 
   const url = parseUrl(href);
   const linkParams = {
     link_url: href,
+    current_path: window.location.pathname,
     ...(text ? { link_text: text } : {})
   };
 
   if (url.protocol === "mailto:") {
     trackAnalyticsEvent("email_click", linkParams);
+    if (isRecruiterCompletionUrl(url)) {
+      trackAnalyticsEvent("recruiter_journey_completed", linkParams);
+    }
     return;
   }
 
   if (isLinkedInUrl(url)) {
     trackAnalyticsEvent("linkedin_click", linkParams);
+  }
+
+  if (isGitHubUrl(url)) {
+    trackAnalyticsEvent("github_outbound_clicked", linkParams);
   }
 
   if (isResumeUrl(url)) {
@@ -219,6 +231,10 @@ export function trackLinkClick({ href, text }: { href: string; text?: string }) 
 
   if (url.pathname === "/contact") {
     trackAnalyticsEvent("contact_click", linkParams);
+  }
+
+  if (isRecruiterCompletionUrl(url)) {
+    trackAnalyticsEvent("recruiter_journey_completed", linkParams);
   }
 
   if (isExternalUrl(url)) {
@@ -238,6 +254,14 @@ function isLinkedInUrl(url: URL) {
   return url.hostname.includes("linkedin.com");
 }
 
+function isGitHubUrl(url: URL) {
+  return url.hostname.includes("github.com");
+}
+
 function isResumeUrl(url: URL) {
   return url.pathname === "/resume" || url.pathname.toLowerCase().endsWith(".pdf");
+}
+
+function isRecruiterCompletionUrl(url: URL) {
+  return window.location.pathname === "/contact" && (url.protocol === "mailto:" || isLinkedInUrl(url));
 }

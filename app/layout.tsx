@@ -48,14 +48,25 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true
-  }
+  },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/og-image.png",
+    shortcut: "/og-image.png",
+    apple: "/og-image.png"
+  },
+  category: "technology"
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-paper font-sans text-ink antialiased">
-        {children}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
+        <div id="main-content">{children}</div>
         <SiteFooter />
         <AnalyticsLinkTracker />
         {gaMeasurementId ? <GoogleAnalytics gaId={gaMeasurementId} /> : null}
@@ -82,3 +93,21 @@ function getClarityScript(projectId: string) {
     })(window, document, "clarity", "script", ${JSON.stringify(projectId)});
   `;
 }
+
+const webSiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Product OS",
+  url: siteUrl,
+  description: siteDescription,
+  publisher: {
+    "@type": "Person",
+    name: "Saurabh Chawda",
+    url: `${siteUrl}/profile`,
+    sameAs: ["https://www.linkedin.com/in/chawdasaurabh/", "https://github.com/saurabh1chawda"]
+  },
+  potentialAction: {
+    "@type": "ReadAction",
+    target: [`${siteUrl}/executive`, `${siteUrl}/case-studies`, `${siteUrl}/ai-product-playbook`]
+  }
+};

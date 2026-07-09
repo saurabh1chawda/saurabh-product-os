@@ -1,10 +1,44 @@
+import type { Metadata } from "next";
 import { ArrowRight, BarChart3, BriefcaseBusiness, FileText, MessageSquare, Sparkles } from "lucide-react";
 
+import { AnalyticsRouteEvent } from "@/components/analytics-route-event";
 import { MetricCard } from "@/components/metric-card";
 import { SectionHeader } from "@/components/section-header";
 import { SiteHeader } from "@/components/site-header";
 import { StoryCard } from "@/components/story-card";
 import { ButtonLink } from "@/components/ui/button-link";
+
+export const metadata: Metadata = {
+  title: "Product OS | Saurabh Chawda",
+  description:
+    "Product OS is Saurabh Chawda's executive product leadership platform for AI product judgment, Product Leadership Briefs, business outcomes, and reusable decision systems.",
+  alternates: {
+    canonical: "/"
+  },
+  openGraph: {
+    title: "Product OS | Saurabh Chawda",
+    description:
+      "Explore Saurabh Chawda's Product OS: executive brief, professional profile, Product Leadership Briefs, AI Product Playbook, and measurable product outcomes.",
+    url: "https://saurabh-product-os.vercel.app",
+    type: "website",
+    siteName: "Product Operating System",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Saurabh Chawda Product Operating System"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Product OS | Saurabh Chawda",
+    description:
+      "Executive product leadership evidence, AI product decision systems, Product Leadership Briefs, and reusable frameworks.",
+    images: ["/og-image.png"]
+  }
+};
 
 const metrics = [
   {
@@ -119,6 +153,7 @@ const capabilities = [
 export default function Home() {
   return (
     <main>
+      <AnalyticsRouteEvent eventName="homepage_viewed" />
       <SiteHeader />
 
       <section className="border-b border-line bg-panel">
