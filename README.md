@@ -47,7 +47,7 @@ Resumes summarize roles and outcomes, but they rarely show how a product leader 
 
 ## Screenshots
 
-Screenshots should be added before a public repository launch.
+Public launch preview assets should use the existing Product OS Open Graph image until repository-specific screenshots are captured.
 
 Recommended captures:
 
@@ -197,25 +197,30 @@ Existing documentation is intentionally not moved yet. The hierarchy above shoul
 
 ## Contributing
 
-This repository is currently maintained as Saurabh Chawda's canonical Product OS implementation. External contributions are not open yet.
+This repository is currently maintained as Saurabh Chawda's canonical Product OS implementation. External contributions are limited to documentation corrections, broken link reports, accessibility issues, and clarity improvements.
 
-Future contribution model:
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the current contribution boundary.
 
-- Documentation corrections
-- Accessibility improvements
-- Framework template improvements
-- Issue-based suggestions for reusable artifacts
-
-Before opening contributions, the repository should add a contributor guide, code of conduct decision, issue templates, and pull request template.
+Personal career evidence, company-specific metrics, and Product OS positioning are not open for external edits.
 
 ## License
 
-License is not yet finalized.
+Product OS uses a mixed license boundary because it contains application code, reusable frameworks, personal career evidence, and brand assets.
 
-Before a public open-source launch, add a license file and clarify which parts of the repository are reusable code, reusable documentation, personal career content, and protected brand/content assets.
+- Application code: MIT License.
+- Reusable frameworks, templates, and documentation patterns: reusable with attribution.
+- Personal career evidence, company-specific metrics, Product OS positioning, screenshots, and brand assets: all rights reserved unless explicitly marked reusable.
+
+See [LICENSE.md](LICENSE.md), [NOTICE.md](NOTICE.md), and [Licensing Strategy](docs/licensing-strategy.md).
 
 ## Status
 
 Production reference implementation for the GitHub Product Leadership Hub.
 
 Launch readiness is tracked in [Repository Launch Checklist](docs/repository-launch-checklist.md).
+
+## Connect
+
+- Executive Brief: https://saurabh-product-os.vercel.app/executive
+- Product OS: https://saurabh-product-os.vercel.app
+- Contact: https://saurabh-product-os.vercel.app/contact

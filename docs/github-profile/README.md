@@ -16,6 +16,16 @@ Product OS explains how I think. GitHub shows the reusable assets behind that th
 
 Start with the [Executive Brief](https://saurabh-product-os.vercel.app/executive), continue into Product OS, inspect the flagship repositories, then contact me if the evidence maps to your role.
 
+Suggested GitHub bio:
+
+> Lead Product Manager building AI products, product decision systems, and reusable product leadership frameworks.
+
+Suggested profile links:
+
+- Product OS: https://saurabh-product-os.vercel.app
+- Executive Brief: https://saurabh-product-os.vercel.app/executive
+- LinkedIn: https://www.linkedin.com/in/chawdasaurabh/
+
 ## Operating Principle
 
 > Every repository should leave another Product Manager better than they arrived.
@@ -66,6 +76,19 @@ Start here: [Product Discovery Toolkit](https://saurabh-product-os.vercel.app/de
 | [AI Product Playbook](https://saurabh-product-os.vercel.app/ai-product-playbook) | Practical AI product operating model |
 | [Product Leadership Briefs](https://saurabh-product-os.vercel.app/case-studies) | Evidence-backed product decisions |
 | Product Toolkit | Reusable discovery, prioritization, decision memo, and leadership brief artifacts |
+
+## Pinned Repositories
+
+Pin repositories in this order once the standalone repositories are public:
+
+1. `product-os` — Executive Product OS and canonical evidence platform.
+2. `ai-product-playbook` — Practical AI product operating model.
+3. `product-leadership-briefs` — Decision-first product leadership evidence.
+4. `ai-prioritization-framework` — AI opportunity scoring and investment decision model.
+5. `product-discovery-toolkit` — Reusable discovery frameworks and templates.
+6. `decision-memo-template` — Executive product decision communication templates.
+
+Use Product OS social preview assets until repository-specific previews are ready.
 
 ## Product OS
 

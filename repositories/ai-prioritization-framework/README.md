@@ -65,6 +65,14 @@ The AI Prioritization Framework follows this flow:
 
 See [Framework](framework/framework.md).
 
+## Start Here
+
+1. Read the [Framework](framework/framework.md).
+2. Review the [Evaluation Criteria](framework/evaluation-criteria.md).
+3. Use the [AI Opportunity Canvas](templates/ai-opportunity-canvas.md).
+4. Score with the [Scoring Sheet](templates/scoring-sheet.md).
+5. Compare against the [Recommendation Guide](framework/recommendation-guide.md).
+
 ## Four Evaluation Dimensions
 
 The framework groups evaluation criteria into four decision dimensions:
@@ -205,7 +213,7 @@ Relevant Product OS page:
 
 ## Contributing
 
-This repository is not open for external contributions yet.
+This repository uses a limited contribution model.
 
 Future contribution paths may include:
 
@@ -215,14 +223,24 @@ Future contribution paths may include:
 - Workshop facilitation improvements
 - Accessibility and documentation improvements
 
-Before accepting public contributions, this repository should add contribution guidelines, issue templates, and a license decision.
+Public contribution handling uses the Product Leadership Platform boundary: documentation corrections, broken link reports, accessibility issues, and framework clarity suggestions only.
 
 ## License
 
-License is not finalized.
+This repository uses a mixed reuse boundary.
 
-Before public open-source launch, clarify which parts of this repository are reusable frameworks, which examples require attribution, and which Product OS-linked evidence remains personal career content.
+- Frameworks, templates, scoring worksheets, diagrams, and workshop materials may be reused with attribution.
+- Examples tied to Saurabh Chawda's product work, company-specific metrics, Product OS positioning, screenshots, and brand assets are protected.
+
+See [LICENSE.md](LICENSE.md).
 
 ## Status
 
 This repository is ready as a v1 foundation for AI prioritization. It includes the framework structure, scoring philosophy, evaluation criteria, decision tree, anti-patterns, templates, examples, and governance docs needed to support practical roadmap planning.
+
+## Connect
+
+- Product OS: `https://saurabh-product-os.vercel.app`
+- AI Prioritization Decision System: `https://saurabh-product-os.vercel.app/decision-systems/ai-prioritization`
+- Executive Brief: `https://saurabh-product-os.vercel.app/executive`
+- Contact: `https://saurabh-product-os.vercel.app/contact`

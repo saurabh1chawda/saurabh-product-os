@@ -68,6 +68,14 @@ Start with:
 - [Evidence Ladder](frameworks/evidence-ladder.md)
 - [Discovery Canvas](templates/discovery-canvas.md)
 
+## Start Here
+
+1. Read the [Discovery Process](frameworks/discovery-process.md).
+2. Use the [Customer Interview Guide](templates/customer-interview-guide.md).
+3. Fill the [Discovery Canvas](templates/discovery-canvas.md).
+4. Review evidence quality with the [Evidence Ladder](frameworks/evidence-ladder.md).
+5. Decide next steps with the [Validation Scorecard](templates/validation-scorecard.md).
+
 ## Frameworks
 
 | Framework | Purpose |
@@ -203,7 +211,7 @@ Relevant Product OS pages:
 
 ## Contributing
 
-This repository is not open for external contributions yet.
+This repository uses a limited contribution model.
 
 Future contribution paths may include:
 
@@ -213,14 +221,24 @@ Future contribution paths may include:
 - Workshop facilitation improvements
 - Accessibility and documentation improvements
 
-Before accepting public contributions, this repository should add contribution guidelines, issue templates, and a license decision.
+Public contribution handling uses the Product Leadership Platform boundary: documentation corrections, broken link reports, accessibility issues, and template clarity suggestions only.
 
 ## License
 
-License is not finalized.
+This repository uses a mixed reuse boundary.
 
-Before public open-source launch, clarify which parts of this repository are reusable templates, which examples require attribution, and which Product OS-linked evidence remains personal career content.
+- Discovery frameworks, templates, workshop guides, diagrams, and documentation patterns may be reused with attribution.
+- Examples tied to Saurabh Chawda's product work, company-specific metrics, Product OS positioning, screenshots, and brand assets are protected.
+
+See [LICENSE.md](LICENSE.md).
 
 ## Status
 
 This repository is ready as a v1 foundation for the Product Discovery Toolkit. It is independently useful as a discovery starter kit and ready for future expansion into facilitation notes, richer examples, and editable templates.
+
+## Connect
+
+- Product OS: `https://saurabh-product-os.vercel.app`
+- Customer Discovery Decision System: `https://saurabh-product-os.vercel.app/decision-systems/customer-discovery`
+- Executive Brief: `https://saurabh-product-os.vercel.app/executive`
+- Contact: `https://saurabh-product-os.vercel.app/contact`

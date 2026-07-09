@@ -1,0 +1,32 @@
+name: Documentation improvement
+description: Suggest a correction, clarification, or link fix.
+title: "Docs: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Product Leadership Platform documentation.
+        Please avoid submitting changes to personal career evidence, company-specific metrics, or role-specific positioning.
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Which page, README, or document needs attention?
+      placeholder: "docs/example.md or https://..."
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What should be improved?
+      description: Describe the correction, clarification, or broken link.
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-change
+    attributes:
+      label: Suggested change
+      description: If you have a proposed edit, add it here.
+    validations:
+      required: false

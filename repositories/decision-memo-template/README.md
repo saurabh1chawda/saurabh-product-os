@@ -77,6 +77,14 @@ Specialized templates:
 - [Platform Modernization Memo](templates/platform-modernization-memo.md)
 - [Roadmap Prioritization Memo](templates/roadmap-prioritization-memo.md)
 
+## Start Here
+
+1. Choose the [Executive Decision Memo](templates/executive-decision-memo.md) for senior review.
+2. Use the [Decision Writing Pyramid](frameworks/decision-writing-pyramid.md) to order the memo.
+3. Check evidence quality with [Evidence Standards](frameworks/evidence-standards.md).
+4. Set recommendation strength with [Decision Confidence](frameworks/decision-confidence.md).
+5. Review common mistakes before sharing.
+
 ## Framework Overview
 
 | Framework | Purpose |
@@ -203,7 +211,7 @@ Relevant Product OS pages:
 
 ## Contributing
 
-This repository is not open for external contributions yet.
+This repository uses a limited contribution model.
 
 Future contribution paths may include:
 
@@ -213,14 +221,24 @@ Future contribution paths may include:
 - Accessibility and documentation improvements
 - Facilitation guides for product reviews
 
-Before accepting public contributions, this repository should add contribution guidelines, issue templates, and a license decision.
+Public contribution handling uses the Product Leadership Platform boundary: documentation corrections, broken link reports, accessibility issues, and template clarity suggestions only.
 
 ## License
 
-License is not finalized.
+This repository uses a mixed reuse boundary.
 
-Before public open-source launch, clarify which templates are freely reusable, which examples require attribution, and which Product OS-linked evidence remains personal career content.
+- Memo templates, decision-writing frameworks, diagrams, and playbook structures may be reused with attribution.
+- Examples tied to Saurabh Chawda's product work, company-specific metrics, Product OS positioning, screenshots, and brand assets are protected.
+
+See [LICENSE.md](LICENSE.md).
 
 ## Status
 
 This repository is ready as a v1 foundation for the Decision Memo Template flagship product. It is independently useful for Product Managers writing executive recommendations and ready for future expansion into completed samples and portable formats.
+
+## Connect
+
+- Product OS: `https://saurabh-product-os.vercel.app`
+- Decision Operating System: `https://saurabh-product-os.vercel.app/decision-operating-system`
+- Executive Brief: `https://saurabh-product-os.vercel.app/executive`
+- Contact: `https://saurabh-product-os.vercel.app/contact`

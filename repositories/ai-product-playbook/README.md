@@ -168,7 +168,7 @@ Relevant Product OS pages:
 
 ## Contributing
 
-This repository is not open for external contributions yet.
+This repository uses a limited contribution model.
 
 Future contribution paths may include:
 
@@ -178,14 +178,23 @@ Future contribution paths may include:
 - Accessibility and documentation improvements
 - Product review checklists
 
-Before accepting public contributions, this repository should add contribution guidelines, issue templates, and a license decision.
+Public contribution handling uses the Product Leadership Platform boundary: documentation corrections, broken link reports, accessibility issues, and framework clarity suggestions only.
 
 ## License
 
-License is not finalized.
+This repository uses a mixed reuse boundary.
 
-Before public open-source launch, clarify which parts of this repository are reusable frameworks, which examples require attribution, and which assets are protected by Product OS ownership.
+- Frameworks, templates, diagrams, and documentation patterns may be reused with attribution.
+- Examples tied to Saurabh Chawda's product work, Product OS positioning, screenshots, and brand assets are protected.
+
+See [LICENSE.md](LICENSE.md).
 
 ## Status
 
 This repository is GA-ready as the capstone orchestration layer for the Product Leadership Platform. It coordinates the lifecycle, operating model, learning paths, examples, diagrams, and repository handoffs while leaving detailed artifacts in their owning flagship repositories.
+
+## Connect
+
+- Product OS: `https://saurabh-product-os.vercel.app`
+- Executive Brief: `https://saurabh-product-os.vercel.app/executive`
+- Contact: `https://saurabh-product-os.vercel.app/contact`

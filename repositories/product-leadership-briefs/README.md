@@ -75,6 +75,14 @@ Would I trust this person to lead a difficult product decision?
 
 Start with the [Decision Index](briefs/decision-index.md) to browse briefs by decision category rather than employer.
 
+## Start Here
+
+1. Open the [Decision Index](briefs/decision-index.md).
+2. Review the brief that matches your role-fit question.
+3. Use the [Product Decision Framework](frameworks/product-decision-framework.md).
+4. Adapt the [Leadership Brief Template](templates/leadership-brief-template.md).
+5. Continue to Product OS for rendered executive context.
+
 ## Leadership Cards
 
 - [JoVE](examples/leadership-cards/jove.md)
@@ -227,7 +235,7 @@ Relevant Product OS pages:
 
 ## Contributing
 
-This repository is not open for external contributions yet.
+This repository uses a limited contribution model.
 
 Future contribution paths may include:
 
@@ -237,14 +245,24 @@ Future contribution paths may include:
 - Public examples using the brief structure
 - Facilitation guides for product review discussions
 
-Before accepting public contributions, this repository should add contribution guidelines, issue templates, and a license decision.
+Public contribution handling uses the Product Leadership Platform boundary: documentation corrections, broken link reports, accessibility issues, and template clarity suggestions only.
 
 ## License
 
-License is not finalized.
+This repository uses a mixed reuse boundary.
 
-Before public open-source launch, clarify which parts of this repository are reusable templates, which examples require attribution, and which Product OS-linked evidence remains personal career content.
+- Frameworks, templates, scorecards, diagrams, and documentation patterns may be reused with attribution.
+- Saurabh-specific brief evidence, company-specific metrics, Product OS positioning, screenshots, and brand assets are protected.
+
+See [LICENSE.md](LICENSE.md).
 
 ## Status
 
 This repository is ready as a v1 foundation for the Product Leadership Briefs flagship product. The structure, framework, template, decision index, and governance model are in place. Full evidence packs and expanded examples are planned for later versions.
+
+## Connect
+
+- Product OS: `https://saurabh-product-os.vercel.app`
+- Case Studies Hub: `https://saurabh-product-os.vercel.app/case-studies`
+- Executive Brief: `https://saurabh-product-os.vercel.app/executive`
+- Contact: `https://saurabh-product-os.vercel.app/contact`
