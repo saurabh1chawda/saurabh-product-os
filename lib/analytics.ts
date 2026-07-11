@@ -172,18 +172,36 @@ type AnalyticsEventParams = {
 
 declare global {
   interface Window {
-    gtag?: (command: "event", eventName: AnalyticsEventName, params?: AnalyticsEventParams) => void;
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+    __productOSAnalyticsQueue?: Array<{
+      eventName: AnalyticsEventName;
+      params?: AnalyticsEventParams;
+    }>;
+    __productOSFlushAnalyticsQueue?: () => void;
   }
 }
 
 const siteHost = "saurabh-product-os.vercel.app";
+const maxQueuedAnalyticsEvents = 100;
 
 export function trackAnalyticsEvent(eventName: AnalyticsEventName, params?: AnalyticsEventParams) {
-  if (typeof window === "undefined" || !window.gtag) {
+  if (typeof window === "undefined") {
     return;
   }
 
-  window.gtag("event", eventName, params);
+  if (window.gtag) {
+    window.gtag("event", eventName, params);
+    return;
+  }
+
+  window.__productOSAnalyticsQueue = window.__productOSAnalyticsQueue ?? [];
+
+  if (window.__productOSAnalyticsQueue.length >= maxQueuedAnalyticsEvents) {
+    window.__productOSAnalyticsQueue.shift();
+  }
+
+  window.__productOSAnalyticsQueue.push({ eventName, params });
 }
 
 export function trackRouteView({

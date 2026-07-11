@@ -49,6 +49,65 @@ Notes:
 | Logix Product Leadership Brief | 59 | 100 | 77 | 100 | No |
 | Contact | 55 | 100 | 77 | 100 | No |
 
+## Remediation Update: Sprint 16.3.1
+
+Status: implemented locally; production redeploy and median Lighthouse retest still required.
+
+Implemented changes:
+
+- Replaced the root metadata icon references from `/og-image.png` to `/favicon.svg`.
+- Replaced the web manifest icon from `/og-image.png` to `/favicon.svg`.
+- Added a lightweight `322` byte SVG favicon.
+- Kept `/og-image.png` for Open Graph and Twitter cards only.
+- Replaced `@next/third-parties/google` with explicit `next/script` loading for GA4.
+- Removed the now-unused `@next/third-parties` runtime dependency.
+- Kept the GA4 initialization stub lightweight and moved the external GA network script to `lazyOnload`.
+- Moved Microsoft Clarity from `afterInteractive` to `lazyOnload`.
+- Added an in-memory analytics queue so route-view and click events are preserved until lazy GA initializes.
+- Removed custom `aria-label` values from homepage capability cards so visible text remains the accessible name.
+
+Expected impact:
+
+- Browser should no longer fetch the `1.1 MB` Open Graph image as the favicon or manifest icon on every page.
+- GA4 and Clarity should no longer compete as early for main-thread time.
+- Route-view and contact/click events should continue to queue and flush once GA initializes.
+- Homepage accessible-name mismatch should be resolved.
+
+Production retest requirement:
+
+- Deploy commit containing this remediation.
+- Run three clean mobile Lighthouse audits per target page.
+- Record the median result below.
+- Verify GA4 events and Clarity sessions after deployment.
+
+## Before / After Scorecard
+
+| Page | Before Performance | After Performance | Before Accessibility | After Accessibility | Before Best Practices | After Best Practices | Before SEO | After SEO |
+| --- | ---: | --- | ---: | --- | ---: | --- | ---: | --- |
+| Homepage | 91 | Pending production retest | 100 | Pending production retest | 77 | Pending production retest | 100 | Pending production retest |
+| Executive Brief | 57 | Pending production retest | 100 | Pending production retest | 77 | Pending production retest | 100 | Pending production retest |
+| Professional Profile | 61 | Pending production retest | 100 | Pending production retest | 77 | Pending production retest | 100 | Pending production retest |
+| Logix Product Leadership Brief | 59 | Pending production retest | 100 | Pending production retest | 77 | Pending production retest | 100 | Pending production retest |
+| Contact | 55 | Pending production retest | 100 | Pending production retest | 77 | Pending production retest | 100 | Pending production retest |
+
+## Root Causes Confirmed
+
+| Root cause | Evidence | Remediation |
+| --- | --- | --- |
+| Oversized app icon payload | Lighthouse network payload showed `/og-image.png` at roughly `1.1 MB` on every audited page | Added `/favicon.svg`; updated metadata and manifest icons |
+| Early third-party script cost | Lighthouse unused JavaScript showed GA and shared client chunks as major contributors; Clarity appeared in Best Practices cookie issues | Moved GA network script and Clarity to `lazyOnload`; retained GA event queue |
+| Route events could be dropped if GA loads later | Existing `trackAnalyticsEvent` returned early when `window.gtag` was unavailable | Added bounded queue and flush mechanism |
+| Homepage accessible-name mismatch | Lighthouse `label-content-name-mismatch` reported homepage capability cards | Removed redundant `aria-label` attributes |
+
+## Remaining Production Exceptions
+
+| Exception | Status | Owner decision needed |
+| --- | --- | --- |
+| Microsoft Clarity third-party cookie diagnostics | Still expected until production retest proves otherwise | Accept as P1 diagnostic exception or add consent-gated loading |
+| Production after-scores | Pending deployment | Required before changing release decision |
+| GA4 event receipt | Pending production dashboard check | Required before public launch |
+| Clarity session receipt | Pending production dashboard check | Required before public launch |
+
 ## Target Assessment
 
 | Page group | Target | Result |
@@ -244,15 +303,16 @@ Estimated effort:
 
 ## Launch Readiness Assessment
 
-Current recommendation: **NO GO**.
+Current recommendation: **NO GO until redeploy and production retest**.
 
 Rationale:
 
 - SEO target is met across all audited pages.
 - Accessibility target is met across all audited pages.
-- Performance target is missed on all audited pages.
-- Best Practices target is missed on all audited pages.
-- The most important recruiter pages are below the stated performance threshold.
+- The Sprint 16.3 production baseline missed Performance target on all audited pages.
+- The Sprint 16.3 production baseline missed Best Practices target on all audited pages.
+- Sprint 16.3.1 remediation has been implemented locally but has not yet been deployed and retested in production.
+- The release decision cannot be upgraded until median production Lighthouse runs confirm the improvement.
 
 Launch can move to **GO WITH MINOR ISSUES** only after:
 

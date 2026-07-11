@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { AnalyticsLinkTracker } from "@/components/analytics-link-tracker";
 import { SiteFooter } from "@/components/site-footer";
@@ -54,9 +53,9 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/og-image.png",
-    shortcut: "/og-image.png",
-    apple: "/og-image.png"
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg"
   },
   category: "technology"
 };
@@ -72,11 +71,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div id="main-content">{children}</div>
         <SiteFooter />
         <AnalyticsLinkTracker />
-        {gaMeasurementId ? <GoogleAnalytics gaId={gaMeasurementId} /> : null}
+        {gaMeasurementId ? (
+          <>
+            <Script
+              id="google-analytics-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: getGoogleAnalyticsScript(gaMeasurementId)
+              }}
+            />
+            <Script id="google-analytics" src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`} strategy="lazyOnload" />
+          </>
+        ) : null}
         {process.env.NODE_ENV === "production" && clarityProjectId ? (
           <Script
             id="microsoft-clarity"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: getClarityScript(clarityProjectId)
             }}
@@ -85,6 +95,28 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </body>
     </html>
   );
+}
+
+function getGoogleAnalyticsScript(measurementId: string) {
+  return `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", ${JSON.stringify(measurementId)});
+
+    window.__productOSFlushAnalyticsQueue = function(){
+      var queue = window.__productOSAnalyticsQueue || [];
+      for (var i = 0; i < queue.length; i += 1) {
+        var item = queue[i];
+        if (item && item.eventName) {
+          gtag("event", item.eventName, item.params || {});
+        }
+      }
+      window.__productOSAnalyticsQueue = [];
+    };
+    window.__productOSFlushAnalyticsQueue();
+  `;
 }
 
 function getClarityScript(projectId: string) {

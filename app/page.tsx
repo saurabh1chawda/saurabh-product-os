@@ -255,7 +255,6 @@ export default function Home() {
                 key={capability.name}
                 href="#featured-product-stories"
                 className="min-h-11 rounded-md border border-line bg-paper p-5 shadow-soft"
-                aria-label={`View product stories related to ${capability.name}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-semibold leading-7 text-ink">{capability.name}</h3>
