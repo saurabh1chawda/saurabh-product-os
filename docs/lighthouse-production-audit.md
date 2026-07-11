@@ -254,6 +254,129 @@ This is not a **STRONG GO** because:
 - Best Practices remains `77` due to Microsoft Clarity third-party cookie diagnostics.
 - `recruiter_journey_completed` was not observed on the Contact page-specific email click.
 
+## Recruiter Conversion Event Verification: Sprint 16.3.3
+
+Status: implementation complete; production verification pending deployment.
+
+### Root Cause
+
+`recruiter_journey_completed` was not observed during the Contact page email conversion flow because Product OS had two analytics paths:
+
+- The global document-level link tracker called `trackLinkClick`, which could emit `email_click`, `linkedin_click`, `github_outbound_clicked`, `contact_click`, and `recruiter_journey_completed`.
+- The Contact page used `RecruiterJourneyTrackedLink`, a page-specific tracked link wrapper that emitted `contact_link_clicked` only.
+
+The Contact page-specific wrapper bypassed the generic recruiter completion logic, so the visible primary Contact CTAs produced `contact_link_clicked` but did not produce `recruiter_journey_completed`.
+
+This was not caused by:
+
+- incorrect link selectors,
+- broken Contact links,
+- GA4 initialization failure,
+- analytics queue failure,
+- Microsoft Clarity,
+- route loading,
+- or page-view tracking.
+
+### Conversion Definition
+
+For this sprint, a recruiter journey completion is defined as:
+
+> A visitor reaches `/contact` and selects a primary recruiter contact action: email or LinkedIn.
+
+The completion event intentionally avoids personally identifiable destination values. It sends:
+
+- `journey_type`: `recruiter_conversion`
+- `contact_method`: `email` or `linkedin`
+- `source_page`: `Contact`
+- `current_path`: `/contact`
+- `destination`: `email` or `linkedin`
+- `cta_name`
+- `link_text`
+
+The existing `contact_link_clicked` event remains unchanged and still carries the original destination for Contact page link reporting.
+
+### Fix Applied
+
+Implementation changes:
+
+- Added reusable `trackRecruiterJourneyCompletion` logic in `lib/analytics.ts`.
+- Added same-session deduplication for completion events using a browser-scoped completion key.
+- Sanitized completion destinations so email addresses are not sent in `recruiter_journey_completed`.
+- Updated `RecruiterJourneyTrackedLink` so Contact page email and LinkedIn clicks emit:
+  - the existing `contact_link_clicked` event, and
+  - one `recruiter_journey_completed` event when the link is a recruiter completion action.
+- Preserved existing bounded analytics queue behavior.
+- Preserved existing GA4 and Clarity initialization behavior.
+
+### Exact Event Behavior
+
+Before:
+
+| Action | Events observed |
+| --- | --- |
+| Contact page email click | `contact_link_clicked` |
+| Contact page LinkedIn click | `contact_link_clicked` |
+| Contact page GitHub click | `contact_link_clicked` |
+
+After:
+
+| Action | Events observed |
+| --- | --- |
+| Contact page email click | `contact_link_clicked`, `recruiter_journey_completed` with `contact_method=email` |
+| Repeated Contact page email click in same session | `contact_link_clicked`; no duplicate `recruiter_journey_completed` |
+| Contact page LinkedIn click | `contact_link_clicked`, `recruiter_journey_completed` with `contact_method=linkedin` |
+| Contact page GitHub click | `contact_link_clicked`; no `recruiter_journey_completed` |
+
+### Local Journey Verification
+
+Local browser verification passed using the running Next.js app at `http://localhost:3000`.
+
+Journey A:
+
+`Homepage -> Executive Brief -> Professional Profile -> Contact -> Email`
+
+Observed:
+
+- `contact_page_viewed`
+- `contact_link_clicked`
+- one `recruiter_journey_completed`
+- `contact_method=email`
+- `destination=email`
+- `journey_type=recruiter_conversion`
+
+Journey B:
+
+`Homepage -> Executive Brief -> Logix brief -> Contact -> LinkedIn`
+
+Observed:
+
+- `contact_page_viewed`
+- `contact_link_clicked`
+- one `recruiter_journey_completed`
+- `contact_method=linkedin`
+- `destination=linkedin`
+- `journey_type=recruiter_conversion`
+
+Duplicate-event check:
+
+- Repeated email click emitted another `contact_link_clicked`, but did not emit a duplicate `recruiter_journey_completed`.
+- GitHub contact option did not emit `recruiter_journey_completed`.
+- Normal page views did not emit `recruiter_journey_completed`.
+
+### Production Verification
+
+Production verification is pending deployment of the fix.
+
+The workspace did not contain a local `.vercel` project link and the Vercel CLI was not available, so production redeployment could not be completed from this environment. After deployment, verify in GA4 Realtime or DebugView:
+
+- Journey A emits one `recruiter_journey_completed` with `contact_method=email`.
+- Journey B emits one `recruiter_journey_completed` with `contact_method=linkedin`.
+- `contact_link_clicked` still arrives.
+- No duplicate completion event is emitted for repeated clicks in the same session.
+- GA4 and Clarity still initialize normally.
+
+Until production receives this commit, the release recommendation remains **GO WITH MINOR ISSUES**.
+
 ## Before / After Scorecard
 
 | Page | Before Performance | After Performance | Before Accessibility | After Accessibility | Before Best Practices | After Best Practices | Before SEO | After SEO |

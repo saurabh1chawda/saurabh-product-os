@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { useEffect } from "react";
 
 import { ButtonLink } from "@/components/ui/button-link";
-import { trackAnalyticsEvent } from "@/lib/analytics";
+import { trackAnalyticsEvent, trackRecruiterJourneyCompletion } from "@/lib/analytics";
 
 type RecruiterJourneyViewedProps = {
   eventName: "resume_page_viewed" | "contact_page_viewed";
@@ -45,6 +45,14 @@ export function RecruiterJourneyTrackedLink({
       link_text: label,
       link_url: href
     });
+
+    if (eventName === "contact_link_clicked") {
+      trackRecruiterJourneyCompletion({
+        href,
+        sourcePage: "Contact",
+        text: label
+      });
+    }
   }
 
   return (

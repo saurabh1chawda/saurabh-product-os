@@ -168,6 +168,11 @@ type AnalyticsEventParams = {
   link_url?: string;
   link_text?: string;
   current_path?: string;
+  source_page?: string;
+  contact_method?: string;
+  journey_type?: string;
+  entry_route?: string;
+  previous_route?: string;
 };
 
 declare global {
@@ -179,6 +184,7 @@ declare global {
       params?: AnalyticsEventParams;
     }>;
     __productOSFlushAnalyticsQueue?: () => void;
+    __productOSRecruiterCompletionKeys?: Set<string>;
   }
 }
 
@@ -230,7 +236,7 @@ export function trackLinkClick({ href, text }: { href: string; text?: string }) 
   if (url.protocol === "mailto:") {
     trackAnalyticsEvent("email_click", linkParams);
     if (isRecruiterCompletionUrl(url)) {
-      trackAnalyticsEvent("recruiter_journey_completed", linkParams);
+      trackRecruiterJourneyCompletion({ href, text });
     }
     return;
   }
@@ -252,12 +258,42 @@ export function trackLinkClick({ href, text }: { href: string; text?: string }) 
   }
 
   if (isRecruiterCompletionUrl(url)) {
-    trackAnalyticsEvent("recruiter_journey_completed", linkParams);
+    trackRecruiterJourneyCompletion({ href, text });
   }
 
   if (isExternalUrl(url)) {
     trackAnalyticsEvent("external_link_click", linkParams);
   }
+}
+
+export function trackRecruiterJourneyCompletion({ href, sourcePage, text }: { href: string; sourcePage?: string; text?: string }) {
+  const url = parseUrl(href);
+  const contactMethod = getRecruiterContactMethod(url);
+
+  if (!contactMethod) {
+    return;
+  }
+
+  const destination = getRecruiterCompletionDestination(url);
+  const currentPath = window.location.pathname;
+  const dedupeKey = `${currentPath}:${contactMethod}:${destination}`;
+
+  window.__productOSRecruiterCompletionKeys = window.__productOSRecruiterCompletionKeys ?? new Set<string>();
+
+  if (window.__productOSRecruiterCompletionKeys.has(dedupeKey)) {
+    return;
+  }
+
+  window.__productOSRecruiterCompletionKeys.add(dedupeKey);
+
+  trackAnalyticsEvent("recruiter_journey_completed", {
+    contact_method: contactMethod,
+    current_path: currentPath,
+    destination,
+    journey_type: "recruiter_conversion",
+    source_page: sourcePage ?? currentPath,
+    ...(text ? { cta_name: text, link_text: text } : {})
+  });
 }
 
 function parseUrl(href: string) {
@@ -282,4 +318,32 @@ function isResumeUrl(url: URL) {
 
 function isRecruiterCompletionUrl(url: URL) {
   return window.location.pathname === "/contact" && (url.protocol === "mailto:" || isLinkedInUrl(url));
+}
+
+function getRecruiterContactMethod(url: URL) {
+  if (window.location.pathname !== "/contact") {
+    return null;
+  }
+
+  if (url.protocol === "mailto:") {
+    return "email";
+  }
+
+  if (isLinkedInUrl(url)) {
+    return "linkedin";
+  }
+
+  return null;
+}
+
+function getRecruiterCompletionDestination(url: URL) {
+  if (url.protocol === "mailto:") {
+    return "email";
+  }
+
+  if (isLinkedInUrl(url)) {
+    return "linkedin";
+  }
+
+  return url.pathname;
 }
