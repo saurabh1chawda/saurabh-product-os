@@ -2,14 +2,16 @@
 
 All notable changes to the Product Leadership Platform are documented here.
 
-## v1.0.0 - Product Leadership Platform v1.0
+## v1.0.0 - Product OS General Availability
 
-Status: Release candidate baseline  
-Date: July 2026
+Status: General Availability
+Date: July 11, 2026
 
 ### Summary
 
-Product Leadership Platform v1.0 establishes the canonical production baseline for Product OS, the GitHub Product Leadership Hub, and the operating systems that support publishing, production, acquisition, and recruiter conversion.
+Product OS v1.0.0 is the first official production release of the Product Leadership Platform. It establishes the canonical GA baseline for Product OS, the GitHub Product Leadership Hub, and the operating systems that support publishing, production, acquisition, and recruiter conversion.
+
+Release decision: **GO WITH MINOR ISSUES**.
 
 ### Major Epics Completed
 
