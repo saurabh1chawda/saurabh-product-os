@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:resume-os:schema:employment",
+  "title": "Resume OS Employment Role",
+  "type": "object",
+  "required": [
+    "role_id",
+    "company",
+    "canonical_title",
+    "resume_title_variants",
+    "start_date",
+    "end_date",
+    "location",
+    "role_type",
+    "scope",
+    "domains",
+    "technologies",
+    "verified_achievement_ids",
+    "evidence_sources",
+    "never_infer_fields"
+  ],
+  "properties": {
+    "role_id": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}-[A-Z]{2,3}$"
+    },
+    "company": {
+      "type": "string"
+    },
+    "canonical_title": {
+      "type": "string"
+    },
+    "resume_title_variants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "start_date": {
+      "type": "string"
+    },
+    "end_date": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "role_type": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "technologies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verified_achievement_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "evidence_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "never_infer_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,26 @@
+certifications:
+  - name: AI for Product Management
+    issuer: not_specified_in_source
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+  - name: Generative AI for Everyone
+    issuer: not_specified_in_source
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+  - name: Data-Driven Product Management
+    issuer: not_specified_in_source
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+  - name: Managing Machine Learning Projects
+    issuer: not_specified_in_source
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+  - name: Large Language Models
+    issuer: not_specified_in_source
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf

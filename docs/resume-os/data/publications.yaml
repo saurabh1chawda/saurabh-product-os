@@ -1,0 +1,15 @@
+publications:
+  - publication_id: PUB-COM-5G-001
+    title: 5G Strategy Research Paper
+    organization: Mahindra Comviva
+    period: "2019-09 to 2020-03"
+    description: Authored 5G strategy research for B2B telecom portfolios and drove implementation across product lines.
+    related_achievement_id: COM-PUB-004
+    metric_claim:
+      value: 15
+      unit: percent revenue growth contribution
+      verification_status: reference_verified
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+    confidentiality_status: resume_safe

@@ -1,0 +1,267 @@
+projects:
+  - project_id: POS-HOME
+    name: Product OS
+    category: Product Leadership Platform
+    repository: https://github.com/saurabh1chawda/saurabh-product-os
+    portfolio_url: https://saurabh-product-os.vercel.app
+    supported_skills:
+      - Product leadership
+      - Evidence architecture
+      - Executive communication
+      - Product systems thinking
+    supported_resume_archetypes:
+      - senior-pm
+      - lead-pm
+      - ai-pm
+      - platform-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - Logix Built Solutions Limited
+      - JoVE
+      - Simplilearn
+      - Mahindra Comviva
+    business_domain:
+      - Product leadership
+      - AI products
+      - Platform strategy
+      - Growth
+
+  - project_id: POS-EXEC
+    name: Executive Briefing Center
+    category: Recruiter evidence hub
+    repository: https://github.com/saurabh1chawda/saurabh-product-os
+    portfolio_url: https://saurabh-product-os.vercel.app/executive
+    supported_skills:
+      - Executive communication
+      - Product storytelling
+      - Business impact synthesis
+    supported_resume_archetypes:
+      - senior-pm
+      - lead-pm
+      - ai-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping: []
+    business_domain:
+      - Career evidence
+      - Product leadership
+
+  - project_id: PLB-LOGIX
+    name: Logix Product Leadership Brief
+    category: Product Leadership Brief
+    repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
+    supported_skills:
+      - Platform modernization
+      - AI readiness
+      - Product sequencing
+      - Cross-functional alignment
+    supported_resume_archetypes:
+      - ai-pm
+      - platform-pm
+      - lead-pm
+      - senior-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - Logix Built Solutions Limited
+    business_domain:
+      - AI platforms
+      - Enterprise SaaS
+      - Platform modernization
+
+  - project_id: PLB-JOVE
+    name: JoVE Product Leadership Brief
+    category: Product Leadership Brief
+    repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
+    supported_skills:
+      - Customer discovery
+      - Workflow adoption
+      - Enterprise SaaS
+      - Portfolio strategy
+    supported_resume_archetypes:
+      - enterprise-saas
+      - consumer-pm
+      - senior-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - JoVE
+    business_domain:
+      - Scientific content
+      - Biopharma
+      - Enterprise SaaS
+
+  - project_id: PLB-SIMPLILEARN
+    name: Simplilearn Product Leadership Brief
+    category: Product Leadership Brief
+    repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
+    supported_skills:
+      - Growth
+      - Funnel optimization
+      - Product-led growth
+      - Monetization
+    supported_resume_archetypes:
+      - growth-pm
+      - monetization-pm
+      - consumer-pm
+      - senior-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - Simplilearn
+    business_domain:
+      - EdTech
+      - Growth products
+      - Digital learning
+
+  - project_id: PLB-COMVIVA
+    name: Mahindra Comviva Product Leadership Brief
+    category: Product Leadership Brief
+    repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    portfolio_url: https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva
+    supported_skills:
+      - Payments reliability
+      - Trust
+      - Enterprise platform strategy
+      - Transaction-scale product management
+    supported_resume_archetypes:
+      - payments-pm
+      - platform-pm
+      - enterprise-saas
+      - lead-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - Mahindra Comviva
+    business_domain:
+      - Payments
+      - FinTech
+      - Mobile money
+
+  - project_id: AI-PLAYBOOK
+    name: AI Product Playbook
+    category: AI Product Management
+    repository: https://github.com/saurabh1chawda/ai-product-playbook
+    portfolio_url: https://saurabh-product-os.vercel.app/ai-product-playbook
+    supported_skills:
+      - AI product lifecycle
+      - Trust before automation
+      - AI measurement
+      - Workflow-to-agent thinking
+    supported_resume_archetypes:
+      - ai-pm
+      - generative-ai-pm
+      - platform-pm
+      - lead-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - Logix Built Solutions Limited
+      - JoVE
+      - Mahindra Comviva
+      - Simplilearn
+    business_domain:
+      - AI products
+      - Product strategy
+
+  - project_id: AI-PRIORITIZATION
+    name: AI Prioritization Framework
+    category: AI Framework
+    repository: https://github.com/saurabh1chawda/ai-prioritization-framework
+    portfolio_url: https://saurabh-product-os.vercel.app/decision-systems/ai-prioritization
+    supported_skills:
+      - AI opportunity scoring
+      - Investment prioritization
+      - Trust risk assessment
+      - Readiness evaluation
+    supported_resume_archetypes:
+      - ai-pm
+      - platform-pm
+      - lead-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - Logix Built Solutions Limited
+    business_domain:
+      - AI products
+      - Product strategy
+
+  - project_id: DISCOVERY-TOOLKIT
+    name: Product Discovery Toolkit
+    category: Product Toolkit
+    repository: https://github.com/saurabh1chawda/product-discovery-toolkit
+    portfolio_url: https://saurabh-product-os.vercel.app/decision-systems/customer-discovery
+    supported_skills:
+      - Customer discovery
+      - Assumption mapping
+      - Evidence quality
+      - Opportunity assessment
+    supported_resume_archetypes:
+      - enterprise-saas
+      - consumer-pm
+      - senior-pm
+      - ai-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - JoVE
+    business_domain:
+      - Product discovery
+      - Customer research
+
+  - project_id: DECISION-MEMO
+    name: Decision Memo Template
+    category: Product Toolkit
+    repository: https://github.com/saurabh1chawda/decision-memo-template
+    portfolio_url: https://saurabh-product-os.vercel.app/product-leadership-operating-principles
+    supported_skills:
+      - Executive communication
+      - Decision writing
+      - Trade-off framing
+      - Stakeholder alignment
+    supported_resume_archetypes:
+      - lead-pm
+      - senior-pm
+      - platform-pm
+      - ai-pm
+    publication_status: live
+    evidence_quality: public_verified
+    company_mapping:
+      - Mahindra Comviva
+      - Logix Built Solutions Limited
+      - JoVE
+      - Simplilearn
+    business_domain:
+      - Product leadership
+      - Executive communication
+
+  - project_id: LOYALTYIQ
+    name: LoyaltyIQ - AI-Personalized Loyalty and Wallet Engine Simulation Workspace
+    category: Company-specific proof-of-work simulation
+    repository: reference_resume_link_only
+    portfolio_url: reference_resume_link_only
+    supported_skills:
+      - Loyalty and rewards design
+      - Marketplace product thinking
+      - Wallet architecture
+      - Fraud and risk trade-offs
+      - AI personalization
+    supported_resume_archetypes:
+      - monetization-pm
+      - consumer-pm
+      - ai-pm
+      - platform-pm
+    publication_status: reference_resume_only
+    evidence_quality: simulation_claims_must_be_labeled
+    company_mapping:
+      - eBay target application
+    business_domain:
+      - Marketplace loyalty
+      - Wallet products
+      - Monetization
+    disclaimer_required: true
+    production_status: simulation_only

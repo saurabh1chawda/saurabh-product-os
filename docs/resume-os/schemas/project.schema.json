@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:resume-os:schema:project",
+  "title": "Resume OS Project",
+  "type": "object",
+  "required": [
+    "project_id",
+    "name",
+    "category",
+    "repository",
+    "portfolio_url",
+    "supported_skills",
+    "supported_resume_archetypes",
+    "publication_status",
+    "evidence_quality",
+    "company_mapping",
+    "business_domain"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "portfolio_url": {
+      "type": "string"
+    },
+    "supported_skills": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "supported_resume_archetypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "publication_status": {
+      "type": "string"
+    },
+    "evidence_quality": {
+      "type": "string"
+    },
+    "company_mapping": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "business_domain": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "disclaimer_required": {
+      "type": "boolean"
+    },
+    "production_status": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

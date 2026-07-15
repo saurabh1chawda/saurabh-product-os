@@ -1,0 +1,33 @@
+education:
+  - education_id: EDU-IIM-001
+    institution: Indian Institute of Management Indore
+    credential: MBA
+    field: Business Administration and Management
+    start_date: "2017-06"
+    end_date: "2019-03"
+    location: Indore, India
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+    never_infer_fields:
+      - institution
+      - credential
+      - start_date
+      - end_date
+  - education_id: EDU-NIT-001
+    institution: National Institute of Technology Surat
+    credential: B.Tech
+    field: Computer Engineering
+    start_date: "2012-06"
+    end_date: "2016-05"
+    location: Surat, India
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+    never_infer_fields:
+      - institution
+      - credential
+      - start_date
+      - end_date

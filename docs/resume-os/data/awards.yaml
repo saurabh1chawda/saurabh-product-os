@@ -1,0 +1,35 @@
+awards:
+  - award_id: AWD-SIM-001
+    name: The Game Changer
+    organization: Simplilearn
+    period: "2022-01 to 2022-03"
+    description: Recognized for outstanding performance and cross-functional leadership across 3 product teams.
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+  - award_id: AWD-SIM-002
+    name: Best Performing Employee
+    organization: Simplilearn
+    period: "2021-10 to 2021-12"
+    description: Exceeded targets within the first 2 months and earned recognition for execution and rapid impact.
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+  - award_id: AWD-COM-001
+    name: Credo Cap Award
+    organization: Mahindra Comviva
+    period: "2020-10 to 2020-12"
+    description: Appreciated as a best performer in the MBS department for customer-focused solutions and service.
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+  - award_id: AWD-LOG-001
+    name: Best Contributor
+    organization: Logix Built Solutions Limited
+    period: "2016-10 to 2016-12"
+    description: Recognized among a 25-member team for analytical work and ownership of business-critical insights.
+    verification_status: product_os_verified
+    evidence_sources:
+      - product_os_profile

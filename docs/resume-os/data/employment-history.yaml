@@ -1,0 +1,201 @@
+employment_history:
+  - role_id: LOG-ANL
+    company: Logix Built Solutions Limited
+    canonical_title: Data Analyst
+    resume_title_variants:
+      - Data Analyst
+      - Data Analyst - Product & Business Analytics
+    start_date: "2016-06"
+    end_date: "2017-05"
+    location: Surat, India
+    role_type: Analytics
+    scope: Product analytics, SQL optimization, customer insight, churn analysis
+    domains:
+      - Analytics
+      - Product analytics
+      - Retention
+    technologies:
+      - SQL
+      - MySQL
+      - Machine learning
+    verified_achievement_ids:
+      - LOG-ANL-001
+      - LOG-ANL-002
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+    never_infer_fields:
+      - company
+      - canonical_title
+      - start_date
+      - end_date
+
+  - role_id: COM-PM
+    company: Mahindra Comviva
+    canonical_title: Product Manager
+    resume_title_variants:
+      - Product Manager
+      - Product Manager - Core Product & Platform
+    start_date: "2019-05"
+    end_date: "2021-04"
+    location: Bengaluru, India
+    role_type: Product Manager
+    scope: Core B2B platform modules, customer-facing features, payment and mobile money product experiences
+    domains:
+      - Payments
+      - FinTech
+      - Enterprise platforms
+      - Reliability
+    technologies:
+      - APIs
+      - Payment platforms
+      - Multichannel integrations
+    verified_achievement_ids:
+      - COM-PAY-001
+      - COM-PAY-002
+      - COM-PAY-003
+      - COM-PUB-004
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_comviva
+    never_infer_fields:
+      - company
+      - canonical_title
+      - start_date
+      - end_date
+
+  - role_id: FRE-CON
+    company: Freelancer.com
+    canonical_title: Product Consultant
+    resume_title_variants:
+      - Product Consultant
+      - Product Consultant - Product & Business Strategy
+    start_date: "2021-04"
+    end_date: "2021-09"
+    location: Bengaluru, India
+    role_type: Product Consultant
+    scope: Client advisory, product strategy, customer feedback systems, operational improvement
+    domains:
+      - Product strategy
+      - Client advisory
+      - Customer experience
+    technologies: []
+    verified_achievement_ids:
+      - FRE-CON-001
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+    never_infer_fields:
+      - company
+      - canonical_title
+      - start_date
+      - end_date
+
+  - role_id: SIM-SPM
+    company: Simplilearn
+    canonical_title: Senior Product Manager
+    resume_title_variants:
+      - Senior Product Manager
+      - Senior Product Manager - Growth, Conversion & Digital Platforms
+    start_date: "2021-09"
+    end_date: "2022-12"
+    location: Bengaluru, India
+    role_type: Senior Product Manager
+    scope: Growth, conversion, acquisition, referral, monetization, web and mobile platforms
+    domains:
+      - Growth
+      - Monetization
+      - Product-led growth
+      - Experimentation
+      - EdTech
+    technologies:
+      - Web analytics
+      - Experimentation platforms
+    verified_achievement_ids:
+      - SIM-REV-001
+      - SIM-CNV-002
+      - SIM-REF-003
+      - SIM-EFF-004
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_simplilearn
+    never_infer_fields:
+      - company
+      - canonical_title
+      - start_date
+      - end_date
+
+  - role_id: JOV-SPM
+    company: JoVE
+    canonical_title: Senior Product Manager
+    resume_title_variants:
+      - Senior Product Manager
+      - Senior Product Manager - Product Strategy, Growth & Portfolio Management
+    start_date: "2023-01"
+    end_date: "2025-05"
+    location: Mumbai, India
+    role_type: Senior Product Manager
+    scope: Research and Biopharma portfolio strategy, discovery, personalization, engagement, revenue outcomes
+    domains:
+      - Enterprise SaaS
+      - Biopharma
+      - Scientific content
+      - Customer discovery
+      - Workflow adoption
+    technologies:
+      - Behavioral analytics
+      - ML personalization pilots
+    verified_achievement_ids:
+      - JOV-REV-001
+      - JOV-ENG-002
+      - JOV-AI-003
+      - JOV-LCY-004
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_jove
+    never_infer_fields:
+      - company
+      - canonical_title
+      - start_date
+      - end_date
+
+  - role_id: LOG-LPM
+    company: Logix Built Solutions Limited
+    canonical_title: Lead Product Manager
+    resume_title_variants:
+      - Lead Product Manager
+      - Lead Product Manager - AI Products, Platform Strategy & Growth
+    start_date: "2025-05"
+    end_date: Present
+    location: Surat, India
+    role_type: Lead Product Manager
+    scope: AI product strategy, platform modernization, product-led growth, customer experience, roadmap governance
+    domains:
+      - AI platforms
+      - Platform strategy
+      - Enterprise SaaS
+      - Product-led growth
+      - Architecture strategy
+    technologies:
+      - AI/ML personalization
+      - APIs
+      - DevOps
+      - Platform architecture
+    verified_achievement_ids:
+      - LOG-ARR-001
+      - LOG-MRR-002
+      - LOG-SEO-003
+      - LOG-DEL-004
+      - LOG-THR-005
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_logix
+    never_infer_fields:
+      - company
+      - canonical_title
+      - start_date
+      - end_date

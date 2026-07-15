@@ -1,0 +1,710 @@
+achievements:
+  - id: LOG-ANL-001
+    company: Logix Built Solutions Limited
+    role: Data Analyst
+    date: "2016-06 to 2017-05"
+    category: Analytics and retention
+    business_problem: Retention risk needed to be identified through customer and product data.
+    action: Built machine-learning based churn prediction models.
+    outcome: Improved retention.
+    metric:
+      value: 15
+      unit: percent retention improvement
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+    skills_demonstrated:
+      - Product analytics
+      - Churn modeling
+      - SQL
+      - Customer insight
+    applicable_role_archetypes:
+      - senior-pm
+      - growth-pm
+      - ai-pm
+    related_product_os_assets:
+      - POS-PROFILE
+    related_github_repository: null
+    related_portfolio_url: https://saurabh-product-os.vercel.app/profile
+    confidence_level: high
+
+  - id: LOG-ANL-002
+    company: Logix Built Solutions Limited
+    role: Data Analyst
+    date: "2016-06 to 2017-05"
+    category: Analytics infrastructure
+    business_problem: Query performance constrained analytical speed.
+    action: Optimized MySQL query performance.
+    outcome: Improved query performance.
+    metric:
+      value: 30
+      unit: percent query performance improvement
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+    skills_demonstrated:
+      - SQL optimization
+      - MySQL
+      - Data analysis
+    applicable_role_archetypes:
+      - platform-pm
+      - senior-pm
+    related_product_os_assets:
+      - POS-PROFILE
+    related_github_repository: null
+    related_portfolio_url: https://saurabh-product-os.vercel.app/profile
+    confidence_level: high
+
+  - id: COM-PAY-001
+    company: Mahindra Comviva
+    role: Product Manager
+    date: "2019-05 to 2021-04"
+    category: Enterprise platform launch
+    business_problem: Core B2B platform modules needed MVP strategy and customer adoption.
+    action: Owned MVP strategy and launch for core B2B platform modules.
+    outcome: Onboarded paying customers within six months.
+    metric:
+      value: 15
+      unit: paying customers
+      baseline: 0
+      final_value: 15+
+      timeframe: six months
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+    skills_demonstrated:
+      - MVP strategy
+      - Enterprise SaaS
+      - Platform product management
+      - Customer onboarding
+    applicable_role_archetypes:
+      - enterprise-saas
+      - payments-pm
+      - senior-pm
+    related_product_os_assets:
+      - PLB-COMVIVA
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva
+    confidence_level: high
+
+  - id: COM-PAY-002
+    company: Mahindra Comviva
+    role: Product Manager
+    date: "2019-05 to 2021-04"
+    category: Customer engagement and satisfaction
+    business_problem: Payment platform experiences needed stronger targeting, segmentation, and multichannel customer experience.
+    action: Optimized targeting, segmentation, and multichannel integration.
+    outcome: Improved engagement and customer satisfaction.
+    metric:
+      value:
+        engagement: 83
+        csat: 94
+      unit: percent
+      baseline: null
+      final_value:
+        engagement: 83
+        csat: 94
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_comviva
+    skills_demonstrated:
+      - Segmentation
+      - Customer experience
+      - Payments
+      - Enterprise platform reliability
+    applicable_role_archetypes:
+      - payments-pm
+      - enterprise-saas
+      - consumer-pm
+    related_product_os_assets:
+      - PLB-COMVIVA
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva
+    confidence_level: high
+
+  - id: COM-PAY-003
+    company: Mahindra Comviva
+    role: Product Manager
+    date: "2019-05 to 2021-04"
+    category: Payments reliability
+    business_problem: Mobile money and payment systems required high-volume reliable transaction experiences.
+    action: Prioritized reliability and trust before platform expansion.
+    outcome: Supported transaction-scale product experiences.
+    metric:
+      value: 10M+
+      unit: monthly transactions supported
+      baseline: null
+      final_value: 10M+
+      timeframe: monthly
+    verification_status: product_os_verified
+    evidence_sources:
+      - product_leadership_brief_comviva
+      - decision_memo_template_example_comviva
+    skills_demonstrated:
+      - Reliability strategy
+      - Trust-centered product management
+      - Payments
+      - Platform sequencing
+    applicable_role_archetypes:
+      - payments-pm
+      - platform-pm
+      - lead-pm
+    related_product_os_assets:
+      - PLB-COMVIVA
+      - PRINCIPLE-TRUST-BEFORE-INNOVATION
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/product-leadership-operating-principles
+    confidence_level: high
+
+  - id: COM-PUB-004
+    company: Mahindra Comviva
+    role: Product Manager
+    date: "2019-09 to 2020-03"
+    category: Publication and strategy
+    business_problem: B2B telecom portfolios needed 5G strategy research and implementation support.
+    action: Authored 5G strategy research and drove implementation across product lines.
+    outcome: Contributed to revenue growth.
+    metric:
+      value: 15
+      unit: percent revenue growth contribution
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+    skills_demonstrated:
+      - Strategy research
+      - Telecom products
+      - B2B portfolio strategy
+    applicable_role_archetypes:
+      - platform-pm
+      - enterprise-saas
+      - senior-pm
+    related_product_os_assets:
+      - POS-PROFILE
+    related_github_repository: null
+    related_portfolio_url: https://saurabh-product-os.vercel.app/profile
+    confidence_level: medium
+
+  - id: FRE-CON-001
+    company: Freelancer.com
+    role: Product Consultant
+    date: "2021-04 to 2021-09"
+    category: Client advisory
+    business_problem: Clients needed product and business strategy guidance plus stronger feedback systems.
+    action: Advised 15+ clients and redesigned a global customer feedback system.
+    outcome: Improved operational efficiency and CSAT.
+    metric:
+      value:
+        clients: 15+
+        efficiency: 20
+        csat_lift: 15
+      unit:
+        clients: count
+        efficiency: percent
+        csat_lift: percent
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+    skills_demonstrated:
+      - Product consulting
+      - Customer feedback systems
+      - Operational improvement
+      - Stakeholder advisory
+    applicable_role_archetypes:
+      - senior-pm
+      - enterprise-saas
+      - consumer-pm
+    related_product_os_assets:
+      - POS-PROFILE
+    related_github_repository: null
+    related_portfolio_url: https://saurabh-product-os.vercel.app/profile
+    confidence_level: high
+
+  - id: SIM-REV-001
+    company: Simplilearn
+    role: Senior Product Manager
+    date: "2021-09 to 2022-12"
+    category: Revenue growth and monetization
+    business_problem: Job Guarantee portfolio needed commercial scale without simply increasing acquisition spend.
+    action: Redesigned pricing, packaging, and go-to-market alignment with senior leadership.
+    outcome: Scaled Job Guarantee revenue.
+    metric:
+      value: 10x
+      unit: revenue growth
+      baseline: Rs. 1M
+      final_value: Rs. 10M
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_simplilearn
+    skills_demonstrated:
+      - Monetization
+      - Pricing and packaging
+      - Product-led growth
+      - Executive alignment
+    applicable_role_archetypes:
+      - growth-pm
+      - monetization-pm
+      - senior-pm
+      - lead-pm
+    related_product_os_assets:
+      - PLB-SIMPLILEARN
+      - PRINCIPLE-OPTIMIZATION-BEFORE-SCALE
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
+    confidence_level: high
+
+  - id: SIM-CNV-002
+    company: Simplilearn
+    role: Senior Product Manager
+    date: "2021-09 to 2022-12"
+    category: Conversion optimization
+    business_problem: Traffic acquisition was growing while funnel efficiency remained below potential.
+    action: Improved customer journey and conversion through structured, data-driven experimentation.
+    outcome: Improved traffic-to-lead and lead-to-customer conversion.
+    metric:
+      value:
+        traffic_to_lead: 62
+        lead_to_customer: 40
+      unit: percent improvement
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_leadership_brief_simplilearn
+    skills_demonstrated:
+      - Funnel optimization
+      - Experimentation
+      - Product analytics
+      - Conversion strategy
+    applicable_role_archetypes:
+      - growth-pm
+      - monetization-pm
+      - consumer-pm
+      - senior-pm
+    related_product_os_assets:
+      - PLB-SIMPLILEARN
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
+    confidence_level: high
+
+  - id: SIM-REF-003
+    company: Simplilearn
+    role: Senior Product Manager
+    date: "2021-09 to 2022-12"
+    category: Referral and rewards mechanics
+    business_problem: Organic referral contribution was low.
+    action: Designed and scaled the Refer & Earn peer-referral incentive program.
+    outcome: Doubled organic revenue contribution.
+    metric:
+      value: 1.5% to 3%
+      unit: referral contribution
+      baseline: 1.5%
+      final_value: 3%
+      timeframe: three months
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_leadership_brief_simplilearn
+    skills_demonstrated:
+      - Referral systems
+      - Incentive design
+      - Rewards mechanics
+      - Product-led growth
+    applicable_role_archetypes:
+      - growth-pm
+      - monetization-pm
+      - consumer-pm
+    related_product_os_assets:
+      - PLB-SIMPLILEARN
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
+    confidence_level: high
+
+  - id: SIM-EFF-004
+    company: Simplilearn
+    role: Senior Product Manager
+    date: "2021-09 to 2022-12"
+    category: Roadmap efficiency
+    business_problem: Roadmap inefficiency increased engineering cost and slowed delivery.
+    action: Managed cross-functional roadmap prioritization and sequencing.
+    outcome: Reduced development costs and improved time-to-market.
+    metric:
+      value:
+        development_cost: 25
+        time_to_market: 15
+      unit: percent improvement
+      baseline: null
+      final_value:
+        development_cost: 25% lower
+        time_to_market: 15% faster
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_leadership_brief_simplilearn
+    skills_demonstrated:
+      - Roadmap governance
+      - Cost optimization
+      - Delivery sequencing
+    applicable_role_archetypes:
+      - senior-pm
+      - lead-pm
+      - growth-pm
+      - platform-pm
+    related_product_os_assets:
+      - PLB-SIMPLILEARN
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
+    confidence_level: high
+
+  - id: JOV-REV-001
+    company: JoVE
+    role: Senior Product Manager
+    date: "2023-01 to 2025-05"
+    category: Portfolio monetization
+    business_problem: Biopharma portfolio needed beta-to-scale monetization strategy.
+    action: Led beta-to-scale monetization strategy through customer-driven pricing and packaging decisions.
+    outcome: Grew portfolio revenue.
+    metric:
+      value: 30
+      unit: percent portfolio revenue growth
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_jove
+    skills_demonstrated:
+      - Portfolio strategy
+      - Monetization
+      - Pricing and packaging
+      - Enterprise SaaS
+    applicable_role_archetypes:
+      - enterprise-saas
+      - monetization-pm
+      - senior-pm
+    related_product_os_assets:
+      - PLB-JOVE
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
+    confidence_level: high
+
+  - id: JOV-ENG-002
+    company: JoVE
+    role: Senior Product Manager
+    date: "2023-01 to 2025-05"
+    category: Workflow adoption and engagement
+    business_problem: Valuable scientific content needed better discovery and workflow fit to improve adoption.
+    action: Re-architected discovery and personalization logic based on behavioral data.
+    outcome: Improved session duration, page views, and video consumption.
+    metric:
+      value:
+        session_duration: 40
+        page_views: 15
+        video_consumption: 12
+      unit: percent improvement
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_jove
+    skills_demonstrated:
+      - Customer discovery
+      - Workflow adoption
+      - Personalization
+      - Behavioral analytics
+    applicable_role_archetypes:
+      - enterprise-saas
+      - consumer-pm
+      - senior-pm
+      - ai-pm
+    related_product_os_assets:
+      - PLB-JOVE
+      - DISCOVERY-TOOLKIT
+    related_github_repository: https://github.com/saurabh1chawda/product-discovery-toolkit
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
+    confidence_level: high
+
+  - id: JOV-AI-003
+    company: JoVE
+    role: Senior Product Manager
+    date: "2023-01 to 2025-05"
+    category: AI and ML product partnership
+    business_problem: Behavioral insight needed to be translated into personalization opportunities.
+    action: Partnered with engineering and data science to evaluate and pilot ML-driven personalization models.
+    outcome: Created product requirements for personalization based on behavioral insight.
+    metric:
+      value: null
+      unit: null
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+    skills_demonstrated:
+      - ML product partnership
+      - Product requirements
+      - Behavioral analytics
+      - Cross-functional collaboration
+    applicable_role_archetypes:
+      - ai-pm
+      - enterprise-saas
+      - senior-pm
+    related_product_os_assets:
+      - PLB-JOVE
+      - AI-PLAYBOOK
+    related_github_repository: https://github.com/saurabh1chawda/ai-product-playbook
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
+    confidence_level: medium
+
+  - id: JOV-LCY-004
+    company: JoVE
+    role: Senior Product Manager
+    date: "2023-01 to 2025-05"
+    category: Product lifecycle ownership
+    business_problem: Roadmap decisions needed to incorporate market and competitive analysis.
+    action: Chaired the complete product lifecycle from ideation to launch.
+    outcome: Incorporated market and competitive analysis into roadmap decisions.
+    metric:
+      value: null
+      unit: null
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+    skills_demonstrated:
+      - Product lifecycle management
+      - Market analysis
+      - Competitive analysis
+      - Roadmap strategy
+    applicable_role_archetypes:
+      - senior-pm
+      - lead-pm
+      - enterprise-saas
+    related_product_os_assets:
+      - PLB-JOVE
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
+    confidence_level: medium
+
+  - id: LOG-ARR-001
+    company: Logix Built Solutions Limited
+    role: Lead Product Manager
+    date: "2025-05 to Present"
+    category: Zero-to-one monetization
+    business_problem: Platform needed sustainable commercial growth and monetization leverage.
+    action: Owned strategy and execution for zero-to-one platform products through pricing, packaging, and upsell design.
+    outcome: Generated ARR within nine months.
+    metric:
+      value: Rs. 1M+
+      unit: ARR
+      baseline: 0
+      final_value: Rs. 1M+
+      timeframe: nine months
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_logix
+    skills_demonstrated:
+      - Monetization strategy
+      - Pricing and packaging
+      - Platform strategy
+      - Product-led growth
+    applicable_role_archetypes:
+      - platform-pm
+      - monetization-pm
+      - lead-pm
+      - senior-pm
+    related_product_os_assets:
+      - PLB-LOGIX
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
+    confidence_level: high
+
+  - id: LOG-MRR-002
+    company: Logix Built Solutions Limited
+    role: Lead Product Manager
+    date: "2025-05 to Present"
+    category: AI personalization and growth
+    business_problem: Product discovery and engagement needed personalization and AI readiness.
+    action: Directed integration of AI/ML-powered personalization into product discovery.
+    outcome: Improved engagement and MRR growth while laying groundwork for an AI-first roadmap.
+    metric:
+      value:
+        engagement_lift: 25
+        mrr_growth: 20
+      unit: percent
+      baseline: null
+      final_value:
+        engagement_lift: 25
+        mrr_growth: 20
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile
+      - product_leadership_brief_logix
+    skills_demonstrated:
+      - AI product management
+      - Personalization
+      - Product discovery
+      - Growth strategy
+    applicable_role_archetypes:
+      - ai-pm
+      - platform-pm
+      - growth-pm
+      - lead-pm
+    related_product_os_assets:
+      - PLB-LOGIX
+      - AI-PLAYBOOK
+      - AI-PRIORITIZATION
+    related_github_repository: https://github.com/saurabh1chawda/ai-product-playbook
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
+    confidence_level: high
+
+  - id: LOG-SEO-003
+    company: Logix Built Solutions Limited
+    role: Lead Product Manager
+    date: "2025-05 to Present"
+    category: Acquisition and retention engine
+    business_problem: Growth needed scalable organic acquisition and retention infrastructure.
+    action: Built an organic acquisition and retention engine using SEO and personalized landing experiences.
+    outcome: Doubled organic traffic and lifted revenue.
+    metric:
+      value:
+        organic_traffic: 2x
+        revenue_lift: 10
+      unit:
+        organic_traffic: multiplier
+        revenue_lift: percent
+      baseline: null
+      final_value: null
+      timeframe: null
+    verification_status: reference_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_leadership_brief_logix
+    skills_demonstrated:
+      - SEO
+      - Landing experience personalization
+      - Retention
+      - Product-led growth
+    applicable_role_archetypes:
+      - growth-pm
+      - monetization-pm
+      - platform-pm
+    related_product_os_assets:
+      - PLB-LOGIX
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
+    confidence_level: high
+
+  - id: LOG-DEL-004
+    company: Logix Built Solutions Limited
+    role: Lead Product Manager
+    date: "2025-05 to Present"
+    category: Delivery velocity and roadmap governance
+    business_problem: Fragmented delivery and platform constraints slowed release cycles.
+    action: Aligned Engineering, Design, Sales, and Marketing around unified roadmap governance.
+    outcome: Improved delivery velocity and release cycles.
+    metric:
+      value:
+        delivery_velocity: 3x
+        release_cycles: 50
+      unit:
+        delivery_velocity: multiplier
+        release_cycles: percent reduction
+      baseline: null
+      final_value:
+        delivery_velocity: 3x
+        release_cycles: 50% reduction
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_leadership_brief_logix
+    skills_demonstrated:
+      - Roadmap governance
+      - Cross-functional leadership
+      - Delivery velocity
+      - Stakeholder alignment
+    applicable_role_archetypes:
+      - lead-pm
+      - platform-pm
+      - senior-pm
+    related_product_os_assets:
+      - PLB-LOGIX
+      - PRINCIPLE-PLATFORM-BEFORE-INTELLIGENCE
+    related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
+    confidence_level: high
+
+  - id: LOG-THR-005
+    company: Logix Built Solutions Limited
+    role: Lead Product Manager
+    date: "2025-05 to Present"
+    category: Platform scalability
+    business_problem: Platform architecture and DevOps maturity needed to support scalability and faster releases.
+    action: Led platform architecture and DevOps maturity initiatives.
+    outcome: Improved throughput and accelerated releases.
+    metric:
+      value:
+        throughput: 15
+        release_speed: 2x
+      unit:
+        throughput: percent increase
+        release_speed: multiplier
+      baseline: null
+      final_value:
+        throughput: 15% increase
+        release_speed: 2x faster
+      timeframe: null
+    verification_status: product_os_verified
+    evidence_sources:
+      - reference_resume_ebay_pdf
+      - product_leadership_brief_logix
+    skills_demonstrated:
+      - Platform architecture
+      - DevOps maturity
+      - Scalability
+      - AI readiness
+    applicable_role_archetypes:
+      - platform-pm
+      - ai-pm
+      - lead-pm
+    related_product_os_assets:
+      - PLB-LOGIX
+      - AI-PLAYBOOK
+    related_github_repository: https://github.com/saurabh1chawda/ai-product-playbook
+    related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
+    confidence_level: high

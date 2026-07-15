@@ -1,0 +1,37 @@
+candidate_profile:
+  name: Saurabh Chawda
+  location: Surat, India
+  email: saurabh1chawda@gmail.com
+  phone: "+91-9106759745"
+  linkedin: https://www.linkedin.com/in/chawdasaurabh/
+  github: https://github.com/saurabh1chawda
+  product_os: https://saurabh-product-os.vercel.app
+  current_positioning:
+    - Lead Product Manager
+    - Senior Product Manager
+    - AI Product Manager
+    - Platform Product Manager
+  domains:
+    - AI products
+    - Enterprise SaaS
+    - Platform strategy
+    - Payments and fintech
+    - Growth and experimentation
+    - Monetization
+  target_locations:
+    status: optional
+    values: []
+    never_infer: true
+  relocation_preferences:
+    status: optional
+    value: null
+    never_infer: true
+  work_authorization:
+    status: optional
+    value: null
+    never_infer: true
+  verification:
+    status: evidence_verified
+    sources:
+      - reference_resume_ebay_pdf
+      - product_os_profile

@@ -1,0 +1,34 @@
+links:
+  identity:
+    email: mailto:saurabh1chawda@gmail.com
+    linkedin: https://www.linkedin.com/in/chawdasaurabh/
+    github: https://github.com/saurabh1chawda
+    product_os: https://saurabh-product-os.vercel.app
+  product_os:
+    homepage: https://saurabh-product-os.vercel.app
+    executive: https://saurabh-product-os.vercel.app/executive
+    profile: https://saurabh-product-os.vercel.app/profile
+    ai_product_playbook: https://saurabh-product-os.vercel.app/ai-product-playbook
+    operating_principles: https://saurabh-product-os.vercel.app/product-leadership-operating-principles
+    decision_operating_system: https://saurabh-product-os.vercel.app/decision-operating-system
+    case_studies: https://saurabh-product-os.vercel.app/case-studies
+    logix: https://saurabh-product-os.vercel.app/case-studies/logix
+    jove: https://saurabh-product-os.vercel.app/case-studies/jove
+    simplilearn: https://saurabh-product-os.vercel.app/case-studies/simplilearn
+    comviva_story: https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva
+    ai_prioritization: https://saurabh-product-os.vercel.app/decision-systems/ai-prioritization
+    customer_discovery: https://saurabh-product-os.vercel.app/decision-systems/customer-discovery
+    ai_success_metrics: https://saurabh-product-os.vercel.app/decision-systems/ai-success-metrics
+    rag_vs_agent: https://saurabh-product-os.vercel.app/decision-systems/rag-vs-agent
+    build_vs_buy_ai: https://saurabh-product-os.vercel.app/decision-systems/build-vs-buy-ai
+  github_repositories:
+    product_os: https://github.com/saurabh1chawda/saurabh-product-os
+    ai_product_playbook: https://github.com/saurabh1chawda/ai-product-playbook
+    product_leadership_briefs: https://github.com/saurabh1chawda/product-leadership-briefs
+    ai_prioritization_framework: https://github.com/saurabh1chawda/ai-prioritization-framework
+    product_discovery_toolkit: https://github.com/saurabh1chawda/product-discovery-toolkit
+    decision_memo_template: https://github.com/saurabh1chawda/decision-memo-template
+  reference_artifacts:
+    ebay_reference_resume:
+      path: docs/resume-os/reference-resumes/ebay-spm-monetization-loyalty-reference.docx.pdf
+      commit_policy: local_only_never_commit

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:resume-os:schema:achievement",
+  "title": "Resume OS Achievement",
+  "type": "object",
+  "required": [
+    "id",
+    "company",
+    "role",
+    "date",
+    "category",
+    "business_problem",
+    "action",
+    "outcome",
+    "metric",
+    "verification_status",
+    "evidence_sources",
+    "skills_demonstrated",
+    "applicable_role_archetypes",
+    "related_product_os_assets",
+    "related_github_repository",
+    "related_portfolio_url",
+    "confidence_level"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}-[A-Z]{2,3}-[0-9]{3}$"
+    },
+    "company": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "business_problem": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "outcome": {
+      "type": "string"
+    },
+    "metric": {
+      "type": "object"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "reference_verified",
+        "product_os_verified",
+        "needs_review"
+      ]
+    },
+    "evidence_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "skills_demonstrated": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "applicable_role_archetypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "related_product_os_assets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_github_repository": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "related_portfolio_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "confidence_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
