@@ -30,6 +30,27 @@ achievements:
     related_github_repository: null
     related_portfolio_url: https://saurabh-product-os.vercel.app/profile
     confidence_level: high
+    importance_score: 72
+    evidence_strength: 76
+    confidence_status: self-reported
+    keyword_tags: ["churn", "retention", "machine learning", "analytics"]
+    competency_tags: ["Analytics", "AI/ML", "Retention"]
+    domain_tags: ["Data analytics", "Growth"]
+    archetype_scores:
+      growth-pm: 76
+      ai-pm: 70
+      senior-pm: 68
+    seniority_signal: early_analytics_depth
+    recruiter_value: 68
+    hiring_manager_value: 74
+    ats_value: 72
+    technical_depth: 3
+    leadership_depth: 1
+    business_impact_strength: 3
+    recency_score: 35
+    uniqueness_score: 64
+    interview_defensibility: 78
+    confidentiality_status: resume_safe
 
   - id: LOG-ANL-002
     company: Logix Built Solutions Limited
@@ -60,6 +81,26 @@ achievements:
     related_github_repository: null
     related_portfolio_url: https://saurabh-product-os.vercel.app/profile
     confidence_level: high
+    importance_score: 68
+    evidence_strength: 76
+    confidence_status: self-reported
+    keyword_tags: ["SQL", "MySQL", "query optimization", "analytics"]
+    competency_tags: ["Analytics", "Data systems", "Technical execution"]
+    domain_tags: ["Data analytics", "Platform"]
+    archetype_scores:
+      platform-pm: 70
+      senior-pm: 62
+    seniority_signal: early_technical_depth
+    recruiter_value: 62
+    hiring_manager_value: 70
+    ats_value: 70
+    technical_depth: 3
+    leadership_depth: 1
+    business_impact_strength: 2
+    recency_score: 35
+    uniqueness_score: 58
+    interview_defensibility: 76
+    confidentiality_status: resume_safe
 
   - id: COM-PAY-001
     company: Mahindra Comviva
@@ -93,6 +134,28 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva
     confidence_level: high
+    importance_score: 84
+    evidence_strength: 82
+    confidence_status: evidence-partial
+    keyword_tags: ["MVP", "B2B platform", "customer onboarding", "payments"]
+    competency_tags: ["Zero-to-one", "Launch", "Enterprise platform"]
+    domain_tags: ["Payments", "Enterprise SaaS", "FinTech"]
+    archetype_scores:
+      payments-pm: 88
+      enterprise-saas: 82
+      platform-pm: 78
+      senior-pm: 76
+    seniority_signal: enterprise_platform_launch
+    recruiter_value: 82
+    hiring_manager_value: 86
+    ats_value: 78
+    technical_depth: 3
+    leadership_depth: 3
+    business_impact_strength: 4
+    recency_score: 62
+    uniqueness_score: 78
+    interview_defensibility: 84
+    confidentiality_status: resume_safe
 
   - id: COM-PAY-002
     company: Mahindra Comviva
@@ -131,6 +194,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva
     confidence_level: high
+    importance_score: 87
+    evidence_strength: 88
+    confidence_status: verified-public
+    keyword_tags: ["prepaid card", "15M users", "payments", "digital financial services"]
+    competency_tags: ["Payments", "Scale", "Platform strategy"]
+    domain_tags: ["Payments", "FinTech", "Telecom"]
+    archetype_scores:
+      payments-pm: 92
+      platform-pm: 76
+      enterprise-saas: 74
+    seniority_signal: scaled_payments_product
+    recruiter_value: 86
+    hiring_manager_value: 88
+    ats_value: 84
+    technical_depth: 3
+    leadership_depth: 3
+    business_impact_strength: 4
+    recency_score: 62
+    uniqueness_score: 86
+    interview_defensibility: 86
+    confidentiality_status: resume_safe
 
   - id: COM-PAY-003
     company: Mahindra Comviva
@@ -165,6 +249,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/product-leadership-operating-principles
     confidence_level: high
+    importance_score: 93
+    evidence_strength: 90
+    confidence_status: verified-public
+    keyword_tags: ["10M transactions", "mobile money", "payment workflows", "reliability"]
+    competency_tags: ["Payments", "Reliability", "Operational excellence"]
+    domain_tags: ["Payments", "FinTech", "Platform"]
+    archetype_scores:
+      payments-pm: 96
+      platform-pm: 86
+      senior-pm: 82
+    seniority_signal: payments_scale_and_reliability
+    recruiter_value: 92
+    hiring_manager_value: 94
+    ats_value: 88
+    technical_depth: 3
+    leadership_depth: 4
+    business_impact_strength: 5
+    recency_score: 62
+    uniqueness_score: 90
+    interview_defensibility: 90
+    confidentiality_status: resume_safe
 
   - id: COM-PUB-004
     company: Mahindra Comviva
@@ -196,6 +301,27 @@ achievements:
     related_github_repository: null
     related_portfolio_url: https://saurabh-product-os.vercel.app/profile
     confidence_level: medium
+    importance_score: 74
+    evidence_strength: 72
+    confidence_status: self-reported
+    keyword_tags: ["industry publication", "mobile banking", "thought leadership"]
+    competency_tags: ["Thought leadership", "Domain communication"]
+    domain_tags: ["FinTech", "Payments"]
+    archetype_scores:
+      payments-pm: 76
+      lead-pm: 70
+      senior-pm: 66
+    seniority_signal: domain_thought_leadership
+    recruiter_value: 76
+    hiring_manager_value: 72
+    ats_value: 60
+    technical_depth: 2
+    leadership_depth: 3
+    business_impact_strength: 2
+    recency_score: 58
+    uniqueness_score: 72
+    interview_defensibility: 74
+    confidentiality_status: resume_safe
 
   - id: FRE-CON-001
     company: Freelancer.com
@@ -235,6 +361,27 @@ achievements:
     related_github_repository: null
     related_portfolio_url: https://saurabh-product-os.vercel.app/profile
     confidence_level: high
+    importance_score: 80
+    evidence_strength: 76
+    confidence_status: evidence-partial
+    keyword_tags: ["consulting", "go-to-market", "retention", "engagement"]
+    competency_tags: ["Product strategy", "Go-to-market", "Retention"]
+    domain_tags: ["B2B", "Growth", "Strategy"]
+    archetype_scores:
+      senior-pm: 78
+      growth-pm: 76
+      enterprise-saas: 74
+    seniority_signal: consulting_strategy_range
+    recruiter_value: 78
+    hiring_manager_value: 80
+    ats_value: 70
+    technical_depth: 2
+    leadership_depth: 3
+    business_impact_strength: 3
+    recency_score: 72
+    uniqueness_score: 76
+    interview_defensibility: 78
+    confidentiality_status: resume_safe
 
   - id: SIM-REV-001
     company: Simplilearn
@@ -271,6 +418,28 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
     confidence_level: high
+    importance_score: 96
+    evidence_strength: 94
+    confidence_status: verified-public
+    keyword_tags: ["revenue", "pricing", "packaging", "go-to-market"]
+    competency_tags: ["Monetization", "Pricing", "Growth", "Business cases"]
+    domain_tags: ["EdTech", "Consumer", "Growth"]
+    archetype_scores:
+      monetization-pm: 96
+      growth-pm: 92
+      consumer-pm: 82
+      senior-pm: 86
+    seniority_signal: senior_revenue_ownership
+    recruiter_value: 95
+    hiring_manager_value: 96
+    ats_value: 90
+    technical_depth: 2
+    leadership_depth: 4
+    business_impact_strength: 5
+    recency_score: 78
+    uniqueness_score: 88
+    interview_defensibility: 94
+    confidentiality_status: resume_safe
 
   - id: SIM-CNV-002
     company: Simplilearn
@@ -307,6 +476,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
     confidence_level: high
+    importance_score: 92
+    evidence_strength: 92
+    confidence_status: verified-public
+    keyword_tags: ["conversion", "checkout", "funnel", "activation"]
+    competency_tags: ["Growth", "Experimentation", "Lifecycle ownership"]
+    domain_tags: ["EdTech", "Consumer", "Growth"]
+    archetype_scores:
+      growth-pm: 96
+      monetization-pm: 88
+      consumer-pm: 84
+    seniority_signal: growth_conversion_execution
+    recruiter_value: 90
+    hiring_manager_value: 92
+    ats_value: 88
+    technical_depth: 2
+    leadership_depth: 3
+    business_impact_strength: 4
+    recency_score: 78
+    uniqueness_score: 82
+    interview_defensibility: 92
+    confidentiality_status: resume_safe
 
   - id: SIM-REF-003
     company: Simplilearn
@@ -340,6 +530,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
     confidence_level: high
+    importance_score: 84
+    evidence_strength: 86
+    confidence_status: verified-public
+    keyword_tags: ["referrals", "revenue contribution", "growth loop"]
+    competency_tags: ["Growth", "Lifecycle ownership", "Go-to-market"]
+    domain_tags: ["EdTech", "Consumer", "Growth"]
+    archetype_scores:
+      growth-pm: 88
+      consumer-pm: 80
+      monetization-pm: 78
+    seniority_signal: growth_loop_ownership
+    recruiter_value: 84
+    hiring_manager_value: 84
+    ats_value: 76
+    technical_depth: 2
+    leadership_depth: 3
+    business_impact_strength: 4
+    recency_score: 78
+    uniqueness_score: 78
+    interview_defensibility: 86
+    confidentiality_status: resume_safe
 
   - id: SIM-EFF-004
     company: Simplilearn
@@ -377,6 +588,28 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/simplilearn
     confidence_level: high
+    importance_score: 88
+    evidence_strength: 88
+    confidence_status: verified-public
+    keyword_tags: ["automation", "operational efficiency", "cost reduction"]
+    competency_tags: ["Operational excellence", "Execution", "Risk management"]
+    domain_tags: ["EdTech", "Operations", "Platform"]
+    archetype_scores:
+      platform-pm: 82
+      lead-pm: 84
+      senior-pm: 84
+      ai-pm: 72
+    seniority_signal: operational_leverage
+    recruiter_value: 86
+    hiring_manager_value: 88
+    ats_value: 78
+    technical_depth: 3
+    leadership_depth: 3
+    business_impact_strength: 4
+    recency_score: 78
+    uniqueness_score: 80
+    interview_defensibility: 88
+    confidentiality_status: resume_safe
 
   - id: JOV-REV-001
     company: JoVE
@@ -411,6 +644,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
     confidence_level: high
+    importance_score: 88
+    evidence_strength: 88
+    confidence_status: verified-public
+    keyword_tags: ["revenue", "pricing", "portfolio strategy", "Biopharma"]
+    competency_tags: ["Enterprise SaaS", "Monetization", "Customer discovery"]
+    domain_tags: ["Enterprise SaaS", "Biopharma", "Scientific content"]
+    archetype_scores:
+      enterprise-saas: 90
+      monetization-pm: 84
+      senior-pm: 84
+    seniority_signal: enterprise_revenue_strategy
+    recruiter_value: 88
+    hiring_manager_value: 90
+    ats_value: 82
+    technical_depth: 2
+    leadership_depth: 4
+    business_impact_strength: 4
+    recency_score: 86
+    uniqueness_score: 82
+    interview_defensibility: 88
+    confidentiality_status: resume_safe
 
   - id: JOV-ENG-002
     company: JoVE
@@ -450,6 +704,28 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-discovery-toolkit
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
     confidence_level: high
+    importance_score: 92
+    evidence_strength: 90
+    confidence_status: verified-public
+    keyword_tags: ["engagement", "session duration", "personalization", "workflow adoption"]
+    competency_tags: ["Customer discovery", "Product sense", "Lifecycle ownership"]
+    domain_tags: ["Enterprise SaaS", "Consumer", "Scientific content"]
+    archetype_scores:
+      enterprise-saas: 90
+      consumer-pm: 88
+      growth-pm: 86
+      senior-pm: 84
+    seniority_signal: customer_workflow_adoption
+    recruiter_value: 90
+    hiring_manager_value: 92
+    ats_value: 84
+    technical_depth: 3
+    leadership_depth: 3
+    business_impact_strength: 4
+    recency_score: 86
+    uniqueness_score: 86
+    interview_defensibility: 90
+    confidentiality_status: resume_safe
 
   - id: JOV-AI-003
     company: JoVE
@@ -483,6 +759,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/ai-product-playbook
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
     confidence_level: medium
+    importance_score: 80
+    evidence_strength: 76
+    confidence_status: evidence-partial
+    keyword_tags: ["AI recommendations", "engagement", "content discovery"]
+    competency_tags: ["AI/ML", "Personalization", "Customer discovery"]
+    domain_tags: ["AI products", "Enterprise SaaS", "Scientific content"]
+    archetype_scores:
+      ai-pm: 84
+      consumer-pm: 78
+      enterprise-saas: 76
+    seniority_signal: ai_adjacent_product_judgment
+    recruiter_value: 80
+    hiring_manager_value: 82
+    ats_value: 80
+    technical_depth: 3
+    leadership_depth: 3
+    business_impact_strength: 3
+    recency_score: 86
+    uniqueness_score: 82
+    interview_defensibility: 78
+    confidentiality_status: resume_safe
 
   - id: JOV-LCY-004
     company: JoVE
@@ -515,6 +812,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/jove
     confidence_level: medium
+    importance_score: 78
+    evidence_strength: 74
+    confidence_status: self-reported
+    keyword_tags: ["lifecycle", "engagement", "customer feedback", "workflow"]
+    competency_tags: ["Lifecycle ownership", "Customer discovery", "Product sense"]
+    domain_tags: ["Enterprise SaaS", "Scientific content"]
+    archetype_scores:
+      enterprise-saas: 78
+      consumer-pm: 76
+      senior-pm: 74
+    seniority_signal: lifecycle_product_craft
+    recruiter_value: 76
+    hiring_manager_value: 78
+    ats_value: 72
+    technical_depth: 2
+    leadership_depth: 3
+    business_impact_strength: 3
+    recency_score: 86
+    uniqueness_score: 72
+    interview_defensibility: 76
+    confidentiality_status: resume_safe
 
   - id: LOG-ARR-001
     company: Logix Built Solutions Limited
@@ -550,6 +868,28 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
     confidence_level: high
+    importance_score: 96
+    evidence_strength: 94
+    confidence_status: verified-public
+    keyword_tags: ["ARR", "pricing", "packaging", "upsell", "zero-to-one"]
+    competency_tags: ["Monetization", "Pricing", "Platform strategy", "Business cases"]
+    domain_tags: ["AI platforms", "Enterprise SaaS", "Platform"]
+    archetype_scores:
+      monetization-pm: 96
+      platform-pm: 92
+      lead-pm: 90
+      senior-pm: 88
+    seniority_signal: lead_pm_platform_monetization
+    recruiter_value: 95
+    hiring_manager_value: 96
+    ats_value: 90
+    technical_depth: 3
+    leadership_depth: 4
+    business_impact_strength: 5
+    recency_score: 100
+    uniqueness_score: 90
+    interview_defensibility: 94
+    confidentiality_status: resume_safe
 
   - id: LOG-MRR-002
     company: Logix Built Solutions Limited
@@ -591,6 +931,28 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/ai-product-playbook
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
     confidence_level: high
+    importance_score: 97
+    evidence_strength: 94
+    confidence_status: verified-public
+    keyword_tags: ["AI", "ML", "personalization", "MRR", "engagement"]
+    competency_tags: ["AI/ML", "Personalization", "Metrics", "Growth"]
+    domain_tags: ["AI products", "Enterprise SaaS", "Platform"]
+    archetype_scores:
+      ai-pm: 98
+      platform-pm: 88
+      growth-pm: 88
+      lead-pm: 90
+    seniority_signal: ai_product_business_impact
+    recruiter_value: 96
+    hiring_manager_value: 97
+    ats_value: 94
+    technical_depth: 4
+    leadership_depth: 4
+    business_impact_strength: 5
+    recency_score: 100
+    uniqueness_score: 94
+    interview_defensibility: 94
+    confidentiality_status: resume_safe
 
   - id: LOG-SEO-003
     company: Logix Built Solutions Limited
@@ -628,6 +990,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
     confidence_level: high
+    importance_score: 84
+    evidence_strength: 82
+    confidence_status: evidence-partial
+    keyword_tags: ["SEO", "organic traffic", "content discovery", "revenue"]
+    competency_tags: ["Growth", "Discovery", "Go-to-market"]
+    domain_tags: ["Growth", "AI platforms", "Enterprise SaaS"]
+    archetype_scores:
+      growth-pm: 86
+      consumer-pm: 74
+      senior-pm: 76
+    seniority_signal: growth_and_discoverability
+    recruiter_value: 82
+    hiring_manager_value: 84
+    ats_value: 78
+    technical_depth: 2
+    leadership_depth: 3
+    business_impact_strength: 4
+    recency_score: 100
+    uniqueness_score: 76
+    interview_defensibility: 82
+    confidentiality_status: resume_safe
 
   - id: LOG-DEL-004
     company: Logix Built Solutions Limited
@@ -668,6 +1051,27 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/product-leadership-briefs
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
     confidence_level: high
+    importance_score: 94
+    evidence_strength: 92
+    confidence_status: verified-public
+    keyword_tags: ["delivery velocity", "release cycles", "roadmap governance", "cross-functional"]
+    competency_tags: ["Roadmapping", "Cross-functional leadership", "Execution", "Operating cadence"]
+    domain_tags: ["Platform", "Enterprise SaaS", "AI products"]
+    archetype_scores:
+      lead-pm: 96
+      platform-pm: 90
+      senior-pm: 90
+    seniority_signal: leadership_operating_system
+    recruiter_value: 94
+    hiring_manager_value: 95
+    ats_value: 88
+    technical_depth: 3
+    leadership_depth: 5
+    business_impact_strength: 4
+    recency_score: 100
+    uniqueness_score: 88
+    interview_defensibility: 92
+    confidentiality_status: resume_safe
 
   - id: LOG-THR-005
     company: Logix Built Solutions Limited
@@ -708,3 +1112,25 @@ achievements:
     related_github_repository: https://github.com/saurabh1chawda/ai-product-playbook
     related_portfolio_url: https://saurabh-product-os.vercel.app/case-studies/logix
     confidence_level: high
+    importance_score: 93
+    evidence_strength: 92
+    confidence_status: verified-public
+    keyword_tags: ["architecture", "DevOps", "throughput", "release acceleration"]
+    competency_tags: ["Architecture", "Reliability", "Platform strategy", "Operational excellence"]
+    domain_tags: ["Platform", "AI products", "Enterprise SaaS"]
+    archetype_scores:
+      platform-pm: 96
+      ai-pm: 86
+      lead-pm: 90
+      senior-pm: 86
+    seniority_signal: technical_platform_leadership
+    recruiter_value: 92
+    hiring_manager_value: 94
+    ats_value: 88
+    technical_depth: 4
+    leadership_depth: 4
+    business_impact_strength: 4
+    recency_score: 100
+    uniqueness_score: 88
+    interview_defensibility: 92
+    confidentiality_status: resume_safe

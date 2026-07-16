@@ -20,7 +20,25 @@
     "related_product_os_assets",
     "related_github_repository",
     "related_portfolio_url",
-    "confidence_level"
+    "confidence_level",
+    "importance_score",
+    "evidence_strength",
+    "confidence_status",
+    "keyword_tags",
+    "competency_tags",
+    "domain_tags",
+    "archetype_scores",
+    "seniority_signal",
+    "recruiter_value",
+    "hiring_manager_value",
+    "ats_value",
+    "technical_depth",
+    "leadership_depth",
+    "business_impact_strength",
+    "recency_score",
+    "uniqueness_score",
+    "interview_defensibility",
+    "confidentiality_status"
   ],
   "properties": {
     "id": {
@@ -104,6 +122,112 @@
         "low",
         "medium",
         "high"
+      ]
+    },
+    "importance_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "evidence_strength": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "confidence_status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "verified-public",
+        "evidence-partial",
+        "self-reported",
+        "simulation",
+        "prototype",
+        "case-study",
+        "conceptual"
+      ]
+    },
+    "keyword_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "competency_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "domain_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "archetype_scores": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    "seniority_signal": {
+      "type": "string"
+    },
+    "recruiter_value": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "hiring_manager_value": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "ats_value": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "technical_depth": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "leadership_depth": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "business_impact_strength": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "recency_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "uniqueness_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "interview_defensibility": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "confidentiality_status": {
+      "type": "string",
+      "enum": [
+        "resume_safe",
+        "public_safe",
+        "internal_only",
+        "needs_review"
       ]
     }
   },
