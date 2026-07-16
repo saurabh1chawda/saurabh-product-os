@@ -1,0 +1,32 @@
+{
+  "status": "warning",
+  "cases": [
+    {
+      "fixture": "ai-overstatement-risk.md",
+      "warnings": [],
+      "failures": []
+    },
+    {
+      "fixture": "evidence-diversity.md",
+      "warnings": [
+        "Evidence diversity review triggered for broad cross-domain role; human balancing required."
+      ],
+      "failures": []
+    },
+    {
+      "fixture": "growth-overtechnical.md",
+      "warnings": [],
+      "failures": []
+    },
+    {
+      "fixture": "hybrid-balance.md",
+      "warnings": [],
+      "failures": []
+    },
+    {
+      "fixture": "ic-platform-overmanagement.md",
+      "warnings": [],
+      "failures": []
+    }
+  ]
+}

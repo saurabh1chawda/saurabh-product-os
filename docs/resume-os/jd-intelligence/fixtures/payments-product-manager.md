@@ -13,6 +13,7 @@ We are seeking a Product Manager to launch and scale payment platform capabiliti
 ## Responsibilities
 
 - Define payment product requirements for enterprise customers.
+- Preserve customer trust across transaction success, risk, and reliability decisions.
 - Improve transaction success, operational reliability, and customer adoption.
 - Partner with engineering, compliance, operations, and customer-facing teams.
 - Prioritize roadmap items across customer needs, regulatory considerations, and business impact.
@@ -27,4 +28,3 @@ We are seeking a Product Manager to launch and scale payment platform capabiliti
 ## Preferred Qualifications
 
 - Experience with telecom, prepaid, wallets, or financial services platforms.
-

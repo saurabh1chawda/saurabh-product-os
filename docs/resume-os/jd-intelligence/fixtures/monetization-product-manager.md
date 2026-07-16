@@ -13,6 +13,7 @@ We are hiring a Senior Product Manager for monetization to improve pricing, pack
 ## Responsibilities
 
 - Own monetization roadmap for subscription, offers, and loyalty experiences.
+- Identify upsell opportunities and evaluate unit economics for pricing decisions.
 - Use data to improve conversion, ARPU, retention, and revenue.
 - Partner with finance, analytics, design, engineering, and marketing.
 - Develop business cases and communicate trade-offs to executives.
@@ -28,4 +29,3 @@ We are hiring a Senior Product Manager for monetization to improve pricing, pack
 
 - Marketplace or consumer commerce experience.
 - Experience with rewards, referrals, or paid membership products.
-

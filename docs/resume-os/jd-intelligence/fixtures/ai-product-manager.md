@@ -14,6 +14,7 @@ We are hiring a Senior Product Manager to define AI-powered workflows that help 
 
 - Identify high-value AI opportunities through customer discovery and workflow analysis.
 - Define product requirements for AI-assisted workflows, including human review points.
+- Run experiments to validate AI workflow quality before scaling.
 - Partner with engineering, design, data science, and customer success.
 - Establish success metrics for model quality, adoption, trust, and task completion.
 - Communicate trade-offs and investment decisions to senior leadership.
@@ -30,4 +31,3 @@ We are hiring a Senior Product Manager to define AI-powered workflows that help 
 - Experience with LLMs, RAG, evaluation, or responsible AI.
 - Enterprise SaaS experience.
 - Strong written communication.
-

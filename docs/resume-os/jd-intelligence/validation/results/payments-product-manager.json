@@ -1,0 +1,546 @@
+{
+  "fixture": "payments-product-manager.md",
+  "expected": {
+    "file": "payments-product-manager.md",
+    "label": "Payments Product Manager",
+    "acceptedPrimary": [
+      "Payments / FinTech Product Manager"
+    ],
+    "expectedCompetencies": [
+      "Payments",
+      "Reliability",
+      "Trust",
+      "Risk",
+      "Transaction success",
+      "Compliance"
+    ],
+    "expectedKeywords": [
+      "payments",
+      "transaction",
+      "reliability",
+      "compliance"
+    ],
+    "expectedHiddenSignals": [
+      "Regulatory sensitivity",
+      "Operational excellence",
+      "Technical depth"
+    ],
+    "topFiveAchievements": [
+      "COM-PAY-003",
+      "COM-PAY-002"
+    ],
+    "topTenAchievements": [
+      "COM-PAY-001"
+    ],
+    "bulletSources": [
+      "payments-pm.md",
+      "platform-pm.md"
+    ],
+    "productAssets": [
+      "Mahindra Comviva Product Leadership Brief",
+      "Executive Briefing Center"
+    ],
+    "expectedGaps": [
+      "direct regulatory ownership"
+    ]
+  },
+  "actual": {
+    "primary_archetype": "Payments / FinTech Product Manager",
+    "primary_score": 100,
+    "secondary_archetypes": [
+      {
+        "name": "Senior Product Manager",
+        "score": 45
+      }
+    ],
+    "confidence": "high",
+    "strongest_supporting_signals": [
+      "payment",
+      "payments",
+      "wallet",
+      "fintech",
+      "transaction",
+      "compliance",
+      "risk",
+      "trust"
+    ],
+    "ambiguities": [],
+    "contradictory_signals": [],
+    "human_review_required": false,
+    "competencies": [
+      "AI/ML",
+      "Responsible AI",
+      "Reliability",
+      "Scalability",
+      "Technical roadmap",
+      "Activation",
+      "Payments",
+      "Trust",
+      "Risk",
+      "Transaction success",
+      "Compliance",
+      "Enterprise workflows",
+      "Adoption",
+      "Executive communication"
+    ],
+    "keywords": [
+      {
+        "keyword": "ai",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "trust",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "reliability",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "scale",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "roadmap",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "onboarding",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "payment",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "payments",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "wallet",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "risk",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "transaction",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "compliance",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "regulatory",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "enterprise",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "adoption",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "communicate",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "equal opportunity",
+        "class": "boilerplate",
+        "evidence_status": "ignored"
+      }
+    ],
+    "hidden_signals": [
+      {
+        "signal": "High ambiguity",
+        "supporting_phrase": "define",
+        "confidence": 78,
+        "explanation": "High ambiguity is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Technical depth",
+        "supporting_phrase": "platform",
+        "confidence": 82,
+        "explanation": "Technical depth is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Matrix leadership",
+        "supporting_phrase": "partner",
+        "confidence": 76,
+        "explanation": "Matrix leadership is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Product maturity",
+        "supporting_phrase": "scale",
+        "confidence": 66,
+        "explanation": "Product maturity is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": "Weak signal; human review required.",
+        "inference": true
+      },
+      {
+        "signal": "Scale",
+        "supporting_phrase": "scale",
+        "confidence": 74,
+        "explanation": "Scale is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Customer obsession",
+        "supporting_phrase": "customer",
+        "confidence": 74,
+        "explanation": "Customer obsession is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Written communication",
+        "supporting_phrase": "communicate",
+        "confidence": 70,
+        "explanation": "Written communication is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Regulatory sensitivity",
+        "supporting_phrase": "compliance",
+        "confidence": 78,
+        "explanation": "Regulatory sensitivity is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Operational excellence",
+        "supporting_phrase": "operational",
+        "confidence": 76,
+        "explanation": "Operational excellence is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      }
+    ],
+    "ranked_achievements": [
+      {
+        "achievement_id": "COM-PAY-003",
+        "company": "Mahindra Comviva",
+        "score": 75,
+        "drivers": [
+          "Archetype score 96",
+          "Evidence strength 90",
+          "Business impact 5/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/product-leadership-operating-principles"
+      },
+      {
+        "achievement_id": "COM-PAY-002",
+        "company": "Mahindra Comviva",
+        "score": 72,
+        "drivers": [
+          "Archetype score 92",
+          "Evidence strength 88",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva"
+      },
+      {
+        "achievement_id": "COM-PAY-001",
+        "company": "Mahindra Comviva",
+        "score": 68,
+        "drivers": [
+          "Archetype score 88",
+          "Evidence strength 82",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "evidence-partial",
+        "product_os_url": "https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva"
+      },
+      {
+        "achievement_id": "LOG-DEL-004",
+        "company": "Logix Built Solutions Limited",
+        "score": 54,
+        "drivers": [
+          "Archetype score 54",
+          "Evidence strength 92",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "achievement_id": "LOG-ARR-001",
+        "company": "Logix Built Solutions Limited",
+        "score": 53,
+        "drivers": [
+          "Archetype score 52.8",
+          "Evidence strength 94",
+          "Business impact 5/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "achievement_id": "LOG-THR-005",
+        "company": "Logix Built Solutions Limited",
+        "score": 53,
+        "drivers": [
+          "Archetype score 51.6",
+          "Evidence strength 92",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "achievement_id": "SIM-EFF-004",
+        "company": "Simplilearn",
+        "score": 52,
+        "drivers": [
+          "Archetype score 50.4",
+          "Evidence strength 88",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+      },
+      {
+        "achievement_id": "COM-PUB-004",
+        "company": "Mahindra Comviva",
+        "score": 50,
+        "drivers": [
+          "Archetype score 76",
+          "Evidence strength 72",
+          "Business impact 2/5"
+        ],
+        "penalties": [
+          "Self-reported evidence requires interview care."
+        ],
+        "confidence_status": "self-reported",
+        "product_os_url": "https://saurabh-product-os.vercel.app/profile"
+      },
+      {
+        "achievement_id": "SIM-REV-001",
+        "company": "Simplilearn",
+        "score": 49,
+        "drivers": [
+          "Archetype score 51.6",
+          "Evidence strength 94",
+          "Business impact 5/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+      },
+      {
+        "achievement_id": "JOV-ENG-002",
+        "company": "JoVE",
+        "score": 47,
+        "drivers": [
+          "Archetype score 50.4",
+          "Evidence strength 90",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/jove"
+      }
+    ],
+    "ranked_bullets": [
+      {
+        "bullet_id": "PAY-BLT-001",
+        "achievement_id": "COM-PAY-003",
+        "source_file": "payments-pm.md",
+        "score": 90,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PAY-BLT-002",
+        "achievement_id": "COM-PAY-002",
+        "source_file": "payments-pm.md",
+        "score": 87,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PAY-BLT-003",
+        "achievement_id": "COM-PAY-001",
+        "source_file": "payments-pm.md",
+        "score": 83,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PAY-BLT-006",
+        "achievement_id": "LOG-DEL-004",
+        "source_file": "payments-pm.md",
+        "score": 69,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PAY-BLT-005",
+        "achievement_id": "LOG-THR-005",
+        "source_file": "payments-pm.md",
+        "score": 68,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PLAT-BLT-003",
+        "achievement_id": "LOG-ARR-001",
+        "source_file": "platform-pm.md",
+        "score": 68,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PAY-BLT-008",
+        "achievement_id": "SIM-EFF-004",
+        "source_file": "payments-pm.md",
+        "score": 67,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PAY-BLT-004",
+        "achievement_id": "COM-PUB-004",
+        "source_file": "payments-pm.md",
+        "score": 65,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PAY-BLT-007",
+        "achievement_id": "FRE-CON-001",
+        "source_file": "payments-pm.md",
+        "score": 56,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "PLAT-BLT-008",
+        "achievement_id": "LOG-MRR-002",
+        "source_file": "platform-pm.md",
+        "score": 52,
+        "duplicate_risk": false
+      }
+    ],
+    "recommended_assets": [
+      {
+        "project_id": "PLB-COMVIVA",
+        "name": "Mahindra Comviva Product Leadership Brief",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva"
+      },
+      {
+        "project_id": "POS-EXEC",
+        "name": "Executive Briefing Center",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/executive"
+      },
+      {
+        "project_id": "POS-HOME",
+        "name": "Product OS",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app"
+      },
+      {
+        "project_id": "PLB-LOGIX",
+        "name": "Logix Product Leadership Brief",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "project_id": "PLB-JOVE",
+        "name": "JoVE Product Leadership Brief",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/jove"
+      },
+      {
+        "project_id": "PLB-SIMPLILEARN",
+        "name": "Simplilearn Product Leadership Brief",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+      }
+    ],
+    "gaps": [
+      {
+        "severity": "P1",
+        "gap": "Direct regulatory ownership is not fully proven",
+        "source_phrase": "compliance or regulatory language",
+        "current_evidence": "Payments reliability and risk-aware product sequencing evidence.",
+        "resume_mitigation": "Use payments reliability and trust evidence; do not claim compliance ownership.",
+        "product_os_mitigation": "Use Mahindra Comviva leadership evidence.",
+        "interview_mitigation": "Clarify collaboration with compliance stakeholders if asked.",
+        "cannot_mitigate_honestly": false
+      }
+    ],
+    "diversity": {
+      "company_distribution": {
+        "Mahindra Comviva": 4,
+        "Logix Built Solutions Limited": 3,
+        "Simplilearn": 1
+      },
+      "current_role_represented": true,
+      "repeated_achievements": [],
+      "warnings": []
+    },
+    "explainability": {
+      "status": "pass",
+      "notes": [
+        "Top achievements include score, drivers, penalties, evidence status, and Product OS URL.",
+        "Top bullets include source file, achievement ID, score, and duplicate-risk flag.",
+        "Gaps include severity, source phrase, mitigation, and cannot-mitigate flag."
+      ]
+    }
+  },
+  "passes": [
+    "Primary archetype accepted."
+  ],
+  "warnings": [],
+  "failures": [],
+  "status": "pass"
+}

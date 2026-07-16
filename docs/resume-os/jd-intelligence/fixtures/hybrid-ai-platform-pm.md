@@ -16,6 +16,7 @@ We need a Principal Product Manager to define the AI platform strategy for reusa
 - Establish evaluation and trust standards for AI-assisted product experiences.
 - Partner with engineering leaders on architecture, reliability, and scalability.
 - Align product teams, executives, legal, and customer-facing teams around investment priorities.
+- Create written decision narratives for AI platform trade-offs.
 - Build operating cadences for prioritization, launch readiness, measurement, and feedback.
 
 ## Required Qualifications
@@ -29,4 +30,3 @@ We need a Principal Product Manager to define the AI platform strategy for reusa
 
 - Experience with responsible AI, evaluation, RAG, agents, or internal platforms.
 - Experience leading cross-functional product strategy in ambiguous environments.
-

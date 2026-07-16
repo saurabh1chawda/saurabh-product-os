@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-07-16T14:23:16.842Z",
+  "readiness": "READY WITH MINOR ISSUES",
+  "fixture_count": 7,
+  "pass_count": 5,
+  "warning_count": 2,
+  "failure_count": 0,
+  "edge_case_status": "warning"
+}

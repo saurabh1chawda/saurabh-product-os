@@ -1,0 +1,539 @@
+{
+  "fixture": "monetization-product-manager.md",
+  "expected": {
+    "file": "monetization-product-manager.md",
+    "label": "Monetization Product Manager",
+    "acceptedPrimary": [
+      "Monetization Product Manager"
+    ],
+    "expectedCompetencies": [
+      "Pricing",
+      "Packaging",
+      "Revenue",
+      "Upsell",
+      "Monetization",
+      "Unit economics"
+    ],
+    "expectedKeywords": [
+      "pricing",
+      "packaging",
+      "revenue",
+      "loyalty"
+    ],
+    "expectedHiddenSignals": [
+      "Commercial ownership",
+      "Executive influence",
+      "Customer obsession"
+    ],
+    "topFiveAchievements": [
+      "LOG-ARR-001",
+      "SIM-REV-001"
+    ],
+    "topTenAchievements": [
+      "JOV-REV-001",
+      "SIM-REF-003"
+    ],
+    "bulletSources": [
+      "monetization-pm.md",
+      "growth-pm.md"
+    ],
+    "productAssets": [
+      "Simplilearn Product Leadership Brief",
+      "Decision Memo Template"
+    ],
+    "expectedGaps": [
+      "marketplace monetization depth"
+    ]
+  },
+  "actual": {
+    "primary_archetype": "Monetization Product Manager",
+    "primary_score": 100,
+    "secondary_archetypes": [
+      {
+        "name": "Consumer Product Manager",
+        "score": 73
+      },
+      {
+        "name": "Growth Product Manager",
+        "score": 49
+      },
+      {
+        "name": "Senior Product Manager",
+        "score": 45
+      }
+    ],
+    "confidence": "high",
+    "strongest_supporting_signals": [
+      "monetization",
+      "pricing",
+      "packaging",
+      "revenue",
+      "subscription",
+      "loyalty",
+      "rewards",
+      "arpu"
+    ],
+    "ambiguities": [],
+    "contradictory_signals": [],
+    "human_review_required": false,
+    "competencies": [
+      "AI/ML",
+      "Model evaluation",
+      "Responsible AI",
+      "Experimentation",
+      "Technical roadmap",
+      "Conversion",
+      "Retention",
+      "Pricing",
+      "Packaging",
+      "Revenue",
+      "Upsell",
+      "Monetization",
+      "Unit economics",
+      "Trust",
+      "Executive communication"
+    ],
+    "keywords": [
+      {
+        "keyword": "ai",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "eval",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "trust",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "experiment",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "roadmap",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "conversion",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "retention",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "pricing",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "packaging",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "revenue",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "upsell",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "monetization",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "unit economics",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "executive",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "communicate",
+        "class": "must_cover",
+        "evidence_status": "supported_or_review"
+      },
+      {
+        "keyword": "equal opportunity",
+        "class": "boilerplate",
+        "evidence_status": "ignored"
+      }
+    ],
+    "hidden_signals": [
+      {
+        "signal": "Technical depth",
+        "supporting_phrase": "engineering",
+        "confidence": 82,
+        "explanation": "Technical depth is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Matrix leadership",
+        "supporting_phrase": "partner",
+        "confidence": 76,
+        "explanation": "Matrix leadership is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Executive influence",
+        "supporting_phrase": "executive",
+        "confidence": 78,
+        "explanation": "Executive influence is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Commercial ownership",
+        "supporting_phrase": "revenue",
+        "confidence": 82,
+        "explanation": "Commercial ownership is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Product maturity",
+        "supporting_phrase": "optimization",
+        "confidence": 66,
+        "explanation": "Product maturity is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": "Weak signal; human review required.",
+        "inference": true
+      },
+      {
+        "signal": "Customer obsession",
+        "supporting_phrase": "customer",
+        "confidence": 74,
+        "explanation": "Customer obsession is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Data fluency",
+        "supporting_phrase": "analytics",
+        "confidence": 78,
+        "explanation": "Data fluency is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      },
+      {
+        "signal": "Written communication",
+        "supporting_phrase": "communicate",
+        "confidence": 70,
+        "explanation": "Written communication is inferred from JD language and must not be treated as a stated fact.",
+        "resume_implication": "Select verified evidence that demonstrates this signal without overstating scope.",
+        "interview_implication": "Prepare a concise story with source evidence and trade-offs.",
+        "evidence_gap": null,
+        "inference": true
+      }
+    ],
+    "ranked_achievements": [
+      {
+        "achievement_id": "SIM-REV-001",
+        "company": "Simplilearn",
+        "score": 79,
+        "drivers": [
+          "Archetype score 96",
+          "Evidence strength 94",
+          "Business impact 5/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+      },
+      {
+        "achievement_id": "LOG-ARR-001",
+        "company": "Logix Built Solutions Limited",
+        "score": 78,
+        "drivers": [
+          "Archetype score 96",
+          "Evidence strength 94",
+          "Business impact 5/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "achievement_id": "SIM-CNV-002",
+        "company": "Simplilearn",
+        "score": 66,
+        "drivers": [
+          "Archetype score 88",
+          "Evidence strength 92",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+      },
+      {
+        "achievement_id": "JOV-REV-001",
+        "company": "JoVE",
+        "score": 65,
+        "drivers": [
+          "Archetype score 84",
+          "Evidence strength 88",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/jove"
+      },
+      {
+        "achievement_id": "SIM-REF-003",
+        "company": "Simplilearn",
+        "score": 59,
+        "drivers": [
+          "Archetype score 78",
+          "Evidence strength 86",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+      },
+      {
+        "achievement_id": "LOG-MRR-002",
+        "company": "Logix Built Solutions Limited",
+        "score": 53,
+        "drivers": [
+          "Archetype score 52.8",
+          "Evidence strength 94",
+          "Business impact 5/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "achievement_id": "LOG-DEL-004",
+        "company": "Logix Built Solutions Limited",
+        "score": 51,
+        "drivers": [
+          "Archetype score 54",
+          "Evidence strength 92",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "achievement_id": "JOV-ENG-002",
+        "company": "JoVE",
+        "score": 50,
+        "drivers": [
+          "Archetype score 52.8",
+          "Evidence strength 90",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/jove"
+      },
+      {
+        "achievement_id": "LOG-THR-005",
+        "company": "Logix Built Solutions Limited",
+        "score": 49,
+        "drivers": [
+          "Archetype score 51.6",
+          "Evidence strength 92",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "verified-public",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      },
+      {
+        "achievement_id": "LOG-SEO-003",
+        "company": "Logix Built Solutions Limited",
+        "score": 48,
+        "drivers": [
+          "Archetype score 51.6",
+          "Evidence strength 82",
+          "Business impact 4/5"
+        ],
+        "penalties": [],
+        "confidence_status": "evidence-partial",
+        "product_os_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+      }
+    ],
+    "ranked_bullets": [
+      {
+        "bullet_id": "GROW-BLT-001",
+        "achievement_id": "SIM-REV-001",
+        "source_file": "growth-pm.md",
+        "score": 94,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "MON-BLT-001",
+        "achievement_id": "LOG-ARR-001",
+        "source_file": "monetization-pm.md",
+        "score": 93,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "GROW-BLT-002",
+        "achievement_id": "SIM-CNV-002",
+        "source_file": "growth-pm.md",
+        "score": 81,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "MON-BLT-003",
+        "achievement_id": "JOV-REV-001",
+        "source_file": "monetization-pm.md",
+        "score": 80,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "GROW-BLT-003",
+        "achievement_id": "SIM-REF-003",
+        "source_file": "growth-pm.md",
+        "score": 74,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "GROW-BLT-005",
+        "achievement_id": "LOG-MRR-002",
+        "source_file": "growth-pm.md",
+        "score": 68,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "GROW-BLT-006",
+        "achievement_id": "JOV-ENG-002",
+        "source_file": "growth-pm.md",
+        "score": 65,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "GROW-BLT-004",
+        "achievement_id": "LOG-SEO-003",
+        "source_file": "growth-pm.md",
+        "score": 63,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "GROW-BLT-008",
+        "achievement_id": "SIM-EFF-004",
+        "source_file": "growth-pm.md",
+        "score": 61,
+        "duplicate_risk": false
+      },
+      {
+        "bullet_id": "GROW-BLT-007",
+        "achievement_id": "LOG-ANL-001",
+        "source_file": "growth-pm.md",
+        "score": 58,
+        "duplicate_risk": false
+      }
+    ],
+    "recommended_assets": [
+      {
+        "project_id": "PLB-SIMPLILEARN",
+        "name": "Simplilearn Product Leadership Brief",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+      },
+      {
+        "project_id": "PLB-JOVE",
+        "name": "JoVE Product Leadership Brief",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/jove"
+      },
+      {
+        "project_id": "DISCOVERY-TOOLKIT",
+        "name": "Product Discovery Toolkit",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/decision-systems/customer-discovery"
+      },
+      {
+        "project_id": "POS-EXEC",
+        "name": "Executive Briefing Center",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/executive"
+      },
+      {
+        "project_id": "DECISION-MEMO",
+        "name": "Decision Memo Template",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app/product-leadership-operating-principles"
+      },
+      {
+        "project_id": "POS-HOME",
+        "name": "Product OS",
+        "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+        "portfolio_url": "https://saurabh-product-os.vercel.app"
+      }
+    ],
+    "gaps": [
+      {
+        "severity": "P1",
+        "gap": "Marketplace-specific depth may be limited",
+        "source_phrase": "marketplace language",
+        "current_evidence": "Consumer, monetization, loyalty, and pricing evidence.",
+        "resume_mitigation": "Use adjacent monetization and consumer evidence; do not claim deep marketplace ownership.",
+        "product_os_mitigation": "Use relevant Product Leadership Briefs only as supporting proof.",
+        "interview_mitigation": "Frame transferable marketplace logic cautiously.",
+        "cannot_mitigate_honestly": false
+      }
+    ],
+    "diversity": {
+      "company_distribution": {
+        "Simplilearn": 3,
+        "Logix Built Solutions Limited": 3,
+        "JoVE": 2
+      },
+      "current_role_represented": true,
+      "repeated_achievements": [],
+      "warnings": []
+    },
+    "explainability": {
+      "status": "pass",
+      "notes": [
+        "Top achievements include score, drivers, penalties, evidence status, and Product OS URL.",
+        "Top bullets include source file, achievement ID, score, and duplicate-risk flag.",
+        "Gaps include severity, source phrase, mitigation, and cannot-mitigate flag."
+      ]
+    }
+  },
+  "passes": [
+    "Primary archetype accepted."
+  ],
+  "warnings": [],
+  "failures": [],
+  "status": "pass"
+}
