@@ -1,0 +1,32 @@
+{
+  "status": "blocked",
+  "scores": {
+    "factual_integrity": 100,
+    "evidence_traceability": 100,
+    "jd_relevance": null,
+    "archetype_accuracy": null,
+    "achievement_selection": null,
+    "bullet_selection": null,
+    "summary_quality": null,
+    "headline_quality": null,
+    "project_strategy": 70,
+    "product_os_strategy": null,
+    "skills_relevance": null,
+    "ats_quality": null,
+    "recruiter_quality": null,
+    "hiring_manager_quality": null,
+    "human_written_quality": null,
+    "two_page_discipline": null,
+    "manual_override_burden": null,
+    "tailoring_speed": null,
+    "interview_defensibility": null,
+    "overall_readiness": 0
+  },
+  "rationale": {
+    "factual_integrity": "No generated draft was produced; no unsupported generated claims were introduced.",
+    "evidence_traceability": "All scaffold claims reference canonical sources or benchmark-only analysis.",
+    "overall_readiness": "The pilot is blocked because the real JD is missing."
+  },
+  "readiness_decision": "NOT READY - RETURN TO INPUT DISCOVERY"
+}
+

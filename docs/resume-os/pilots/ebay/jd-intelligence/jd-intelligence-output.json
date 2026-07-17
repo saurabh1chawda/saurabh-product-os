@@ -1,0 +1,26 @@
+{
+  "status": "not_generated",
+  "reason": "real_ebay_job_description_not_found",
+  "jd_metadata": {
+    "company_name": "eBay",
+    "source_jd_path": null,
+    "captured_at": null
+  },
+  "primary_archetype": null,
+  "secondary_archetypes": [],
+  "ranked_achievements": [],
+  "ranked_bullets": [],
+  "recommended_assets": [],
+  "gaps": [
+    {
+      "severity": "P0",
+      "gap": "Real JD missing",
+      "explanation": "Live JD Intelligence cannot run without the source job description."
+    }
+  ],
+  "human_review_items": [
+    "Add the real eBay JD as a local ignored source file or sanitized tracked text.",
+    "Rerun the live pilot after source JD discovery succeeds."
+  ]
+}
+

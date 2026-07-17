@@ -1,0 +1,12 @@
+{
+  "status": "blocked",
+  "p0_failures": [
+    "Real eBay JD missing; JD Intelligence cannot run."
+  ],
+  "warnings": [
+    "Benchmark resume suggests monetization, loyalty, marketplace, and platform themes, but these are not a substitute for JD evidence."
+  ],
+  "generated_outputs": false,
+  "human_review_required": true
+}
+

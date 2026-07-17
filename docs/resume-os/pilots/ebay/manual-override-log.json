@@ -1,0 +1,25 @@
+{
+  "status": "no_generated_draft",
+  "overrides": [
+    {
+      "override_id": "EBAY-OVR-001",
+      "section": "Input discovery",
+      "generated_value": "No JD input found",
+      "proposed_value": "Add real eBay JD before generation",
+      "reason": "Live pilot cannot run without source JD.",
+      "category": "Factual correction",
+      "severity": "P0",
+      "source": "input discovery",
+      "evidence_impact": "Prevents fabricated JD analysis.",
+      "ats_impact": "Prevents irrelevant keyword optimization.",
+      "recruiter_impact": "Prevents mispositioning.",
+      "hiring_manager_impact": "Prevents unsupported fit narrative.",
+      "approved": false,
+      "approver": null,
+      "timestamp": null,
+      "engine_rule_implicated": "Live JD required before JD Intelligence and Assembly.",
+      "future_automation_opportunity": "Add a live-pilot preflight command that fails fast when JD input is missing."
+    }
+  ]
+}
+

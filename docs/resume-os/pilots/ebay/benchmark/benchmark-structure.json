@@ -1,0 +1,54 @@
+{
+  "source_path": "docs/resume-os/reference-resumes/ebay-spm-monetization-loyalty-reference.docx.txt",
+  "source_commit_policy": "ignored_private_source_not_committed",
+  "headline": "Lead Product Manager | Monetization, Growth & Platform Strategy",
+  "summary_themes": [
+    "monetization",
+    "growth",
+    "platform strategy",
+    "focused hands-on IC positioning",
+    "loyalty and rewards mechanics",
+    "data fluency",
+    "AI/ML product integration",
+    "cross-functional alignment"
+  ],
+  "section_order": [
+    "Header",
+    "Summary",
+    "Experience",
+    "Open Source Project",
+    "Skills",
+    "Tools",
+    "Certifications",
+    "Honours and Awards",
+    "Publications",
+    "Education"
+  ],
+  "role_allocation": {
+    "Logix Built Solutions Limited - Lead Product Manager": 5,
+    "JoVE - Senior Product Manager": 4,
+    "Simplilearn - Senior Product Manager": 4,
+    "Freelancer.com - Product Consultant": 1,
+    "Mahindra Comviva - Product Manager": 2,
+    "Logix Built Solutions Limited - Data Analyst": 1
+  },
+  "project_inclusion": {
+    "included": true,
+    "name": "LoyaltyIQ",
+    "classification": "simulation_workspace",
+    "risk": "Must not imply eBay sponsorship, production deployment, or real customer data."
+  },
+  "estimated_page_count": 2,
+  "estimated_word_count": 1320,
+  "ats_risks": [
+    "Emoji/link glyphs in project section may not parse consistently.",
+    "Dense project bullets may reduce scanability.",
+    "Simulation details could be mistaken for production claims without stronger labeling."
+  ],
+  "evidence_traceability": "partial",
+  "unsupported_or_ambiguous_claims": [
+    "Some LoyaltyIQ simulated metrics and architecture details require explicit simulation labeling.",
+    "Any eBay-specific relevance must be framed as portfolio proof, not direct experience."
+  ]
+}
+
