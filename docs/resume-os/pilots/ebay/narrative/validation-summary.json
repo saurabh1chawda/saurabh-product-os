@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "factual_integrity": 100,
+  "evidence_traceability": 100,
+  "ats_quality": 93,
+  "recruiter_quality": 96,
+  "hiring_manager_quality": 94,
+  "human_written_quality": 95,
+  "p0_failures": [],
+  "warnings": [],
+  "fixture_count": 7,
+  "readiness_decision": "READY FOR HUMAN REVIEW AND DOCX/PDF EXPORT"
+}

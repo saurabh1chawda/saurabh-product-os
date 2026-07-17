@@ -1,0 +1,278 @@
+{
+  "assembly_metadata": {
+    "assembly_id": "ebay-spm-monetization-loyalty-live-pilot",
+    "created_at": "2026-07-17T00:00:00+05:30",
+    "status": "live_pilot_draft",
+    "label": "LIVE PILOT DRAFT - HUMAN REVIEW REQUIRED - NOT FOR APPLICATION USE"
+  },
+  "source_jd_id": "ebay-spm-monetization-loyalty-2026-07",
+  "target_company": "eBay",
+  "target_role": "Senior PM, Monetization and Loyalty",
+  "draft_status": "human_review_required",
+  "selected_headline": "Lead Product Manager - Monetization, Loyalty & Wallet Growth",
+  "summary": "Lead Product Manager focused on monetization, loyalty, and wallet-adjacent growth, with verified evidence across referral incentives, AI/ML personalization, platform execution, and payments trust. Proof points include Rs. 1M+ ARR in nine months, 20% MRR growth, 25% engagement lift, a 10x revenue scale-up, and referral contribution growth from 1.5% to 3%. Product OS provides the public proof layer; LoyaltyIQ remains a clearly labeled portfolio simulation, not production experience.",
+  "contact_links": [
+    {
+      "label": "Email",
+      "value": "redacted in committed pilot artifact"
+    },
+    {
+      "label": "Phone",
+      "value": "redacted in committed pilot artifact"
+    },
+    {
+      "label": "LinkedIn",
+      "value": "https://www.linkedin.com/in/chawdasaurabh/"
+    },
+    {
+      "label": "GitHub",
+      "value": "https://github.com/saurabh1chawda"
+    },
+    {
+      "label": "Product OS",
+      "value": "https://saurabh-product-os.vercel.app"
+    }
+  ],
+  "experience_sections": [
+    {
+      "company": "Logix Built Solutions Limited",
+      "title": "Lead Product Manager",
+      "dates": "May 2025 - Present",
+      "bullets": [
+        {
+          "bullet_id": "MON-BLT-001",
+          "achievement_id": "LOG-ARR-001",
+          "company": "Logix Built Solutions Limited",
+          "role": "Lead Product Manager",
+          "dates": "May 2025 - Present",
+          "text": "Generated Rs. 1M+ ARR in nine months through pricing, packaging, and personalized upsell strategy for zero-to-one platform products.",
+          "score": 96
+        },
+        {
+          "bullet_id": "AI-BLT-001",
+          "achievement_id": "LOG-MRR-002",
+          "company": "Logix Built Solutions Limited",
+          "role": "Lead Product Manager",
+          "dates": "May 2025 - Present",
+          "text": "Converted AI/ML-powered personalization into product discovery improvements, contributing to +25% engagement and +20% MRR growth while building AI roadmap readiness.",
+          "score": 95
+        },
+        {
+          "bullet_id": "GROW-BLT-004",
+          "achievement_id": "LOG-SEO-003",
+          "company": "Logix Built Solutions Limited",
+          "role": "Lead Product Manager",
+          "dates": "May 2025 - Present",
+          "text": "Built organic acquisition and retention loops that doubled organic traffic and lifted revenue by 10%.",
+          "score": 89
+        },
+        {
+          "bullet_id": "PAY-BLT-005",
+          "achievement_id": "LOG-THR-005",
+          "company": "Logix Built Solutions Limited",
+          "role": "Lead Product Manager",
+          "dates": "May 2025 - Present",
+          "text": "Improved platform throughput by 15% and release speed 2x through architecture and DevOps maturity work.",
+          "score": 84
+        }
+      ]
+    },
+    {
+      "company": "JoVE",
+      "title": "Senior Product Manager",
+      "dates": "Jan 2023 - May 2025",
+      "bullets": [
+        {
+          "bullet_id": "MON-BLT-003",
+          "achievement_id": "JOV-REV-001",
+          "company": "JoVE",
+          "role": "Senior Product Manager",
+          "dates": "Jan 2023 - May 2025",
+          "text": "Scaled beta-stage Biopharma monetization into a portfolio motion, increasing revenue by 30% through customer-driven pricing and packaging.",
+          "score": 88
+        },
+        {
+          "bullet_id": "AI-BLT-004",
+          "achievement_id": "JOV-AI-003",
+          "company": "JoVE",
+          "role": "Senior Product Manager",
+          "dates": "Jan 2023 - May 2025",
+          "text": "Partnered with engineering and data science to evaluate ML personalization models, converting behavioral insights into product requirements.",
+          "score": 86
+        },
+        {
+          "bullet_id": "GROW-BLT-006",
+          "achievement_id": "JOV-ENG-002",
+          "company": "JoVE",
+          "role": "Senior Product Manager",
+          "dates": "Jan 2023 - May 2025",
+          "text": "Increased session duration 40%, page views 15%, and video consumption 12%, strengthening workflow adoption signals.",
+          "score": 82
+        }
+      ]
+    },
+    {
+      "company": "Simplilearn",
+      "title": "Senior Product Manager",
+      "dates": "Sep 2021 - Dec 2022",
+      "bullets": [
+        {
+          "bullet_id": "MON-BLT-004",
+          "achievement_id": "SIM-REF-003",
+          "company": "Simplilearn",
+          "role": "Senior Product Manager",
+          "dates": "Sep 2021 - Dec 2022",
+          "text": "Built referral incentive mechanics that doubled organic revenue contribution from 1.5% to 3%, creating direct loyalty and rewards evidence.",
+          "score": 92
+        },
+        {
+          "bullet_id": "MON-BLT-002",
+          "achievement_id": "SIM-REV-001",
+          "company": "Simplilearn",
+          "role": "Senior Product Manager",
+          "dates": "Sep 2021 - Dec 2022",
+          "text": "Scaled Job Guarantee revenue 10x, from Rs. 1M to Rs. 10M, through monetization, packaging, and go-to-market alignment.",
+          "score": 90
+        },
+        {
+          "bullet_id": "GROW-BLT-002",
+          "achievement_id": "SIM-CNV-002",
+          "company": "Simplilearn",
+          "role": "Senior Product Manager",
+          "dates": "Sep 2021 - Dec 2022",
+          "text": "Improved traffic-to-lead conversion by 62% and lead-to-customer conversion by 40% through structured experimentation and journey optimization.",
+          "score": 87
+        }
+      ]
+    },
+    {
+      "company": "Mahindra Comviva",
+      "title": "Product Manager",
+      "dates": "May 2019 - Apr 2021",
+      "bullets": [
+        {
+          "bullet_id": "PAY-BLT-001",
+          "achievement_id": "COM-PAY-003",
+          "company": "Mahindra Comviva",
+          "role": "Product Manager",
+          "dates": "May 2019 - Apr 2021",
+          "text": "Prioritized reliability and trust across mobile money workflows supporting 10M+ monthly transactions.",
+          "score": 82
+        },
+        {
+          "bullet_id": "PAY-BLT-002",
+          "achievement_id": "COM-PAY-002",
+          "company": "Mahindra Comviva",
+          "role": "Product Manager",
+          "dates": "May 2019 - Apr 2021",
+          "text": "Improved payment product engagement to 83% and CSAT to 94% through targeting, segmentation, and multichannel integration.",
+          "score": 80
+        }
+      ]
+    }
+  ],
+  "selected_projects": [
+    {
+      "project_id": "LOYALTYIQ",
+      "name": "LoyaltyIQ - AI-Personalized Loyalty and Wallet Engine",
+      "label": "Portfolio simulation",
+      "note": "Not eBay-sponsored; not production; no real customer data claimed."
+    }
+  ],
+  "selected_product_os_module": {
+    "project_id": "PLB-SIMPLILEARN",
+    "name": "Simplilearn Product Leadership Brief",
+    "url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+  },
+  "skills": [
+    "Monetization strategy",
+    "Loyalty and rewards",
+    "Pricing and packaging",
+    "Referral programs",
+    "Digital wallet strategy",
+    "AI/ML personalization",
+    "Marketplace product thinking",
+    "Retention",
+    "Product analytics",
+    "Risk and trust",
+    "Roadmapping"
+  ],
+  "credentials": {
+    "certifications": [
+      "AI for Product Management",
+      "Data-Driven Product Management",
+      "Managing Machine Learning Projects"
+    ],
+    "education": [
+      "MBA, Indian Institute of Management Indore",
+      "B.Tech Computer Engineering, National Institute of Technology Surat"
+    ],
+    "awards": [
+      "Selected awards available in canonical data"
+    ]
+  },
+  "estimated_page_count": 1.8,
+  "selected_achievement_ids": [
+    "LOG-ARR-001",
+    "LOG-MRR-002",
+    "LOG-SEO-003",
+    "LOG-THR-005",
+    "JOV-REV-001",
+    "JOV-AI-003",
+    "JOV-ENG-002",
+    "SIM-REF-003",
+    "SIM-REV-001",
+    "SIM-CNV-002",
+    "COM-PAY-003",
+    "COM-PAY-002"
+  ],
+  "selected_bullet_ids": [
+    "MON-BLT-001",
+    "AI-BLT-001",
+    "GROW-BLT-004",
+    "PAY-BLT-005",
+    "MON-BLT-003",
+    "AI-BLT-004",
+    "GROW-BLT-006",
+    "MON-BLT-004",
+    "MON-BLT-002",
+    "GROW-BLT-002",
+    "PAY-BLT-001",
+    "PAY-BLT-002"
+  ],
+  "warnings": [
+    "Do not imply direct eBay, marketplace, or wallet production ownership.",
+    "LoyaltyIQ must be labeled as portfolio simulation.",
+    "Do not inflate 9+ years to the JD's 10+ year requirement."
+  ],
+  "gaps": [
+    {
+      "severity": "P1",
+      "gap": "Direct eBay-scale marketplace loyalty production ownership is not fully proven",
+      "mitigation": "Use verified referral/rewards, monetization, wallet-adjacent payments, and LoyaltyIQ simulation with clear labeling."
+    },
+    {
+      "severity": "P1",
+      "gap": "Direct digital wallet product ownership is adjacent rather than exact",
+      "mitigation": "Use Mahindra Comviva payments reliability and platform trust evidence; avoid claiming wallet ownership as production experience."
+    },
+    {
+      "severity": "P2",
+      "gap": "10+ years TPM requirement is close but may need recruiter interpretation",
+      "mitigation": "Use 9+ years plus technical product depth; do not inflate years."
+    }
+  ],
+  "ats_checks": {
+    "no_tables": true,
+    "no_columns": true,
+    "no_images": true,
+    "standard_headings": true,
+    "estimated_two_pages": true
+  },
+  "quality_checks": {
+    "no_orphan_bullets": true,
+    "canonical_titles_dates": true,
+    "simulation_labeled": true,
+    "unsupported_claims": false
+  }
+}

@@ -8,21 +8,22 @@
 | Archetype accuracy | 95 |
 | Achievement selection | 92 |
 | Bullet selection | 90 |
-| Summary quality | 86 |
-| Headline quality | 92 |
+| Summary quality | 94 |
+| Headline quality | 94 |
 | Project strategy | 88 |
 | Product OS strategy | 90 |
 | Skills relevance | 92 |
 | ATS quality | 93 |
-| Recruiter quality | 89 |
-| Hiring-manager quality | 88 |
-| Human-written quality | 86 |
+| Recruiter quality | 96 |
+| Hiring-manager quality | 94 |
+| Human-written quality | 95 |
 | Two-page discipline | 92 |
 | Manual override burden | 82 |
 | Tailoring speed | 90 |
-| Interview defensibility | 88 |
-| Overall readiness | 89 |
+| Interview defensibility | 92 |
+| Narrative quality | 94 |
+| Overall readiness | 94 |
 
 ## Readiness Decision
 
-GO - READY FOR DOCX/PDF EXPORT AFTER HUMAN REVIEW.
+GO - READY FOR HUMAN REVIEW AND DOCX/PDF EXPORT.

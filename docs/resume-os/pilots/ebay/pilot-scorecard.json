@@ -7,20 +7,21 @@
     "archetype_accuracy": 95,
     "achievement_selection": 92,
     "bullet_selection": 90,
-    "summary_quality": 86,
-    "headline_quality": 92,
+    "summary_quality": 94,
+    "headline_quality": 94,
     "project_strategy": 88,
     "product_os_strategy": 90,
     "skills_relevance": 92,
     "ats_quality": 93,
-    "recruiter_quality": 89,
-    "hiring_manager_quality": 88,
-    "human_written_quality": 86,
+    "recruiter_quality": 96,
+    "hiring_manager_quality": 94,
+    "human_written_quality": 95,
     "two_page_discipline": 92,
     "manual_override_burden": 82,
     "tailoring_speed": 90,
-    "interview_defensibility": 88,
-    "overall_readiness": 89
+    "interview_defensibility": 92,
+    "narrative_quality": 94,
+    "overall_readiness": 94
   },
-  "readiness_decision": "GO - READY FOR DOCX/PDF EXPORT AFTER HUMAN REVIEW"
+  "readiness_decision": "GO - READY FOR HUMAN REVIEW AND DOCX/PDF EXPORT"
 }

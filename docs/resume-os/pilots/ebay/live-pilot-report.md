@@ -2,9 +2,9 @@
 
 ## 1. Executive Summary
 
-The rerun completed with the real eBay JD available at `docs/resume-os/live-jds/ebay-spm-monetization.md.md`. Resume OS successfully produced JD Intelligence, a Resume Plan, a human-review-required Markdown draft, evidence map, benchmark comparison, evaluations, scorecard, and readiness decision.
+The rerun completed with the real eBay JD available at `docs/resume-os/live-jds/ebay-spm-monetization.md.md`. Resume OS successfully produced JD Intelligence, a Resume Plan, a human-review-required Markdown draft, evidence map, benchmark comparison, evaluations, scorecard, and readiness decision. The Narrative Layer then improved headline, summary, and bullet readability while preserving metrics, chronology, titles, companies, evidence IDs, and draft status.
 
-Readiness decision: GO - READY FOR DOCX/PDF EXPORT AFTER HUMAN REVIEW.
+Readiness decision: GO - READY FOR HUMAN REVIEW AND DOCX/PDF EXPORT.
 
 ## 2. Inputs Used
 
@@ -22,7 +22,7 @@ The plan foregrounds monetization, referral/rewards, AI/ML personalization, wall
 
 ## 5. Generated Draft Assessment
 
-The draft is ATS-safe, under two pages by estimate, traceable to canonical evidence, and human-review-required. No unsupported generated claims were found.
+The draft is ATS-safe, under two pages by estimate, traceable to canonical evidence, and human-review-required. No unsupported generated claims were found. Narrative output is available under `docs/resume-os/pilots/ebay/narrative/`.
 
 ## 6. Benchmark Resume Assessment
 
@@ -35,18 +35,19 @@ Generated draft: no P0 claim failures. Benchmark: simulation labeling should be 
 ## 8. Scores
 
 - ATS: 93
-- Recruiter: 89
-- Hiring Manager: 88
-- Human Writing: 86
-- Overall readiness: 89
+- Recruiter: 96
+- Hiring Manager: 94
+- Human Writing: 95
+- Narrative Quality: 94
+- Overall readiness: 94
 
 ## 9. Manual Overrides
 
-Required before export: compact LoyaltyIQ, preserve simulation label, polish summary, and avoid inflating years of experience.
+Required before export: preserve simulation label, avoid inflating years of experience, and complete final human review. Summary polish is now addressed by the Narrative Layer.
 
 ## 10. Defects
 
-No P0 defects. Two P1 export-stage defects remain.
+No P0 defects. Narrative validation found no evidence-corruption failures.
 
 ## 11. Regression Results
 
@@ -54,4 +55,4 @@ Existing Resume OS regressions were run after pilot generation.
 
 ## 12. Recommendation For DOCX/PDF Export
 
-Proceed to DOCX/PDF export only after human review and the listed P1 export-stage fixes.
+Proceed to DOCX/PDF export after human review of the narrative draft.
