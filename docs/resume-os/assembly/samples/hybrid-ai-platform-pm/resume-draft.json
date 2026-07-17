@@ -1,0 +1,375 @@
+{
+  "assembly_metadata": {
+    "assembly_id": "hybrid-ai-platform-pm",
+    "created_at": "2026-07-17T05:58:39.086Z",
+    "status": "synthetic_draft",
+    "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE"
+  },
+  "source_jd_id": "hybrid-ai-platform-pm.md",
+  "target_company": "Synthetic Fixture Company",
+  "target_role": "Hybrid AI Platform PM.Md",
+  "target_level": null,
+  "archetype_summary": {
+    "primary": "Platform Product Manager",
+    "secondary": [
+      "Product Lead / Lead Product Manager",
+      "AI Product Manager",
+      "Enterprise SaaS Product Manager"
+    ]
+  },
+  "resume_strategy": "Position as a Platform Product Manager with verified product outcomes, role-relevant evidence, and Product OS proof used only as supporting context.",
+  "selected_headline": {
+    "text": "Platform Product Manager | Architecture, Reliability & Technical Strategy",
+    "evidence_ids": [
+      "LOG-THR-005",
+      "LOG-MRR-002",
+      "LOG-ARR-001"
+    ],
+    "human_review_required": true
+  },
+  "selected_summary": {
+    "text": "Product leader focused on Platform Product Manager roles, with evidence across AI/ML, Model evaluation, AI workflows, Responsible AI. Selected proof points include LOG-THR-005, LOG-MRR-002, LOG-ARR-001. This draft uses Product OS as a supporting proof layer while preserving employer experience, metrics, and interview-defensible claims.",
+    "evidence_ids": [
+      "LOG-THR-005",
+      "LOG-MRR-002",
+      "LOG-ARR-001"
+    ],
+    "human_review_required": true
+  },
+  "contact_links": [
+    {
+      "label": "Email",
+      "value": "redacted-for-synthetic-output",
+      "url": null
+    },
+    {
+      "label": "Phone",
+      "value": "redacted-for-synthetic-output",
+      "url": null
+    },
+    {
+      "label": "LinkedIn",
+      "value": "LinkedIn",
+      "url": "https://www.linkedin.com/in/chawdasaurabh/"
+    },
+    {
+      "label": "GitHub",
+      "value": "GitHub",
+      "url": "https://github.com/saurabh1chawda"
+    },
+    {
+      "label": "Product OS",
+      "value": "Product OS",
+      "url": "https://saurabh-product-os.vercel.app"
+    }
+  ],
+  "experience_sections": [
+    {
+      "company": "Logix Built Solutions Limited",
+      "title": "Lead Product Manager",
+      "dates": "2025-05 to Present",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "AI-BLT-003",
+          "achievement_id": "LOG-THR-005",
+          "text": "Led platform architecture and DevOps maturity work that improved throughput by 15% and made future AI capabilities more scalable.",
+          "source_file": "ai-pm.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "AI-BLT-001",
+          "achievement_id": "LOG-MRR-002",
+          "text": "Directed AI/ML-powered personalization in product discovery, contributing to +25% engagement and +20% MRR growth while building AI roadmap readiness.",
+          "source_file": "ai-pm.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "AI-BLT-007",
+          "achievement_id": "LOG-ARR-001",
+          "text": "Owned zero-to-one platform product strategy that generated Rs. 1M+ ARR, creating commercial context for AI-enabled product expansion.",
+          "source_file": "ai-pm.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "AI-BLT-008",
+          "achievement_id": "LOG-DEL-004",
+          "text": "Aligned cross-functional teams around roadmap governance, tripling delivery velocity and creating operating discipline for AI-ready execution.",
+          "source_file": "ai-pm.md",
+          "confidence_status": "verified-public"
+        }
+      ],
+      "role_relevance_score": 90
+    },
+    {
+      "company": "Mahindra Comviva",
+      "title": "Product Manager",
+      "dates": "2019-05 to 2021-04",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "LEAD-BLT-004",
+          "achievement_id": "COM-PAY-003",
+          "text": "Framed reliability as a product outcome in payment environments supporting 10M+ monthly transactions.",
+          "source_file": "lead-pm.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "PLAT-BLT-004",
+          "achievement_id": "COM-PAY-001",
+          "text": "Owned MVP strategy and launch for core B2B platform modules, onboarding 15+ paying customers within six months.",
+          "source_file": "platform-pm.md",
+          "confidence_status": "evidence-partial"
+        },
+        {
+          "bullet_id": "CONS-BLT-005",
+          "achievement_id": "COM-PAY-002",
+          "text": "Improved customer engagement to 83% and CSAT to 94% through targeting, segmentation, and multichannel integration.",
+          "source_file": "consumer-pm.md",
+          "confidence_status": "verified-public"
+        }
+      ],
+      "role_relevance_score": 81
+    },
+    {
+      "company": "Simplilearn",
+      "title": "Senior Product Manager",
+      "dates": "2021-09 to 2022-12",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "LEAD-BLT-005",
+          "achievement_id": "SIM-EFF-004",
+          "text": "Improved roadmap economics by reducing development cost 25% and time-to-market 15% through prioritization discipline.",
+          "source_file": "lead-pm.md",
+          "confidence_status": "verified-public"
+        }
+      ],
+      "role_relevance_score": 76
+    },
+    {
+      "company": "JoVE",
+      "title": "Senior Product Manager",
+      "dates": "2023-01 to 2025-05",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "AI-BLT-005",
+          "achievement_id": "JOV-ENG-002",
+          "text": "Used behavioral data to re-architect discovery and personalization logic, improving session duration by 40% and strengthening workflow adoption.",
+          "source_file": "ai-pm.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "AI-BLT-004",
+          "achievement_id": "JOV-AI-003",
+          "text": "Partnered with engineering and data science to evaluate ML personalization models and convert behavioral insights into product requirements.",
+          "source_file": "ai-pm.md",
+          "confidence_status": "evidence-partial"
+        }
+      ],
+      "role_relevance_score": 64
+    }
+  ],
+  "selected_projects": [
+    {
+      "project_id": "AI-PLAYBOOK",
+      "name": "AI Product Playbook",
+      "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+      "portfolio_url": "https://saurabh-product-os.vercel.app/ai-product-playbook",
+      "label": "Supporting proof"
+    },
+    {
+      "project_id": "AI-PRIORITIZATION",
+      "name": "AI Prioritization Framework",
+      "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+      "portfolio_url": "https://saurabh-product-os.vercel.app/decision-systems/ai-prioritization",
+      "label": "Supporting proof"
+    }
+  ],
+  "selected_product_os_module": {
+    "project_id": "PLB-LOGIX",
+    "name": "Logix Product Leadership Brief",
+    "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+    "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/logix",
+    "label": "Primary Product OS proof"
+  },
+  "skills": [
+    "AI/ML",
+    "Model evaluation",
+    "AI workflows",
+    "Responsible AI",
+    "APIs",
+    "Architecture",
+    "Reliability",
+    "Scalability",
+    "Technical roadmap",
+    "Cross-team dependencies",
+    "Revenue",
+    "Trust",
+    "Enterprise workflows",
+    "Adoption",
+    "Executive communication"
+  ],
+  "tools": [
+    "SQL",
+    "Analytics",
+    "Product analytics",
+    "AI/ML collaboration"
+  ],
+  "certifications": [
+    "AI for Product Management",
+    "Data-Driven Product Management"
+  ],
+  "awards": [
+    "Selected role-relevant awards available in canonical data"
+  ],
+  "publications": [],
+  "education": [
+    "MBA, Indian Institute of Management Indore",
+    "B.Tech Computer Engineering, National Institute of Technology Surat"
+  ],
+  "optional_statements": [],
+  "section_word_counts": {
+    "summary": 43,
+    "experience": 166,
+    "skills": 15,
+    "total": 359
+  },
+  "estimated_page_count": 1,
+  "keyword_coverage": {
+    "target": "role-relevant keywords only",
+    "covered_keywords": [
+      "ai",
+      "ml",
+      "model",
+      "ai-assisted",
+      "evaluation",
+      "eval",
+      "workflow",
+      "responsible ai",
+      "trust",
+      "api",
+      "apis",
+      "integrations"
+    ]
+  },
+  "competency_coverage": {
+    "covered_competencies": [
+      "AI/ML",
+      "Model evaluation",
+      "AI workflows",
+      "Responsible AI",
+      "APIs",
+      "Architecture",
+      "Reliability",
+      "Scalability",
+      "Technical roadmap",
+      "Cross-team dependencies",
+      "Revenue",
+      "Trust",
+      "Enterprise workflows",
+      "Adoption",
+      "Executive communication"
+    ]
+  },
+  "evidence_coverage": {
+    "selected_achievements": 10,
+    "selected_bullets": 10
+  },
+  "selected_achievement_ids": [
+    "LOG-THR-005",
+    "LOG-MRR-002",
+    "LOG-ARR-001",
+    "LOG-DEL-004",
+    "COM-PAY-003",
+    "COM-PAY-001",
+    "COM-PAY-002",
+    "SIM-EFF-004",
+    "JOV-ENG-002",
+    "JOV-AI-003"
+  ],
+  "selected_bullet_ids": [
+    "AI-BLT-003",
+    "AI-BLT-001",
+    "AI-BLT-007",
+    "AI-BLT-008",
+    "LEAD-BLT-004",
+    "PLAT-BLT-004",
+    "CONS-BLT-005",
+    "LEAD-BLT-005",
+    "AI-BLT-005",
+    "AI-BLT-004"
+  ],
+  "selected_project_ids": [
+    "PLB-LOGIX",
+    "AI-PLAYBOOK",
+    "AI-PRIORITIZATION"
+  ],
+  "exclusions": [
+    "Final DOCX/PDF export",
+    "Active application-specific content",
+    "Unapproved work authorization or relocation statements"
+  ],
+  "warnings": [
+    "Top archetype scores are close; human review recommended."
+  ],
+  "gaps": [
+    {
+      "severity": "P1",
+      "gap": "Limited direct production GenAI/LLM ownership",
+      "source_phrase": "production AI/LLM/RAG language",
+      "current_evidence": "AI product judgment, ML personalization, AI prioritization, and AI readiness evidence.",
+      "resume_mitigation": "Use AI product and prioritization evidence without claiming unsupported GenAI production ownership.",
+      "product_os_mitigation": "Use AI Product Playbook or AI Prioritization Framework as proof of thinking.",
+      "interview_mitigation": "Explain AI product decision quality and boundaries clearly.",
+      "cannot_mitigate_honestly": false
+    },
+    {
+      "severity": "P1",
+      "gap": "Developer-platform depth may require careful framing",
+      "source_phrase": "developer platform/API language",
+      "current_evidence": "Platform architecture, throughput, payments platform, and roadmap governance evidence.",
+      "resume_mitigation": "Use platform evidence; avoid overstating developer-tools specialization.",
+      "product_os_mitigation": "Use Logix Product Leadership Brief and Decision Memo Template.",
+      "interview_mitigation": "Prepare technical trade-off examples.",
+      "cannot_mitigate_honestly": false
+    },
+    {
+      "severity": "P2",
+      "gap": "Deep enterprise integration or admin tooling ownership may need review",
+      "source_phrase": "integration/admin language",
+      "current_evidence": "Enterprise workflow, onboarding, platform, and customer discovery evidence.",
+      "resume_mitigation": "Use enterprise SaaS and platform evidence only where supported.",
+      "product_os_mitigation": "Use Product Discovery Toolkit or JoVE brief.",
+      "interview_mitigation": "Prepare examples of enterprise workflow prioritization.",
+      "cannot_mitigate_honestly": false
+    }
+  ],
+  "human_review_items": [
+    "Draft is not final",
+    "Review factual integrity",
+    "Review ATS readability",
+    "Approve all gaps and warnings"
+  ],
+  "ats_checks": {
+    "standard_headings": true,
+    "no_tables": true,
+    "no_columns": true,
+    "no_images": true,
+    "readable_links": true,
+    "estimated_two_pages": true
+  },
+  "quality_checks": {
+    "no_orphan_bullets": true,
+    "all_bullets_have_achievement_ids": true,
+    "simulations_labeled": true,
+    "product_os_not_employer_experience": true
+  },
+  "draft_status": "human_review_required",
+  "final_recommendation": "Ready for human review"
+}

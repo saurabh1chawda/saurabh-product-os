@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "resume-os:validate-jd": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-jd-intelligence.ts"
+    "resume-os:validate-jd": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-jd-intelligence.ts",
+    "resume-os:assemble": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/assemble-resume.ts",
+    "resume-os:validate-assembly": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-assembly.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "3.1.1",

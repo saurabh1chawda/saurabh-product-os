@@ -1,0 +1,32 @@
+{
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "selected_achievement_ids": [
+    "LOG-THR-005",
+    "LOG-MRR-002",
+    "LOG-ARR-001",
+    "LOG-DEL-004",
+    "COM-PAY-003",
+    "COM-PAY-001",
+    "COM-PAY-002",
+    "SIM-EFF-004",
+    "JOV-ENG-002",
+    "JOV-AI-003"
+  ],
+  "selected_bullet_ids": [
+    "AI-BLT-003",
+    "AI-BLT-001",
+    "AI-BLT-007",
+    "AI-BLT-008",
+    "LEAD-BLT-004",
+    "PLAT-BLT-004",
+    "CONS-BLT-005",
+    "LEAD-BLT-005",
+    "AI-BLT-005",
+    "AI-BLT-004"
+  ],
+  "selected_project_ids": [
+    "PLB-LOGIX",
+    "AI-PLAYBOOK",
+    "AI-PRIORITIZATION"
+  ]
+}

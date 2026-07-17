@@ -1,0 +1,32 @@
+{
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "selected_achievement_ids": [
+    "SIM-REV-001",
+    "SIM-CNV-002",
+    "SIM-REF-003",
+    "SIM-EFF-004",
+    "LOG-ARR-001",
+    "LOG-MRR-002",
+    "LOG-SEO-003",
+    "LOG-ANL-001",
+    "JOV-REV-001",
+    "JOV-ENG-002"
+  ],
+  "selected_bullet_ids": [
+    "GROW-BLT-001",
+    "GROW-BLT-002",
+    "GROW-BLT-003",
+    "GROW-BLT-008",
+    "MON-BLT-001",
+    "GROW-BLT-005",
+    "GROW-BLT-004",
+    "GROW-BLT-007",
+    "MON-BLT-003",
+    "GROW-BLT-006"
+  ],
+  "selected_project_ids": [
+    "PLB-SIMPLILEARN",
+    "PLB-JOVE",
+    "DISCOVERY-TOOLKIT"
+  ]
+}

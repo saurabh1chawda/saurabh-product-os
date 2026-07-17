@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:resume-os:schema:resume-assembly-output",
+  "title": "Resume OS Assembly Output",
+  "type": "object",
+  "required": [
+    "assembly_metadata",
+    "source_jd_id",
+    "target_company",
+    "target_role",
+    "target_level",
+    "archetype_summary",
+    "resume_strategy",
+    "selected_headline",
+    "selected_summary",
+    "contact_links",
+    "experience_sections",
+    "selected_projects",
+    "selected_product_os_module",
+    "skills",
+    "tools",
+    "certifications",
+    "awards",
+    "publications",
+    "education",
+    "optional_statements",
+    "section_word_counts",
+    "estimated_page_count",
+    "keyword_coverage",
+    "competency_coverage",
+    "evidence_coverage",
+    "selected_achievement_ids",
+    "selected_bullet_ids",
+    "selected_project_ids",
+    "exclusions",
+    "warnings",
+    "gaps",
+    "human_review_items",
+    "ats_checks",
+    "quality_checks",
+    "draft_status",
+    "final_recommendation"
+  ],
+  "properties": {
+    "assembly_metadata": {
+      "type": "object",
+      "required": ["assembly_id", "created_at", "status"],
+      "properties": {
+        "assembly_id": { "type": "string" },
+        "created_at": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "source_jd_id": { "type": "string" },
+    "target_company": { "type": "string" },
+    "target_role": { "type": "string" },
+    "target_level": { "type": ["string", "null"] },
+    "archetype_summary": {
+      "type": "object",
+      "required": ["primary", "secondary"],
+      "properties": {
+        "primary": { "type": "string" },
+        "secondary": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "resume_strategy": { "type": "string" },
+    "selected_headline": { "$ref": "#/$defs/selectedText" },
+    "selected_summary": { "$ref": "#/$defs/selectedText" },
+    "contact_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "value"],
+        "properties": {
+          "label": { "type": "string" },
+          "value": { "type": "string" },
+          "url": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "experience_sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["company", "title", "dates", "bullets"],
+        "properties": {
+          "company": { "type": "string" },
+          "title": { "type": "string" },
+          "dates": { "type": "string" },
+          "location": { "type": ["string", "null"] },
+          "scope_statement": { "type": ["string", "null"] },
+          "bullets": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/assembledBullet" }
+          },
+          "role_relevance_score": { "type": "number" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "selected_projects": { "type": "array", "items": { "$ref": "#/$defs/projectSelection" } },
+    "selected_product_os_module": { "$ref": "#/$defs/projectSelection" },
+    "skills": { "type": "array", "items": { "type": "string" } },
+    "tools": { "type": "array", "items": { "type": "string" } },
+    "certifications": { "type": "array", "items": { "type": "string" } },
+    "awards": { "type": "array", "items": { "type": "string" } },
+    "publications": { "type": "array", "items": { "type": "string" } },
+    "education": { "type": "array", "items": { "type": "string" } },
+    "optional_statements": { "type": "array", "items": { "type": "string" } },
+    "section_word_counts": { "type": "object", "additionalProperties": { "type": "number" } },
+    "estimated_page_count": { "type": "number" },
+    "keyword_coverage": { "type": "object", "additionalProperties": true },
+    "competency_coverage": { "type": "object", "additionalProperties": true },
+    "evidence_coverage": { "type": "object", "additionalProperties": true },
+    "selected_achievement_ids": { "type": "array", "items": { "type": "string" } },
+    "selected_bullet_ids": { "type": "array", "items": { "type": "string" } },
+    "selected_project_ids": { "type": "array", "items": { "type": "string" } },
+    "exclusions": { "type": "array", "items": { "type": "string" } },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "gaps": { "type": "array", "items": { "type": "object" } },
+    "human_review_items": { "type": "array", "items": { "type": "string" } },
+    "ats_checks": { "type": "object", "additionalProperties": true },
+    "quality_checks": { "type": "object", "additionalProperties": true },
+    "draft_status": { "type": "string", "enum": ["draft", "human_review_required", "approved_draft"] },
+    "final_recommendation": {
+      "type": "string",
+      "enum": ["Ready for human review", "Revise before review", "Blocked"]
+    }
+  },
+  "$defs": {
+    "selectedText": {
+      "type": "object",
+      "required": ["text", "evidence_ids", "human_review_required"],
+      "properties": {
+        "text": { "type": "string" },
+        "evidence_ids": { "type": "array", "items": { "type": "string" } },
+        "human_review_required": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "assembledBullet": {
+      "type": "object",
+      "required": ["bullet_id", "achievement_id", "text", "source_file", "confidence_status"],
+      "properties": {
+        "bullet_id": { "type": "string" },
+        "achievement_id": { "type": "string" },
+        "text": { "type": "string" },
+        "source_file": { "type": "string" },
+        "confidence_status": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "projectSelection": {
+      "type": "object",
+      "required": ["project_id", "name", "portfolio_url", "reason", "label"],
+      "properties": {
+        "project_id": { "type": "string" },
+        "name": { "type": "string" },
+        "portfolio_url": { "type": "string" },
+        "reason": { "type": "string" },
+        "label": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
+

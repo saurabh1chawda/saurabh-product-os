@@ -1,0 +1,30 @@
+{
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "selected_achievement_ids": [
+    "COM-PAY-003",
+    "COM-PAY-002",
+    "COM-PAY-001",
+    "LOG-DEL-004",
+    "LOG-THR-005",
+    "LOG-ARR-001",
+    "LOG-MRR-002",
+    "SIM-EFF-004",
+    "FRE-CON-001"
+  ],
+  "selected_bullet_ids": [
+    "PAY-BLT-001",
+    "PAY-BLT-002",
+    "PAY-BLT-003",
+    "PAY-BLT-006",
+    "PAY-BLT-005",
+    "PLAT-BLT-003",
+    "PLAT-BLT-008",
+    "PAY-BLT-008",
+    "PAY-BLT-007"
+  ],
+  "selected_project_ids": [
+    "PLB-COMVIVA",
+    "POS-EXEC",
+    "POS-HOME"
+  ]
+}

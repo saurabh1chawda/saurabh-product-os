@@ -1,0 +1,100 @@
+{
+  "assembly_id": "payments-product-manager",
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "target_role": "Payments / FinTech Product Manager",
+  "primary_archetype": "Payments / FinTech Product Manager",
+  "secondary_archetypes": [
+    "Senior Product Manager"
+  ],
+  "strategy": "Position as a Payments / FinTech Product Manager with verified product outcomes, role-relevant evidence, and Product OS proof used only as supporting context.",
+  "headline": "Product Manager | Payments, Reliability & Trust-Centered Platforms",
+  "summary_direction": "Product leader focused on Payments / FinTech Product Manager roles, with evidence across AI/ML, Responsible AI, Reliability, Scalability. Selected proof points include COM-PAY-003, COM-PAY-002, COM-PAY-001. This draft uses Product OS as a supporting proof layer while preserving employer experience, metrics, and interview-defensible claims.",
+  "role_bullet_counts": {
+    "Mahindra Comviva": 3,
+    "Logix Built Solutions Limited": 4,
+    "Simplilearn": 1,
+    "Freelancer.com": 1
+  },
+  "selected_achievement_ids": [
+    "COM-PAY-003",
+    "COM-PAY-002",
+    "COM-PAY-001",
+    "LOG-DEL-004",
+    "LOG-THR-005",
+    "LOG-ARR-001",
+    "LOG-MRR-002",
+    "SIM-EFF-004",
+    "FRE-CON-001"
+  ],
+  "selected_bullet_ids": [
+    "PAY-BLT-001",
+    "PAY-BLT-002",
+    "PAY-BLT-003",
+    "PAY-BLT-006",
+    "PAY-BLT-005",
+    "PLAT-BLT-003",
+    "PLAT-BLT-008",
+    "PAY-BLT-008",
+    "PAY-BLT-007"
+  ],
+  "selected_project_ids": [
+    "PLB-COMVIVA",
+    "POS-EXEC",
+    "POS-HOME"
+  ],
+  "skills_priority": [
+    "AI/ML",
+    "Responsible AI",
+    "Reliability",
+    "Scalability",
+    "Technical roadmap",
+    "Activation",
+    "Payments",
+    "Trust",
+    "Risk",
+    "Transaction success",
+    "Compliance",
+    "Enterprise workflows",
+    "Adoption",
+    "Executive communication"
+  ],
+  "sections_included": [
+    "Header",
+    "Headline",
+    "Summary",
+    "Experience",
+    "Product OS Proof",
+    "Skills",
+    "Credentials",
+    "Education"
+  ],
+  "sections_excluded": [
+    "Detailed tools if space is constrained",
+    "Company-specific project unless explicitly approved"
+  ],
+  "page_budget": {
+    "estimated_words": 319,
+    "estimated_pages": 1
+  },
+  "gaps": [
+    {
+      "severity": "P1",
+      "gap": "Direct regulatory ownership is not fully proven",
+      "source_phrase": "compliance or regulatory language",
+      "current_evidence": "Payments reliability and risk-aware product sequencing evidence.",
+      "resume_mitigation": "Use payments reliability and trust evidence; do not claim compliance ownership.",
+      "product_os_mitigation": "Use Mahindra Comviva leadership evidence.",
+      "interview_mitigation": "Clarify collaboration with compliance stakeholders if asked.",
+      "cannot_mitigate_honestly": false
+    }
+  ],
+  "risks": [],
+  "human_review_decisions": [
+    "Review all gaps",
+    "Approve Product OS proof module",
+    "Confirm no unsupported claims",
+    "Approve final contact details before live use"
+  ],
+  "expected_ats_score": 90,
+  "expected_recruiter_signal": "Clear Payments / FinTech Product Manager positioning with traceable evidence."
+}

@@ -1,0 +1,88 @@
+{
+  "assembly_id": "growth-product-manager",
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "target_role": "Growth Product Manager",
+  "primary_archetype": "Growth Product Manager",
+  "secondary_archetypes": [
+    "Consumer Product Manager",
+    "Senior Product Manager"
+  ],
+  "strategy": "Position as a Growth Product Manager with verified product outcomes, role-relevant evidence, and Product OS proof used only as supporting context.",
+  "headline": "Growth Product Manager | Experimentation, Conversion & Retention",
+  "summary_direction": "Product leader focused on Growth Product Manager roles, with evidence across Product discovery, Experimentation, Technical roadmap, Acquisition. Selected proof points include SIM-CNV-002, SIM-REV-001, SIM-REF-003. This draft uses Product OS as a supporting proof layer while preserving employer experience, metrics, and interview-defensible claims.",
+  "role_bullet_counts": {
+    "Simplilearn": 4,
+    "Logix Built Solutions Limited": 4,
+    "JoVE": 1,
+    "Freelancer.com": 1
+  },
+  "selected_achievement_ids": [
+    "SIM-CNV-002",
+    "SIM-REV-001",
+    "SIM-REF-003",
+    "SIM-EFF-004",
+    "LOG-MRR-002",
+    "LOG-SEO-003",
+    "LOG-ANL-001",
+    "LOG-ARR-001",
+    "JOV-ENG-002",
+    "FRE-CON-001"
+  ],
+  "selected_bullet_ids": [
+    "CONS-BLT-002",
+    "GROW-BLT-001",
+    "CONS-BLT-003",
+    "GROW-BLT-008",
+    "CONS-BLT-004",
+    "CONS-BLT-008",
+    "CONS-BLT-007",
+    "AI-BLT-007",
+    "CONS-BLT-001",
+    "CONS-BLT-006"
+  ],
+  "selected_project_ids": [
+    "PLB-SIMPLILEARN",
+    "DISCOVERY-TOOLKIT",
+    "POS-EXEC"
+  ],
+  "skills_priority": [
+    "Product discovery",
+    "Experimentation",
+    "Technical roadmap",
+    "Acquisition",
+    "Activation",
+    "Conversion",
+    "Retention",
+    "Funnel",
+    "Cohort analysis",
+    "Executive communication"
+  ],
+  "sections_included": [
+    "Header",
+    "Headline",
+    "Summary",
+    "Experience",
+    "Product OS Proof",
+    "Skills",
+    "Credentials",
+    "Education"
+  ],
+  "sections_excluded": [
+    "Detailed tools if space is constrained",
+    "Company-specific project unless explicitly approved"
+  ],
+  "page_budget": {
+    "estimated_words": 320,
+    "estimated_pages": 1
+  },
+  "gaps": [],
+  "risks": [],
+  "human_review_decisions": [
+    "Review all gaps",
+    "Approve Product OS proof module",
+    "Confirm no unsupported claims",
+    "Approve final contact details before live use"
+  ],
+  "expected_ats_score": 90,
+  "expected_recruiter_signal": "Clear Growth Product Manager positioning with traceable evidence."
+}

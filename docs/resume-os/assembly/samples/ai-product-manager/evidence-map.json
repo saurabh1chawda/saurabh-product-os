@@ -1,0 +1,30 @@
+{
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "selected_achievement_ids": [
+    "LOG-MRR-002",
+    "LOG-THR-005",
+    "LOG-ARR-001",
+    "LOG-DEL-004",
+    "JOV-AI-003",
+    "JOV-ENG-002",
+    "JOV-REV-001",
+    "SIM-EFF-004",
+    "SIM-REV-001"
+  ],
+  "selected_bullet_ids": [
+    "AI-BLT-001",
+    "AI-BLT-003",
+    "AI-BLT-007",
+    "AI-BLT-008",
+    "AI-BLT-004",
+    "AI-BLT-005",
+    "SAAS-BLT-001",
+    "GROW-BLT-008",
+    "GROW-BLT-001"
+  ],
+  "selected_project_ids": [
+    "AI-PLAYBOOK",
+    "POS-EXEC",
+    "PLB-JOVE"
+  ]
+}

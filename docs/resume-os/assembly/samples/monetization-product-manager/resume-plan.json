@@ -1,0 +1,104 @@
+{
+  "assembly_id": "monetization-product-manager",
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "target_role": "Monetization Product Manager",
+  "primary_archetype": "Monetization Product Manager",
+  "secondary_archetypes": [
+    "Consumer Product Manager",
+    "Growth Product Manager",
+    "Senior Product Manager"
+  ],
+  "strategy": "Position as a Monetization Product Manager with verified product outcomes, role-relevant evidence, and Product OS proof used only as supporting context.",
+  "headline": "Product Manager | Monetization, Pricing & Growth Strategy",
+  "summary_direction": "Product leader focused on Monetization Product Manager roles, with evidence across AI/ML, Model evaluation, Responsible AI, Experimentation. Selected proof points include SIM-REV-001, SIM-CNV-002, SIM-REF-003. This draft uses Product OS as a supporting proof layer while preserving employer experience, metrics, and interview-defensible claims.",
+  "role_bullet_counts": {
+    "Simplilearn": 4,
+    "Logix Built Solutions Limited": 4,
+    "JoVE": 2
+  },
+  "selected_achievement_ids": [
+    "SIM-REV-001",
+    "SIM-CNV-002",
+    "SIM-REF-003",
+    "SIM-EFF-004",
+    "LOG-ARR-001",
+    "LOG-MRR-002",
+    "LOG-SEO-003",
+    "LOG-ANL-001",
+    "JOV-REV-001",
+    "JOV-ENG-002"
+  ],
+  "selected_bullet_ids": [
+    "GROW-BLT-001",
+    "GROW-BLT-002",
+    "GROW-BLT-003",
+    "GROW-BLT-008",
+    "MON-BLT-001",
+    "GROW-BLT-005",
+    "GROW-BLT-004",
+    "GROW-BLT-007",
+    "MON-BLT-003",
+    "GROW-BLT-006"
+  ],
+  "selected_project_ids": [
+    "PLB-SIMPLILEARN",
+    "PLB-JOVE",
+    "DISCOVERY-TOOLKIT"
+  ],
+  "skills_priority": [
+    "AI/ML",
+    "Model evaluation",
+    "Responsible AI",
+    "Experimentation",
+    "Technical roadmap",
+    "Conversion",
+    "Retention",
+    "Pricing",
+    "Packaging",
+    "Revenue",
+    "Upsell",
+    "Monetization",
+    "Unit economics",
+    "Trust",
+    "Executive communication"
+  ],
+  "sections_included": [
+    "Header",
+    "Headline",
+    "Summary",
+    "Experience",
+    "Product OS Proof",
+    "Skills",
+    "Credentials",
+    "Education"
+  ],
+  "sections_excluded": [
+    "Detailed tools if space is constrained",
+    "Company-specific project unless explicitly approved"
+  ],
+  "page_budget": {
+    "estimated_words": 354,
+    "estimated_pages": 1
+  },
+  "gaps": [
+    {
+      "severity": "P1",
+      "gap": "Marketplace-specific depth may be limited",
+      "source_phrase": "marketplace language",
+      "current_evidence": "Consumer, monetization, loyalty, and pricing evidence.",
+      "resume_mitigation": "Use adjacent monetization and consumer evidence; do not claim deep marketplace ownership.",
+      "product_os_mitigation": "Use relevant Product Leadership Briefs only as supporting proof.",
+      "interview_mitigation": "Frame transferable marketplace logic cautiously.",
+      "cannot_mitigate_honestly": false
+    }
+  ],
+  "risks": [],
+  "human_review_decisions": [
+    "Review all gaps",
+    "Approve Product OS proof module",
+    "Confirm no unsupported claims",
+    "Approve final contact details before live use"
+  ],
+  "expected_ats_score": 90,
+  "expected_recruiter_signal": "Clear Monetization Product Manager positioning with traceable evidence."
+}

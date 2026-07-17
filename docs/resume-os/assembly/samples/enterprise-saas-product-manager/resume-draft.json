@@ -1,0 +1,343 @@
+{
+  "assembly_metadata": {
+    "assembly_id": "enterprise-saas-product-manager",
+    "created_at": "2026-07-17T05:58:39.059Z",
+    "status": "synthetic_draft",
+    "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE"
+  },
+  "source_jd_id": "enterprise-saas-product-manager.md",
+  "target_company": "Synthetic Fixture Company",
+  "target_role": "Enterprise SaaS Product Manager.Md",
+  "target_level": null,
+  "archetype_summary": {
+    "primary": "Enterprise SaaS Product Manager",
+    "secondary": [
+      "Senior Product Manager",
+      "Product Lead / Lead Product Manager"
+    ]
+  },
+  "resume_strategy": "Position as a Enterprise SaaS Product Manager with verified product outcomes, role-relevant evidence, and Product OS proof used only as supporting context.",
+  "selected_headline": {
+    "text": "Senior Product Manager | Enterprise SaaS, Discovery & Workflow Adoption",
+    "evidence_ids": [
+      "JOV-REV-001",
+      "JOV-ENG-002",
+      "JOV-AI-003"
+    ],
+    "human_review_required": true
+  },
+  "selected_summary": {
+    "text": "Product leader focused on Enterprise SaaS Product Manager roles, with evidence across AI workflows, Product discovery, APIs, Technical roadmap. Selected proof points include JOV-REV-001, JOV-ENG-002, JOV-AI-003. This draft uses Product OS as a supporting proof layer while preserving employer experience, metrics, and interview-defensible claims.",
+    "evidence_ids": [
+      "JOV-REV-001",
+      "JOV-ENG-002",
+      "JOV-AI-003"
+    ],
+    "human_review_required": true
+  },
+  "contact_links": [
+    {
+      "label": "Email",
+      "value": "redacted-for-synthetic-output",
+      "url": null
+    },
+    {
+      "label": "Phone",
+      "value": "redacted-for-synthetic-output",
+      "url": null
+    },
+    {
+      "label": "LinkedIn",
+      "value": "LinkedIn",
+      "url": "https://www.linkedin.com/in/chawdasaurabh/"
+    },
+    {
+      "label": "GitHub",
+      "value": "GitHub",
+      "url": "https://github.com/saurabh1chawda"
+    },
+    {
+      "label": "Product OS",
+      "value": "Product OS",
+      "url": "https://saurabh-product-os.vercel.app"
+    }
+  ],
+  "experience_sections": [
+    {
+      "company": "JoVE",
+      "title": "Senior Product Manager",
+      "dates": "2023-01 to 2025-05",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "SAAS-BLT-001",
+          "achievement_id": "JOV-REV-001",
+          "text": "Grew Biopharma portfolio revenue 30% through customer-driven pricing, packaging, and portfolio strategy.",
+          "source_file": "enterprise-saas.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "SAAS-BLT-002",
+          "achievement_id": "JOV-ENG-002",
+          "text": "Improved workflow adoption by re-architecting discovery and personalization logic around customer behavior.",
+          "source_file": "enterprise-saas.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "SAAS-BLT-008",
+          "achievement_id": "JOV-AI-003",
+          "text": "Partnered with engineering and data science to evaluate ML-driven personalization models for enterprise workflow adoption.",
+          "source_file": "enterprise-saas.md",
+          "confidence_status": "evidence-partial"
+        }
+      ],
+      "role_relevance_score": 82
+    },
+    {
+      "company": "Freelancer.com",
+      "title": "Product Consultant",
+      "dates": "2021-04 to 2021-09",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "SAAS-BLT-005",
+          "achievement_id": "FRE-CON-001",
+          "text": "Advised 15+ clients on product and business strategy, improving operational efficiency by 20%.",
+          "source_file": "enterprise-saas.md",
+          "confidence_status": "evidence-partial"
+        }
+      ],
+      "role_relevance_score": 72
+    },
+    {
+      "company": "Mahindra Comviva",
+      "title": "Product Manager",
+      "dates": "2019-05 to 2021-04",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "SAAS-BLT-003",
+          "achievement_id": "COM-PAY-001",
+          "text": "Launched core B2B platform modules and onboarded 15+ paying customers within six months.",
+          "source_file": "enterprise-saas.md",
+          "confidence_status": "evidence-partial"
+        },
+        {
+          "bullet_id": "SAAS-BLT-004",
+          "achievement_id": "COM-PAY-002",
+          "text": "Improved engagement to 83% and CSAT to 94% through segmentation and multichannel enterprise product experiences.",
+          "source_file": "enterprise-saas.md",
+          "confidence_status": "verified-public"
+        }
+      ],
+      "role_relevance_score": 72
+    },
+    {
+      "company": "Logix Built Solutions Limited",
+      "title": "Lead Product Manager",
+      "dates": "2025-05 to Present",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "SPM-BLT-007",
+          "achievement_id": "LOG-DEL-004",
+          "text": "Aligned cross-functional teams around roadmap governance, tripling delivery velocity and reducing release cycles 50%.",
+          "source_file": "senior-pm.md",
+          "confidence_status": "verified-public"
+        },
+        {
+          "bullet_id": "SAAS-BLT-006",
+          "achievement_id": "LOG-ARR-001",
+          "text": "Generated Rs. 1M+ ARR from zero-to-one platform products through pricing, packaging, and upsell design.",
+          "source_file": "enterprise-saas.md",
+          "confidence_status": "verified-public"
+        }
+      ],
+      "role_relevance_score": 69
+    },
+    {
+      "company": "Simplilearn",
+      "title": "Senior Product Manager",
+      "dates": "2021-09 to 2022-12",
+      "location": null,
+      "scope_statement": null,
+      "bullets": [
+        {
+          "bullet_id": "SPM-BLT-002",
+          "achievement_id": "SIM-REV-001",
+          "text": "Scaled Job Guarantee revenue 10x from Rs. 1M to Rs. 10M through product-led monetization decisions.",
+          "source_file": "senior-pm.md",
+          "confidence_status": "verified-public"
+        }
+      ],
+      "role_relevance_score": 64
+    }
+  ],
+  "selected_projects": [
+    {
+      "project_id": "POS-EXEC",
+      "name": "Executive Briefing Center",
+      "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+      "portfolio_url": "https://saurabh-product-os.vercel.app/executive",
+      "label": "Supporting proof"
+    },
+    {
+      "project_id": "DISCOVERY-TOOLKIT",
+      "name": "Product Discovery Toolkit",
+      "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+      "portfolio_url": "https://saurabh-product-os.vercel.app/decision-systems/customer-discovery",
+      "label": "Supporting proof"
+    }
+  ],
+  "selected_product_os_module": {
+    "project_id": "PLB-JOVE",
+    "name": "JoVE Product Leadership Brief",
+    "reason": "Recommended because the asset supports the detected archetype and JD signals.",
+    "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/jove",
+    "label": "Primary Product OS proof"
+  },
+  "skills": [
+    "AI workflows",
+    "Product discovery",
+    "APIs",
+    "Technical roadmap",
+    "Retention",
+    "B2B",
+    "Enterprise workflows",
+    "Adoption",
+    "Customer success",
+    "Executive communication"
+  ],
+  "tools": [
+    "SQL",
+    "Analytics",
+    "Product analytics",
+    "AI/ML collaboration"
+  ],
+  "certifications": [
+    "AI for Product Management",
+    "Data-Driven Product Management"
+  ],
+  "awards": [
+    "Selected role-relevant awards available in canonical data"
+  ],
+  "publications": [],
+  "education": [
+    "MBA, Indian Institute of Management Indore",
+    "B.Tech Computer Engineering, National Institute of Technology Surat"
+  ],
+  "optional_statements": [],
+  "section_word_counts": {
+    "summary": 44,
+    "experience": 123,
+    "skills": 10,
+    "total": 307
+  },
+  "estimated_page_count": 1,
+  "keyword_coverage": {
+    "target": "role-relevant keywords only",
+    "covered_keywords": [
+      "workflow",
+      "discovery",
+      "integrations",
+      "roadmap",
+      "retention",
+      "b2b",
+      "enterprise",
+      "adoption",
+      "customer success",
+      "leadership",
+      "communicate",
+      "equal opportunity"
+    ]
+  },
+  "competency_coverage": {
+    "covered_competencies": [
+      "AI workflows",
+      "Product discovery",
+      "APIs",
+      "Technical roadmap",
+      "Retention",
+      "B2B",
+      "Enterprise workflows",
+      "Adoption",
+      "Customer success",
+      "Executive communication"
+    ]
+  },
+  "evidence_coverage": {
+    "selected_achievements": 9,
+    "selected_bullets": 9
+  },
+  "selected_achievement_ids": [
+    "JOV-REV-001",
+    "JOV-ENG-002",
+    "JOV-AI-003",
+    "FRE-CON-001",
+    "COM-PAY-001",
+    "COM-PAY-002",
+    "LOG-DEL-004",
+    "LOG-ARR-001",
+    "SIM-REV-001"
+  ],
+  "selected_bullet_ids": [
+    "SAAS-BLT-001",
+    "SAAS-BLT-002",
+    "SAAS-BLT-008",
+    "SAAS-BLT-005",
+    "SAAS-BLT-003",
+    "SAAS-BLT-004",
+    "SPM-BLT-007",
+    "SAAS-BLT-006",
+    "SPM-BLT-002"
+  ],
+  "selected_project_ids": [
+    "PLB-JOVE",
+    "POS-EXEC",
+    "DISCOVERY-TOOLKIT"
+  ],
+  "exclusions": [
+    "Final DOCX/PDF export",
+    "Active application-specific content",
+    "Unapproved work authorization or relocation statements"
+  ],
+  "warnings": [],
+  "gaps": [
+    {
+      "severity": "P2",
+      "gap": "Deep enterprise integration or admin tooling ownership may need review",
+      "source_phrase": "integration/admin language",
+      "current_evidence": "Enterprise workflow, onboarding, platform, and customer discovery evidence.",
+      "resume_mitigation": "Use enterprise SaaS and platform evidence only where supported.",
+      "product_os_mitigation": "Use Product Discovery Toolkit or JoVE brief.",
+      "interview_mitigation": "Prepare examples of enterprise workflow prioritization.",
+      "cannot_mitigate_honestly": false
+    }
+  ],
+  "human_review_items": [
+    "Draft is not final",
+    "Review factual integrity",
+    "Review ATS readability",
+    "Approve all gaps and warnings"
+  ],
+  "ats_checks": {
+    "standard_headings": true,
+    "no_tables": true,
+    "no_columns": true,
+    "no_images": true,
+    "readable_links": true,
+    "estimated_two_pages": true
+  },
+  "quality_checks": {
+    "no_orphan_bullets": true,
+    "all_bullets_have_achievement_ids": true,
+    "simulations_labeled": true,
+    "product_os_not_employer_experience": true
+  },
+  "draft_status": "human_review_required",
+  "final_recommendation": "Ready for human review"
+}

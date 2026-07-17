@@ -1,0 +1,9 @@
+{
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "p0_failures": [],
+  "warnings": [
+    "More than 50% of recommended bullets come from one company; human justification required."
+  ],
+  "estimated_page_count": 1,
+  "draft_status": "human_review_required"
+}

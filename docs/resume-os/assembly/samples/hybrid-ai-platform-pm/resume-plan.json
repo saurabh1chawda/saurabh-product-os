@@ -1,0 +1,127 @@
+{
+  "assembly_id": "hybrid-ai-platform-pm",
+  "label": "SYNTHETIC FIXTURE OUTPUT - NOT FOR APPLICATION USE",
+  "target_role": "Platform Product Manager",
+  "primary_archetype": "Platform Product Manager",
+  "secondary_archetypes": [
+    "Product Lead / Lead Product Manager",
+    "AI Product Manager",
+    "Enterprise SaaS Product Manager"
+  ],
+  "strategy": "Position as a Platform Product Manager with verified product outcomes, role-relevant evidence, and Product OS proof used only as supporting context.",
+  "headline": "Platform Product Manager | Architecture, Reliability & Technical Strategy",
+  "summary_direction": "Product leader focused on Platform Product Manager roles, with evidence across AI/ML, Model evaluation, AI workflows, Responsible AI. Selected proof points include LOG-THR-005, LOG-MRR-002, LOG-ARR-001. This draft uses Product OS as a supporting proof layer while preserving employer experience, metrics, and interview-defensible claims.",
+  "role_bullet_counts": {
+    "Logix Built Solutions Limited": 4,
+    "Mahindra Comviva": 3,
+    "Simplilearn": 1,
+    "JoVE": 2
+  },
+  "selected_achievement_ids": [
+    "LOG-THR-005",
+    "LOG-MRR-002",
+    "LOG-ARR-001",
+    "LOG-DEL-004",
+    "COM-PAY-003",
+    "COM-PAY-001",
+    "COM-PAY-002",
+    "SIM-EFF-004",
+    "JOV-ENG-002",
+    "JOV-AI-003"
+  ],
+  "selected_bullet_ids": [
+    "AI-BLT-003",
+    "AI-BLT-001",
+    "AI-BLT-007",
+    "AI-BLT-008",
+    "LEAD-BLT-004",
+    "PLAT-BLT-004",
+    "CONS-BLT-005",
+    "LEAD-BLT-005",
+    "AI-BLT-005",
+    "AI-BLT-004"
+  ],
+  "selected_project_ids": [
+    "PLB-LOGIX",
+    "AI-PLAYBOOK",
+    "AI-PRIORITIZATION"
+  ],
+  "skills_priority": [
+    "AI/ML",
+    "Model evaluation",
+    "AI workflows",
+    "Responsible AI",
+    "APIs",
+    "Architecture",
+    "Reliability",
+    "Scalability",
+    "Technical roadmap",
+    "Cross-team dependencies",
+    "Revenue",
+    "Trust",
+    "Enterprise workflows",
+    "Adoption",
+    "Executive communication"
+  ],
+  "sections_included": [
+    "Header",
+    "Headline",
+    "Summary",
+    "Experience",
+    "Product OS Proof",
+    "Skills",
+    "Credentials",
+    "Education"
+  ],
+  "sections_excluded": [
+    "Detailed tools if space is constrained",
+    "Company-specific project unless explicitly approved"
+  ],
+  "page_budget": {
+    "estimated_words": 359,
+    "estimated_pages": 1
+  },
+  "gaps": [
+    {
+      "severity": "P1",
+      "gap": "Limited direct production GenAI/LLM ownership",
+      "source_phrase": "production AI/LLM/RAG language",
+      "current_evidence": "AI product judgment, ML personalization, AI prioritization, and AI readiness evidence.",
+      "resume_mitigation": "Use AI product and prioritization evidence without claiming unsupported GenAI production ownership.",
+      "product_os_mitigation": "Use AI Product Playbook or AI Prioritization Framework as proof of thinking.",
+      "interview_mitigation": "Explain AI product decision quality and boundaries clearly.",
+      "cannot_mitigate_honestly": false
+    },
+    {
+      "severity": "P1",
+      "gap": "Developer-platform depth may require careful framing",
+      "source_phrase": "developer platform/API language",
+      "current_evidence": "Platform architecture, throughput, payments platform, and roadmap governance evidence.",
+      "resume_mitigation": "Use platform evidence; avoid overstating developer-tools specialization.",
+      "product_os_mitigation": "Use Logix Product Leadership Brief and Decision Memo Template.",
+      "interview_mitigation": "Prepare technical trade-off examples.",
+      "cannot_mitigate_honestly": false
+    },
+    {
+      "severity": "P2",
+      "gap": "Deep enterprise integration or admin tooling ownership may need review",
+      "source_phrase": "integration/admin language",
+      "current_evidence": "Enterprise workflow, onboarding, platform, and customer discovery evidence.",
+      "resume_mitigation": "Use enterprise SaaS and platform evidence only where supported.",
+      "product_os_mitigation": "Use Product Discovery Toolkit or JoVE brief.",
+      "interview_mitigation": "Prepare examples of enterprise workflow prioritization.",
+      "cannot_mitigate_honestly": false
+    }
+  ],
+  "risks": [
+    "Top archetype scores are close; human review recommended."
+  ],
+  "human_review_decisions": [
+    "Review all gaps",
+    "Approve Product OS proof module",
+    "Confirm no unsupported claims",
+    "Approve final contact details before live use"
+  ],
+  "expected_ats_score": 90,
+  "expected_recruiter_signal": "Clear Platform Product Manager positioning with traceable evidence."
+}
