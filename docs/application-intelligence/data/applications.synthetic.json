@@ -1,0 +1,3602 @@
+[
+  {
+    "application_id": "APP-001",
+    "company": "Northstar AI",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-001",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-01-01",
+    "status": "active",
+    "current_stage": "Applied",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb9b",
+      "resume_file_path": "docs/resume-os/applications/APP-001/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-001/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-001/resume.docx",
+      "human_review_timestamp": "2026-01-01T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-001.md",
+      "jd_hash": "7382dba2",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-01",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-002",
+    "company": "Atlas Platform",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-002",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-01-03",
+    "status": "active",
+    "current_stage": "Recruiter Viewed",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb9a",
+      "resume_file_path": "docs/resume-os/applications/APP-002/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-002/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-002/resume.docx",
+      "human_review_timestamp": "2026-01-03T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-002.md",
+      "jd_hash": "73835001",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-03",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-003",
+    "company": "RiverPay",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-003",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-01-05",
+    "status": "active",
+    "current_stage": "Recruiter Contact",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb99",
+      "resume_file_path": "docs/resume-os/applications/APP-003/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-003/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-003/resume.docx",
+      "human_review_timestamp": "2026-01-05T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-003.md",
+      "jd_hash": "7383c460",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-05",
+      "response_date": "2026-01-12",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-004",
+    "company": "GrowthLoop",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-004",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-01-07",
+    "status": "closed",
+    "current_stage": "Recruiter Reject",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb98",
+      "resume_file_path": "docs/resume-os/applications/APP-004/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-004/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-004/resume.docx",
+      "human_review_timestamp": "2026-01-07T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-004.md",
+      "jd_hash": "738438bf",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-07",
+      "response_date": "2026-01-15",
+      "response_type": "reject",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Timing",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-005",
+    "company": "MarketGrid",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-005",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-01-09",
+    "status": "active",
+    "current_stage": "Online Assessment",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb97",
+      "resume_file_path": "docs/resume-os/applications/APP-005/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-005/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-005/resume.docx",
+      "human_review_timestamp": "2026-01-09T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-005.md",
+      "jd_hash": "7384ad1e",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-09",
+      "response_date": "2026-01-18",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-006",
+    "company": "CloudDesk",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-006",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-01-11",
+    "status": "active",
+    "current_stage": "Hiring Manager Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb96",
+      "resume_file_path": "docs/resume-os/applications/APP-006/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-006/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-006/resume.docx",
+      "human_review_timestamp": "2026-01-11T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-006.md",
+      "jd_hash": "7385217d",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-11",
+      "response_date": "2026-01-21",
+      "response_type": "interview",
+      "interview_count": 1,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-PROJECT-001",
+      "variant": "B",
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-007",
+    "company": "Vector Labs",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-007",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-01-13",
+    "status": "active",
+    "current_stage": "Product Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb95",
+      "resume_file_path": "docs/resume-os/applications/APP-007/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-007/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-007/resume.docx",
+      "human_review_timestamp": "2026-01-13T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-007.md",
+      "jd_hash": "738595dc",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-13",
+      "response_date": "2026-01-24",
+      "response_type": "interview",
+      "interview_count": 2,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-008",
+    "company": "StackForge",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-008",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-01-15",
+    "status": "active",
+    "current_stage": "System Design",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb94",
+      "resume_file_path": "docs/resume-os/applications/APP-008/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-008/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-008/resume.docx",
+      "human_review_timestamp": "2026-01-15T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-008.md",
+      "jd_hash": "73860a3b",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-15",
+      "response_date": "2026-01-27",
+      "response_type": "interview",
+      "interview_count": 3,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-009",
+    "company": "TrustWallet",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-009",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-01-17",
+    "status": "active",
+    "current_stage": "Final Round",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb93",
+      "resume_file_path": "docs/resume-os/applications/APP-009/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-009/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-009/resume.docx",
+      "human_review_timestamp": "2026-01-17T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-009.md",
+      "jd_hash": "73867e9a",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-17",
+      "response_date": "2026-01-22",
+      "response_type": "interview",
+      "interview_count": 4,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-010",
+    "company": "Lifecycle Co",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-010",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-01-19",
+    "status": "active",
+    "current_stage": "Offer",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb7d",
+      "resume_file_path": "docs/resume-os/applications/APP-010/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-010/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-010/resume.docx",
+      "human_review_timestamp": "2026-01-19T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-010.md",
+      "jd_hash": "73907ec4",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-19",
+      "response_date": "2026-01-25",
+      "response_type": "offer",
+      "interview_count": 5,
+      "offer": true,
+      "salary": 220000,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-011",
+    "company": "Northstar AI",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-011",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-01-21",
+    "status": "closed",
+    "current_stage": "Rejected",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb7c",
+      "resume_file_path": "docs/resume-os/applications/APP-011/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-011/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-011/resume.docx",
+      "human_review_timestamp": "2026-01-21T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-011.md",
+      "jd_hash": "7390f323",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-21",
+      "response_date": "2026-01-28",
+      "response_type": "reject",
+      "interview_count": 1,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Role fit",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-PROJECT-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-012",
+    "company": "Atlas Platform",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-012",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-01-23",
+    "status": "withdrawn",
+    "current_stage": "Withdrawn",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb7b",
+      "resume_file_path": "docs/resume-os/applications/APP-012/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-012/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-012/resume.docx",
+      "human_review_timestamp": "2026-01-23T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-012.md",
+      "jd_hash": "73916782",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-23",
+      "response_date": "2026-01-31",
+      "response_type": "interview",
+      "interview_count": 2,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": true
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-013",
+    "company": "RiverPay",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-013",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-01-25",
+    "status": "accepted",
+    "current_stage": "Accepted",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb7a",
+      "resume_file_path": "docs/resume-os/applications/APP-013/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-013/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-013/resume.docx",
+      "human_review_timestamp": "2026-01-25T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-013.md",
+      "jd_hash": "7391dbe1",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-25",
+      "response_date": "2026-02-03",
+      "response_type": "offer",
+      "interview_count": 3,
+      "offer": true,
+      "salary": 200000,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-014",
+    "company": "GrowthLoop",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-014",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-01-27",
+    "status": "active",
+    "current_stage": "Applied",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb79",
+      "resume_file_path": "docs/resume-os/applications/APP-014/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-014/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-014/resume.docx",
+      "human_review_timestamp": "2026-01-27T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-014.md",
+      "jd_hash": "73925040",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-27",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-015",
+    "company": "MarketGrid",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-015",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-01-29",
+    "status": "active",
+    "current_stage": "Recruiter Viewed",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb78",
+      "resume_file_path": "docs/resume-os/applications/APP-015/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-015/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-015/resume.docx",
+      "human_review_timestamp": "2026-01-29T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-015.md",
+      "jd_hash": "7392c49f",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-29",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-016",
+    "company": "CloudDesk",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-016",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-01-31",
+    "status": "active",
+    "current_stage": "Recruiter Contact",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb77",
+      "resume_file_path": "docs/resume-os/applications/APP-016/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-016/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-016/resume.docx",
+      "human_review_timestamp": "2026-01-31T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-016.md",
+      "jd_hash": "739338fe",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-01-31",
+      "response_date": "2026-02-12",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-PROJECT-001",
+      "variant": "B",
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-017",
+    "company": "Vector Labs",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-017",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-02-02",
+    "status": "closed",
+    "current_stage": "Recruiter Reject",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb76",
+      "resume_file_path": "docs/resume-os/applications/APP-017/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-017/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-017/resume.docx",
+      "human_review_timestamp": "2026-02-02T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-017.md",
+      "jd_hash": "7393ad5d",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-02",
+      "response_date": "2026-02-07",
+      "response_type": "reject",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Role fit",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-018",
+    "company": "StackForge",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-018",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-02-04",
+    "status": "active",
+    "current_stage": "Online Assessment",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb75",
+      "resume_file_path": "docs/resume-os/applications/APP-018/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-018/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-018/resume.docx",
+      "human_review_timestamp": "2026-02-04T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-018.md",
+      "jd_hash": "739421bc",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-04",
+      "response_date": "2026-02-10",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-019",
+    "company": "TrustWallet",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-019",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-02-06",
+    "status": "active",
+    "current_stage": "Hiring Manager Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb74",
+      "resume_file_path": "docs/resume-os/applications/APP-019/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-019/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-019/resume.docx",
+      "human_review_timestamp": "2026-02-06T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-019.md",
+      "jd_hash": "7394961b",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-06",
+      "response_date": "2026-02-13",
+      "response_type": "interview",
+      "interview_count": 4,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-020",
+    "company": "Lifecycle Co",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-020",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-02-08",
+    "status": "active",
+    "current_stage": "Product Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb5e",
+      "resume_file_path": "docs/resume-os/applications/APP-020/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-020/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-020/resume.docx",
+      "human_review_timestamp": "2026-02-08T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-020.md",
+      "jd_hash": "739e9645",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-08",
+      "response_date": "2026-02-16",
+      "response_type": "interview",
+      "interview_count": 5,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-021",
+    "company": "Northstar AI",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-021",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-02-10",
+    "status": "active",
+    "current_stage": "System Design",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb5d",
+      "resume_file_path": "docs/resume-os/applications/APP-021/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-021/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-021/resume.docx",
+      "human_review_timestamp": "2026-02-10T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-021.md",
+      "jd_hash": "739f0aa4",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-10",
+      "response_date": "2026-02-19",
+      "response_type": "interview",
+      "interview_count": 1,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-022",
+    "company": "Atlas Platform",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-022",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-02-12",
+    "status": "active",
+    "current_stage": "Final Round",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb5c",
+      "resume_file_path": "docs/resume-os/applications/APP-022/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-022/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-022/resume.docx",
+      "human_review_timestamp": "2026-02-12T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-022.md",
+      "jd_hash": "739f7f03",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-12",
+      "response_date": "2026-02-22",
+      "response_type": "interview",
+      "interview_count": 2,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-023",
+    "company": "RiverPay",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-023",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-02-14",
+    "status": "active",
+    "current_stage": "Offer",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb5b",
+      "resume_file_path": "docs/resume-os/applications/APP-023/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-023/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-023/resume.docx",
+      "human_review_timestamp": "2026-02-14T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-023.md",
+      "jd_hash": "739ff362",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-14",
+      "response_date": "2026-02-25",
+      "response_type": "offer",
+      "interview_count": 3,
+      "offer": true,
+      "salary": 200000,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-024",
+    "company": "GrowthLoop",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-024",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-02-16",
+    "status": "closed",
+    "current_stage": "Rejected",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb5a",
+      "resume_file_path": "docs/resume-os/applications/APP-024/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-024/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-024/resume.docx",
+      "human_review_timestamp": "2026-02-16T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-024.md",
+      "jd_hash": "73a067c1",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-16",
+      "response_date": "2026-02-28",
+      "response_type": "reject",
+      "interview_count": 4,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Timing",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-025",
+    "company": "MarketGrid",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-025",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-02-18",
+    "status": "withdrawn",
+    "current_stage": "Withdrawn",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb59",
+      "resume_file_path": "docs/resume-os/applications/APP-025/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-025/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-025/resume.docx",
+      "human_review_timestamp": "2026-02-18T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-025.md",
+      "jd_hash": "73a0dc20",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-18",
+      "response_date": "2026-02-23",
+      "response_type": "interview",
+      "interview_count": 5,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": true
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-026",
+    "company": "CloudDesk",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-026",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-02-20",
+    "status": "accepted",
+    "current_stage": "Accepted",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb58",
+      "resume_file_path": "docs/resume-os/applications/APP-026/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-026/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-026/resume.docx",
+      "human_review_timestamp": "2026-02-20T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-026.md",
+      "jd_hash": "73a1507f",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-20",
+      "response_date": "2026-02-26",
+      "response_type": "offer",
+      "interview_count": 1,
+      "offer": true,
+      "salary": 180000,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-PROJECT-001",
+      "variant": "B",
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-027",
+    "company": "Vector Labs",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-027",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-02-22",
+    "status": "active",
+    "current_stage": "Applied",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb57",
+      "resume_file_path": "docs/resume-os/applications/APP-027/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-027/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-027/resume.docx",
+      "human_review_timestamp": "2026-02-22T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-027.md",
+      "jd_hash": "73a1c4de",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-22",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-028",
+    "company": "StackForge",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-028",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-02-24",
+    "status": "active",
+    "current_stage": "Recruiter Viewed",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb56",
+      "resume_file_path": "docs/resume-os/applications/APP-028/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-028/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-028/resume.docx",
+      "human_review_timestamp": "2026-02-24T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-028.md",
+      "jd_hash": "73a2393d",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-24",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-029",
+    "company": "TrustWallet",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-029",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-02-26",
+    "status": "active",
+    "current_stage": "Recruiter Contact",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb55",
+      "resume_file_path": "docs/resume-os/applications/APP-029/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-029/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-029/resume.docx",
+      "human_review_timestamp": "2026-02-26T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-029.md",
+      "jd_hash": "73a2ad9c",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-26",
+      "response_date": "2026-03-07",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-030",
+    "company": "Lifecycle Co",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-030",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-02-28",
+    "status": "closed",
+    "current_stage": "Recruiter Reject",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb3f",
+      "resume_file_path": "docs/resume-os/applications/APP-030/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-030/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-030/resume.docx",
+      "human_review_timestamp": "2026-02-28T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-030.md",
+      "jd_hash": "73acadc6",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-02-28",
+      "response_date": "2026-03-10",
+      "response_type": "reject",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Timing",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-031",
+    "company": "Northstar AI",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-031",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-03-02",
+    "status": "active",
+    "current_stage": "Online Assessment",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb3e",
+      "resume_file_path": "docs/resume-os/applications/APP-031/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-031/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-031/resume.docx",
+      "human_review_timestamp": "2026-03-02T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-031.md",
+      "jd_hash": "73ad2225",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-02",
+      "response_date": "2026-03-13",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-PROJECT-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-032",
+    "company": "Atlas Platform",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-032",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-03-04",
+    "status": "active",
+    "current_stage": "Hiring Manager Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb3d",
+      "resume_file_path": "docs/resume-os/applications/APP-032/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-032/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-032/resume.docx",
+      "human_review_timestamp": "2026-03-04T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-032.md",
+      "jd_hash": "73ad9684",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-04",
+      "response_date": "2026-03-16",
+      "response_type": "interview",
+      "interview_count": 2,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-033",
+    "company": "RiverPay",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-033",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-03-06",
+    "status": "active",
+    "current_stage": "Product Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb3c",
+      "resume_file_path": "docs/resume-os/applications/APP-033/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-033/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-033/resume.docx",
+      "human_review_timestamp": "2026-03-06T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-033.md",
+      "jd_hash": "73ae0ae3",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-06",
+      "response_date": "2026-03-11",
+      "response_type": "interview",
+      "interview_count": 3,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-034",
+    "company": "GrowthLoop",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-034",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-03-08",
+    "status": "active",
+    "current_stage": "System Design",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb3b",
+      "resume_file_path": "docs/resume-os/applications/APP-034/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-034/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-034/resume.docx",
+      "human_review_timestamp": "2026-03-08T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-034.md",
+      "jd_hash": "73ae7f42",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-08",
+      "response_date": "2026-03-14",
+      "response_type": "interview",
+      "interview_count": 4,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-035",
+    "company": "MarketGrid",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-035",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-03-10",
+    "status": "active",
+    "current_stage": "Final Round",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb3a",
+      "resume_file_path": "docs/resume-os/applications/APP-035/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-035/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-035/resume.docx",
+      "human_review_timestamp": "2026-03-10T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-035.md",
+      "jd_hash": "73aef3a1",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-10",
+      "response_date": "2026-03-17",
+      "response_type": "interview",
+      "interview_count": 5,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-036",
+    "company": "CloudDesk",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-036",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-03-12",
+    "status": "active",
+    "current_stage": "Offer",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb39",
+      "resume_file_path": "docs/resume-os/applications/APP-036/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-036/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-036/resume.docx",
+      "human_review_timestamp": "2026-03-12T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-036.md",
+      "jd_hash": "73af6800",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-12",
+      "response_date": "2026-03-20",
+      "response_type": "offer",
+      "interview_count": 1,
+      "offer": true,
+      "salary": 180000,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-PROJECT-001",
+      "variant": "B",
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-037",
+    "company": "Vector Labs",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-037",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-03-14",
+    "status": "closed",
+    "current_stage": "Rejected",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb38",
+      "resume_file_path": "docs/resume-os/applications/APP-037/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-037/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-037/resume.docx",
+      "human_review_timestamp": "2026-03-14T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-037.md",
+      "jd_hash": "73afdc5f",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-14",
+      "response_date": "2026-03-23",
+      "response_type": "reject",
+      "interview_count": 2,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Role fit",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-038",
+    "company": "StackForge",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-038",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-03-16",
+    "status": "withdrawn",
+    "current_stage": "Withdrawn",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb37",
+      "resume_file_path": "docs/resume-os/applications/APP-038/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-038/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-038/resume.docx",
+      "human_review_timestamp": "2026-03-16T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-038.md",
+      "jd_hash": "73b050be",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-16",
+      "response_date": "2026-03-26",
+      "response_type": "interview",
+      "interview_count": 3,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": true
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-039",
+    "company": "TrustWallet",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-039",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-03-18",
+    "status": "accepted",
+    "current_stage": "Accepted",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb36",
+      "resume_file_path": "docs/resume-os/applications/APP-039/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-039/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-039/resume.docx",
+      "human_review_timestamp": "2026-03-18T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-039.md",
+      "jd_hash": "73b0c51d",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-18",
+      "response_date": "2026-03-29",
+      "response_type": "offer",
+      "interview_count": 4,
+      "offer": true,
+      "salary": 210000,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-040",
+    "company": "Lifecycle Co",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-040",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-03-20",
+    "status": "active",
+    "current_stage": "Applied",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb20",
+      "resume_file_path": "docs/resume-os/applications/APP-040/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-040/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-040/resume.docx",
+      "human_review_timestamp": "2026-03-20T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-040.md",
+      "jd_hash": "73bac547",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-20",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-041",
+    "company": "Northstar AI",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-041",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-03-22",
+    "status": "active",
+    "current_stage": "Recruiter Viewed",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb1f",
+      "resume_file_path": "docs/resume-os/applications/APP-041/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-041/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-041/resume.docx",
+      "human_review_timestamp": "2026-03-22T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-041.md",
+      "jd_hash": "73bb39a6",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-22",
+      "response_date": null,
+      "response_type": null,
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-042",
+    "company": "Atlas Platform",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-042",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-03-24",
+    "status": "active",
+    "current_stage": "Recruiter Contact",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb1e",
+      "resume_file_path": "docs/resume-os/applications/APP-042/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-042/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-042/resume.docx",
+      "human_review_timestamp": "2026-03-24T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-042.md",
+      "jd_hash": "73bbae05",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-24",
+      "response_date": "2026-03-30",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-043",
+    "company": "RiverPay",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-043",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-03-26",
+    "status": "closed",
+    "current_stage": "Recruiter Reject",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb1d",
+      "resume_file_path": "docs/resume-os/applications/APP-043/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-043/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-043/resume.docx",
+      "human_review_timestamp": "2026-03-26T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-043.md",
+      "jd_hash": "73bc2264",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-26",
+      "response_date": "2026-04-02",
+      "response_type": "reject",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Role fit",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-044",
+    "company": "GrowthLoop",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-044",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-03-28",
+    "status": "active",
+    "current_stage": "Online Assessment",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb1c",
+      "resume_file_path": "docs/resume-os/applications/APP-044/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-044/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-044/resume.docx",
+      "human_review_timestamp": "2026-03-28T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-044.md",
+      "jd_hash": "73bc96c3",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-28",
+      "response_date": "2026-04-05",
+      "response_type": "interview",
+      "interview_count": 0,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  },
+  {
+    "application_id": "APP-045",
+    "company": "MarketGrid",
+    "role": "Payments Product Manager",
+    "role_archetype": "Payments",
+    "job_url": "https://example.com/jobs/app-045",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-03-30",
+    "status": "active",
+    "current_stage": "Hiring Manager Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb1b",
+      "resume_file_path": "docs/resume-os/applications/APP-045/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-045/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-045/resume.docx",
+      "human_review_timestamp": "2026-03-30T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-045.md",
+      "jd_hash": "73bd0b22",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Payments",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "payments",
+        "trust",
+        "transaction success"
+      ],
+      "competencies": [
+        "risk management",
+        "reliability",
+        "customer trust"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Improve company relevance",
+        "section": "experience",
+        "time_spent_minutes": 11,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-03-30",
+      "response_date": "2026-04-08",
+      "response_type": "interview",
+      "interview_count": 5,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-046",
+    "company": "CloudDesk",
+    "role": "Growth Product Manager",
+    "role_archetype": "Growth",
+    "job_url": "https://example.com/jobs/app-046",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-04-01",
+    "status": "active",
+    "current_stage": "Product Interview",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb1a",
+      "resume_file_path": "docs/resume-os/applications/APP-046/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-046/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-046/resume.docx",
+      "human_review_timestamp": "2026-04-01T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-046.md",
+      "jd_hash": "73bd7f81",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Growth",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "conversion",
+        "retention",
+        "experimentation"
+      ],
+      "competencies": [
+        "experimentation",
+        "funnel analysis",
+        "commercial ownership"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Reduce wording risk",
+        "section": "headline",
+        "time_spent_minutes": 14,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-04-01",
+      "response_date": "2026-04-11",
+      "response_type": "interview",
+      "interview_count": 1,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-PROJECT-001",
+      "variant": "B",
+      "headline_variant": "domain-led",
+      "summary_variant": "metrics-first",
+      "project_included": false,
+      "product_os_module": "Product Leadership Briefs"
+    }
+  },
+  {
+    "application_id": "APP-047",
+    "company": "Vector Labs",
+    "role": "Marketplace Product Manager",
+    "role_archetype": "Marketplace",
+    "job_url": "https://example.com/jobs/app-047",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "Company site",
+    "application_date": "2026-04-03",
+    "status": "active",
+    "current_stage": "System Design",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v3.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb19",
+      "resume_file_path": "docs/resume-os/applications/APP-047/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-047/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-047/resume.docx",
+      "human_review_timestamp": "2026-04-03T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-047.md",
+      "jd_hash": "73bdf3e0",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Marketplace",
+      "secondary_archetypes": [
+        "Growth"
+      ],
+      "keywords": [
+        "marketplace",
+        "pricing",
+        "loyalty"
+      ],
+      "competencies": [
+        "monetization",
+        "customer experience",
+        "business cases"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Improve company relevance",
+        "section": "summary",
+        "time_spent_minutes": 17,
+        "frequency": 3,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-04-03",
+      "response_date": "2026-04-14",
+      "response_type": "interview",
+      "interview_count": 2,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "impact-led",
+      "summary_variant": "archetype-first",
+      "project_included": true,
+      "product_os_module": "AI Prioritization Framework"
+    }
+  },
+  {
+    "application_id": "APP-048",
+    "company": "StackForge",
+    "role": "Enterprise SaaS Product Manager",
+    "role_archetype": "Enterprise SaaS",
+    "job_url": "https://example.com/jobs/app-048",
+    "location": "New York, NY",
+    "employment_type": "Full-time",
+    "application_source": "Recruiter outreach",
+    "application_date": "2026-04-05",
+    "status": "active",
+    "current_stage": "Final Round",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v3.0",
+      "resume_plan_version": "plan-v4.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb18",
+      "resume_file_path": "docs/resume-os/applications/APP-048/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-048/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-048/resume.docx",
+      "human_review_timestamp": "2026-04-05T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-048.md",
+      "jd_hash": "73be683f",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Enterprise SaaS",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "enterprise",
+        "integrations",
+        "adoption"
+      ],
+      "competencies": [
+        "customer discovery",
+        "portfolio strategy",
+        "workflow adoption"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "bullet",
+        "reason": "Reduce wording risk",
+        "section": "experience",
+        "time_spent_minutes": 20,
+        "frequency": 4,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-04-05",
+      "response_date": "2026-04-17",
+      "response_type": "interview",
+      "interview_count": 3,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product Discovery Toolkit"
+    }
+  },
+  {
+    "application_id": "APP-049",
+    "company": "TrustWallet",
+    "role": "AI Product Manager",
+    "role_archetype": "AI PM",
+    "job_url": "https://example.com/jobs/app-049",
+    "location": "Remote",
+    "employment_type": "Full-time",
+    "application_source": "Referral",
+    "application_date": "2026-04-07",
+    "status": "active",
+    "current_stage": "Offer",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v1.0",
+      "resume_plan_version": "plan-v1.0",
+      "narrative_version": "narrative-v1.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb17",
+      "resume_file_path": "docs/resume-os/applications/APP-049/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-049/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-049/resume.docx",
+      "human_review_timestamp": "2026-04-07T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-049.md",
+      "jd_hash": "73bedc9e",
+      "jd_version": "jd-v1",
+      "primary_archetype": "AI PM",
+      "secondary_archetypes": [
+        "Platform"
+      ],
+      "keywords": [
+        "AI workflows",
+        "model evaluation",
+        "responsible AI"
+      ],
+      "competencies": [
+        "AI/ML",
+        "product discovery",
+        "trust and risk"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "headline",
+        "reason": "Improve company relevance",
+        "section": "headline",
+        "time_spent_minutes": 5,
+        "frequency": 1,
+        "future_automation_opportunity": true
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-04-07",
+      "response_date": "2026-04-12",
+      "response_type": "offer",
+      "interview_count": 4,
+      "offer": true,
+      "salary": 210000,
+      "rejection_reason": null,
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": "EXP-HEADLINE-001",
+      "variant": "A",
+      "headline_variant": "impact-led",
+      "summary_variant": "metrics-first",
+      "project_included": true,
+      "product_os_module": "AI Product Playbook"
+    }
+  },
+  {
+    "application_id": "APP-050",
+    "company": "Lifecycle Co",
+    "role": "Platform Product Manager",
+    "role_archetype": "Platform",
+    "job_url": "https://example.com/jobs/app-050",
+    "location": "San Francisco, CA",
+    "employment_type": "Full-time",
+    "application_source": "LinkedIn",
+    "application_date": "2026-04-09",
+    "status": "closed",
+    "current_stage": "Rejected",
+    "notes": "Synthetic fixture for Application Intelligence validation.",
+    "resume_snapshot": {
+      "resume_version": "resume-v2.0",
+      "resume_plan_version": "plan-v2.0",
+      "narrative_version": "narrative-v2.0",
+      "export_version": "export-v1.0",
+      "commit_hash": "048abb01",
+      "resume_file_path": "docs/resume-os/applications/APP-050/resume.json",
+      "pdf_path": "docs/resume-os/applications/APP-050/resume.pdf",
+      "docx_path": "docs/resume-os/applications/APP-050/resume.docx",
+      "human_review_timestamp": "2026-04-09T18:00:00+05:30"
+    },
+    "jd_snapshot": {
+      "jd_path": "docs/resume-os/job-descriptions/APP-050.md",
+      "jd_hash": "73c8dcc8",
+      "jd_version": "jd-v1",
+      "primary_archetype": "Platform",
+      "secondary_archetypes": [
+        "Senior PM"
+      ],
+      "keywords": [
+        "APIs",
+        "reliability",
+        "technical roadmap"
+      ],
+      "competencies": [
+        "architecture",
+        "cross-team leadership",
+        "scalability"
+      ]
+    },
+    "manual_overrides": [
+      {
+        "override_type": "summary",
+        "reason": "Reduce wording risk",
+        "section": "summary",
+        "time_spent_minutes": 8,
+        "frequency": 2,
+        "future_automation_opportunity": false
+      }
+    ],
+    "outcome": {
+      "application_date": "2026-04-09",
+      "response_date": "2026-04-15",
+      "response_type": "reject",
+      "interview_count": 5,
+      "offer": false,
+      "salary": null,
+      "rejection_reason": "Timing",
+      "candidate_withdrawal": false
+    },
+    "experiment": {
+      "experiment_id": null,
+      "variant": null,
+      "headline_variant": "domain-led",
+      "summary_variant": "archetype-first",
+      "project_included": false,
+      "product_os_module": "Product OS"
+    }
+  }
+]

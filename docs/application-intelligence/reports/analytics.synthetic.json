@@ -1,0 +1,105 @@
+{
+  "applications": 50,
+  "response_rate": 84,
+  "interview_rate": 60,
+  "offer_rate": 14,
+  "average_response_time_days": 8.5,
+  "applications_per_archetype": {
+    "AI PM": {
+      "applications": 9,
+      "response_rate": 88.9,
+      "interview_rate": 66.7,
+      "offer_rate": 22.2
+    },
+    "Platform": {
+      "applications": 9,
+      "response_rate": 77.8,
+      "interview_rate": 66.7,
+      "offer_rate": 11.1
+    },
+    "Payments": {
+      "applications": 8,
+      "response_rate": 75,
+      "interview_rate": 62.5,
+      "offer_rate": 12.5
+    },
+    "Growth": {
+      "applications": 8,
+      "response_rate": 75,
+      "interview_rate": 50,
+      "offer_rate": 12.5
+    },
+    "Marketplace": {
+      "applications": 8,
+      "response_rate": 87.5,
+      "interview_rate": 50,
+      "offer_rate": 12.5
+    },
+    "Enterprise SaaS": {
+      "applications": 8,
+      "response_rate": 100,
+      "interview_rate": 62.5,
+      "offer_rate": 12.5
+    }
+  },
+  "applications_per_company": {
+    "Northstar AI": 5,
+    "Atlas Platform": 5,
+    "RiverPay": 5,
+    "GrowthLoop": 5,
+    "MarketGrid": 5,
+    "CloudDesk": 5,
+    "Vector Labs": 5,
+    "StackForge": 5,
+    "TrustWallet": 5,
+    "Lifecycle Co": 5
+  },
+  "applications_per_role": {
+    "AI Product Manager": 9,
+    "Platform Product Manager": 9,
+    "Payments Product Manager": 8,
+    "Growth Product Manager": 8,
+    "Marketplace Product Manager": 8,
+    "Enterprise SaaS Product Manager": 8
+  },
+  "applications_per_role_pack": {
+    "AI PM": 9,
+    "Platform": 9,
+    "Payments": 8,
+    "Growth": 8,
+    "Marketplace": 8,
+    "Enterprise SaaS": 8
+  },
+  "applications_per_resume_version": {
+    "resume-v1.0": 17,
+    "resume-v2.0": 17,
+    "resume-v3.0": 16
+  },
+  "applications_per_product_os_module": {
+    "AI Product Playbook": {
+      "applications": 9,
+      "interview_rate": 66.7,
+      "offer_rate": 22.2
+    },
+    "Product OS": {
+      "applications": 9,
+      "interview_rate": 66.7,
+      "offer_rate": 11.1
+    },
+    "Product Leadership Briefs": {
+      "applications": 16,
+      "interview_rate": 56.3,
+      "offer_rate": 12.5
+    },
+    "AI Prioritization Framework": {
+      "applications": 8,
+      "interview_rate": 50,
+      "offer_rate": 12.5
+    },
+    "Product Discovery Toolkit": {
+      "applications": 8,
+      "interview_rate": 62.5,
+      "offer_rate": 12.5
+    }
+  }
+}

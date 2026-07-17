@@ -1,0 +1,36 @@
+[
+  {
+    "insight": "highest-performing-archetype",
+    "value": "AI PM",
+    "evidence": {
+      "applications": 9,
+      "response_rate": 88.9,
+      "interview_rate": 66.7,
+      "offer_rate": 22.2
+    }
+  },
+  {
+    "insight": "highest-performing-product-os-module",
+    "value": "AI Product Playbook",
+    "evidence": {
+      "applications": 9,
+      "interview_rate": 66.7,
+      "offer_rate": 22.2
+    }
+  },
+  {
+    "insight": "most-overridden-section",
+    "value": "headline",
+    "evidence": {
+      "override_count": 17
+    }
+  },
+  {
+    "insight": "fastest-response-company",
+    "value": "TrustWallet",
+    "evidence": {
+      "application_id": "APP-009",
+      "response_days": 5
+    }
+  }
+]
