@@ -1,0 +1,180 @@
+{
+  "assembly_id": "ebay-spm-monetization-loyalty-live-pilot",
+  "label": "LIVE PILOT PLAN - HUMAN REVIEW REQUIRED",
+  "target_role": "Senior PM, Monetization and Loyalty",
+  "target_company": "eBay",
+  "primary_archetype": "Monetization Product Manager",
+  "secondary_archetypes": [
+    "Consumer Product Manager",
+    "Payments / FinTech Product Manager",
+    "AI Product Manager"
+  ],
+  "positioning_statement": "Position Saurabh as a senior IC product leader with verified monetization, referral/rewards, AI/ML personalization, wallet-adjacent payments trust, and platform execution evidence.",
+  "recommended_headline": "Lead Product Manager - Monetization, Loyalty, Wallet & AI-Personalized Growth",
+  "alternative_headline": "Senior Product Manager - Monetization, Rewards & Marketplace Growth Systems",
+  "summary_architecture": [
+    "Lead with monetization outcomes",
+    "Connect referral/rewards to loyalty systems",
+    "Use AI/ML personalization carefully",
+    "Position Product OS as proof layer, not employer experience"
+  ],
+  "role_bullet_allocation": {
+    "Logix Built Solutions Limited": 4,
+    "JoVE": 3,
+    "Simplilearn": 3,
+    "Mahindra Comviva": 2
+  },
+  "selected_achievement_ids": [
+    "LOG-ARR-001",
+    "LOG-MRR-002",
+    "LOG-SEO-003",
+    "LOG-THR-005",
+    "JOV-REV-001",
+    "JOV-AI-003",
+    "JOV-ENG-002",
+    "SIM-REF-003",
+    "SIM-REV-001",
+    "SIM-CNV-002",
+    "COM-PAY-003",
+    "COM-PAY-002"
+  ],
+  "selected_bullet_ids": [
+    "MON-BLT-001",
+    "AI-BLT-001",
+    "GROW-BLT-004",
+    "PAY-BLT-005",
+    "MON-BLT-003",
+    "AI-BLT-004",
+    "GROW-BLT-006",
+    "MON-BLT-004",
+    "MON-BLT-002",
+    "GROW-BLT-002",
+    "PAY-BLT-001",
+    "PAY-BLT-002"
+  ],
+  "selected_project": {
+    "project_id": "LOYALTYIQ",
+    "decision": "Include compactly after experience",
+    "label": "Portfolio simulation"
+  },
+  "selected_product_os_evidence": [
+    "PLB-SIMPLILEARN",
+    "PLB-LOGIX",
+    "AI-PLAYBOOK"
+  ],
+  "skills": [
+    "Monetization strategy",
+    "Loyalty and rewards",
+    "Pricing and packaging",
+    "Referral programs",
+    "Digital wallet strategy",
+    "AI/ML personalization",
+    "Marketplace product thinking",
+    "Retention",
+    "Product analytics",
+    "Risk and trust",
+    "Roadmapping"
+  ],
+  "tools": [
+    "SQL",
+    "Python",
+    "Analytics",
+    "Product analytics",
+    "Figma",
+    "Jira",
+    "Confluence"
+  ],
+  "awards": [
+    "Selected awards available in canonical data"
+  ],
+  "certifications": [
+    "AI for Product Management",
+    "Data-Driven Product Management",
+    "Managing Machine Learning Projects"
+  ],
+  "education": [
+    "MBA, Indian Institute of Management Indore",
+    "B.Tech Computer Engineering, National Institute of Technology Surat"
+  ],
+  "included_sections": [
+    "Header",
+    "Headline",
+    "Summary",
+    "Experience",
+    "Portfolio Simulation",
+    "Product OS Proof",
+    "Skills",
+    "Credentials",
+    "Education"
+  ],
+  "excluded_sections": [
+    "Dense tools list",
+    "Unverified work authorization",
+    "Final PDF/DOCX export"
+  ],
+  "page_budget": {
+    "estimated_words": 980,
+    "estimated_pages": 1.8
+  },
+  "keyword_coverage": [
+    "monetization",
+    "loyalty",
+    "rewards",
+    "wallet",
+    "marketplace",
+    "AI-first",
+    "machine learning",
+    "personalize rewards",
+    "repeat purchase rate",
+    "wallet adoption",
+    "GMV",
+    "risk",
+    "matrix organization",
+    "executive storytelling",
+    "large-scale platforms",
+    "e-commerce"
+  ],
+  "competency_coverage": [
+    "Monetization",
+    "Loyalty and rewards",
+    "Digital wallet strategy",
+    "Marketplace product thinking",
+    "AI/ML personalization",
+    "Retention",
+    "Revenue",
+    "Risk mitigation",
+    "Product metrics",
+    "Executive communication",
+    "Roadmapping",
+    "Cross-functional leadership",
+    "Data fluency",
+    "Platform scalability"
+  ],
+  "known_gaps": [
+    {
+      "severity": "P1",
+      "gap": "Direct eBay-scale marketplace loyalty production ownership is not fully proven",
+      "mitigation": "Use verified referral/rewards, monetization, wallet-adjacent payments, and LoyaltyIQ simulation with clear labeling."
+    },
+    {
+      "severity": "P1",
+      "gap": "Direct digital wallet product ownership is adjacent rather than exact",
+      "mitigation": "Use Mahindra Comviva payments reliability and platform trust evidence; avoid claiming wallet ownership as production experience."
+    },
+    {
+      "severity": "P2",
+      "gap": "10+ years TPM requirement is close but may need recruiter interpretation",
+      "mitigation": "Use 9+ years plus technical product depth; do not inflate years."
+    }
+  ],
+  "warnings": [
+    "Do not imply direct eBay, marketplace, or wallet production ownership.",
+    "LoyaltyIQ must be labeled as portfolio simulation.",
+    "Do not inflate 9+ years to the JD's 10+ year requirement."
+  ],
+  "human_review_decisions": [
+    "Confirm whether to foreground LoyaltyIQ or keep it compact.",
+    "Confirm final contact details before DOCX/PDF export.",
+    "Review 10+ years requirement wording without inflating experience."
+  ]
+}

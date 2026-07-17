@@ -2,9 +2,9 @@
   "pilot_id": "resume-os-live-pilot-ebay-001",
   "pilot_name": "eBay Senior Product Manager Monetization and Loyalty Pilot",
   "company": "eBay",
-  "target_role": "Unknown - JD missing; benchmark suggests Senior Product Manager, monetization and loyalty",
-  "target_level": "Unverified",
-  "source_jd_path": null,
+  "target_role": "Senior PM, Monetization and Loyalty",
+  "target_level": "Senior Product Manager",
+  "source_jd_path": "docs/resume-os/live-jds/ebay-spm-monetization.md.md",
   "benchmark_resume_path": "docs/resume-os/reference-resumes/ebay-spm-monetization-loyalty-reference.docx.txt",
   "associated_project_paths": [
     "docs/resume-os/data/projects.yaml",
@@ -16,14 +16,14 @@
   "assembly_engine_version": "SPR-017.4 deterministic Resume Assembly Engine",
   "pilot_start_timestamp": "2026-07-17T00:00:00+05:30",
   "input_confidentiality": {
-    "jd": "missing",
+    "jd": "public_job_posting_material",
     "benchmark_resume": "private_local_ignored",
-    "generated_outputs": "sanitized_only",
-    "contact_details": "not_committed"
+    "generated_outputs": "sanitized_committed",
+    "contact_details": "redacted_in_committed_outputs"
   },
   "benchmark_available": true,
   "human_review_required": true,
-  "active_application": "unknown",
+  "active_application": "not_submitted_by_resume_os",
   "output_commit_policy": "Commit sanitized pilot methodology, blocker reports, benchmark structure, and scaffold only. Do not commit private source resume, private contact details, or final application materials.",
   "prohibited_outputs": [
     "final_resume_docx",
@@ -42,7 +42,6 @@
     "Manual overrides logged",
     "GO, REVISE, or NOT READY decision documented"
   ],
-  "current_status": "blocked_missing_real_jd",
-  "readiness_decision": "NOT READY - RETURN TO INPUT DISCOVERY"
+  "current_status": "live_pipeline_completed",
+  "readiness_decision": "GO - READY FOR DOCX/PDF EXPORT AFTER HUMAN REVIEW"
 }
-

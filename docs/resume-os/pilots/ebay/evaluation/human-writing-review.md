@@ -1,36 +1,16 @@
 # Human-Written Quality Review
 
-Status: PARTIAL - benchmark only
+Generated human-written quality score: 86
+Benchmark human-written quality score: 86
+Recommended revised draft score: 91
 
-## Benchmark Writing Strengths
+## Findings
 
-- The headline is specific and readable.
-- The summary has a human strategic argument rather than generic resume language.
-- The first-page bullets are evidence-dense and role-relevant.
-- The IC repositioning sentence is distinctive.
+The generated draft is accurate and traceable but somewhat system-like. The benchmark has stronger narrative voice, especially the focused IC repositioning. Final export should merge benchmark tone into the generated structure without changing claims.
 
-## Benchmark Writing Risks
+## Recommended Edits
 
-- Page two is dense.
-- Project bullets have repeated technical stacking.
-- Some phrasing risks sounding overengineered for a recruiter scan.
-- Simulation language needs more explicit front-loaded labeling.
-
-## Generated Draft Review
-
-Not available because no live draft was generated.
-
-## Recommended Changes For Future Draft
-
-- Keep the IC repositioning idea if JD-relevant.
-- Reduce project section density.
-- Replace emoji/glyph links with ATS-safe text labels.
-- Put simulation label before project details.
-- Avoid repeated verbs such as owned, led, drove, and designed where sentence variety can improve readability.
-
-## Scores
-
-- Generated human-written quality score: N/A
-- Benchmark human-written quality score: 86
-- Recommended revised draft score: N/A
-
+- Make the summary less formulaic.
+- Keep bullet verbs varied.
+- Compress LoyaltyIQ to three bullets.
+- Avoid overusing monetization/wallet keywords beyond what evidence supports.

@@ -1,105 +1,43 @@
 # eBay Application Strategy
 
-Status: BLOCKED PENDING REAL JD
-
 ## Role Thesis
 
-Not finalized. The benchmark resume suggests a monetization, loyalty, marketplace, and platform-oriented SPM role, but the real JD is required before a role thesis can be treated as evidence-based.
+eBay is hiring a senior IC Product Manager for monetization and loyalty across wallet, rewards, marketplace retention, AI-first personalization, and GMV-scale risk-aware product execution.
 
 ## Candidate Positioning
 
-Preliminary safe positioning: product leader with verified monetization, growth, platform, referral, and AI/ML-adjacent product evidence. This positioning must be recalibrated against the actual eBay JD.
+Position Saurabh as a senior product leader with verified monetization, referral/rewards, AI/ML personalization, wallet-adjacent payments reliability, and platform execution evidence. Product OS is the proof layer; Resume OS routes the most relevant evidence.
 
 ## Primary Archetype
 
-Not assigned. Likely candidates, pending JD confirmation:
-
-- Monetization Product Manager
-- Growth Product Manager
-- Consumer Product Manager
+Monetization Product Manager.
 
 ## Secondary Archetypes
 
-Not assigned. Possible secondary archetypes, pending JD confirmation:
-
-- Platform Product Manager
-- AI Product Manager
-- Senior Product Manager
+Consumer Product Manager, Payments / FinTech Product Manager, AI Product Manager.
 
 ## Core Hiring Narrative
 
-Do not finalize until the JD is located. A safe draft narrative would connect verified monetization outcomes, referral mechanics, pricing and packaging, and simulation-labeled LoyaltyIQ proof-of-work without claiming direct eBay experience.
+Saurabh has not owned eBay-scale marketplace loyalty in production, but he has strong adjacent evidence: referral/rewards mechanics, monetization growth, AI/ML personalization, wallet-adjacent payment trust, and platform scalability. LoyaltyIQ should be used as a compact simulation proof, not as employer experience.
 
 ## Top Five Proof Points
 
-Preliminary proof candidates only:
-
-1. `SIM-REV-001` - Job Guarantee revenue scale-up.
-2. `SIM-CNV-002` - Conversion optimization.
-3. `SIM-REF-003` - Referral contribution growth.
-4. `LOG-ARR-001` - Zero-to-one monetization platform ARR.
-5. `JOV-REV-001` - Biopharma portfolio monetization.
-
-## Major Transferable Strengths
-
-- Monetization strategy.
-- Referral and rewards mechanics.
-- Pricing and packaging.
-- Platform growth.
-- Data-informed experimentation.
-
-## Direct-Fit Strengths
-
-Cannot be determined without the JD.
-
-## Honest Adjacent-Fit Strengths
-
-- Marketplace logic through LoyaltyIQ is portfolio/simulation-supported, not production eBay experience.
-- AI personalization evidence exists, but production GenAI or eBay-specific AI ownership should not be claimed without JD and evidence alignment.
+1. LOG-ARR-001 - Rs. 1M+ ARR through pricing, packaging, and upsell.
+2. LOG-MRR-002 - AI/ML personalization tied to +25% engagement and +20% MRR growth.
+3. SIM-REF-003 - Referral incentive mechanics doubled contribution from 1.5% to 3%.
+4. SIM-REV-001 - 10x revenue scale-up.
+5. COM-PAY-003 - Payments reliability and trust at 10M+ monthly transaction scale.
 
 ## Material Gaps
 
-- Real JD missing.
-- Direct marketplace monetization depth may be a gap.
-- Direct loyalty platform production ownership may be a gap.
-- eBay-specific domain expectations are unknown.
+- Direct eBay-scale marketplace loyalty production ownership is adjacent, not direct.
+- Digital wallet experience is wallet-adjacent through payments and platform reliability, not direct consumer wallet ownership.
+- The JD asks for 10+ years; canonical positioning should remain 9+ years unless the user confirms a defensible count.
 
 ## Project Strategy
 
-LoyaltyIQ may be relevant only if the JD emphasizes loyalty, marketplace rewards, wallet mechanics, personalization, or trust/risk trade-offs. It must be labeled as a simulation or portfolio project.
+Include LoyaltyIQ compactly as a portfolio simulation because the JD directly emphasizes wallet, rewards, loyalty, marketplace incentives, AI personalization, and risk.
 
 ## Product OS Strategy
 
-Use Product OS as proof layer only. It should not displace verified employer experience.
-
-## Headline Strategy
-
-Do not finalize. Likely direction: monetization, growth, and platform strategy.
-
-## Summary Strategy
-
-Concise, evidence-led, and role-specific after JD ingestion. Avoid copying benchmark language unless it maps to canonical evidence.
-
-## Experience Allocation
-
-Likely emphasis if JD confirms monetization and loyalty:
-
-- Logix: monetization platform, AI personalization, platform execution.
-- Simplilearn: referral, conversion, revenue scale-up.
-- JoVE: portfolio monetization and personalization.
-- Comviva: platform and payments reliability only if relevant.
-
-## Skills Strategy
-
-Prioritize monetization, pricing, packaging, loyalty, referrals, experimentation, retention, analytics, SQL, Python, APIs, and platform strategy only when JD-supported.
-
-## Risks
-
-- Overclaiming marketplace or loyalty production experience.
-- Treating LoyaltyIQ simulation as production.
-- Overfitting the resume to benchmark content rather than JD evidence.
-
-## Interview Defensibility
-
-Every claim must map to canonical evidence or be explicitly marked as simulation/portfolio-supported.
-
+Use Product OS links selectively: Simplilearn for referral/monetization proof, Logix for AI/platform proof, and AI Product Playbook for AI-first product judgment.

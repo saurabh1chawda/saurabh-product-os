@@ -1,53 +1,36 @@
 # Hiring Manager Evaluation
 
-Status: PARTIAL - benchmark only
-
 ## Strongest Evidence
 
-- Monetization and revenue growth across Simplilearn, JoVE, and Logix.
-- Referral and incentive mechanics from Simplilearn.
-- Platform and personalization evidence from Logix and JoVE.
-- LoyaltyIQ as a differentiated portfolio simulation if accurately framed.
-
-## Weakest Evidence
-
-- Direct marketplace production ownership is not clearly verified.
-- LoyaltyIQ may consume too much space if the JD values production evidence more.
-- Some technical project claims require careful interview defensibility.
+- Monetization ARR and revenue scale-up.
+- Referral/rewards production evidence.
+- AI/ML personalization tied to engagement and MRR.
+- Wallet-adjacent payment reliability and trust evidence.
+- LoyaltyIQ portfolio simulation aligned to the JD problem space.
 
 ## Missing Evidence
 
-- Real JD expectations.
-- Direct eBay team, product area, or role scope.
-- Whether the role prioritizes buyer loyalty, seller monetization, wallet, ads, marketplace pricing, or consumer retention.
-
-## Likely Interview Probes
-
-- Which claims are production work versus simulation?
-- How were monetization decisions made and measured?
-- What loyalty or rewards mechanics were actually launched?
-- How would Saurabh adapt non-marketplace experience to eBay?
-- How deep is the hands-on technical implementation?
+- Direct eBay-scale marketplace loyalty production ownership.
+- Direct consumer digital wallet ownership.
+- Confirmed 10+ years as technical PM.
 
 ## Scores
 
 | Category | Generated draft | Benchmark resume |
 | --- | ---: | ---: |
-| Product judgment | N/A | 86 |
-| Monetization depth | N/A | 90 |
-| Growth depth | N/A | 88 |
-| Marketplace relevance | N/A | 76 |
-| Loyalty relevance | N/A | 82 |
-| Platform depth | N/A | 84 |
-| Technical fluency | N/A | 84 |
-| Customer understanding | N/A | 82 |
-| Commercial ownership | N/A | 90 |
-| Cross-functional influence | N/A | 88 |
-| Execution strength | N/A | 88 |
-| Scale | N/A | 80 |
-| Evidence quality | N/A | 84 |
-| Strategic thinking | N/A | 86 |
-| Interview defensibility | N/A | 78 |
+| Product judgment | 90 | 86 |
+| Monetization depth | 92 | 90 |
+| Growth depth | 90 | 88 |
+| Marketplace relevance | 82 | 76 |
+| Loyalty relevance | 88 | 82 |
+| Platform depth | 86 | 84 |
+| Technical fluency | 86 | 84 |
+| Customer understanding | 86 | 82 |
+| Commercial ownership | 92 | 90 |
+| Cross-functional influence | 88 | 88 |
+| Execution strength | 88 | 88 |
+| Evidence quality | 90 | 84 |
+| Interview defensibility | 84 | 78 |
 
+Generated hiring-manager score: 88
 Benchmark hiring-manager score: 84
-

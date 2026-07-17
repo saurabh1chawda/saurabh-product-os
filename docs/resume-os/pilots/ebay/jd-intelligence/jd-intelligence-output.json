@@ -1,26 +1,468 @@
 {
-  "status": "not_generated",
-  "reason": "real_ebay_job_description_not_found",
   "jd_metadata": {
+    "jd_id": "ebay-spm-monetization-loyalty-2026-07",
+    "source": "local_live_jd",
+    "source_url": null,
+    "captured_at": "2026-07-17T00:00:00+05:30",
+    "source_jd_path": "docs/resume-os/live-jds/ebay-spm-monetization.md.md",
     "company_name": "eBay",
-    "source_jd_path": null,
-    "captured_at": null
+    "role_title": "Senior PM, Monetization and Loyalty",
+    "location": "Bengaluru, India",
+    "work_model": "Hybrid",
+    "requisition_id": "R0074382"
   },
-  "primary_archetype": null,
-  "secondary_archetypes": [],
-  "ranked_achievements": [],
-  "ranked_bullets": [],
-  "recommended_assets": [],
-  "gaps": [
+  "normalized_role": {
+    "company": "eBay",
+    "normalized_role_title": "Senior Product Manager, Monetization and Loyalty",
+    "stated_level": "Senior PM",
+    "inferred_level": "Senior Product Manager",
+    "product_domain": [
+      "monetization",
+      "loyalty",
+      "digital wallet",
+      "marketplace",
+      "AI personalization"
+    ],
+    "customer_type": [
+      "buyers",
+      "sellers"
+    ],
+    "product_type": [
+      "marketplace",
+      "wallet",
+      "loyalty platform",
+      "rewards platform"
+    ]
+  },
+  "primary_archetype": {
+    "name": "Monetization Product Manager",
+    "score": 98,
+    "confidence": "high"
+  },
+  "secondary_archetypes": [
     {
-      "severity": "P0",
-      "gap": "Real JD missing",
-      "explanation": "Live JD Intelligence cannot run without the source job description."
+      "name": "Consumer Product Manager",
+      "score": 89
+    },
+    {
+      "name": "Payments / FinTech Product Manager",
+      "score": 84
+    },
+    {
+      "name": "AI Product Manager",
+      "score": 82
     }
   ],
+  "archetype_scores": {
+    "Monetization Product Manager": 98,
+    "Consumer Product Manager": 89,
+    "Payments / FinTech Product Manager": 84,
+    "AI Product Manager": 82,
+    "Growth Product Manager": 80,
+    "Platform Product Manager": 78,
+    "Senior Product Manager": 86
+  },
+  "competencies": [
+    "Monetization",
+    "Loyalty and rewards",
+    "Digital wallet strategy",
+    "Marketplace product thinking",
+    "AI/ML personalization",
+    "Retention",
+    "Revenue",
+    "Risk mitigation",
+    "Product metrics",
+    "Executive communication",
+    "Roadmapping",
+    "Cross-functional leadership",
+    "Data fluency",
+    "Platform scalability"
+  ],
+  "keywords": [
+    {
+      "keyword": "monetization",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "loyalty",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "rewards",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "wallet",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "marketplace",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "AI-first",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "machine learning",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "personalize rewards",
+      "class": "must_cover",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "repeat purchase rate",
+      "class": "strongly_recommended",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "wallet adoption",
+      "class": "strongly_recommended",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "GMV",
+      "class": "strongly_recommended",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "risk",
+      "class": "strongly_recommended",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "matrix organization",
+      "class": "strongly_recommended",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "executive storytelling",
+      "class": "supporting",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "large-scale platforms",
+      "class": "supporting",
+      "evidence_status": "requires_resume_os_mapping"
+    },
+    {
+      "keyword": "e-commerce",
+      "class": "supporting",
+      "evidence_status": "requires_resume_os_mapping"
+    }
+  ],
+  "hidden_signals": [
+    {
+      "signal": "Senior IC execution in matrix organization",
+      "supporting_phrase": "individual contributor role ... multiple complex product initiatives in a matrix organization",
+      "confidence": 90,
+      "implication": "Do not overemphasize people-management scope; emphasize influence without authority."
+    },
+    {
+      "signal": "AI-first transition without unsupported GenAI claim",
+      "supporting_phrase": "Lead the transition of the platform into an AI-first engine, employing machine learning",
+      "confidence": 86,
+      "implication": "Use AI/ML personalization evidence; avoid claiming production GenAI ownership."
+    },
+    {
+      "signal": "Marketplace scale and GMV risk",
+      "supporting_phrase": "billions in GMV ... monetization and wallet systems",
+      "confidence": 88,
+      "implication": "Use payments reliability and platform throughput evidence as adjacent trust proof."
+    },
+    {
+      "signal": "Loyalty and wallet domain depth",
+      "supporting_phrase": "digital wallet, loyalty programs, and rewards platforms",
+      "confidence": 92,
+      "implication": "Use referral/rewards production evidence plus LoyaltyIQ simulation only as portfolio proof."
+    }
+  ],
+  "ranked_achievements": [
+    {
+      "achievement_id": "LOG-ARR-001",
+      "score": 96,
+      "drivers": [
+        "Strong match to eBay monetization, AI-first, platform, or wallet signals",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "LOG-MRR-002",
+      "score": 95,
+      "drivers": [
+        "Strong match to eBay monetization, AI-first, platform, or wallet signals",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "LOG-SEO-003",
+      "score": 89,
+      "drivers": [
+        "Strong match to eBay monetization, AI-first, platform, or wallet signals",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "LOG-THR-005",
+      "score": 84,
+      "drivers": [
+        "Strong match to eBay monetization, AI-first, platform, or wallet signals",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "verified-public"
+    },
+    {
+      "achievement_id": "JOV-REV-001",
+      "score": 88,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "JOV-AI-003",
+      "score": 86,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "JOV-ENG-002",
+      "score": 82,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "SIM-REF-003",
+      "score": 92,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "SIM-REV-001",
+      "score": 90,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "SIM-CNV-002",
+      "score": 87,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "COM-PAY-003",
+      "score": 82,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [
+        "Payments evidence is adjacent to eBay wallet, not direct marketplace wallet ownership"
+      ],
+      "confidence_status": "evidence-partial"
+    },
+    {
+      "achievement_id": "COM-PAY-002",
+      "score": 80,
+      "drivers": [
+        "Relevant transferable evidence",
+        "Canonical Resume OS evidence",
+        "Interview-defensible metric"
+      ],
+      "penalties": [
+        "Payments evidence is adjacent to eBay wallet, not direct marketplace wallet ownership"
+      ],
+      "confidence_status": "evidence-partial"
+    }
+  ],
+  "ranked_bullets": [
+    {
+      "bullet_id": "MON-BLT-001",
+      "achievement_id": "LOG-ARR-001",
+      "source_file": "monetization-pm.md",
+      "score": 96,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "AI-BLT-001",
+      "achievement_id": "LOG-MRR-002",
+      "source_file": "ai-pm.md",
+      "score": 95,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "GROW-BLT-004",
+      "achievement_id": "LOG-SEO-003",
+      "source_file": "growth-pm.md",
+      "score": 89,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "PAY-BLT-005",
+      "achievement_id": "LOG-THR-005",
+      "source_file": "payments-pm.md",
+      "score": 84,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "MON-BLT-003",
+      "achievement_id": "JOV-REV-001",
+      "source_file": "monetization-pm.md",
+      "score": 88,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "AI-BLT-004",
+      "achievement_id": "JOV-AI-003",
+      "source_file": "ai-pm.md",
+      "score": 86,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "GROW-BLT-006",
+      "achievement_id": "JOV-ENG-002",
+      "source_file": "growth-pm.md",
+      "score": 82,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "MON-BLT-004",
+      "achievement_id": "SIM-REF-003",
+      "source_file": "monetization-pm.md",
+      "score": 92,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "MON-BLT-002",
+      "achievement_id": "SIM-REV-001",
+      "source_file": "monetization-pm.md",
+      "score": 90,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "GROW-BLT-002",
+      "achievement_id": "SIM-CNV-002",
+      "source_file": "growth-pm.md",
+      "score": 87,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "PAY-BLT-001",
+      "achievement_id": "COM-PAY-003",
+      "source_file": "payments-pm.md",
+      "score": 82,
+      "duplicate_risk": false
+    },
+    {
+      "bullet_id": "PAY-BLT-002",
+      "achievement_id": "COM-PAY-002",
+      "source_file": "payments-pm.md",
+      "score": 80,
+      "duplicate_risk": false
+    }
+  ],
+  "recommended_assets": [
+    {
+      "project_id": "LOYALTYIQ",
+      "name": "LoyaltyIQ",
+      "reason": "Directly mirrors loyalty, rewards, wallet, marketplace, and AI personalization problem space; must be simulation-labeled.",
+      "portfolio_url": "reference_resume_link_only"
+    },
+    {
+      "project_id": "PLB-SIMPLILEARN",
+      "name": "Simplilearn Product Leadership Brief",
+      "reason": "Strongest verified referral, rewards, growth, and monetization proof.",
+      "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+    },
+    {
+      "project_id": "PLB-LOGIX",
+      "name": "Logix Product Leadership Brief",
+      "reason": "Verified platform monetization, AI personalization, and operating model evidence.",
+      "portfolio_url": "https://saurabh-product-os.vercel.app/case-studies/logix"
+    },
+    {
+      "project_id": "AI-PLAYBOOK",
+      "name": "AI Product Playbook",
+      "reason": "Supports AI-first product lifecycle and trust-before-automation narrative.",
+      "portfolio_url": "https://saurabh-product-os.vercel.app/ai-product-playbook"
+    }
+  ],
+  "gaps": [
+    {
+      "severity": "P1",
+      "gap": "Direct eBay-scale marketplace loyalty production ownership is not fully proven",
+      "mitigation": "Use verified referral/rewards, monetization, wallet-adjacent payments, and LoyaltyIQ simulation with clear labeling."
+    },
+    {
+      "severity": "P1",
+      "gap": "Direct digital wallet product ownership is adjacent rather than exact",
+      "mitigation": "Use Mahindra Comviva payments reliability and platform trust evidence; avoid claiming wallet ownership as production experience."
+    },
+    {
+      "severity": "P2",
+      "gap": "10+ years TPM requirement is close but may need recruiter interpretation",
+      "mitigation": "Use 9+ years plus technical product depth; do not inflate years."
+    }
+  ],
+  "risks": [
+    "Do not imply direct eBay, marketplace, or wallet production ownership.",
+    "LoyaltyIQ must be labeled as portfolio simulation.",
+    "Do not inflate 9+ years to the JD's 10+ year requirement."
+  ],
+  "confidence": "high",
   "human_review_items": [
-    "Add the real eBay JD as a local ignored source file or sanitized tracked text.",
-    "Rerun the live pilot after source JD discovery succeeds."
-  ]
+    "Confirm whether to foreground LoyaltyIQ or keep it compact.",
+    "Confirm final contact details before DOCX/PDF export.",
+    "Review 10+ years requirement wording without inflating experience."
+  ],
+  "final_recommendation": "Apply With Mitigation"
 }
-

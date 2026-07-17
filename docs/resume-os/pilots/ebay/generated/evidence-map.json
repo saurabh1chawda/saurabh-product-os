@@ -1,0 +1,89 @@
+{
+  "source_jd_path": "docs/resume-os/live-jds/ebay-spm-monetization.md.md",
+  "selected_bullets": [
+    {
+      "bullet_id": "MON-BLT-001",
+      "achievement_id": "LOG-ARR-001",
+      "company": "Logix Built Solutions Limited",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "AI-BLT-001",
+      "achievement_id": "LOG-MRR-002",
+      "company": "Logix Built Solutions Limited",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "GROW-BLT-004",
+      "achievement_id": "LOG-SEO-003",
+      "company": "Logix Built Solutions Limited",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "PAY-BLT-005",
+      "achievement_id": "LOG-THR-005",
+      "company": "Logix Built Solutions Limited",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "MON-BLT-003",
+      "achievement_id": "JOV-REV-001",
+      "company": "JoVE",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "AI-BLT-004",
+      "achievement_id": "JOV-AI-003",
+      "company": "JoVE",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "GROW-BLT-006",
+      "achievement_id": "JOV-ENG-002",
+      "company": "JoVE",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "MON-BLT-004",
+      "achievement_id": "SIM-REF-003",
+      "company": "Simplilearn",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "MON-BLT-002",
+      "achievement_id": "SIM-REV-001",
+      "company": "Simplilearn",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "GROW-BLT-002",
+      "achievement_id": "SIM-CNV-002",
+      "company": "Simplilearn",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "PAY-BLT-001",
+      "achievement_id": "COM-PAY-003",
+      "company": "Mahindra Comviva",
+      "evidence_source": "canonical_resume_os"
+    },
+    {
+      "bullet_id": "PAY-BLT-002",
+      "achievement_id": "COM-PAY-002",
+      "company": "Mahindra Comviva",
+      "evidence_source": "canonical_resume_os"
+    }
+  ],
+  "selected_projects": [
+    {
+      "project_id": "LOYALTYIQ",
+      "evidence_type": "portfolio_simulation",
+      "disclaimer_required": true
+    }
+  ],
+  "product_os_links": [
+    "https://saurabh-product-os.vercel.app/case-studies/simplilearn",
+    "https://saurabh-product-os.vercel.app/case-studies/logix",
+    "https://saurabh-product-os.vercel.app/ai-product-playbook"
+  ]
+}

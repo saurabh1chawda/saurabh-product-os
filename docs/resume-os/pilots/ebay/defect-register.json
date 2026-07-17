@@ -1,21 +1,19 @@
 {
-  "status": "open",
+  "status": "open_minor",
   "defects": [
     {
-      "defect_id": "EBAY-P0-001",
-      "title": "Real eBay JD missing",
-      "description": "The live pilot cannot run JD Intelligence or Assembly without the source job description.",
-      "severity": "P0",
-      "affected_component": "Pilot input discovery",
-      "fixture_tests_affected": [],
-      "live_pilot_effect": "Blocks live generation, comparison, scoring, and export readiness.",
-      "root_cause": "Input artifact not present in tracked or ignored repository files.",
-      "recommended_fix": "Add the real eBay JD as a local ignored file or sanitized tracked text, then rerun the pilot.",
-      "immediate_workaround": "Use scaffold only; do not fabricate JD analysis.",
-      "regression_test_required": "Add live-pilot preflight check for source_jd_path.",
-      "resolved": false,
-      "resolution_commit": null
+      "defect_id": "EBAY-P1-001",
+      "title": "Summary needs human polish",
+      "severity": "P1",
+      "affected_component": "Assembly wording",
+      "resolved": false
+    },
+    {
+      "defect_id": "EBAY-P1-002",
+      "title": "LoyaltyIQ must be compressed and simulation-labeled in export",
+      "severity": "P1",
+      "affected_component": "Project strategy",
+      "resolved": false
     }
   ]
 }
-

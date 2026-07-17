@@ -1,26 +1,23 @@
 # Headline and Summary Comparison
 
-Status: PARTIAL
+## Generated Headline
 
-## Generated Version
+Lead Product Manager - Monetization, Loyalty, Wallet & AI-Personalized Growth
 
-Not generated because the real JD is missing.
+## Benchmark Headline
 
-## Benchmark Version
+Lead Product Manager | Monetization, Growth & Platform Strategy
 
-The benchmark headline emphasizes monetization, growth, and platform strategy. The summary makes a strong case for senior product impact while positioning the candidate for a focused IC role.
+## Recommended Pilot Headline
 
-## Recommended Pilot Version
+Lead Product Manager - Monetization, Loyalty, Wallet & AI-Personalized Growth
 
-Not available until the real JD is ingested.
+## Summary Assessment
 
-## Preliminary Recommendation
-
-Use the benchmark headline as a candidate baseline only if the JD confirms monetization, growth, loyalty, marketplace, or platform expectations. If the JD is more consumer, payments, or AI-oriented, the headline should be recalibrated.
+The generated summary is more accurate and JD-specific. The benchmark summary is more natural and distinctive, especially the focused IC positioning. Final export should preserve the generated evidence structure while borrowing the benchmark's human tone.
 
 ## Claims Requiring Review
 
-- Hands-on IC repositioning should remain if it directly addresses the role.
-- Loyalty and rewards claims should be tied to verified referral evidence or explicitly labeled project simulation.
-- AI/ML language should not imply production GenAI ownership unless supported.
-
+- 10+ years requirement: do not inflate.
+- Digital wallet: frame as adjacent payments/platform and portfolio simulation.
+- AI-first: use AI/ML personalization, not unsupported production GenAI.

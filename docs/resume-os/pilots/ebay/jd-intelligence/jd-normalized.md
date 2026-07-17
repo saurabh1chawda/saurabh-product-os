@@ -1,13 +1,39 @@
 # eBay JD Normalized
 
-Status: NOT GENERATED
+Source: `docs/resume-os/live-jds/ebay-spm-monetization.md.md`
 
-The real eBay job description was not found in tracked or ignored repository files. Per the live pilot rules, the JD normalization step is stopped rather than reconstructed from benchmark resume language or synthetic fixtures.
+## Role Metadata
 
-Required input before this file can be replaced:
+- Company: eBay
+- Role: Senior PM, Monetization and Loyalty
+- Location: Bengaluru, India
+- Work model: Hybrid
+- Requisition: R0074382
+- Function: Product Management
 
-- Real eBay JD text or sanitized local extract.
-- Source path or source URL.
-- Capture date.
-- Confirmation that the JD can be used for local Resume OS analysis.
+## Normalized Role
 
+Senior Product Manager focused on monetization, loyalty, rewards, digital wallet, marketplace retention, AI/ML personalization, GMV risk, and matrix execution.
+
+## Key JD Signals
+
+- monetization
+- loyalty
+- rewards
+- wallet
+- marketplace
+- AI-first
+- machine learning
+- personalize rewards
+- repeat purchase rate
+- wallet adoption
+- GMV
+- risk
+- matrix organization
+- executive storytelling
+- large-scale platforms
+- e-commerce
+
+## Source JD Excerpt Summary
+
+The JD asks for a senior IC product manager to lead monetization and loyalty initiatives across eBay's wallet, rewards, and loyalty platforms, using AI/ML to personalize incentives and protect GMV-scale systems through risk-aware execution.

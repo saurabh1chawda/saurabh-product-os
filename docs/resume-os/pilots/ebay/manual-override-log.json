@@ -1,25 +1,37 @@
 {
-  "status": "no_generated_draft",
+  "status": "live_pipeline_completed",
   "overrides": [
     {
       "override_id": "EBAY-OVR-001",
-      "section": "Input discovery",
-      "generated_value": "No JD input found",
-      "proposed_value": "Add real eBay JD before generation",
-      "reason": "Live pilot cannot run without source JD.",
+      "section": "Summary",
+      "category": "Natural-language improvement",
+      "severity": "P2",
+      "reason": "Generated summary is safe but less human than benchmark.",
+      "approved": false
+    },
+    {
+      "override_id": "EBAY-OVR-002",
+      "section": "Project",
+      "category": "Project strategy",
+      "severity": "P1",
+      "reason": "LoyaltyIQ must be compact and simulation-labeled before export.",
+      "approved": false
+    },
+    {
+      "override_id": "EBAY-OVR-003",
+      "section": "Headline",
+      "category": "Domain calibration",
+      "severity": "P2",
+      "reason": "Use wallet/loyalty wording because the JD explicitly requires it.",
+      "approved": false
+    },
+    {
+      "override_id": "EBAY-OVR-004",
+      "section": "Experience",
       "category": "Factual correction",
-      "severity": "P0",
-      "source": "input discovery",
-      "evidence_impact": "Prevents fabricated JD analysis.",
-      "ats_impact": "Prevents irrelevant keyword optimization.",
-      "recruiter_impact": "Prevents mispositioning.",
-      "hiring_manager_impact": "Prevents unsupported fit narrative.",
-      "approved": false,
-      "approver": null,
-      "timestamp": null,
-      "engine_rule_implicated": "Live JD required before JD Intelligence and Assembly.",
-      "future_automation_opportunity": "Add a live-pilot preflight command that fails fast when JD input is missing."
+      "severity": "P1",
+      "reason": "Do not inflate 9+ years to 10+ years without user confirmation.",
+      "approved": false
     }
   ]
 }
-

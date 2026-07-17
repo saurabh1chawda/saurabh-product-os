@@ -1,0 +1,15 @@
+{
+  "status": "pass_with_human_review",
+  "p0_failures": [],
+  "warnings": [
+    "Do not imply direct eBay, marketplace, or wallet production ownership.",
+    "LoyaltyIQ must be labeled as portfolio simulation.",
+    "Do not inflate 9+ years to the JD's 10+ year requirement."
+  ],
+  "estimated_page_count": 1.8,
+  "draft_status": "human_review_required",
+  "orphan_bullets": [],
+  "unsupported_claims": [],
+  "simulation_labeling": "pass",
+  "recommendation": "GO - READY FOR DOCX/PDF EXPORT after human review of manual overrides"
+}
