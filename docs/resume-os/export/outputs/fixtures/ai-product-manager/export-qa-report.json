@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "p0_failures": [],
+  "warnings": [],
+  "ats_safe": {
+    "single_column": true,
+    "no_tables": true,
+    "no_text_boxes": true,
+    "no_floating_graphics": true,
+    "no_icons": true,
+    "standard_headings": true,
+    "searchable_pdf": true,
+    "hyperlinks_preserved": true
+  },
+  "content_counts": {
+    "section_count": 9,
+    "heading_count": 13,
+    "bullet_count": 9,
+    "link_count": 6,
+    "evidence_id_count": 9
+  }
+}

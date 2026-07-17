@@ -1,0 +1,23 @@
+{
+  "font_family": "Arial",
+  "body_font_size": 10.5,
+  "heading_font_size": 11,
+  "single_column": true,
+  "tables_used": false,
+  "text_boxes_used": false,
+  "floating_graphics_used": false,
+  "icons_used": false,
+  "standard_headings": [
+    "Professional Summary",
+    "Experience",
+    "Selected Project",
+    "Product OS Proof",
+    "Skills",
+    "Tools",
+    "Certifications",
+    "Education",
+    "Awards"
+  ],
+  "hyperlink_count": 6,
+  "alignment": "centered header; left-aligned body"
+}

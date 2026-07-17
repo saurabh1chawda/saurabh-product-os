@@ -1,0 +1,97 @@
+{
+  "export_id": "enterprise-saas-product-manager",
+  "input": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\assembly\\samples\\enterprise-saas-product-manager\\resume-draft.json",
+  "docx": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\enterprise-saas-product-manager\\enterprise-saas-product-manager.docx",
+  "pdf": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\enterprise-saas-product-manager\\enterprise-saas-product-manager.pdf",
+  "draft_status": "human_review_required",
+  "renderer_role": "rendering-only",
+  "content_fingerprint": {
+    "section_count": 9,
+    "heading_count": 15,
+    "bullet_count": 9,
+    "bullets": [
+      "Grew Biopharma portfolio revenue 30% through customer-driven pricing, packaging, and portfolio strategy.",
+      "Improved workflow adoption by re-architecting discovery and personalization logic around customer behavior.",
+      "Partnered with engineering and data science to evaluate ML-driven personalization models for enterprise workflow adoption.",
+      "Advised 15+ clients on product and business strategy, improving operational efficiency by 20%.",
+      "Launched core B2B platform modules and onboarded 15+ paying customers within six months.",
+      "Improved engagement to 83% and CSAT to 94% through segmentation and multichannel enterprise product experiences.",
+      "Aligned cross-functional teams around roadmap governance, tripling delivery velocity and reducing release cycles 50%.",
+      "Generated Rs. 1M+ ARR from zero-to-one platform products through pricing, packaging, and upsell design.",
+      "Scaled Job Guarantee revenue 10x from Rs. 1M to Rs. 10M through product-led monetization decisions."
+    ],
+    "headings": [
+      "Senior Product Manager | Enterprise SaaS, Discovery & Workflow Adoption",
+      "Professional Summary",
+      "Experience",
+      "Senior Product Manager - JoVE | 2023-01 to 2025-05",
+      "Product Consultant - Freelancer.com | 2021-04 to 2021-09",
+      "Product Manager - Mahindra Comviva | 2019-05 to 2021-04",
+      "Lead Product Manager - Logix Built Solutions Limited | 2025-05 to Present",
+      "Senior Product Manager - Simplilearn | 2021-09 to 2022-12",
+      "Selected Project",
+      "Product OS Proof",
+      "Skills",
+      "Tools",
+      "Certifications",
+      "Education",
+      "Awards"
+    ],
+    "links": [
+      "https://www.linkedin.com/in/chawdasaurabh/",
+      "https://github.com/saurabh1chawda",
+      "https://saurabh-product-os.vercel.app",
+      "https://saurabh-product-os.vercel.app/executive",
+      "https://saurabh-product-os.vercel.app/decision-systems/customer-discovery",
+      "https://saurabh-product-os.vercel.app/case-studies/jove"
+    ],
+    "metrics": [
+      "30%",
+      "20%",
+      "83%",
+      "94%",
+      "50%",
+      "Rs. 1M+",
+      "10x",
+      "Rs. 1M",
+      "Rs. 10M"
+    ],
+    "dates": [
+      "2023-01 to 2025-05",
+      "2021-04 to 2021-09",
+      "2019-05 to 2021-04",
+      "2025-05 to Present",
+      "2021-09 to 2022-12"
+    ],
+    "evidence_ids": [
+      "JOV-REV-001",
+      "JOV-ENG-002",
+      "JOV-AI-003",
+      "FRE-CON-001",
+      "COM-PAY-001",
+      "COM-PAY-002",
+      "LOG-DEL-004",
+      "LOG-ARR-001",
+      "SIM-REV-001"
+    ],
+    "bullet_ids": [
+      "SAAS-BLT-001",
+      "SAAS-BLT-002",
+      "SAAS-BLT-008",
+      "SAAS-BLT-005",
+      "SAAS-BLT-003",
+      "SAAS-BLT-004",
+      "SPM-BLT-007",
+      "SAAS-BLT-006",
+      "SPM-BLT-002"
+    ]
+  },
+  "performance": {
+    "docx_generation_ms": 2,
+    "pdf_generation_ms": 2,
+    "memory_rss_mb": 60,
+    "docx_size_bytes": 10791,
+    "pdf_size_bytes": 7158,
+    "warning_count": 0
+  }
+}

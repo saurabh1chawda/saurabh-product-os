@@ -1,0 +1,94 @@
+{
+  "export_id": "ai-product-manager",
+  "input": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\assembly\\samples\\ai-product-manager\\resume-draft.json",
+  "docx": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\ai-product-manager\\ai-product-manager.docx",
+  "pdf": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\ai-product-manager\\ai-product-manager.pdf",
+  "draft_status": "human_review_required",
+  "renderer_role": "rendering-only",
+  "content_fingerprint": {
+    "section_count": 9,
+    "heading_count": 13,
+    "bullet_count": 9,
+    "bullets": [
+      "Directed AI/ML-powered personalization in product discovery, contributing to +25% engagement and +20% MRR growth while building AI roadmap readiness.",
+      "Led platform architecture and DevOps maturity work that improved throughput by 15% and made future AI capabilities more scalable.",
+      "Owned zero-to-one platform product strategy that generated Rs. 1M+ ARR, creating commercial context for AI-enabled product expansion.",
+      "Aligned cross-functional teams around roadmap governance, tripling delivery velocity and creating operating discipline for AI-ready execution.",
+      "Partnered with engineering and data science to evaluate ML personalization models and convert behavioral insights into product requirements.",
+      "Used behavioral data to re-architect discovery and personalization logic, improving session duration by 40% and strengthening workflow adoption.",
+      "Grew Biopharma portfolio revenue 30% through customer-driven pricing, packaging, and portfolio strategy.",
+      "Improved delivery economics by reducing development cost 25% and increasing time-to-market speed 15%.",
+      "Scaled the Job Guarantee portfolio from Rs. 1M to Rs. 10M by redesigning pricing, packaging, and go-to-market alignment."
+    ],
+    "headings": [
+      "AI Product Manager | AI Workflows, Product Strategy & Platform Readiness",
+      "Professional Summary",
+      "Experience",
+      "Lead Product Manager - Logix Built Solutions Limited | 2025-05 to Present",
+      "Senior Product Manager - JoVE | 2023-01 to 2025-05",
+      "Senior Product Manager - Simplilearn | 2021-09 to 2022-12",
+      "Selected Project",
+      "Product OS Proof",
+      "Skills",
+      "Tools",
+      "Certifications",
+      "Education",
+      "Awards"
+    ],
+    "links": [
+      "https://www.linkedin.com/in/chawdasaurabh/",
+      "https://github.com/saurabh1chawda",
+      "https://saurabh-product-os.vercel.app",
+      "https://saurabh-product-os.vercel.app/decision-systems/customer-discovery",
+      "https://saurabh-product-os.vercel.app/executive",
+      "https://saurabh-product-os.vercel.app/ai-product-playbook"
+    ],
+    "metrics": [
+      "+25%",
+      "+20%",
+      "15%",
+      "Rs. 1M+",
+      "40%",
+      "30%",
+      "25%",
+      "15%",
+      "Rs. 1M",
+      "Rs. 10M"
+    ],
+    "dates": [
+      "2025-05 to Present",
+      "2023-01 to 2025-05",
+      "2021-09 to 2022-12"
+    ],
+    "evidence_ids": [
+      "LOG-MRR-002",
+      "LOG-THR-005",
+      "LOG-ARR-001",
+      "LOG-DEL-004",
+      "JOV-AI-003",
+      "JOV-ENG-002",
+      "JOV-REV-001",
+      "SIM-EFF-004",
+      "SIM-REV-001"
+    ],
+    "bullet_ids": [
+      "AI-BLT-001",
+      "AI-BLT-003",
+      "AI-BLT-007",
+      "AI-BLT-008",
+      "AI-BLT-004",
+      "AI-BLT-005",
+      "SAAS-BLT-001",
+      "GROW-BLT-008",
+      "GROW-BLT-001"
+    ]
+  },
+  "performance": {
+    "docx_generation_ms": 1,
+    "pdf_generation_ms": 1,
+    "memory_rss_mb": 59,
+    "docx_size_bytes": 10789,
+    "pdf_size_bytes": 7348,
+    "warning_count": 0
+  }
+}

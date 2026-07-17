@@ -1,0 +1,99 @@
+{
+  "export_id": "payments-product-manager",
+  "input": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\assembly\\samples\\payments-product-manager\\resume-draft.json",
+  "docx": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\payments-product-manager\\payments-product-manager.docx",
+  "pdf": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\payments-product-manager\\payments-product-manager.pdf",
+  "draft_status": "human_review_required",
+  "renderer_role": "rendering-only",
+  "content_fingerprint": {
+    "section_count": 9,
+    "heading_count": 14,
+    "bullet_count": 9,
+    "bullets": [
+      "Prioritized reliability and trust for mobile money and payment workflows supporting 10M+ monthly transactions.",
+      "Improved payment product engagement to 83% and CSAT to 94% through targeting, segmentation, and multichannel integration.",
+      "Owned MVP strategy for core B2B platform modules, onboarding 15+ paying customers within six months.",
+      "Built roadmap governance across cross-functional teams, improving delivery velocity 3x and reducing release cycles 50%.",
+      "Improved platform throughput 15% and release speed 2x through architecture and DevOps maturity work.",
+      "Owned zero-to-one platform product strategy that generated Rs. 1M+ ARR through pricing, packaging, and upsell design.",
+      "Connected AI/ML personalization to platform readiness, contributing to +25% engagement and +20% MRR growth.",
+      "Reduced development cost 25% and improved time-to-market 15% through roadmap prioritization discipline.",
+      "Improved customer feedback systems and CSAT by 15%, strengthening customer confidence loops."
+    ],
+    "headings": [
+      "Product Manager | Payments, Reliability & Trust-Centered Platforms",
+      "Professional Summary",
+      "Experience",
+      "Product Manager - Mahindra Comviva | 2019-05 to 2021-04",
+      "Lead Product Manager - Logix Built Solutions Limited | 2025-05 to Present",
+      "Senior Product Manager - Simplilearn | 2021-09 to 2022-12",
+      "Product Consultant - Freelancer.com | 2021-04 to 2021-09",
+      "Selected Project",
+      "Product OS Proof",
+      "Skills",
+      "Tools",
+      "Certifications",
+      "Education",
+      "Awards"
+    ],
+    "links": [
+      "https://www.linkedin.com/in/chawdasaurabh/",
+      "https://github.com/saurabh1chawda",
+      "https://saurabh-product-os.vercel.app",
+      "https://saurabh-product-os.vercel.app/executive",
+      "https://saurabh-product-os.vercel.app",
+      "https://saurabh-product-os.vercel.app/stories/payments-reliability-comviva"
+    ],
+    "metrics": [
+      "10M+",
+      "83%",
+      "94%",
+      "3x",
+      "50%",
+      "15%",
+      "2x",
+      "Rs. 1M+",
+      "+25%",
+      "+20%",
+      "25%",
+      "15%",
+      "15%"
+    ],
+    "dates": [
+      "2019-05 to 2021-04",
+      "2025-05 to Present",
+      "2021-09 to 2022-12",
+      "2021-04 to 2021-09"
+    ],
+    "evidence_ids": [
+      "COM-PAY-003",
+      "COM-PAY-002",
+      "COM-PAY-001",
+      "LOG-DEL-004",
+      "LOG-THR-005",
+      "LOG-ARR-001",
+      "LOG-MRR-002",
+      "SIM-EFF-004",
+      "FRE-CON-001"
+    ],
+    "bullet_ids": [
+      "PAY-BLT-001",
+      "PAY-BLT-002",
+      "PAY-BLT-003",
+      "PAY-BLT-006",
+      "PAY-BLT-005",
+      "PLAT-BLT-003",
+      "PLAT-BLT-008",
+      "PAY-BLT-008",
+      "PAY-BLT-007"
+    ]
+  },
+  "performance": {
+    "docx_generation_ms": 1,
+    "pdf_generation_ms": 1,
+    "memory_rss_mb": 61,
+    "docx_size_bytes": 10689,
+    "pdf_size_bytes": 7130,
+    "warning_count": 0
+  }
+}

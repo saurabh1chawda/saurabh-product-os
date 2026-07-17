@@ -1,0 +1,121 @@
+{
+  "status": "pass",
+  "exports_validated": 8,
+  "failures": [],
+  "warnings": [],
+  "results": [
+    {
+      "id": "ebay-live-pilot",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 12,
+        "section_count": 8,
+        "docx_generation_ms": 5,
+        "pdf_generation_ms": 3,
+        "docx_size_bytes": 10753,
+        "pdf_size_bytes": 7696
+      }
+    },
+    {
+      "id": "ai-product-manager",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 9,
+        "section_count": 9,
+        "docx_generation_ms": 1,
+        "pdf_generation_ms": 1,
+        "docx_size_bytes": 10789,
+        "pdf_size_bytes": 7348
+      }
+    },
+    {
+      "id": "enterprise-saas-product-manager",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 9,
+        "section_count": 9,
+        "docx_generation_ms": 2,
+        "pdf_generation_ms": 2,
+        "docx_size_bytes": 10791,
+        "pdf_size_bytes": 7158
+      }
+    },
+    {
+      "id": "growth-product-manager",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 10,
+        "section_count": 9,
+        "docx_generation_ms": 1,
+        "pdf_generation_ms": 1,
+        "docx_size_bytes": 10899,
+        "pdf_size_bytes": 7573
+      }
+    },
+    {
+      "id": "hybrid-ai-platform-pm",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 10,
+        "section_count": 9,
+        "docx_generation_ms": 1,
+        "pdf_generation_ms": 1,
+        "docx_size_bytes": 11150,
+        "pdf_size_bytes": 7705
+      }
+    },
+    {
+      "id": "monetization-product-manager",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 10,
+        "section_count": 9,
+        "docx_generation_ms": 1,
+        "pdf_generation_ms": 1,
+        "docx_size_bytes": 10924,
+        "pdf_size_bytes": 7968
+      }
+    },
+    {
+      "id": "payments-product-manager",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 9,
+        "section_count": 9,
+        "docx_generation_ms": 1,
+        "pdf_generation_ms": 1,
+        "docx_size_bytes": 10689,
+        "pdf_size_bytes": 7130
+      }
+    },
+    {
+      "id": "platform-product-manager",
+      "failures": [],
+      "warnings": [],
+      "metrics": {
+        "page_count": 2,
+        "bullet_count": 10,
+        "section_count": 9,
+        "docx_generation_ms": 1,
+        "pdf_generation_ms": 1,
+        "docx_size_bytes": 10899,
+        "pdf_size_bytes": 7410
+      }
+    }
+  ],
+  "readiness_decision": "READY FOR DOCX/PDF EXPORT"
+}

@@ -1,0 +1,99 @@
+{
+  "export_id": "hybrid-ai-platform-pm",
+  "input": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\assembly\\samples\\hybrid-ai-platform-pm\\resume-draft.json",
+  "docx": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\hybrid-ai-platform-pm\\hybrid-ai-platform-pm.docx",
+  "pdf": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\hybrid-ai-platform-pm\\hybrid-ai-platform-pm.pdf",
+  "draft_status": "human_review_required",
+  "renderer_role": "rendering-only",
+  "content_fingerprint": {
+    "section_count": 9,
+    "heading_count": 14,
+    "bullet_count": 10,
+    "bullets": [
+      "Led platform architecture and DevOps maturity work that improved throughput by 15% and made future AI capabilities more scalable.",
+      "Directed AI/ML-powered personalization in product discovery, contributing to +25% engagement and +20% MRR growth while building AI roadmap readiness.",
+      "Owned zero-to-one platform product strategy that generated Rs. 1M+ ARR, creating commercial context for AI-enabled product expansion.",
+      "Aligned cross-functional teams around roadmap governance, tripling delivery velocity and creating operating discipline for AI-ready execution.",
+      "Framed reliability as a product outcome in payment environments supporting 10M+ monthly transactions.",
+      "Owned MVP strategy and launch for core B2B platform modules, onboarding 15+ paying customers within six months.",
+      "Improved customer engagement to 83% and CSAT to 94% through targeting, segmentation, and multichannel integration.",
+      "Improved roadmap economics by reducing development cost 25% and time-to-market 15% through prioritization discipline.",
+      "Used behavioral data to re-architect discovery and personalization logic, improving session duration by 40% and strengthening workflow adoption.",
+      "Partnered with engineering and data science to evaluate ML personalization models and convert behavioral insights into product requirements."
+    ],
+    "headings": [
+      "Platform Product Manager | Architecture, Reliability & Technical Strategy",
+      "Professional Summary",
+      "Experience",
+      "Lead Product Manager - Logix Built Solutions Limited | 2025-05 to Present",
+      "Product Manager - Mahindra Comviva | 2019-05 to 2021-04",
+      "Senior Product Manager - Simplilearn | 2021-09 to 2022-12",
+      "Senior Product Manager - JoVE | 2023-01 to 2025-05",
+      "Selected Project",
+      "Product OS Proof",
+      "Skills",
+      "Tools",
+      "Certifications",
+      "Education",
+      "Awards"
+    ],
+    "links": [
+      "https://www.linkedin.com/in/chawdasaurabh/",
+      "https://github.com/saurabh1chawda",
+      "https://saurabh-product-os.vercel.app",
+      "https://saurabh-product-os.vercel.app/ai-product-playbook",
+      "https://saurabh-product-os.vercel.app/decision-systems/ai-prioritization",
+      "https://saurabh-product-os.vercel.app/case-studies/logix"
+    ],
+    "metrics": [
+      "15%",
+      "+25%",
+      "+20%",
+      "Rs. 1M+",
+      "10M+",
+      "83%",
+      "94%",
+      "25%",
+      "15%",
+      "40%"
+    ],
+    "dates": [
+      "2025-05 to Present",
+      "2019-05 to 2021-04",
+      "2021-09 to 2022-12",
+      "2023-01 to 2025-05"
+    ],
+    "evidence_ids": [
+      "LOG-THR-005",
+      "LOG-MRR-002",
+      "LOG-ARR-001",
+      "LOG-DEL-004",
+      "COM-PAY-003",
+      "COM-PAY-001",
+      "COM-PAY-002",
+      "SIM-EFF-004",
+      "JOV-ENG-002",
+      "JOV-AI-003"
+    ],
+    "bullet_ids": [
+      "AI-BLT-003",
+      "AI-BLT-001",
+      "AI-BLT-007",
+      "AI-BLT-008",
+      "LEAD-BLT-004",
+      "PLAT-BLT-004",
+      "CONS-BLT-005",
+      "LEAD-BLT-005",
+      "AI-BLT-005",
+      "AI-BLT-004"
+    ]
+  },
+  "performance": {
+    "docx_generation_ms": 1,
+    "pdf_generation_ms": 1,
+    "memory_rss_mb": 61,
+    "docx_size_bytes": 11150,
+    "pdf_size_bytes": 7705,
+    "warning_count": 0
+  }
+}

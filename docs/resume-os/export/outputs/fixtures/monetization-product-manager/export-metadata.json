@@ -1,0 +1,104 @@
+{
+  "export_id": "monetization-product-manager",
+  "input": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\assembly\\samples\\monetization-product-manager\\resume-draft.json",
+  "docx": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\monetization-product-manager\\monetization-product-manager.docx",
+  "pdf": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\monetization-product-manager\\monetization-product-manager.pdf",
+  "draft_status": "human_review_required",
+  "renderer_role": "rendering-only",
+  "content_fingerprint": {
+    "section_count": 9,
+    "heading_count": 13,
+    "bullet_count": 10,
+    "bullets": [
+      "Scaled the Job Guarantee portfolio from Rs. 1M to Rs. 10M by redesigning pricing, packaging, and go-to-market alignment.",
+      "Improved traffic-to-lead conversion by 62% and lead-to-customer conversion by 40% through structured experimentation and journey optimization.",
+      "Designed and scaled the Refer & Earn incentive program, doubling referral contribution from 1.5% to 3% in three months.",
+      "Improved delivery economics by reducing development cost 25% and increasing time-to-market speed 15%.",
+      "Generated Rs. 1M+ ARR within nine months by owning pricing, packaging, and personalized upsell strategy for zero-to-one platform products.",
+      "Directed personalization work that improved engagement by 25% and supported 20% MRR growth.",
+      "Built an organic acquisition and retention engine that doubled organic traffic and lifted revenue by 10%.",
+      "Built churn prediction models that improved retention by 15%, connecting analytics work to growth and customer health.",
+      "Led beta-to-scale Biopharma portfolio monetization, increasing portfolio revenue by 30% through customer-driven pricing and packaging.",
+      "Improved workflow adoption signals by increasing session duration 40%, page views 15%, and video consumption 12%."
+    ],
+    "headings": [
+      "Product Manager | Monetization, Pricing & Growth Strategy",
+      "Professional Summary",
+      "Experience",
+      "Senior Product Manager - Simplilearn | 2021-09 to 2022-12",
+      "Lead Product Manager - Logix Built Solutions Limited | 2025-05 to Present",
+      "Senior Product Manager - JoVE | 2023-01 to 2025-05",
+      "Selected Project",
+      "Product OS Proof",
+      "Skills",
+      "Tools",
+      "Certifications",
+      "Education",
+      "Awards"
+    ],
+    "links": [
+      "https://www.linkedin.com/in/chawdasaurabh/",
+      "https://github.com/saurabh1chawda",
+      "https://saurabh-product-os.vercel.app",
+      "https://saurabh-product-os.vercel.app/case-studies/jove",
+      "https://saurabh-product-os.vercel.app/decision-systems/customer-discovery",
+      "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+    ],
+    "metrics": [
+      "Rs. 1M",
+      "Rs. 10M",
+      "62%",
+      "40%",
+      "1.5%",
+      "3%",
+      "25%",
+      "15%",
+      "Rs. 1M+",
+      "25%",
+      "20%",
+      "10%",
+      "15%",
+      "30%",
+      "40%",
+      "15%",
+      "12%"
+    ],
+    "dates": [
+      "2021-09 to 2022-12",
+      "2025-05 to Present",
+      "2023-01 to 2025-05"
+    ],
+    "evidence_ids": [
+      "SIM-REV-001",
+      "SIM-CNV-002",
+      "SIM-REF-003",
+      "SIM-EFF-004",
+      "LOG-ARR-001",
+      "LOG-MRR-002",
+      "LOG-SEO-003",
+      "LOG-ANL-001",
+      "JOV-REV-001",
+      "JOV-ENG-002"
+    ],
+    "bullet_ids": [
+      "GROW-BLT-001",
+      "GROW-BLT-002",
+      "GROW-BLT-003",
+      "GROW-BLT-008",
+      "MON-BLT-001",
+      "GROW-BLT-005",
+      "GROW-BLT-004",
+      "GROW-BLT-007",
+      "MON-BLT-003",
+      "GROW-BLT-006"
+    ]
+  },
+  "performance": {
+    "docx_generation_ms": 1,
+    "pdf_generation_ms": 1,
+    "memory_rss_mb": 61,
+    "docx_size_bytes": 10924,
+    "pdf_size_bytes": 7968,
+    "warning_count": 0
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "export_id": "growth-product-manager",
+  "input": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\assembly\\samples\\growth-product-manager\\resume-draft.json",
+  "docx": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\growth-product-manager\\growth-product-manager.docx",
+  "pdf": "C:\\Users\\saura\\saurabh-product-os\\docs\\resume-os\\export\\outputs\\fixtures\\growth-product-manager\\growth-product-manager.pdf",
+  "draft_status": "human_review_required",
+  "renderer_role": "rendering-only",
+  "content_fingerprint": {
+    "section_count": 9,
+    "heading_count": 14,
+    "bullet_count": 10,
+    "bullets": [
+      "Reduced journey friction through experimentation, improving traffic-to-lead conversion 62% and lead-to-customer conversion 40%.",
+      "Scaled the Job Guarantee portfolio from Rs. 1M to Rs. 10M by redesigning pricing, packaging, and go-to-market alignment.",
+      "Designed incentive-based referral mechanics that doubled organic contribution from 1.5% to 3%.",
+      "Improved delivery economics by reducing development cost 25% and increasing time-to-market speed 15%.",
+      "Directed personalized product discovery work that lifted engagement 25% and supported 20% MRR growth.",
+      "Built personalized landing experiences that doubled organic traffic and improved revenue outcomes.",
+      "Improved retention 15% through churn prediction models that identified customer risk signals.",
+      "Owned zero-to-one platform product strategy that generated Rs. 1M+ ARR, creating commercial context for AI-enabled product expansion.",
+      "Improved customer workflow adoption by re-architecting discovery and personalization logic, increasing session duration 40%.",
+      "Redesigned a global customer feedback system, improving operational efficiency 20% and CSAT 15%."
+    ],
+    "headings": [
+      "Growth Product Manager | Experimentation, Conversion & Retention",
+      "Professional Summary",
+      "Experience",
+      "Senior Product Manager - Simplilearn | 2021-09 to 2022-12",
+      "Lead Product Manager - Logix Built Solutions Limited | 2025-05 to Present",
+      "Senior Product Manager - JoVE | 2023-01 to 2025-05",
+      "Product Consultant - Freelancer.com | 2021-04 to 2021-09",
+      "Selected Project",
+      "Product OS Proof",
+      "Skills",
+      "Tools",
+      "Certifications",
+      "Education",
+      "Awards"
+    ],
+    "links": [
+      "https://www.linkedin.com/in/chawdasaurabh/",
+      "https://github.com/saurabh1chawda",
+      "https://saurabh-product-os.vercel.app",
+      "https://saurabh-product-os.vercel.app/decision-systems/customer-discovery",
+      "https://saurabh-product-os.vercel.app/executive",
+      "https://saurabh-product-os.vercel.app/case-studies/simplilearn"
+    ],
+    "metrics": [
+      "62%",
+      "40%",
+      "Rs. 1M",
+      "Rs. 10M",
+      "1.5%",
+      "3%",
+      "25%",
+      "15%",
+      "25%",
+      "20%",
+      "15%",
+      "Rs. 1M+",
+      "40%",
+      "20%",
+      "15%"
+    ],
+    "dates": [
+      "2021-09 to 2022-12",
+      "2025-05 to Present",
+      "2023-01 to 2025-05",
+      "2021-04 to 2021-09"
+    ],
+    "evidence_ids": [
+      "SIM-CNV-002",
+      "SIM-REV-001",
+      "SIM-REF-003",
+      "SIM-EFF-004",
+      "LOG-MRR-002",
+      "LOG-SEO-003",
+      "LOG-ANL-001",
+      "LOG-ARR-001",
+      "JOV-ENG-002",
+      "FRE-CON-001"
+    ],
+    "bullet_ids": [
+      "CONS-BLT-002",
+      "GROW-BLT-001",
+      "CONS-BLT-003",
+      "GROW-BLT-008",
+      "CONS-BLT-004",
+      "CONS-BLT-008",
+      "CONS-BLT-007",
+      "AI-BLT-007",
+      "CONS-BLT-001",
+      "CONS-BLT-006"
+    ]
+  },
+  "performance": {
+    "docx_generation_ms": 1,
+    "pdf_generation_ms": 1,
+    "memory_rss_mb": 60,
+    "docx_size_bytes": 10899,
+    "pdf_size_bytes": 7573,
+    "warning_count": 0
+  }
+}
