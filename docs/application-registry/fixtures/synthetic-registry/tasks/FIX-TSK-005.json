@@ -1,0 +1,18 @@
+{
+  "task_id": "FIX-TSK-005",
+  "application_id": "FIX-APP-005",
+  "contact_id": "FIX-CON-005",
+  "task_type": "prepare_interview",
+  "title": "Follow up on application",
+  "description": "Synthetic operational task.",
+  "due_at": "2026-06-15",
+  "completed_at": null,
+  "status": "open",
+  "priority": "high",
+  "source": "synthetic",
+  "recurrence": null,
+  "notes": null,
+  "created_at": "2026-07-18T00:00:00+05:30",
+  "updated_at": "2026-07-18T00:00:00+05:30",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,10 @@
+{
+  "full_name": "Sanitized Recruiter",
+  "role": "Recruiter",
+  "company": "Synthetic Pilot Co",
+  "relationship_type": "recruiter",
+  "source": "manual",
+  "follow_up_allowed": true,
+  "confidentiality": "public-fixture",
+  "safe_to_commit": true
+}

@@ -1,0 +1,22 @@
+{
+  "contact_id": "FIX-CON-001",
+  "full_name": "Sanitized Contact 1",
+  "role": "Recruiter",
+  "company": "Northstar AI",
+  "relationship_type": "recruiter",
+  "email": null,
+  "linkedin_url": null,
+  "source": "synthetic",
+  "first_contact_at": "2026-06-10",
+  "last_contact_at": "2026-06-12",
+  "related_application_ids": [
+    "FIX-APP-001"
+  ],
+  "notes": "Sanitized synthetic contact.",
+  "follow_up_allowed": true,
+  "confidentiality": "public-fixture",
+  "safe_to_commit": true,
+  "schema_version": "1.0.0",
+  "created_at": "2026-07-18T00:00:00+05:30",
+  "updated_at": "2026-07-18T00:00:00+05:30"
+}

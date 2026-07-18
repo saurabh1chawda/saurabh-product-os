@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application-event.schema.json",
+  "title": "Application Registry Event",
+  "type": "object",
+  "required": ["event_id", "application_id", "event_type", "occurred_at", "recorded_at", "reason", "source", "actor", "metadata", "schema_version"],
+  "additionalProperties": true,
+  "properties": {
+    "event_id": { "type": "string" },
+    "application_id": { "type": "string" },
+    "event_type": { "type": "string" },
+    "occurred_at": { "type": "string" },
+    "recorded_at": { "type": "string" },
+    "previous_value": {},
+    "new_value": {},
+    "reason": { "type": "string" },
+    "source": { "type": "string" },
+    "actor": { "type": "string" },
+    "metadata": { "type": "object" },
+    "schema_version": { "type": "string" }
+  }
+}
+

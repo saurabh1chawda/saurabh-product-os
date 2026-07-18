@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "fixture": true,
+  "lifecycle_stages": [
+    "discovered",
+    "saved",
+    "resume_generated",
+    "human_reviewed",
+    "ready_to_apply",
+    "applied",
+    "recruiter_viewed",
+    "recruiter_contact",
+    "recruiter_screen",
+    "online_assessment",
+    "hiring_manager_interview",
+    "product_interview",
+    "technical_interview",
+    "system_design",
+    "case_study",
+    "panel_interview",
+    "final_round",
+    "offer",
+    "accepted",
+    "rejected",
+    "withdrawn",
+    "closed"
+  ],
+  "lifecycle_statuses": [
+    "active",
+    "waiting",
+    "action_required",
+    "on_hold",
+    "successful",
+    "unsuccessful",
+    "withdrawn",
+    "archived"
+  ]
+}

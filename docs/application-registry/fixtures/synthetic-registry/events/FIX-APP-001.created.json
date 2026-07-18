@@ -1,0 +1,12 @@
+{
+  "event_id": "FIX-EVT-FIX-APP-001",
+  "application_id": "FIX-APP-001",
+  "event_type": "application_created",
+  "occurred_at": "2026-06-01T09:00:00+05:30",
+  "recorded_at": "2026-06-01T09:00:00+05:30",
+  "reason": "Synthetic fixture creation.",
+  "source": "synthetic-fixture",
+  "actor": "fixture",
+  "metadata": {},
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,11 @@
+{
+  "application_id": "APP-synthetic-pilot-co-senior-ai-product-manager-SYN-001",
+  "task_type": "follow_up",
+  "title": "Follow up on synthetic application",
+  "description": "Sanitized operational-flow task.",
+  "due_at": "2026-07-19",
+  "status": "open",
+  "priority": "high",
+  "source": "manual"
+}
+

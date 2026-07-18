@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 type Stage =
@@ -85,6 +85,7 @@ const root = process.cwd();
 const outRoot = path.join(root, "docs", "application-intelligence");
 const dataRoot = path.join(outRoot, "data");
 const reportRoot = path.join(outRoot, "reports");
+const registryFixtureApplications = path.join(root, "docs", "application-registry", "fixtures", "synthetic-registry", "applications");
 
 const stages: Stage[] = [
   "Discovered",
@@ -383,6 +384,126 @@ function renderMarkdown(applications: Application[], analytics: Record<string, u
   ].join("\n");
 }
 
+type RegistryApplication = {
+  application_id: string;
+  company_name: string;
+  role_title: string;
+  role_pack?: string | null;
+  job_url?: string | null;
+  location?: string | null;
+  employment_type?: string | null;
+  application_source?: string | null;
+  application_date?: string | null;
+  current_stage: string;
+  current_status: string;
+  resume_version?: string | null;
+  resume_plan_path?: string | null;
+  narrative_output_path?: string | null;
+  export_commit_hash?: string | null;
+  pdf_path?: string | null;
+  docx_path?: string | null;
+  jd_path?: string | null;
+  jd_hash?: string | null;
+  product_os_modules?: string[];
+  response_received?: boolean;
+  response_date?: string | null;
+  interview_count?: number;
+  offer_received?: boolean;
+  final_outcome?: string | null;
+};
+
+function titleStage(stage: string): Stage {
+  const mapped: Record<string, Stage> = {
+    discovered: "Discovered",
+    saved: "Saved",
+    resume_generated: "Resume Generated",
+    human_reviewed: "Human Reviewed",
+    applied: "Applied",
+    recruiter_contact: "Recruiter Contact",
+    recruiter_screen: "Recruiter Contact",
+    recruiter_viewed: "Recruiter Viewed",
+    online_assessment: "Online Assessment",
+    hiring_manager_interview: "Hiring Manager Interview",
+    product_interview: "Product Interview",
+    system_design: "System Design",
+    final_round: "Final Round",
+    offer: "Offer",
+    rejected: "Rejected",
+    withdrawn: "Withdrawn",
+    accepted: "Accepted",
+    closed: "Rejected",
+  };
+  return mapped[stage] ?? "Applied";
+}
+
+function registryStatus(app: RegistryApplication): Application["status"] {
+  if (app.current_stage === "accepted") return "accepted";
+  if (app.current_stage === "withdrawn") return "withdrawn";
+  if (["rejected", "closed"].includes(app.current_stage)) return "closed";
+  return "active";
+}
+
+function loadRegistryProjection(): Application[] {
+  if (!existsSync(registryFixtureApplications)) return [];
+  return readdirSync(registryFixtureApplications)
+    .filter((name) => name.endsWith(".json"))
+    .map((name) => JSON.parse(readFileSync(path.join(registryFixtureApplications, name), "utf8")) as RegistryApplication)
+    .filter((app) => !["discovered", "saved"].includes(app.current_stage))
+    .map((app) => ({
+      application_id: app.application_id,
+      company: app.company_name,
+      role: app.role_title,
+      role_archetype: app.role_pack ?? "Unknown",
+      job_url: app.job_url ?? "",
+      location: app.location ?? "",
+      employment_type: app.employment_type ?? "",
+      application_source: app.application_source ?? "unknown",
+      application_date: app.application_date ?? "2026-01-01",
+      status: registryStatus(app),
+      current_stage: titleStage(app.current_stage),
+      notes: "Sanitized registry projection.",
+      resume_snapshot: {
+        resume_version: app.resume_version ?? "unknown",
+        resume_plan_version: app.resume_plan_path ?? "unknown",
+        narrative_version: app.narrative_output_path ?? "unknown",
+        export_version: app.export_commit_hash ?? "unknown",
+        commit_hash: app.export_commit_hash ?? "unknown",
+        resume_file_path: app.resume_plan_path ?? "",
+        pdf_path: app.pdf_path ?? "",
+        docx_path: app.docx_path ?? "",
+        human_review_timestamp: app.application_date ?? "2026-01-01",
+      },
+      jd_snapshot: {
+        jd_path: app.jd_path ?? "",
+        jd_hash: app.jd_hash ?? "",
+        jd_version: "registry-projection",
+        primary_archetype: app.role_pack ?? "Unknown",
+        secondary_archetypes: [],
+        keywords: [],
+        competencies: [],
+      },
+      manual_overrides: [],
+      outcome: {
+        application_date: app.application_date ?? "2026-01-01",
+        response_date: app.response_date ?? null,
+        response_type: app.final_outcome ?? (app.response_received ? "response" : null),
+        interview_count: app.interview_count ?? 0,
+        offer: app.offer_received ?? false,
+        salary: null,
+        rejection_reason: null,
+        candidate_withdrawal: app.current_stage === "withdrawn",
+      },
+      experiment: {
+        experiment_id: null,
+        variant: null,
+        headline_variant: "registry-projection",
+        summary_variant: "registry-projection",
+        project_included: Boolean(app.product_os_modules?.length),
+        product_os_module: app.product_os_modules?.[0] ?? "none",
+      },
+    }));
+}
+
 function main(): void {
   mkdirSync(dataRoot, { recursive: true });
   mkdirSync(reportRoot, { recursive: true });
@@ -395,6 +516,12 @@ function main(): void {
   writeFileSync(path.join(reportRoot, "insights.synthetic.json"), `${JSON.stringify(insights, null, 2)}\n`);
   writeFileSync(path.join(reportRoot, "validation-summary.json"), `${JSON.stringify({ status: validation.failures.length ? "fail" : "pass", ...validation }, null, 2)}\n`);
   writeFileSync(path.join(reportRoot, "synthetic-results.md"), renderMarkdown(applications, analytics, insights, validation));
+  const registryProjection = loadRegistryProjection();
+  if (registryProjection.length) {
+    const projectionAnalytics = computeAnalytics(registryProjection);
+    writeFileSync(path.join(reportRoot, "registry-projection.synthetic.json"), `${JSON.stringify(registryProjection, null, 2)}\n`);
+    writeFileSync(path.join(reportRoot, "registry-projection-analytics.synthetic.json"), `${JSON.stringify(projectionAnalytics, null, 2)}\n`);
+  }
   console.log(`Application Intelligence generated ${applications.length} synthetic applications.`);
   console.log(`Validation failures: ${validation.failures.length}; warnings: ${validation.warnings.length}.`);
   if (validation.failures.length) process.exitCode = 1;

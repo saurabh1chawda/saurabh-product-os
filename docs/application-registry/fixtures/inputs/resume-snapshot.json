@@ -1,0 +1,16 @@
+{
+  "jd_snapshot_id": "JD-SYN-001",
+  "jd_path": "docs/application-registry/fixtures/inputs/synthetic-jd.md",
+  "jd_hash": "synthetic-jd-hash",
+  "resume_snapshot_id": "RS-SYN-001",
+  "resume_plan_path": "docs/resume-os/assembly/samples/ai-product-manager/resume-plan.json",
+  "narrative_output_path": "docs/resume-os/pilots/ebay/narrative/resume-draft.narrative.json",
+  "docx_path": "docs/resume-os/pilots/ebay/export/ebay-live-pilot.docx",
+  "pdf_path": "docs/resume-os/pilots/ebay/export/ebay-live-pilot.pdf",
+  "export_commit_hash": "4adec421934a1fb47bd0b7c558794c86541fe146",
+  "resume_version": "resume-v1.0",
+  "role_pack": "ai-pm",
+  "product_os_modules": ["AI Product Playbook", "AI Prioritization Framework"],
+  "manual_override_ids": ["OVR-SYN-001"]
+}
+

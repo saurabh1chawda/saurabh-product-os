@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "registry-config.schema.json",
+  "title": "Application Registry Config",
+  "type": "object",
+  "required": ["schema_version", "private_registry_root", "default_timezone", "lifecycle_stages", "lifecycle_statuses", "stale_application_thresholds", "privacy_policy", "analytics_inclusion_rules"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "type": "string" },
+    "private_registry_root": { "type": "string" },
+    "default_timezone": { "type": "string" },
+    "default_currency": { "type": "string" },
+    "lifecycle_stages": { "type": "array", "items": { "type": "string" } },
+    "lifecycle_statuses": { "type": "array", "items": { "type": "string" } },
+    "priority_values": { "type": "array", "items": { "type": "string" } },
+    "follow_up_defaults": { "type": "object" },
+    "stale_application_thresholds": { "type": "object" },
+    "allowed_tags": { "type": "array", "items": { "type": "string" } },
+    "archive_policy": { "type": "string" },
+    "privacy_policy": { "type": "string" },
+    "analytics_inclusion_rules": { "type": "object" }
+  }
+}
+

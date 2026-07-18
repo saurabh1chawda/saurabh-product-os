@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contact.schema.json",
+  "title": "Career CRM Contact",
+  "type": "object",
+  "required": ["contact_id", "full_name", "relationship_type", "related_application_ids", "follow_up_allowed", "confidentiality", "safe_to_commit", "schema_version", "created_at", "updated_at"],
+  "additionalProperties": true,
+  "properties": {
+    "contact_id": { "type": "string" },
+    "full_name": { "type": "string" },
+    "role": { "type": ["string", "null"] },
+    "company": { "type": ["string", "null"] },
+    "relationship_type": { "type": "string" },
+    "email": { "type": ["string", "null"] },
+    "linkedin_url": { "type": ["string", "null"] },
+    "source": { "type": ["string", "null"] },
+    "first_contact_at": { "type": ["string", "null"] },
+    "last_contact_at": { "type": ["string", "null"] },
+    "related_application_ids": { "type": "array", "items": { "type": "string" } },
+    "notes": { "type": ["string", "null"] },
+    "follow_up_allowed": { "type": "boolean" },
+    "confidentiality": { "type": "string" },
+    "safe_to_commit": { "type": "boolean" },
+    "schema_version": { "type": "string" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" }
+  }
+}
+

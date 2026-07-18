@@ -1,0 +1,22 @@
+{
+  "company_name": "Synthetic Pilot Co",
+  "role_title": "Senior AI Product Manager",
+  "role_level": "Senior",
+  "employment_type": "Full-time",
+  "work_mode": "remote",
+  "location": "Remote",
+  "country": "United States",
+  "job_url": "https://example.com/jobs/synthetic-pilot-ai-pm",
+  "application_source": "company_site",
+  "job_posting_id": "SYN-001",
+  "job_discovered_at": "2026-07-01",
+  "current_stage": "discovered",
+  "current_status": "active",
+  "priority": "high",
+  "role_pack": "ai-pm",
+  "product_os_modules": ["AI Product Playbook"],
+  "tags": ["synthetic-flow", "ai-pm"],
+  "confidentiality": "public-fixture",
+  "contains_personal_data": false,
+  "safe_to_commit": true
+}

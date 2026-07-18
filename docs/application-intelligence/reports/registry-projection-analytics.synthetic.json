@@ -1,0 +1,100 @@
+{
+  "applications": 30,
+  "response_rate": 86.7,
+  "interview_rate": 73.3,
+  "offer_rate": 13.3,
+  "average_response_time_days": 4,
+  "applications_per_archetype": {
+    "ai-pm": {
+      "applications": 5,
+      "response_rate": 80,
+      "interview_rate": 80,
+      "offer_rate": 20
+    },
+    "platform": {
+      "applications": 5,
+      "response_rate": 80,
+      "interview_rate": 60,
+      "offer_rate": 40
+    },
+    "payments": {
+      "applications": 4,
+      "response_rate": 100,
+      "interview_rate": 50,
+      "offer_rate": 25
+    },
+    "growth": {
+      "applications": 4,
+      "response_rate": 100,
+      "interview_rate": 75,
+      "offer_rate": 0
+    },
+    "marketplace": {
+      "applications": 4,
+      "response_rate": 75,
+      "interview_rate": 75,
+      "offer_rate": 0
+    },
+    "enterprise-saas": {
+      "applications": 4,
+      "response_rate": 75,
+      "interview_rate": 75,
+      "offer_rate": 0
+    },
+    "monetization": {
+      "applications": 4,
+      "response_rate": 100,
+      "interview_rate": 100,
+      "offer_rate": 0
+    }
+  },
+  "applications_per_company": {
+    "Northstar AI": 3,
+    "Atlas Platform": 3,
+    "RiverPay": 3,
+    "GrowthLoop": 3,
+    "MarketGrid": 3,
+    "CloudDesk": 3,
+    "Vector Labs": 2,
+    "StackForge": 2,
+    "TrustWallet": 2,
+    "Lifecycle Co": 2,
+    "SignalCart": 2,
+    "DataNest": 2
+  },
+  "applications_per_role": {
+    "ai pm Product Manager": 5,
+    "platform Product Manager": 5,
+    "payments Product Manager": 4,
+    "growth Product Manager": 4,
+    "marketplace Product Manager": 4,
+    "enterprise saas Product Manager": 4,
+    "monetization Product Manager": 4
+  },
+  "applications_per_role_pack": {
+    "ai-pm": 5,
+    "platform": 5,
+    "payments": 4,
+    "growth": 4,
+    "marketplace": 4,
+    "enterprise-saas": 4,
+    "monetization": 4
+  },
+  "applications_per_resume_version": {
+    "resume-v1": 10,
+    "resume-v2": 10,
+    "resume-v3": 10
+  },
+  "applications_per_product_os_module": {
+    "AI Product Playbook": {
+      "applications": 15,
+      "interview_rate": 73.3,
+      "offer_rate": 13.3
+    },
+    "Product Leadership Briefs": {
+      "applications": 15,
+      "interview_rate": 73.3,
+      "offer_rate": 13.3
+    }
+  }
+}

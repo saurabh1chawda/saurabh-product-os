@@ -13,3 +13,4 @@ yarn-error.log*
 .vercel
 .qa
 docs/resume-os/reference-resumes/
+data/private/application-registry/

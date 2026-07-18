@@ -1,0 +1,18 @@
+{
+  "task_id": "FIX-TSK-010",
+  "application_id": "FIX-APP-010",
+  "contact_id": null,
+  "task_type": "follow_up",
+  "title": "Update application record",
+  "description": "Synthetic operational task.",
+  "due_at": "2026-07-22",
+  "completed_at": null,
+  "status": "open",
+  "priority": "medium",
+  "source": "synthetic",
+  "recurrence": null,
+  "notes": null,
+  "created_at": "2026-07-18T00:00:00+05:30",
+  "updated_at": "2026-07-18T00:00:00+05:30",
+  "schema_version": "1.0.0"
+}
