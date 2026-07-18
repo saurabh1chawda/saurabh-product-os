@@ -34,7 +34,8 @@
     "application-registry:archive": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/archive-application.ts",
     "application-registry:rebuild-indexes": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/rebuild-indexes.ts",
     "application-registry:validate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/validate-registry.ts",
-    "application-registry:validate-privacy": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/validate-privacy.ts"
+    "application-registry:validate-privacy": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/validate-privacy.ts",
+    "career-console:validate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/career-console/validate-career-console.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "3.1.1",
