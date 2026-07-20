@@ -14,3 +14,32 @@ yarn-error.log*
 .qa
 docs/resume-os/reference-resumes/
 data/private/application-registry/
+
+# Career OS private pilot data
+data/private/
+docs/career-os-pilot/pilot-workspace/**/private/
+docs/career-os-pilot/pilot-workspace/**/tmp/
+docs/career-os-pilot/pilot-workspace/**/drafts/
+docs/career-os-pilot/pilot-workspace/**/real/
+
+# Career OS sensitive local artifacts
+*.private.*
+*.sensitive.*
+*-private.*
+*-sensitive.*
+*.local.json
+*.local.csv
+*.local.tsv
+*.local.xlsx
+*.local.docx
+*.local.pdf
+
+# Career OS local exports and screenshots
+exports/private/
+screenshots/private/
+logs/private/
+reports/private/
+tmp/
+temp/
+*.tmp
+~$*
