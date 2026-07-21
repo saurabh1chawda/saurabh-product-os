@@ -8,3 +8,4 @@
 | ADR-004 | Information Storage Strategy | Accepted | Information Architecture / Storage | None | 2026-07-21 |
 | ADR-005 | Platform Services Strategy | Accepted | Platform Architecture | None | 2026-07-21 |
 | ADR-006 | Technology Evaluation & Selection Principles | Accepted | Technology Governance | None | 2026-07-21 |
+| ADR-007 | Authoritative Transactional Store Technology | Accepted | Technology / Transactional Storage | None | 2026-07-21 |
