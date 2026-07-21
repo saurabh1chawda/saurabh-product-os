@@ -11,3 +11,4 @@
 | ADR-007 | Authoritative Transactional Store Technology | Accepted | Technology / Transactional Storage | None | 2026-07-21 |
 | ADR-008 | Immutable Artifact Storage Technology | Accepted | Technology / Artifact Storage | None | 2026-07-21 |
 | ADR-009 | Derived Search & Retrieval Platform | Accepted | Technology / Derived Search | None | 2026-07-21 |
+| ADR-010 | AI Execution Platform & Model Gateway Strategy | Accepted | Technology / AI Execution | None | 2026-07-21 |
