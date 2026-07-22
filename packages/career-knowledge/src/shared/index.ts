@@ -37,6 +37,10 @@ export class PortfolioAssetId extends UniqueIdentifier {}
 export class EducationId extends UniqueIdentifier {}
 export class CertificationId extends UniqueIdentifier {}
 export class EvidenceReferenceId extends UniqueIdentifier {}
+export class MetricId extends UniqueIdentifier {}
+export class StoryId extends UniqueIdentifier {}
+export class ProfessionalIdentityId extends UniqueIdentifier {}
+export class CapabilityEvidenceId extends UniqueIdentifier {}
 
 export type VerificationStatus = "unverified" | "candidate" | "verified" | "rejected";
 
@@ -46,6 +50,7 @@ export type DomainErrorCode =
   | "missing-required-field"
   | "invalid-reference"
   | "invalid-date-range"
+  | "invalid-metric-value"
   | "unsupported-claim"
   | "unverified-evidence";
 
