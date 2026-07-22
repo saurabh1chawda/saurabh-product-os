@@ -2,13 +2,27 @@
   "name": "saurabh-product-os",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@11.7.0",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22 <23",
+    "pnpm": "11.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:workspaces": "pnpm -r --if-present run build",
     "start": "next start",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:workspaces": "pnpm -r --if-present run lint",
     "typecheck": "tsc --noEmit",
+    "typecheck:workspaces": "pnpm -r --if-present run typecheck",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest --passWithNoTests",
+    "test:workspaces": "pnpm -r --if-present run test",
+    "format": "prettier --write --ignore-unknown package.json pnpm-workspace.yaml turbo.json tsconfig.json tsconfig.base.json eslint.config.js prettier.config.js vitest.config.ts .editorconfig .npmrc .nvmrc .prettierignore",
+    "format:check": "prettier --check --ignore-unknown package.json pnpm-workspace.yaml turbo.json tsconfig.json tsconfig.base.json eslint.config.js prettier.config.js vitest.config.ts .editorconfig .npmrc .nvmrc .prettierignore",
+    "clean": "pnpm -r --if-present run clean",
     "resume-os:validate-jd": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-jd-intelligence.ts",
     "resume-os:assemble": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/assemble-resume.ts",
     "resume-os:validate-assembly": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-assembly.ts",
@@ -58,7 +72,10 @@
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.9",
     "postcss": "8.5.15",
+    "prettier": "3.6.2",
     "tailwindcss": "3.4.19",
+    "turbo": "2.6.1",
+    "vitest": "4.0.15",
     "typescript": "6.0.3"
   }
 }
