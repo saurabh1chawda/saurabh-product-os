@@ -1,5 +1,5 @@
 {
-  "name": "@career-companion/career-knowledge",
+  "name": "@career-companion/career-intelligence",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -11,7 +11,7 @@
     }
   },
   "dependencies": {
-    "@career-companion/kernel": "workspace:*"
+    "@career-companion/career-knowledge": "workspace:*"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

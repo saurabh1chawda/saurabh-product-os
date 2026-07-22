@@ -85,6 +85,12 @@ importers:
 
   packages/ai-platform: {}
 
+  packages/career-intelligence:
+    dependencies:
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+
   packages/career-knowledge:
     dependencies:
       '@career-companion/kernel':
