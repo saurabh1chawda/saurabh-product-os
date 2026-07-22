@@ -6,6 +6,11 @@ const nextTypescript = require("eslint-config-next/typescript");
 module.exports = defineConfig([
   ...nextCoreWebVitals,
   ...nextTypescript,
+  {
+    rules: {
+      "@next/next/no-html-link-for-pages": "off"
+    }
+  },
   globalIgnores([
     ".next/**",
     ".pnpm-store/**",

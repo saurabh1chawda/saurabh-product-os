@@ -79,6 +79,36 @@ importers:
         specifier: 4.0.15
         version: 4.0.15(@types/node@26.0.1)(jiti@1.21.7)
 
+  apps/api: {}
+
+  apps/worker: {}
+
+  packages/ai-platform: {}
+
+  packages/career-knowledge: {}
+
+  packages/config: {}
+
+  packages/domain: {}
+
+  packages/errors: {}
+
+  packages/events: {}
+
+  packages/ids: {}
+
+  packages/infrastructure: {}
+
+  packages/logging: {}
+
+  packages/observability: {}
+
+  packages/repositories: {}
+
+  packages/shared: {}
+
+  packages/workflow: {}
+
 packages:
 
   '@alloc/quick-lru@5.2.0':

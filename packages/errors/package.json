@@ -1,0 +1,12 @@
+{
+  "name": "@career-companion/errors",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint . --no-error-on-unmatched-pattern",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "clean": "node -e \"process.exit(0)\""
+  }
+}
