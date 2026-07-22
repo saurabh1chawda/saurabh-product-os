@@ -99,6 +99,8 @@ importers:
 
   packages/infrastructure: {}
 
+  packages/kernel: {}
+
   packages/logging: {}
 
   packages/observability: {}
