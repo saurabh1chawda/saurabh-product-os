@@ -1,4 +1,4 @@
-export class Result<T, E = string> {
+export class Result<T, E = unknown> {
   private constructor(
     readonly isSuccess: boolean,
     readonly value?: T,

@@ -2,6 +2,9 @@
   "name": "@career-companion/career-knowledge",
   "version": "0.0.0",
   "private": true,
+  "dependencies": {
+    "@career-companion/kernel": "workspace:*"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint . --no-error-on-unmatched-pattern",
