@@ -132,6 +132,12 @@ importers:
 
   packages/repositories: {}
 
+  packages/retrieval:
+    dependencies:
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+
   packages/shared: {}
 
   packages/workflow: {}
