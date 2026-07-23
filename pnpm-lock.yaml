@@ -108,6 +108,12 @@ importers:
         specifier: workspace:*
         version: link:../career-knowledge
 
+  packages/decision-model:
+    dependencies:
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+
   packages/domain: {}
 
   packages/errors: {}
