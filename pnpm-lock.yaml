@@ -136,7 +136,17 @@ importers:
         specifier: workspace:*
         version: link:../kernel
 
-  packages/repositories: {}
+  packages/repositories:
+    dependencies:
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+      '@career-companion/persistence':
+        specifier: workspace:*
+        version: link:../persistence
 
   packages/retrieval:
     dependencies:
