@@ -145,6 +145,27 @@ importers:
 
   packages/infrastructure: {}
 
+  packages/infrastructure-memory:
+    dependencies:
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+      '@career-companion/persistence':
+        specifier: workspace:*
+        version: link:../persistence
+      '@career-companion/repositories':
+        specifier: workspace:*
+        version: link:../repositories
+      '@career-companion/retrieval':
+        specifier: workspace:*
+        version: link:../retrieval
+
   packages/kernel: {}
 
   packages/logging: {}
