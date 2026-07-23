@@ -18,6 +18,10 @@
     "@career-companion/repositories": "workspace:*",
     "@career-companion/retrieval": "workspace:*"
   },
+  "devDependencies": {
+    "@career-companion/career-knowledge": "workspace:*",
+    "@career-companion/infrastructure-memory": "workspace:*"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint . --no-error-on-unmatched-pattern",

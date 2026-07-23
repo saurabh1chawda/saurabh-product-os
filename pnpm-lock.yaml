@@ -105,6 +105,13 @@ importers:
       '@career-companion/retrieval':
         specifier: workspace:*
         version: link:../retrieval
+    devDependencies:
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+      '@career-companion/infrastructure-memory':
+        specifier: workspace:*
+        version: link:../infrastructure-memory
 
   packages/career-intelligence:
     dependencies:
