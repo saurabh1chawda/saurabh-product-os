@@ -85,6 +85,27 @@ importers:
 
   packages/ai-platform: {}
 
+  packages/application:
+    dependencies:
+      '@career-companion/decision-engine':
+        specifier: workspace:*
+        version: link:../decision-engine
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+      '@career-companion/persistence':
+        specifier: workspace:*
+        version: link:../persistence
+      '@career-companion/repositories':
+        specifier: workspace:*
+        version: link:../repositories
+      '@career-companion/retrieval':
+        specifier: workspace:*
+        version: link:../retrieval
+
   packages/career-intelligence:
     dependencies:
       '@career-companion/career-knowledge':
