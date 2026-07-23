@@ -130,6 +130,12 @@ importers:
 
   packages/observability: {}
 
+  packages/persistence:
+    dependencies:
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+
   packages/repositories: {}
 
   packages/retrieval:
