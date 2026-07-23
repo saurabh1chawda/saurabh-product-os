@@ -99,6 +99,15 @@ importers:
 
   packages/config: {}
 
+  packages/decision-engine:
+    dependencies:
+      '@career-companion/career-intelligence':
+        specifier: workspace:*
+        version: link:../career-intelligence
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+
   packages/domain: {}
 
   packages/errors: {}
