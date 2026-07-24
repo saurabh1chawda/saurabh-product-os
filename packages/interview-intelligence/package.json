@@ -1,0 +1,29 @@
+{
+  "name": "@career-companion/interview-intelligence",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@career-companion/career-artifacts": "workspace:*",
+    "@career-companion/career-intelligence": "workspace:*",
+    "@career-companion/career-knowledge": "workspace:*",
+    "@career-companion/decision-engine": "workspace:*",
+    "@career-companion/decision-model": "workspace:*",
+    "@career-companion/explainability": "workspace:*",
+    "@career-companion/kernel": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint . --no-error-on-unmatched-pattern",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "clean": "node -e \"process.exit(0)\""
+  }
+}
