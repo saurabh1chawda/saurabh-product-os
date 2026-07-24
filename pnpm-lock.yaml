@@ -113,6 +113,24 @@ importers:
         specifier: workspace:*
         version: link:../infrastructure-memory
 
+  packages/career-artifacts:
+    dependencies:
+      '@career-companion/career-intelligence':
+        specifier: workspace:*
+        version: link:../career-intelligence
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+
   packages/career-intelligence:
     dependencies:
       '@career-companion/career-knowledge':
@@ -147,6 +165,24 @@ importers:
   packages/errors: {}
 
   packages/events: {}
+
+  packages/explainability:
+    dependencies:
+      '@career-companion/career-intelligence':
+        specifier: workspace:*
+        version: link:../career-intelligence
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+      '@career-companion/decision-engine':
+        specifier: workspace:*
+        version: link:../decision-engine
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
 
   packages/ids: {}
 
@@ -185,6 +221,30 @@ importers:
         specifier: workspace:*
         version: link:../kernel
 
+  packages/portfolio-intelligence:
+    dependencies:
+      '@career-companion/career-artifacts':
+        specifier: workspace:*
+        version: link:../career-artifacts
+      '@career-companion/career-intelligence':
+        specifier: workspace:*
+        version: link:../career-intelligence
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+      '@career-companion/decision-engine':
+        specifier: workspace:*
+        version: link:../decision-engine
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+
   packages/repositories:
     dependencies:
       '@career-companion/career-knowledge':
@@ -196,6 +256,33 @@ importers:
       '@career-companion/persistence':
         specifier: workspace:*
         version: link:../persistence
+
+  packages/resume-intelligence:
+    dependencies:
+      '@career-companion/application':
+        specifier: workspace:*
+        version: link:../application
+      '@career-companion/career-artifacts':
+        specifier: workspace:*
+        version: link:../career-artifacts
+      '@career-companion/career-intelligence':
+        specifier: workspace:*
+        version: link:../career-intelligence
+      '@career-companion/career-knowledge':
+        specifier: workspace:*
+        version: link:../career-knowledge
+      '@career-companion/decision-engine':
+        specifier: workspace:*
+        version: link:../decision-engine
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
 
   packages/retrieval:
     dependencies:
