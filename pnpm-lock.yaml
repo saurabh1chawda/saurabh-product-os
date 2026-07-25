@@ -214,6 +214,24 @@ importers:
         specifier: workspace:*
         version: link:../kernel
 
+  packages/hiring-intelligence:
+    dependencies:
+      '@career-companion/career-artifacts':
+        specifier: workspace:*
+        version: link:../career-artifacts
+      '@career-companion/career-decision':
+        specifier: workspace:*
+        version: link:../career-decision
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/product-intelligence':
+        specifier: workspace:*
+        version: link:../product-intelligence
+
   packages/ids: {}
 
   packages/infrastructure: {}
