@@ -151,9 +151,6 @@ importers:
       '@career-companion/job-intelligence':
         specifier: workspace:*
         version: link:../job-intelligence
-      '@career-companion/kernel':
-        specifier: workspace:*
-        version: link:../kernel
       '@career-companion/portfolio-intelligence':
         specifier: workspace:*
         version: link:../portfolio-intelligence

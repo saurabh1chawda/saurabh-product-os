@@ -17,7 +17,6 @@
     "@career-companion/explainability": "workspace:*",
     "@career-companion/interview-intelligence": "workspace:*",
     "@career-companion/job-intelligence": "workspace:*",
-    "@career-companion/kernel": "workspace:*",
     "@career-companion/portfolio-intelligence": "workspace:*",
     "@career-companion/product-intelligence": "workspace:*",
     "@career-companion/resume-intelligence": "workspace:*"
