@@ -1,3 +1,4 @@
+import type { ArtifactEvidence, ArtifactReference } from "@career-companion/career-artifacts";
 import { assertFiniteNumber, clamp, immutableArray, immutableRecord } from "../shared";
 
 export type ScoreBand = "low" | "medium" | "high" | "strong" | "needs-review";
@@ -6,7 +7,16 @@ export type GapSeverity = "low" | "medium" | "high";
 export type GapPriority = "low" | "medium" | "high" | "critical";
 export type EvidenceStrength = "none" | "weak" | "supporting" | "primary" | "authoritative";
 export type OrderingDirection = "ascending" | "descending";
-export type ComparisonResult = -1 | 0 | 1;
+
+export const RECOMMENDATION_PRIORITIES = Object.freeze(["Critical", "High", "Medium", "Low"] as const);
+export const RECOMMENDATION_CATEGORIES = Object.freeze(["Evidence", "Positioning", "Clarity", "Coverage", "Impact", "Readiness", "Alignment", "RiskMitigation"] as const);
+export const RECOMMENDATION_IMPACTS = Object.freeze(["Transformational", "Significant", "Moderate", "Minor"] as const);
+export const RECOMMENDATION_TYPES = Object.freeze(["Add", "Strengthen", "Clarify", "Quantify", "Reframe", "Validate", "Remove", "Replace", "Prepare"] as const);
+
+export type RecommendationPriority = typeof RECOMMENDATION_PRIORITIES[number];
+export type RecommendationCategory = typeof RECOMMENDATION_CATEGORIES[number];
+export type RecommendationImpact = typeof RECOMMENDATION_IMPACTS[number];
+export type RecommendationType = typeof RECOMMENDATION_TYPES[number];
 
 export interface ScoreWeight {
   readonly key: string;
@@ -85,6 +95,21 @@ export interface GapClassification {
 export interface GapRecommendationPriority {
   readonly priority: GapPriority;
   readonly rationale: string;
+}
+
+export interface MissingEvidenceDescriptor {
+  readonly descriptorId: string;
+  readonly evidenceType: string;
+  readonly description: string;
+  readonly reference?: ArtifactReference;
+}
+
+export interface GapEvidence {
+  readonly supportingEvidence: readonly ArtifactEvidence[];
+  readonly missingEvidence: readonly MissingEvidenceDescriptor[];
+  readonly confidence: Confidence;
+  readonly constraintReferences: readonly ArtifactReference[];
+  readonly explanationReference?: ArtifactReference;
 }
 
 export function createScoreWeight(input: ScoreWeight): ScoreWeight {
@@ -176,6 +201,19 @@ export function createGapClassification(input: GapClassification): GapClassifica
 
 export function createGapRecommendationPriority(input: GapRecommendationPriority): GapRecommendationPriority {
   return immutableRecord(input);
+}
+
+export function createMissingEvidenceDescriptor(input: MissingEvidenceDescriptor): MissingEvidenceDescriptor {
+  return immutableRecord(input);
+}
+
+export function createGapEvidence(input: GapEvidence): GapEvidence {
+  return immutableRecord({
+    ...input,
+    supportingEvidence: immutableArray(input.supportingEvidence),
+    missingEvidence: immutableArray(input.missingEvidence),
+    constraintReferences: immutableArray(input.constraintReferences)
+  });
 }
 
 function confidenceBandFor(value: number): ConfidenceBand {

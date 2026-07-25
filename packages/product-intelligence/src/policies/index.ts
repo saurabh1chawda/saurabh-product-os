@@ -35,10 +35,18 @@ export interface GapSeverityPolicy {
   readonly escalationPriority: GapPriority;
 }
 
+export interface OrderingCriterion {
+  readonly criterion: string;
+  readonly direction: OrderingDirection;
+  readonly priority: number;
+  readonly rationale: string;
+}
+
 export interface OrderingPolicy {
   readonly policyId: string;
-  readonly defaultDirection: OrderingDirection;
+  readonly criteria: readonly OrderingCriterion[];
   readonly stableTieBreakRequired: boolean;
+  readonly tieBreakRationale?: string;
 }
 
 export interface ConfidencePolicy {
@@ -73,7 +81,10 @@ export function createGapSeverityPolicy(input: GapSeverityPolicy): GapSeverityPo
 }
 
 export function createOrderingPolicy(input: OrderingPolicy): OrderingPolicy {
-  return immutableRecord(input);
+  return immutableRecord({
+    ...input,
+    criteria: immutableArray(input.criteria)
+  });
 }
 
 export function createConfidencePolicy(input: ConfidencePolicy): ConfidencePolicy {
