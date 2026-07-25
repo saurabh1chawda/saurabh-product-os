@@ -269,6 +269,18 @@ importers:
         specifier: workspace:*
         version: link:../kernel
 
+  packages/product-intelligence:
+    dependencies:
+      '@career-companion/career-artifacts':
+        specifier: workspace:*
+        version: link:../career-artifacts
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+
   packages/repositories:
     dependencies:
       '@career-companion/career-knowledge':
