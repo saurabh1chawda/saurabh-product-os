@@ -100,9 +100,6 @@ export class InterviewArtifactBuilder {
 export class HiringDecisionArtifactBuilder {
   build(input: Omit<HiringDecision, "artifact" | "explanationSummary">): Pick<HiringDecision, "artifact" | "explanationSummary"> {
     const references = [
-      artifactReference(input.pipeline.pipelineId, "hiring-pipeline", "HiringPipeline"),
-      artifactReference(input.recruiterEvaluation.evaluationId, "recruiter-evaluation", "RecruiterEvaluation"),
-      artifactReference(input.hiringManagerEvaluation.evaluationId, "hiring-manager-evaluation", "HiringManagerEvaluation"),
       artifactReference(input.interviewEvaluation.evaluationId, "interview-evaluation", "InterviewEvaluation")
     ];
     const score = Math.round(input.confidence.value * 100);

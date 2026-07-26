@@ -39,6 +39,7 @@ export class RecruiterAnalyzer {
       artifactKind: "RecruiterEvaluation" as const,
       evaluationId: `recruiter-evaluation:${pipeline.pipelineId}`,
       pipelineId: pipeline.pipelineId,
+      decisionTrace: pipeline.decisionTrace,
       proceedToHiringManager: score.overallScore >= 60 && jobFit >= 55,
       careerProgression: signals[0],
       resumeClarity: signals[1],

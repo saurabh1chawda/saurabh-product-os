@@ -27,6 +27,7 @@ export class HiringManagerAnalyzer {
       artifactKind: "HiringManagerEvaluation" as const,
       evaluationId: `hiring-manager-evaluation:${recruiterEvaluation.evaluationId}`,
       recruiterEvaluationId: recruiterEvaluation.evaluationId,
+      decisionTrace: recruiterEvaluation.decisionTrace,
       spendInterviewTime: recruiterEvaluation.proceedToHiringManager && score.overallScore >= 75,
       productThinking: signals[0],
       execution: signals[1],

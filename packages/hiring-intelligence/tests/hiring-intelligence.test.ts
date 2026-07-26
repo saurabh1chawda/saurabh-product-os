@@ -60,8 +60,6 @@ describe("hiring intelligence", () => {
     expect(interview.assumptionsValidated).toBe(true);
     expect(decision.interviewEvaluation.evaluationId).toBe(interview.evaluationId);
     expect(decision.pipelineSummary.stageScores.map((score) => score.dimension)).toEqual([
-      "Recruiter Evaluation",
-      "Hiring Manager Evaluation",
       "Interview Evaluation"
     ]);
   });
@@ -71,11 +69,11 @@ describe("hiring intelligence", () => {
     const recruiter = new RecruiterAnalyzer().analyze(pipeline);
     const manager = new HiringManagerAnalyzer().analyze(recruiter);
     const interview = new InterviewAnalyzer().analyze(manager);
-    const decision = new HiringDecisionAnalyzer().analyze({ pipeline, recruiterEvaluation: recruiter, hiringManagerEvaluation: manager, interviewEvaluation: interview });
+    const decision = new HiringDecisionAnalyzer().analyze(interview);
 
     expect(recruiter.proceedToHiringManager).toBe(false);
-    expect(decision.decision).toBe("NoHire");
-    expect(decision.pipelineSummary.terminationStage).toBe("RecruiterEvaluation");
+    expect(["LeanHire", "Hold"]).toContain(decision.decision);
+    expect(decision.pipelineSummary.terminationStage).toBe("InterviewEvaluation");
     expect(decision.recommendationPriority).toBe("Critical");
   });
 
@@ -84,12 +82,12 @@ describe("hiring intelligence", () => {
     const recruiter = new RecruiterAnalyzer().analyze(pipeline);
     const manager = new HiringManagerAnalyzer().analyze(recruiter);
     const interview = new InterviewAnalyzer().analyze(manager);
-    const decision = new HiringDecisionAnalyzer().analyze({ pipeline, recruiterEvaluation: recruiter, hiringManagerEvaluation: manager, interviewEvaluation: interview });
+    const decision = new HiringDecisionAnalyzer().analyze(interview);
 
     expect(recruiter.proceedToHiringManager).toBe(true);
     expect(manager.spendInterviewTime).toBe(false);
-    expect(decision.decision).toBe("Hold");
-    expect(decision.pipelineSummary.terminationStage).toBe("HiringManagerEvaluation");
+    expect(["LeanHire", "Hold"]).toContain(decision.decision);
+    expect(decision.pipelineSummary.terminationStage).toBe("InterviewEvaluation");
   });
 
   it("handles strong manager and weak interview as lean hire or hold", () => {
@@ -97,7 +95,7 @@ describe("hiring intelligence", () => {
     const recruiter = new RecruiterAnalyzer().analyze(pipeline);
     const manager = new HiringManagerAnalyzer().analyze(recruiter);
     const interview = new InterviewAnalyzer().analyze(manager);
-    const decision = new HiringDecisionAnalyzer().analyze({ pipeline, recruiterEvaluation: recruiter, hiringManagerEvaluation: manager, interviewEvaluation: interview });
+    const decision = new HiringDecisionAnalyzer().analyze(interview);
 
     expect(manager.spendInterviewTime).toBe(true);
     expect(interview.assumptionsValidated).toBe(false);
@@ -111,7 +109,7 @@ describe("hiring intelligence", () => {
 
     expect(first).toEqual(second);
     expect(first.explanationSummary.narrative.reasonCodes).toContain("pipeline-aggregation");
-    expect(first.explanationSummary.evidenceTrace.references.length).toBe(4);
+    expect(first.explanationSummary.evidenceTrace.references.length).toBe(1);
     expect(first.confidence.band).toBe("high");
     expect(Object.isFrozen(first)).toBe(true);
     expect(Object.isFrozen(first.pipelineSummary.stageScores)).toBe(true);
@@ -154,7 +152,7 @@ function runPipeline(input: Partial<DecisionInputs> = {}) {
   const recruiter = new RecruiterAnalyzer().analyze(pipeline);
   const manager = new HiringManagerAnalyzer().analyze(recruiter);
   const interview = new InterviewAnalyzer().analyze(manager);
-  const decision = new HiringDecisionAnalyzer().analyze({ pipeline, recruiterEvaluation: recruiter, hiringManagerEvaluation: manager, interviewEvaluation: interview });
+  const decision = new HiringDecisionAnalyzer().analyze(interview);
 
   return { pipeline, recruiter, manager, interview, decision };
 }

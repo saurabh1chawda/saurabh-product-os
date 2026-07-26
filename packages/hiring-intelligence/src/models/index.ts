@@ -91,6 +91,7 @@ export interface RecruiterEvaluation {
   readonly artifactKind: "RecruiterEvaluation";
   readonly evaluationId: string;
   readonly pipelineId: string;
+  readonly decisionTrace: DecisionReport["decisionTrace"];
   readonly proceedToHiringManager: boolean;
   readonly careerProgression: HiringSignal;
   readonly resumeClarity: HiringSignal;
@@ -113,6 +114,7 @@ export interface HiringManagerEvaluation {
   readonly artifactKind: "HiringManagerEvaluation";
   readonly evaluationId: string;
   readonly recruiterEvaluationId: string;
+  readonly decisionTrace: DecisionReport["decisionTrace"];
   readonly spendInterviewTime: boolean;
   readonly productThinking: HiringSignal;
   readonly execution: HiringSignal;
@@ -136,6 +138,7 @@ export interface InterviewEvaluation {
   readonly artifactKind: "InterviewEvaluation";
   readonly evaluationId: string;
   readonly hiringManagerEvaluationId: string;
+  readonly decisionTrace: DecisionReport["decisionTrace"];
   readonly assumptionsValidated: boolean;
   readonly behavioralEvidence: HiringSignal;
   readonly communication: HiringSignal;
@@ -157,9 +160,6 @@ export interface InterviewEvaluation {
 export interface HiringDecision {
   readonly artifactKind: "HiringDecision";
   readonly decisionId: string;
-  readonly pipeline: HiringPipeline;
-  readonly recruiterEvaluation: RecruiterEvaluation;
-  readonly hiringManagerEvaluation: HiringManagerEvaluation;
   readonly interviewEvaluation: InterviewEvaluation;
   readonly decision: HiringDecisionOutcome;
   readonly confidence: Confidence;

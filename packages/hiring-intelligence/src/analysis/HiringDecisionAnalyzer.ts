@@ -6,38 +6,20 @@ import { confidenceFromScore, immutableArray, immutableRecord, priorityFromScore
 export class HiringDecisionAnalyzer {
   private readonly artifactBuilder = new HiringDecisionArtifactBuilder();
 
-  analyze(input: {
-    readonly pipeline: HiringDecision["pipeline"];
-    readonly recruiterEvaluation: HiringDecision["recruiterEvaluation"];
-    readonly hiringManagerEvaluation: HiringDecision["hiringManagerEvaluation"];
-    readonly interviewEvaluation: InterviewEvaluation;
-  }): HiringDecision {
+  analyze(interviewEvaluation: InterviewEvaluation): HiringDecision {
     const stageScores = immutableArray([
-      createScoreDimension({ dimension: "Recruiter Evaluation", score: input.recruiterEvaluation.score.overallScore, weight: 0.25, rationale: "Recruiter screen outcome." }),
-      createScoreDimension({ dimension: "Hiring Manager Evaluation", score: input.hiringManagerEvaluation.score.overallScore, weight: 0.35, rationale: "Hiring manager screen outcome." }),
-      createScoreDimension({ dimension: "Interview Evaluation", score: input.interviewEvaluation.score.overallScore, weight: 0.4, rationale: "Interview validation outcome." })
+      createScoreDimension({ dimension: "Interview Evaluation", score: interviewEvaluation.score.overallScore, weight: 1, rationale: "Interview validation outcome from the immediate predecessor." })
     ]);
-    const aggregate = Math.round(
-      (input.recruiterEvaluation.score.overallScore * 0.25) +
-      (input.hiringManagerEvaluation.score.overallScore * 0.35) +
-      (input.interviewEvaluation.score.overallScore * 0.4)
-    );
-    const decision = outcomeFor(aggregate, input);
-    const allSignals = [
-      ...input.recruiterEvaluation.score.dimensions,
-      ...input.hiringManagerEvaluation.score.dimensions,
-      ...input.interviewEvaluation.score.dimensions
-    ];
+    const aggregate = interviewEvaluation.score.overallScore;
+    const decision = outcomeFor(aggregate, interviewEvaluation);
+    const allSignals = [...interviewEvaluation.score.dimensions];
     const strongestSignals = uniqueSorted(allSignals.filter((dimension) => dimension.score >= 75).map((dimension) => dimension.dimension)).slice(0, 5);
     const weakestSignals = uniqueSorted(allSignals.filter((dimension) => dimension.score < 70).map((dimension) => dimension.dimension)).slice(0, 5);
-    const terminationStage = terminationStageFor(input);
+    const terminationStage = terminationStageFor(interviewEvaluation);
     const partial = immutableRecord({
       artifactKind: "HiringDecision" as const,
-      decisionId: `hiring-decision:${input.interviewEvaluation.evaluationId}`,
-      pipeline: input.pipeline,
-      recruiterEvaluation: input.recruiterEvaluation,
-      hiringManagerEvaluation: input.hiringManagerEvaluation,
-      interviewEvaluation: input.interviewEvaluation,
+      decisionId: `hiring-decision:${interviewEvaluation.evaluationId}`,
+      interviewEvaluation,
       decision,
       confidence: confidenceFromScore(aggregate, "Hiring decision confidence is derived from all governed hiring stages."),
       supportingEvidence: strongestSignals,
@@ -48,13 +30,9 @@ export class HiringDecisionAnalyzer {
         weakestSignals,
         terminationStage
       }),
-      decisionTrace: input.pipeline.decisionTrace,
+      decisionTrace: interviewEvaluation.decisionTrace,
       recommendationPriority: terminationStage ? "Critical" as const : priorityFromScore(aggregate),
-      recommendations: immutableArray([
-        ...input.recruiterEvaluation.recommendations,
-        ...input.hiringManagerEvaluation.recommendations,
-        ...input.interviewEvaluation.recommendations
-      ].sort((left, right) => priorityRank(left.priority) - priorityRank(right.priority)))
+      recommendations: immutableArray([...interviewEvaluation.recommendations].sort((left, right) => priorityRank(left.priority) - priorityRank(right.priority)))
     });
     const built = this.artifactBuilder.build(partial);
 
@@ -64,15 +42,9 @@ export class HiringDecisionAnalyzer {
 
 function outcomeFor(
   aggregate: number,
-  input: {
-    readonly recruiterEvaluation: HiringDecision["recruiterEvaluation"];
-    readonly hiringManagerEvaluation: HiringDecision["hiringManagerEvaluation"];
-    readonly interviewEvaluation: InterviewEvaluation;
-  }
+  interviewEvaluation: InterviewEvaluation
 ): HiringDecisionOutcome {
-  if (!input.recruiterEvaluation.proceedToHiringManager) return "NoHire";
-  if (!input.hiringManagerEvaluation.spendInterviewTime) return "Hold";
-  if (!input.interviewEvaluation.assumptionsValidated) return aggregate >= 65 ? "LeanHire" : "Hold";
+  if (!interviewEvaluation.assumptionsValidated) return aggregate >= 65 ? "LeanHire" : "Hold";
   if (aggregate >= 85) return "StrongHire";
   if (aggregate >= 75) return "Hire";
   if (aggregate >= 65) return "LeanHire";
@@ -80,14 +52,8 @@ function outcomeFor(
   return "NoHire";
 }
 
-function terminationStageFor(input: {
-  readonly recruiterEvaluation: HiringDecision["recruiterEvaluation"];
-  readonly hiringManagerEvaluation: HiringDecision["hiringManagerEvaluation"];
-  readonly interviewEvaluation: InterviewEvaluation;
-}) {
-  if (!input.recruiterEvaluation.proceedToHiringManager) return "RecruiterEvaluation" as const;
-  if (!input.hiringManagerEvaluation.spendInterviewTime) return "HiringManagerEvaluation" as const;
-  if (!input.interviewEvaluation.assumptionsValidated) return "InterviewEvaluation" as const;
+function terminationStageFor(interviewEvaluation: InterviewEvaluation) {
+  if (!interviewEvaluation.assumptionsValidated) return "InterviewEvaluation" as const;
   return undefined;
 }
 

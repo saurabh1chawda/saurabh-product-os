@@ -26,6 +26,7 @@ export class InterviewAnalyzer {
       artifactKind: "InterviewEvaluation" as const,
       evaluationId: `interview-evaluation:${hiringManagerEvaluation.evaluationId}`,
       hiringManagerEvaluationId: hiringManagerEvaluation.evaluationId,
+      decisionTrace: hiringManagerEvaluation.decisionTrace,
       assumptionsValidated: hiringManagerEvaluation.spendInterviewTime && score.overallScore >= Math.min(managerScore, 75),
       behavioralEvidence: signals[0],
       communication: signals[1],
