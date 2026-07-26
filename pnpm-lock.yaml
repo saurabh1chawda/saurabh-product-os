@@ -113,6 +113,30 @@ importers:
         specifier: workspace:*
         version: link:../infrastructure-memory
 
+  packages/ats-intelligence:
+    dependencies:
+      '@career-companion/career-artifacts':
+        specifier: workspace:*
+        version: link:../career-artifacts
+      '@career-companion/decision-engine':
+        specifier: workspace:*
+        version: link:../decision-engine
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/job-intelligence':
+        specifier: workspace:*
+        version: link:../job-intelligence
+      '@career-companion/product-intelligence':
+        specifier: workspace:*
+        version: link:../product-intelligence
+      '@career-companion/resume-intelligence':
+        specifier: workspace:*
+        version: link:../resume-intelligence
+
   packages/career-artifacts:
     dependencies:
       '@career-companion/career-intelligence':
