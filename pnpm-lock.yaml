@@ -326,6 +326,33 @@ importers:
         specifier: workspace:*
         version: link:../kernel
 
+  packages/interview-planner:
+    dependencies:
+      '@career-companion/career-artifacts':
+        specifier: workspace:*
+        version: link:../career-artifacts
+      '@career-companion/career-strategy':
+        specifier: workspace:*
+        version: link:../career-strategy
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/learning-planner':
+        specifier: workspace:*
+        version: link:../learning-planner
+      '@career-companion/opportunity-intelligence':
+        specifier: workspace:*
+        version: link:../opportunity-intelligence
+      '@career-companion/portfolio-planner':
+        specifier: workspace:*
+        version: link:../portfolio-planner
+      '@career-companion/product-intelligence':
+        specifier: workspace:*
+        version: link:../product-intelligence
+
   packages/job-intelligence:
     dependencies:
       '@career-companion/career-artifacts':
