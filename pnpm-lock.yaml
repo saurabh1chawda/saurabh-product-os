@@ -197,6 +197,27 @@ importers:
         specifier: workspace:*
         version: link:../kernel
 
+  packages/career-strategy:
+    dependencies:
+      '@career-companion/career-artifacts':
+        specifier: workspace:*
+        version: link:../career-artifacts
+      '@career-companion/career-decision':
+        specifier: workspace:*
+        version: link:../career-decision
+      '@career-companion/decision-model':
+        specifier: workspace:*
+        version: link:../decision-model
+      '@career-companion/explainability':
+        specifier: workspace:*
+        version: link:../explainability
+      '@career-companion/opportunity-intelligence':
+        specifier: workspace:*
+        version: link:../opportunity-intelligence
+      '@career-companion/product-intelligence':
+        specifier: workspace:*
+        version: link:../product-intelligence
+
   packages/config: {}
 
   packages/decision-engine:
