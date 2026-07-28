@@ -38,6 +38,7 @@ export class PortfolioRoadmapAnalyzer {
         confidenceScore,
         evidenceReferenceIds: [evaluation.portfolio.artifact.artifactId, evaluation.careerStrategy.artifact.artifactId],
         reasonCodes: items.map((item) => item.initiativeId),
+        tradeOffs: immutableArray(["highest portfolio value is balanced against dependency order"]),
         assumptions: evaluation.assumptions,
         constraints: evaluation.constraints.map((constraint) => constraint.label)
       })

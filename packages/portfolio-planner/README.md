@@ -63,3 +63,18 @@ It must not depend on Resume Intelligence, ATS Intelligence, Hiring Intelligence
 ## DETERMINISM GUARANTEE
 
 Every analyzer consumes immutable input, produces immutable output, and uses deterministic ordering and scoring. Every analyzer after `PortfolioPlanContext` consumes only its immediate predecessor.
+
+## EXPLAINABILITY
+
+Every Portfolio Planner artifact exposes deterministic explainability with:
+
+- Evidence.
+- Assumptions.
+- Constraints.
+- Confidence.
+- Alternatives.
+- tradeOffs.
+- reasonCodes.
+- Trace.
+
+Explainability is derived from canonical inputs and deterministic planning outputs. Runtime AI reasoning is not part of Portfolio Planner.

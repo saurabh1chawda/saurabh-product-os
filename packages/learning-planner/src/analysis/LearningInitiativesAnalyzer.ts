@@ -50,6 +50,7 @@ export class LearningInitiativesAnalyzer {
         confidenceScore,
         evidenceReferenceIds: evidence,
         reasonCodes: initiatives.map((item) => item.kind),
+        tradeOffs: immutableArray(["initiative breadth is balanced against capability-development focus"]),
         assumptions: needs.assumptions,
         constraints: needs.constraints.map((constraint) => constraint.label)
       })

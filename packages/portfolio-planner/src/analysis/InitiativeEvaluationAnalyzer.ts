@@ -34,6 +34,7 @@ export class InitiativeEvaluationAnalyzer {
         confidenceScore,
         evidenceReferenceIds: [initiatives.portfolio.artifact.artifactId, initiatives.careerStrategy.artifact.artifactId],
         reasonCodes: evaluations.map((item) => item.kind),
+        tradeOffs: immutableArray(["strategic alignment is balanced against feasibility and evidence urgency"]),
         assumptions: initiatives.assumptions,
         constraints: initiatives.constraints.map((constraint) => constraint.label)
       })

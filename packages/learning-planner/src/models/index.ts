@@ -232,6 +232,7 @@ export interface LearningPlannerExplanationInput {
   readonly confidenceScore: number;
   readonly evidenceReferenceIds: readonly string[];
   readonly reasonCodes: readonly string[];
+  readonly tradeOffs: readonly string[];
   readonly assumptions: readonly string[];
   readonly constraints: readonly string[];
 }

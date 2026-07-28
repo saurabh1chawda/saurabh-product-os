@@ -41,6 +41,7 @@ export class PortfolioInitiativesAnalyzer {
         confidenceScore,
         evidenceReferenceIds: references,
         reasonCodes: initiatives.map((item) => item.kind),
+        tradeOffs: immutableArray(["initiative breadth is balanced against portfolio evidence focus"]),
         assumptions: needs.assumptions,
         constraints: needs.constraints.map((constraint) => constraint.label)
       })

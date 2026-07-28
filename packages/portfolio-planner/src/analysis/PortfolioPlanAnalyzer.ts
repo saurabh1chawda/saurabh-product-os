@@ -55,6 +55,7 @@ export class PortfolioPlanAnalyzer {
         confidenceScore,
         evidenceReferenceIds: supportingEvidence,
         reasonCodes: [outcome, ...roadmap.items.map((item) => item.initiativeId)],
+        tradeOffs: immutableArray(["portfolio readiness is balanced against publication confidence"]),
         assumptions: roadmap.assumptions,
         constraints: roadmap.constraints.map((constraint) => constraint.label)
       })

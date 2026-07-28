@@ -51,6 +51,7 @@ export class LearningPlanContextAnalyzer {
         confidenceScore: 100,
         evidenceReferenceIds: sourceReferences.map((reference) => reference.referenceId),
         reasonCodes: immutableArray(["aggregation-only", "learning-planning-context"]),
+        tradeOffs: immutableArray(["aggregation defers capability trade-offs to downstream stages"]),
         assumptions,
         constraints: constraints.map((constraint) => constraint.label)
       })

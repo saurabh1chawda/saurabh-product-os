@@ -62,6 +62,7 @@ export class LearningPlanAnalyzer {
         confidenceScore,
         evidenceReferenceIds: evidenceReferences,
         reasonCodes: [outcome, ...roadmap.items.map((item) => item.initiativeId)],
+        tradeOffs: immutableArray(["capability acceleration is balanced against foundation-building confidence"]),
         assumptions: roadmap.assumptions,
         constraints: roadmap.constraints.map((constraint) => constraint.label)
       })

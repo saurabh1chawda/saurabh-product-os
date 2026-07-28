@@ -65,3 +65,18 @@ It must not depend on ATS Intelligence, Hiring Intelligence, infrastructure, per
 ## DETERMINISM GUARANTEE
 
 Every analyzer consumes immutable input, produces immutable output, and uses deterministic ordering and scoring. Every analyzer after `LearningPlanContext` consumes only its immediate predecessor.
+
+## EXPLAINABILITY
+
+Every Learning Planner artifact exposes deterministic explainability with:
+
+- Evidence.
+- Assumptions.
+- Constraints.
+- Confidence.
+- Alternatives.
+- tradeOffs.
+- reasonCodes.
+- Trace.
+
+Explainability is derived from canonical inputs and deterministic planning outputs. Runtime AI reasoning is not part of Learning Planner.

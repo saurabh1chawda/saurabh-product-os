@@ -37,6 +37,7 @@ export class LearningEvaluationAnalyzer {
         confidenceScore,
         evidenceReferenceIds: [initiatives.careerStrategy.artifact.artifactId, initiatives.portfolioPlan.artifact.artifactId, initiatives.opportunityDecision.artifact.artifactId],
         reasonCodes: evaluations.map((item) => item.kind),
+        tradeOffs: immutableArray(["strategic impact is balanced against effort, complexity, dependency, and execution risk"]),
         assumptions: initiatives.assumptions,
         constraints: initiatives.constraints.map((constraint) => constraint.label)
       })

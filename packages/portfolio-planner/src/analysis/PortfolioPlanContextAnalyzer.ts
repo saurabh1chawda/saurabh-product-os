@@ -35,6 +35,7 @@ export class PortfolioPlanContextAnalyzer {
         confidenceScore: 100,
         evidenceReferenceIds: sourceReferences.map((reference) => reference.referenceId),
         reasonCodes: immutableArray(["aggregation-only", "portfolio-planning-context"]),
+        tradeOffs: immutableArray(["aggregation defers portfolio trade-offs to downstream stages"]),
         assumptions,
         constraints: constraints.map((constraint) => constraint.label)
       })

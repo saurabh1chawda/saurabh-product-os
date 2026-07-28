@@ -46,6 +46,7 @@ export class EvidenceNeedsAnalyzer {
         confidenceScore,
         evidenceReferenceIds: needs.flatMap((need) => need.supportingReferences),
         reasonCodes: needs.map((need) => need.targetEvidenceType),
+        tradeOffs: immutableArray(["portfolio evidence gap coverage is balanced against initiative focus"]),
         assumptions: context.assumptions,
         constraints: context.constraints.map((constraint) => constraint.label)
       })

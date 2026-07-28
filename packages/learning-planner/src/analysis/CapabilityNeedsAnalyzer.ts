@@ -44,6 +44,7 @@ export class CapabilityNeedsAnalyzer {
           confidenceScore: Math.round(need.confidence.value * 100),
           evidenceReferenceIds: need.supportingEvidence,
           reasonCodes: [need.category, need.gap.severity],
+          tradeOffs: [`${need.category} capability development is balanced against other capability needs.`],
           assumptions: context.assumptions,
           constraints: context.constraints.map((constraint) => constraint.label)
         })
@@ -61,6 +62,7 @@ export class CapabilityNeedsAnalyzer {
         confidenceScore,
         evidenceReferenceIds: evidence,
         reasonCodes: categories,
+        tradeOffs: immutableArray(["capability gap coverage is balanced against initiative focus"]),
         assumptions: context.assumptions,
         constraints: context.constraints.map((constraint) => constraint.label)
       })

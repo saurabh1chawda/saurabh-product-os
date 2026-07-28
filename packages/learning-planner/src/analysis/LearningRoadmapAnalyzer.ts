@@ -43,6 +43,7 @@ export class LearningRoadmapAnalyzer {
         confidenceScore,
         evidenceReferenceIds: [evaluation.careerStrategy.artifact.artifactId, evaluation.portfolioPlan.artifact.artifactId],
         reasonCodes: items.map((item) => item.initiativeId),
+        tradeOffs: immutableArray(["highest capability-development value is balanced against dependency order"]),
         assumptions: evaluation.assumptions,
         constraints: evaluation.constraints.map((constraint) => constraint.label)
       })

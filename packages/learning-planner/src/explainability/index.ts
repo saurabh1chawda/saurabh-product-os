@@ -65,14 +65,14 @@ export function createLearningPlannerExplanationSummary(input: LearningPlannerEx
   const alternatives: AlternativeSummary = immutableRecord({
     rejectedAlternatives: immutableArray([]),
     orderedAlternatives: immutableArray([]),
-    rejectionReasons: immutableArray(input.reasonCodes)
+    rejectionReasons: immutableArray([...input.reasonCodes, ...input.tradeOffs])
   });
   const narrative: DecisionNarrative = immutableRecord({
     narrativeId: `learning-planner-narrative:${input.decisionId}`,
     decisionId: input.decisionId,
     title: input.title,
     outcome: input.confidenceScore >= 50 ? "recommended" as const : "requires-review" as const,
-    reasonCodes: immutableArray(input.reasonCodes),
+    reasonCodes: immutableArray([...input.reasonCodes, ...input.tradeOffs]),
     rejectedAlternatives: immutableArray([]),
     evidenceReferenceIds: immutableArray(input.evidenceReferenceIds),
     constraintLabels: immutableArray(input.constraints)
