@@ -9,6 +9,7 @@ import type {
   StorySnapshot,
   TechnologySnapshot
 } from "@career-companion/career-knowledge";
+import type { ArtifactSection, CareerArtifact } from "@career-companion/career-artifacts";
 import type { Ranking, RecommendationScore, Confidence } from "@career-companion/career-intelligence";
 import type { DecisionTrace } from "@career-companion/decision-engine";
 import type { AlternativeSummary, ExplanationSummary } from "@career-companion/explainability";
@@ -92,17 +93,14 @@ export interface ResumeScore {
   readonly gapPenalty: number;
 }
 
-export interface ResumeSection<TContent = unknown> {
-  readonly sectionId: string;
+export type ResumeSection<TContent = unknown> = ArtifactSection<TContent> & {
   readonly sectionType: ResumeSectionType;
-  readonly title: string;
-  readonly order: number;
-  readonly content: TContent;
-}
+};
 
 export interface ResumeModel {
   readonly resumeId: string;
   readonly profileId: string;
+  readonly artifact: CareerArtifact;
   readonly sections: readonly ResumeSection[];
   readonly summary: ResumeSummary;
   readonly experience: readonly ResumeExperience[];

@@ -47,6 +47,8 @@ describe("resume intelligence", () => {
     ]);
     expect(model.sections.map((section) => section.order)).toEqual([1, 2, 3, 4, 5, 6]);
     expect(model.summary.headline).toBe("AI Product Leader");
+    expect(model.artifact.artifactType).toBe("Resume");
+    expect(model.artifact.sections).toEqual(model.sections);
     expect(model.experience).toHaveLength(1);
     expect(model.skills.skills).toHaveLength(1);
     expect(Object.isFrozen(model.sections)).toBe(true);
@@ -130,6 +132,7 @@ describe("resume intelligence", () => {
 
     expect(dependencies.sort()).toEqual([
       "@career-companion/application",
+      "@career-companion/career-artifacts",
       "@career-companion/career-intelligence",
       "@career-companion/career-knowledge",
       "@career-companion/decision-engine",

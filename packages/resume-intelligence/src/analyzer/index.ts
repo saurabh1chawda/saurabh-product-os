@@ -1,4 +1,11 @@
 import type { GenerateResumeCommand } from "@career-companion/application";
+import {
+  createArtifactExplanation,
+  createArtifactReference,
+  createArtifactScore,
+  createArtifactSummary,
+  createCareerArtifact
+} from "@career-companion/career-artifacts";
 import { Confidence } from "@career-companion/career-intelligence";
 import { createAlternative, createDecision, createDecisionExplanation, createRecommendation } from "@career-companion/decision-model";
 import type {
@@ -91,10 +98,53 @@ export class ResumeAnalyzer {
       gaps,
       recommendations
     });
+    const artifact = createCareerArtifact({
+      artifactId: `artifact:resume:${input.source.careerProfile.id.toString()}`,
+      artifactType: "Resume",
+      metadata: {
+        artifactId: `artifact:resume:${input.source.careerProfile.id.toString()}`,
+        artifactType: "Resume",
+        title: "Resume",
+        createdAt: input.source.decisionTrace.executionTimestamp,
+        source: "resume-intelligence",
+        version: 1,
+        references: [
+          createArtifactReference({
+            referenceId: input.source.careerProfile.id.toString(),
+            referenceType: "career-profile",
+            label: input.source.careerProfile.displayName
+          })
+        ]
+      },
+      summary: createArtifactSummary({
+        headline: summary.headline,
+        summary: summary.summary,
+        score: createArtifactScore({
+          value: score.value,
+          scale: "zero-to-one-hundred",
+          label: score.value >= 70 ? "strong" : "needs-review"
+        }),
+        references: []
+      }),
+      sections,
+      score: createArtifactScore({
+        value: score.value,
+        scale: "zero-to-one-hundred",
+        label: score.value >= 70 ? "strong" : "needs-review"
+      }),
+      explanation: createArtifactExplanation({
+        explanationSummary,
+        confidence: explanation.confidence,
+        decisionTraceReference: explanation.decisionTraceReference,
+        acceptedAlternative: explanation.alternativeConsideration.acceptedAlternative,
+        rejectedAlternatives: explanation.alternativeConsideration.rejectedAlternatives
+      })
+    });
 
     return immutableRecord({
       resumeId: `resume:${input.source.careerProfile.id.toString()}`,
       profileId: input.source.careerProfile.id.toString(),
+      artifact,
       sections,
       summary,
       experience,

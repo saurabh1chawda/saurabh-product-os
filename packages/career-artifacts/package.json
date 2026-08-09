@@ -1,5 +1,5 @@
 {
-  "name": "@career-companion/resume-intelligence",
+  "name": "@career-companion/career-artifacts",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -11,11 +11,8 @@
     }
   },
   "dependencies": {
-    "@career-companion/application": "workspace:*",
-    "@career-companion/career-artifacts": "workspace:*",
     "@career-companion/career-intelligence": "workspace:*",
     "@career-companion/career-knowledge": "workspace:*",
-    "@career-companion/decision-engine": "workspace:*",
     "@career-companion/decision-model": "workspace:*",
     "@career-companion/explainability": "workspace:*",
     "@career-companion/kernel": "workspace:*"
