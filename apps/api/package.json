@@ -2,10 +2,21 @@
   "name": "@career-companion/api",
   "version": "0.0.0",
   "private": true,
+  "dependencies": {
+    "@career-companion/kernel": "workspace:*",
+    "@career-companion/infrastructure": "workspace:*",
+    "@career-companion/portfolio-workspace": "workspace:*",
+    "@career-companion/portfolio-workspace-application": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.3",
+    "pg": "^8.22.0"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint . --no-error-on-unmatched-pattern",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:integration:portfolio-workspace-host": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types tests/portfolio-workspace-api-host-integration-runner.ts",
     "test": "vitest run --passWithNoTests",
     "clean": "node -e \"process.exit(0)\""
   }

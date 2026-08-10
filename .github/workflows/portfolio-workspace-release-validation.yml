@@ -1,0 +1,111 @@
+name: Portfolio Workspace Release Validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-validation:
+    name: Release Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Activate pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.9.0 --activate
+
+      - name: Verify toolchain
+        run: |
+          node --version
+          pnpm --version
+          test "$(pnpm --version)" = "11.9.0"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+  portfolio-workspace-postgresql-integration:
+    name: Portfolio Workspace PostgreSQL Integration
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: portfolio_workspace_ci
+          POSTGRES_PASSWORD: portfolio_workspace_ci_password
+          POSTGRES_DB: portfolio_workspace_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U portfolio_workspace_ci -d portfolio_workspace_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      PORTFOLIO_WORKSPACE_TEST_DATABASE_URL: postgresql://portfolio_workspace_ci:portfolio_workspace_ci_password@localhost:5432/portfolio_workspace_test
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Activate pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.9.0 --activate
+
+      - name: Verify toolchain
+        run: |
+          node --version
+          pnpm --version
+          test "$(pnpm --version)" = "11.9.0"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate PostgreSQL test database target
+        run: |
+          node --input-type=module -e "const value = process.env.PORTFOLIO_WORKSPACE_TEST_DATABASE_URL; const databaseName = new URL(value).pathname.slice(1).toLowerCase(); if (!databaseName.includes('test') || databaseName.includes('prod') || databaseName.includes('production')) process.exit(1);"
+
+      - name: Portfolio Workspace repository integration
+        run: pnpm --filter @career-companion/infrastructure test:integration:portfolio-workspace
+
+      - name: Portfolio Workspace runtime integration
+        run: pnpm --filter @career-companion/infrastructure test:integration:portfolio-workspace-runtime
+
+      - name: Portfolio Workspace API host integration
+        run: pnpm --filter @career-companion/api test:integration:portfolio-workspace-host

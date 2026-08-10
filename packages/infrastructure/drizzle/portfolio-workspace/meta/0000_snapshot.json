@@ -1,0 +1,65 @@
+{
+  "id": "9b7c8456-7aab-4252-9248-f9144d5ebd66",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.portfolio_executions": {
+      "name": "portfolio_executions",
+      "schema": "",
+      "columns": {
+        "execution_id": {
+          "name": "execution_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "record_version": {
+          "name": "record_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "revision": {
+          "name": "revision",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aggregate_payload": {
+          "name": "aggregate_payload",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "portfolio_executions_record_version_positive": {
+          "name": "portfolio_executions_record_version_positive",
+          "value": "\"portfolio_executions\".\"record_version\" >= 1"
+        },
+        "portfolio_executions_revision_positive": {
+          "name": "portfolio_executions_revision_positive",
+          "value": "\"portfolio_executions\".\"revision\" >= 1"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

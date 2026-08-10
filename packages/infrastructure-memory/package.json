@@ -23,6 +23,8 @@
     "@career-companion/decision-model": "workspace:*",
     "@career-companion/kernel": "workspace:*",
     "@career-companion/persistence": "workspace:*",
+    "@career-companion/portfolio-workspace": "workspace:*",
+    "@career-companion/portfolio-workspace-application": "workspace:*",
     "@career-companion/repositories": "workspace:*",
     "@career-companion/retrieval": "workspace:*"
   }
