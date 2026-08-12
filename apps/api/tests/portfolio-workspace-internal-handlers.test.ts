@@ -23,6 +23,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -30,16 +31,20 @@ import {
 import { describe, expect, it } from "vitest";
 import {
   GetPortfolioExecutionInternalHandler,
+  InitializePortfolioExecutionPresentationRequest,
   InitializePortfolioExecutionInternalHandler,
   PORTFOLIO_WORKSPACE_CORRELATION_HEADER,
+  PortfolioWorkspaceProductionAuthorization,
   PortfolioWorkspaceCommandContextFactory,
   PortfolioWorkspacePresentationErrorCategory,
   PortfolioWorkspacePresentationErrorCode,
   PortfolioWorkspacePresentationOutcome,
   PortfolioWorkspacePresentationPrincipal,
   PortfolioWorkspacePresentationPrincipalType,
+  authorizationResourceReferenceForPrincipal,
   createForbiddenPresentationError,
   mapPortfolioWorkspacePresentationErrorToInternalStatus,
+  type PortfolioWorkspaceAuthorizationResourceResolver,
   type PortfolioWorkspaceInternalAuthorization
 } from "../src";
 
@@ -229,6 +234,7 @@ describe("Portfolio Workspace internal API handlers", () => {
       getFailure: new PortfolioExecutionNotFoundError(new ExecutionId("execution:missing"))
     });
     const deniedAuthorization = new FakeAuthorization({ deniedCorrelationId: "correlation:denied-get" });
+    const deniedRuntime = fakeRuntime();
 
     const notFound = await getHandler({ runtime: notFoundRuntime }).handle({
       principal: trustedPrincipal("missing"),
@@ -237,7 +243,7 @@ describe("Portfolio Workspace internal API handlers", () => {
         pathParameters: { executionId: "execution:missing" }
       }
     });
-    const denied = await getHandler({ runtime: fakeRuntime(), authorization: deniedAuthorization }).handle({
+    const denied = await getHandler({ runtime: deniedRuntime, authorization: deniedAuthorization }).handle({
       principal: trustedPrincipal("denied-get"),
       request: {
         headers: { [PORTFOLIO_WORKSPACE_CORRELATION_HEADER]: "correlation:denied-get" },
@@ -259,6 +265,13 @@ describe("Portfolio Workspace internal API handlers", () => {
     });
     expect(denied.status).toBe(403);
     expect(deniedAuthorization.getCalls).toBe(1);
+    expect(denied.body).toMatchObject({
+      category: PortfolioWorkspacePresentationErrorCategory.Forbidden,
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden
+    });
+    expect(denied.body).not.toHaveProperty("execution");
+    expect(denied.body).not.toHaveProperty("authorizationResourceReference");
+    expect(deniedRuntime.getService.calls).toBe(0);
     expect(invalid.status).toBe(400);
     expect(invalid.body).toMatchObject({
       category: PortfolioWorkspacePresentationErrorCategory.InvalidInput,
@@ -295,6 +308,77 @@ describe("Portfolio Workspace internal API handlers", () => {
 
   it("keeps status mapping host-local and deterministic", () => {
     expect(mapPortfolioWorkspacePresentationErrorToInternalStatus(createForbiddenPresentationError("correlation:status"))).toBe(403);
+  });
+});
+
+describe("Portfolio Workspace production authorization", () => {
+  it("derives initialization ownership from the trusted principal and ignores request-shaped ownership", async () => {
+    const principal = trustedPrincipal("owner");
+    const authorization = new PortfolioWorkspaceProductionAuthorization({
+      resourceResolver: new FakeAuthorizationResourceResolver(authorizationResourceReferenceForPrincipal(principal))
+    });
+
+    const result = await authorization.authorizeInitialize({
+      principal,
+      request: new InitializePortfolioExecutionPresentationRequest(initializationBody("owner")),
+      correlationId: "correlation:owner"
+    });
+
+    expect(result.isSuccess).toBe(true);
+    expect(result.value!.equals(authorizationResourceReferenceForPrincipal(principal))).toBe(true);
+    expect(result.value!.authorizationResourceReference).toMatch(/^portfolio-workspace:principal:user:[a-f0-9]{64}$/u);
+    expect(result.value!.authorizationResourceReference).not.toContain(principal.principalId);
+    expect(result.value!.authorizationResourceReference).not.toContain(principal.authenticationProvider);
+  });
+
+  it("allows get only when the durable resource matches the trusted principal", async () => {
+    const principal = trustedPrincipal("allowed");
+    const resolver = new FakeAuthorizationResourceResolver(authorizationResourceReferenceForPrincipal(principal));
+    const authorization = new PortfolioWorkspaceProductionAuthorization({ resourceResolver: resolver });
+
+    const result = await authorization.authorizeGet({
+      principal,
+      executionId: new ExecutionId("execution:allowed"),
+      correlationId: "correlation:allowed"
+    });
+
+    expect(result.isSuccess).toBe(true);
+    expect(resolver.calls).toBe(1);
+    expect(resolver.lastExecutionId?.toJSON()).toBe("execution:allowed");
+    expect(resolver.lastCorrelationId).toBe("correlation:allowed");
+  });
+
+  it("denies mismatched users and service principals without a privileged bypass", async () => {
+    const owner = trustedPrincipal("owner");
+    const otherUser = trustedPrincipal("other");
+    const servicePrincipal = trustedServicePrincipal("worker");
+    const authorization = new PortfolioWorkspaceProductionAuthorization({
+      resourceResolver: new FakeAuthorizationResourceResolver(authorizationResourceReferenceForPrincipal(owner))
+    });
+
+    const userResult = await authorization.authorizeGet({
+      principal: otherUser,
+      executionId: new ExecutionId("execution:owned"),
+      correlationId: "correlation:other"
+    });
+    const serviceResult = await authorization.authorizeGet({
+      principal: servicePrincipal,
+      executionId: new ExecutionId("execution:owned"),
+      correlationId: "correlation:service"
+    });
+
+    expect(userResult.isFailure).toBe(true);
+    expect(userResult.error).toMatchObject({
+      category: PortfolioWorkspacePresentationErrorCategory.Forbidden,
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden,
+      correlationId: "correlation:other"
+    });
+    expect(serviceResult.isFailure).toBe(true);
+    expect(serviceResult.error).toMatchObject({
+      category: PortfolioWorkspacePresentationErrorCategory.Forbidden,
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden,
+      correlationId: "correlation:service"
+    });
   });
 });
 
@@ -341,7 +425,11 @@ class FakeAuthorization implements PortfolioWorkspaceInternalAuthorization {
 
   async authorizeGet() {
     this.getCalls += 1;
-    return this.decision();
+    if (this.input.deniedCorrelationId !== undefined) {
+      return Result.failure(createForbiddenPresentationError(this.input.deniedCorrelationId));
+    }
+
+    return Result.success(undefined);
   }
 
   private decision() {
@@ -349,7 +437,25 @@ class FakeAuthorization implements PortfolioWorkspaceInternalAuthorization {
       return Result.failure(createForbiddenPresentationError(this.input.deniedCorrelationId));
     }
 
-    return Result.success(undefined);
+    return Result.success(authorizationResourceReference());
+  }
+}
+
+class FakeAuthorizationResourceResolver implements PortfolioWorkspaceAuthorizationResourceResolver {
+  calls = 0;
+  lastExecutionId: ExecutionId | undefined;
+  lastCorrelationId: string | undefined;
+
+  constructor(private readonly resource: PortfolioWorkspaceAuthorizationResourceReference) {}
+
+  async resolve(input: {
+    readonly executionId: ExecutionId;
+    readonly correlationId: string;
+  }) {
+    this.calls += 1;
+    this.lastExecutionId = input.executionId;
+    this.lastCorrelationId = input.correlationId;
+    return Result.success(this.resource);
   }
 }
 
@@ -480,6 +586,20 @@ function trustedPrincipal(suffix: string): PortfolioWorkspacePresentationPrincip
   return result.value;
 }
 
+function trustedServicePrincipal(suffix: string): PortfolioWorkspacePresentationPrincipal {
+  const result = PortfolioWorkspacePresentationPrincipal.create({
+    principalId: `service-${suffix}`,
+    principalType: PortfolioWorkspacePresentationPrincipalType.Service,
+    authenticationProvider: "career-auth"
+  });
+
+  if (result.isFailure || result.value === undefined) {
+    throw new Error("Expected trusted service principal.");
+  }
+
+  return result.value;
+}
+
 function initializationBody(suffix: string) {
   return {
     executionId: `execution:${suffix}`,
@@ -505,6 +625,7 @@ function initializeResultFromInput(input: InitializePortfolioExecutionInput): In
     portfolioPlanReference: input.portfolioPlanReference,
     planSnapshotReference: input.planSnapshotReference,
     approvalReference: input.approvalReference,
+    authorizationResourceReference: input.authorizationResourceReference,
     commandContext: input.commandContext,
     workItems: input.workItems.map((definition) => new PortfolioWorkItem({
       id: definition.workItemId,
@@ -537,6 +658,7 @@ function executionFixture(suffix: string): PortfolioExecution {
     approvalReference: new ApprovalReference({
       approvalReference: `approval:${suffix}`
     }),
+    authorizationResourceReference: authorizationResourceReference(),
     commandContext: new PortfolioExecutionCommandContext({
       commandId: `command:${suffix}`,
       correlationId: `correlation:${suffix}`,
@@ -574,4 +696,11 @@ function portfolioWorkspaceInternalSourcePath(): string {
   }
 
   return join(cwd, "apps", "api", "src", "portfolio-workspace", "internal");
+}
+
+
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+  });
 }

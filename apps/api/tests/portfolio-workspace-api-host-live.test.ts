@@ -5,6 +5,7 @@ import { inspect } from "node:util";
 import { Client } from "pg";
 import { afterEach, describe, expect, it } from "vitest";
 import { Result } from "@career-companion/kernel";
+import { PortfolioWorkspaceAuthorizationResourceReference } from "@career-companion/portfolio-workspace";
 import {
   PORTFOLIO_WORKSPACE_CORRELATION_HEADER,
   PortfolioWorkspaceApiHost,
@@ -14,6 +15,7 @@ import {
   PortfolioWorkspacePresentationOutcome,
   PortfolioWorkspacePresentationPrincipal,
   PortfolioWorkspacePresentationPrincipalType,
+  authorizationResourceReferenceForPrincipal,
   createForbiddenPresentationError,
   createPortfolioWorkspaceApiHostFromEnvironment,
   type PortfolioWorkspaceInternalAuthorization,
@@ -52,7 +54,7 @@ describeLive("PortfolioWorkspaceApiHost live PostgreSQL integration", () => {
     expect(host).not.toHaveProperty("repository");
     expect(host).not.toHaveProperty("database");
     expect(await harness.tableExists("portfolio_executions")).toBe(true);
-    expect(await harness.appliedMigrationCount()).toBe(1);
+    expect(await harness.appliedMigrationCount()).toBe(committedMigrationCount());
     expectNoSensitiveLeak(host, harness);
 
     await host.dispose();
@@ -78,14 +80,14 @@ describeLive("PortfolioWorkspaceApiHost live PostgreSQL integration", () => {
     const applyingHost = await expectHost(harness, {
       migrationMode: "apply"
     });
-    expect(await harness.appliedMigrationCount()).toBe(1);
+    expect(await harness.appliedMigrationCount()).toBe(committedMigrationCount());
     await applyingHost.dispose();
 
     const verifyingHost = await expectHost(harness, {
       migrationMode: "verify-only"
     });
     expect(verifyingHost.isReady()).toBe(true);
-    expect(await harness.appliedMigrationCount()).toBe(1);
+    expect(await harness.appliedMigrationCount()).toBe(committedMigrationCount());
     await verifyingHost.dispose();
   });
 
@@ -102,7 +104,7 @@ describeLive("PortfolioWorkspaceApiHost live PostgreSQL integration", () => {
 
     const initialized = await host.initializePortfolioExecutionHandler.handle({
       principal,
-      request: initializeRequest(executionId, "live-flow", "correlation:live-initialize")
+      request: spoofedInitializeRequest(executionId, "live-flow", "correlation:live-initialize")
     });
 
     expect(initialized.status).toBe(201);
@@ -123,6 +125,20 @@ describeLive("PortfolioWorkspaceApiHost live PostgreSQL integration", () => {
     expect((initialized.body as Record<string, unknown>).commandContext).toBeUndefined();
     expect((initialized.body as Record<string, unknown>).revision).toBeUndefined();
     expectNoSensitiveLeak(initialized, harness);
+    const rows = await harness.query<{ readonly aggregate_payload: { readonly authorizationResourceReference?: { readonly authorizationResourceReference?: string } } }>(
+      "SELECT aggregate_payload FROM portfolio_executions WHERE execution_id = $1",
+      [executionId]
+    );
+    expect(rows[0]?.aggregate_payload.authorizationResourceReference?.authorizationResourceReference).toBe(
+      authorizationResourceReferenceForPrincipal(principal).authorizationResourceReference
+    );
+    expect(rows[0]?.aggregate_payload.authorizationResourceReference?.authorizationResourceReference).toMatch(
+      /^portfolio-workspace:principal:user:[a-f0-9]{64}$/u
+    );
+    expect(JSON.stringify(rows[0]?.aggregate_payload.authorizationResourceReference)).not.toContain(principal.principalId);
+    expect(JSON.stringify(rows[0]?.aggregate_payload.authorizationResourceReference)).not.toContain(principal.authenticationProvider);
+    expect(JSON.stringify(rows[0])).not.toContain("spoofed-owner");
+    expect(JSON.stringify(rows[0])).not.toContain("portfolio-workspace:principal:user:spoofed");
 
     const queried = await host.getPortfolioExecutionHandler.handle({
       principal,
@@ -145,6 +161,111 @@ describeLive("PortfolioWorkspaceApiHost live PostgreSQL integration", () => {
     expect((queried.body as Record<string, unknown>).fact).toBeUndefined();
     expect((queried.body as Record<string, unknown>).revision).toBeUndefined();
     expectNoSensitiveLeak(queried, harness);
+
+    await host.dispose();
+  });
+
+  it("enforces production authorization against persisted ownership across principal boundaries", async () => {
+    const harness = await createHarness();
+    const host = await expectHost(harness, {
+      migrationMode: "apply",
+      correlationIdGenerator: sequentialGenerator("correlation"),
+      commandIdGenerator: sequentialGenerator("command"),
+      clock: fixedClock()
+    });
+    const owner = trustedPrincipal("production-owner");
+    const executionId = uniqueExecutionId("production-authorization");
+
+    const initialized = await host.initializePortfolioExecutionHandler.handle({
+      principal: owner,
+      request: initializeRequest(executionId, "production-authorization", "correlation:production-authz-init")
+    });
+    expect(initialized.status).toBe(201);
+
+    const samePrincipal = await host.getPortfolioExecutionHandler.handle({
+      principal: owner,
+      request: getRequest(executionId, "correlation:production-authz-same")
+    });
+    expect(samePrincipal.status).toBe(200);
+    expect(samePrincipal.body).toMatchObject({
+      correlationId: "correlation:production-authz-same",
+      execution: { executionId }
+    });
+
+    const differentUser = await host.getPortfolioExecutionHandler.handle({
+      principal: trustedPrincipal("production-other"),
+      request: getRequest(executionId, "correlation:production-authz-user")
+    });
+    expect(differentUser.status).toBe(403);
+    expect(differentUser.body).toMatchObject({
+      category: "forbidden",
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden,
+      correlationId: "correlation:production-authz-user"
+    });
+
+    const differentProvider = await host.getPortfolioExecutionHandler.handle({
+      principal: trustedPrincipalWith({
+        principalId: owner.principalId,
+        principalType: PortfolioWorkspacePresentationPrincipalType.User,
+        authenticationProvider: "other-test-auth"
+      }),
+      request: getRequest(executionId, "correlation:production-authz-provider")
+    });
+    expect(differentProvider.status).toBe(403);
+    expect(differentProvider.body).toMatchObject({
+      category: "forbidden",
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden,
+      correlationId: "correlation:production-authz-provider"
+    });
+
+    const differentType = await host.getPortfolioExecutionHandler.handle({
+      principal: trustedPrincipalWith({
+        principalId: owner.principalId,
+        principalType: PortfolioWorkspacePresentationPrincipalType.Service,
+        authenticationProvider: owner.authenticationProvider
+      }),
+      request: getRequest(executionId, "correlation:production-authz-type")
+    });
+    expect(differentType.status).toBe(403);
+    expect(differentType.body).toMatchObject({
+      category: "forbidden",
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden,
+      correlationId: "correlation:production-authz-type"
+    });
+
+    const servicePrincipal = await host.getPortfolioExecutionHandler.handle({
+      principal: trustedPrincipalWith({
+        principalId: "service-production-worker",
+        principalType: PortfolioWorkspacePresentationPrincipalType.Service,
+        authenticationProvider: owner.authenticationProvider
+      }),
+      request: getRequest(executionId, "correlation:production-authz-service")
+    });
+    expect(servicePrincipal.status).toBe(403);
+    expect(servicePrincipal.body).toMatchObject({
+      category: "forbidden",
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden,
+      correlationId: "correlation:production-authz-service"
+    });
+
+    const missing = await host.getPortfolioExecutionHandler.handle({
+      principal: trustedPrincipal("production-missing"),
+      request: getRequest(uniqueExecutionId("production-authz-missing"), "correlation:production-authz-missing")
+    });
+    expect(missing.status).toBe(404);
+    expect(missing.body).toMatchObject({
+      category: "not-found",
+      code: PortfolioWorkspacePresentationErrorCode.PortfolioExecutionNotFound,
+      correlationId: "correlation:production-authz-missing"
+    });
+
+    expectNoSensitiveLeak([samePrincipal, differentUser, differentProvider, differentType, servicePrincipal, missing], harness);
+    for (const response of [differentUser, differentProvider, differentType, servicePrincipal, missing]) {
+      expect(JSON.stringify(response)).not.toContain(owner.principalId);
+      expect(JSON.stringify(response)).not.toContain(owner.authenticationProvider);
+      expect(JSON.stringify(response)).not.toContain("other-test-auth");
+      expect(JSON.stringify(response)).not.toContain("service-production-worker");
+    }
 
     await host.dispose();
   });
@@ -382,6 +503,18 @@ describeLive("PortfolioWorkspaceApiHost live PostgreSQL integration", () => {
       }
     });
     expect((queried.body as Record<string, unknown>).revision).toBeUndefined();
+
+    const forbiddenAfterRecreation = await hostB.getPortfolioExecutionHandler.handle({
+      principal: trustedPrincipal("cross-host-other"),
+      request: getRequest(executionId, "correlation:cross-host-forbidden")
+    });
+    expect(forbiddenAfterRecreation.status).toBe(403);
+    expect(forbiddenAfterRecreation.body).toMatchObject({
+      category: "forbidden",
+      code: PortfolioWorkspacePresentationErrorCode.Forbidden,
+      correlationId: "correlation:cross-host-forbidden"
+    });
+    expectNoSensitiveLeak([queried, forbiddenAfterRecreation], harness);
     await hostB.dispose();
 
     const source = readFileSync(join(packageRoot(), "tests", "portfolio-workspace-api-host-live.test.ts"), "utf8");
@@ -517,7 +650,7 @@ class ControlledAuthorization implements PortfolioWorkspaceInternalAuthorization
       return Result.failure(createForbiddenPresentationError(input.request.incomingCorrelationId ?? "correlation:authorization-denied"));
     }
 
-    return Result.success(undefined);
+    return Result.success(authorizationResourceReference());
   }
 
   async authorizeGet() {
@@ -545,7 +678,7 @@ async function createHostResult(
 ) {
   return createPortfolioWorkspaceApiHostFromEnvironment({
     environment: environmentMap(harness, overrides),
-    authorization: overrides.authorization ?? new ControlledAuthorization(),
+    ...(overrides.authorization === undefined ? {} : { authorization: overrides.authorization }),
     commandIdGenerator: overrides.commandIdGenerator ?? sequentialGenerator("command"),
     correlationIdGenerator: overrides.correlationIdGenerator ?? sequentialGenerator("correlation"),
     clock: overrides.clock ?? fixedClock()
@@ -620,6 +753,31 @@ function initializeRequest(
   };
 }
 
+function spoofedInitializeRequest(
+  executionId: string,
+  suffix: string,
+  correlationId: string
+): PortfolioWorkspaceInternalRequest {
+  const request = initializeRequest(executionId, suffix, correlationId);
+  return {
+    ...request,
+    body: {
+      ...(request.body as Record<string, unknown>),
+      owner: "spoofed-owner",
+      ownerId: "spoofed-owner",
+      actor: "spoofed-actor",
+      principal: "spoofed-principal",
+      principalId: "spoofed-principal",
+      authorizationResource: "portfolio-workspace:principal:user:spoofed",
+      authorizationResourceReference: {
+        authorizationResourceReference: "portfolio-workspace:principal:user:spoofed"
+      },
+      commandId: "command:spoofed",
+      occurredAt: "1999-01-01T00:00:00.000Z"
+    }
+  };
+}
+
 function getRequest(
   executionId: string,
   correlationId: string
@@ -631,11 +789,19 @@ function getRequest(
 }
 
 function trustedPrincipal(suffix: string): TrustedPrincipal {
-  const result = PortfolioWorkspacePresentationPrincipal.create({
+  return trustedPrincipalWith({
     principalId: `principal-${suffix}`,
     principalType: PortfolioWorkspacePresentationPrincipalType.User,
     authenticationProvider: "career-test-auth"
   });
+}
+
+function trustedPrincipalWith(input: {
+  readonly principalId: string;
+  readonly principalType: typeof PortfolioWorkspacePresentationPrincipalType[keyof typeof PortfolioWorkspacePresentationPrincipalType];
+  readonly authenticationProvider: string;
+}): TrustedPrincipal {
+  const result = PortfolioWorkspacePresentationPrincipal.create(input);
   if (result.isFailure || result.value === undefined) {
     throw new Error("Expected trusted principal creation to succeed.");
   }
@@ -730,4 +896,18 @@ function packageRoot(): string {
     return cwd;
   }
   return join(cwd, "apps", "api");
+}
+
+function committedMigrationCount(): number {
+  const journalPath = join(packageRoot(), "..", "..", "packages", "infrastructure", "drizzle", "portfolio-workspace", "meta", "_journal.json");
+  const journal = JSON.parse(readFileSync(journalPath, "utf8")) as {
+    readonly entries?: readonly unknown[];
+  };
+  return journal.entries?.length ?? 0;
+}
+
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+  });
 }

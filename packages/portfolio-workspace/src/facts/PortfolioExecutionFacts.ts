@@ -5,6 +5,7 @@ import { ApprovalReference } from "../value-objects/ApprovalReference";
 import { PlanSnapshotReference } from "../value-objects/PlanSnapshotReference";
 import { PortfolioExecutionCommandContext } from "../value-objects/PortfolioExecutionCommandContext";
 import { PortfolioPlanReference } from "../value-objects/PortfolioPlanReference";
+import { PortfolioWorkspaceAuthorizationResourceReference } from "../value-objects/PortfolioWorkspaceAuthorizationResourceReference";
 import { WorkItemId } from "../value-objects/WorkItemId";
 import { AcceptedArtifactId } from "../value-objects/AcceptedArtifactId";
 
@@ -37,6 +38,7 @@ interface ExecutionInitializedFactInput extends ExecutionFactInput {
   readonly portfolioPlanReference: PortfolioPlanReference;
   readonly planSnapshotReference: PlanSnapshotReference;
   readonly approvalReference: ApprovalReference;
+  readonly authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference;
 }
 
 interface WorkItemFactInput extends ExecutionFactInput {
@@ -231,6 +233,7 @@ export class PortfolioExecutionInitializedFact {
   readonly portfolioPlanReference: PortfolioPlanReference;
   readonly planSnapshotReference: PlanSnapshotReference;
   readonly approvalReference: ApprovalReference;
+  readonly authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference;
   readonly commandContext: PortfolioExecutionCommandContext;
 
   constructor(input: ExecutionInitializedFactInput) {
@@ -238,11 +241,13 @@ export class PortfolioExecutionInitializedFact {
     assertInstance(input.portfolioPlanReference, PortfolioPlanReference);
     assertInstance(input.planSnapshotReference, PlanSnapshotReference);
     assertInstance(input.approvalReference, ApprovalReference);
+    assertInstance(input.authorizationResourceReference, PortfolioWorkspaceAuthorizationResourceReference);
 
     this.executionId = input.executionId;
     this.portfolioPlanReference = input.portfolioPlanReference;
     this.planSnapshotReference = input.planSnapshotReference;
     this.approvalReference = input.approvalReference;
+    this.authorizationResourceReference = input.authorizationResourceReference;
     this.commandContext = input.commandContext;
     Object.freeze(this);
   }
@@ -252,7 +257,8 @@ export class PortfolioExecutionInitializedFact {
       && executionFactEquals(this, other)
       && this.portfolioPlanReference.equals(other.portfolioPlanReference)
       && this.planSnapshotReference.equals(other.planSnapshotReference)
-      && this.approvalReference.equals(other.approvalReference);
+      && this.approvalReference.equals(other.approvalReference)
+      && this.authorizationResourceReference.equals(other.authorizationResourceReference);
   }
 
   toJSON(): ExecutionInitializedFactJson {
@@ -260,7 +266,8 @@ export class PortfolioExecutionInitializedFact {
       ...executionFactJson(this),
       portfolioPlanReference: this.portfolioPlanReference.toJSON(),
       planSnapshotReference: this.planSnapshotReference.toJSON(),
-      approvalReference: this.approvalReference.toJSON()
+      approvalReference: this.approvalReference.toJSON(),
+      authorizationResourceReference: this.authorizationResourceReference.toJSON()
     };
   }
 }
@@ -336,6 +343,7 @@ interface ExecutionInitializedFactJson extends ExecutionFactJson<"PortfolioExecu
   readonly portfolioPlanReference: ReturnType<PortfolioPlanReference["toJSON"]>;
   readonly planSnapshotReference: ReturnType<PlanSnapshotReference["toJSON"]>;
   readonly approvalReference: ReturnType<ApprovalReference["toJSON"]>;
+  readonly authorizationResourceReference: ReturnType<PortfolioWorkspaceAuthorizationResourceReference["toJSON"]>;
 }
 
 interface WorkItemFactJson<TType extends WorkItemFactType> extends ExecutionFactJson<TType> {

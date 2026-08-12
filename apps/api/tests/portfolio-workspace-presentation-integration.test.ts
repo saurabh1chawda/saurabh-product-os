@@ -23,6 +23,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -529,7 +530,7 @@ class RecordingAuthorization implements PortfolioWorkspaceInternalAuthorization 
       return Result.failure(createForbiddenPresentationError(input.request.incomingCorrelationId ?? "correlation:denied"));
     }
 
-    return Result.success(undefined);
+    return Result.success(authorizationResourceReference());
   }
 
   async authorizeGet(input: Parameters<PortfolioWorkspaceInternalAuthorization["authorizeGet"]>[0]) {
@@ -708,6 +709,7 @@ function initializeResultFromInput(input: InitializePortfolioExecutionInput): In
     portfolioPlanReference: input.portfolioPlanReference,
     planSnapshotReference: input.planSnapshotReference,
     approvalReference: input.approvalReference,
+    authorizationResourceReference: input.authorizationResourceReference,
     commandContext: input.commandContext,
     workItems: input.workItems.map((definition) => new PortfolioWorkItem({
       id: definition.workItemId,
@@ -740,6 +742,7 @@ function executionFixture(suffix: string): PortfolioExecution {
     approvalReference: new ApprovalReference({
       approvalReference: `approval:${suffix}`
     }),
+    authorizationResourceReference: authorizationResourceReference(),
     commandContext: new PortfolioExecutionCommandContext({
       commandId: `command:${suffix}`,
       correlationId: `correlation:${suffix}`,
@@ -787,4 +790,11 @@ function portfolioWorkspacePresentationSourcePath(): string {
   }
 
   return join(cwd, "apps", "api", "src", "portfolio-workspace", "presentation");
+}
+
+
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+  });
 }

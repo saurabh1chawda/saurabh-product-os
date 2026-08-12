@@ -9,6 +9,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemCompletedFact,
   PortfolioWorkItemLifecycle,
@@ -228,7 +229,10 @@ function createExecution(
       id: new WorkItemId("work-item-1"),
       lifecycle: PortfolioWorkItemLifecycle.Active
     })],
-    ...overrides
+    ...overrides,
+    authorizationResourceReference: overrides.authorizationResourceReference ?? new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    })
   });
 }
 

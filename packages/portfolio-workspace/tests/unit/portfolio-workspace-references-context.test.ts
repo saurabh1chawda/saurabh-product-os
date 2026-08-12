@@ -4,7 +4,8 @@ import {
   InvalidPortfolioWorkspaceIdentifierError,
   PlanSnapshotReference,
   PortfolioExecutionCommandContext,
-  PortfolioPlanReference
+  PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference
 } from "../../src";
 
 describe("portfolio workspace references and command context", () => {
@@ -91,6 +92,27 @@ describe("portfolio workspace references and command context", () => {
     expect(context).not.toHaveProperty("permissions");
   });
 
+  it("creates an immutable authorization resource reference without provider, role, or transport data", () => {
+    const reference = new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:owner:123"
+    });
+
+    expect(reference.authorizationResourceReference).toBe("portfolio-workspace:owner:123");
+    expect(Object.isFrozen(reference)).toBe(true);
+    expect(reference.toJSON()).toEqual({
+      authorizationResourceReference: "portfolio-workspace:owner:123"
+    });
+    expect(reference.equals(new PortfolioWorkspaceAuthorizationResourceReference(reference.toJSON()))).toBe(true);
+    expect(reference.equals(new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:owner:456"
+    }))).toBe(false);
+    expect(reference).not.toHaveProperty("principal");
+    expect(reference).not.toHaveProperty("session");
+    expect(reference).not.toHaveProperty("token");
+    expect(reference).not.toHaveProperty("roles");
+    expect(reference).not.toHaveProperty("permissions");
+  });
+
   it("rejects empty required PortfolioPlanReference values", () => {
     expect(() => new PortfolioPlanReference({
       planId: "",
@@ -123,6 +145,15 @@ describe("portfolio workspace references and command context", () => {
       correlationId: "correlation-1",
       actorReference: "actor:saura",
       occurredAt: " "
+    })).toThrow(InvalidPortfolioWorkspaceIdentifierError);
+    expect(() => new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "\t"
+    })).toThrow(InvalidPortfolioWorkspaceIdentifierError);
+    expect(() => new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:owner\u0000"
+    })).toThrow(InvalidPortfolioWorkspaceIdentifierError);
+    expect(() => new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio workspace owner"
     })).toThrow(InvalidPortfolioWorkspaceIdentifierError);
   });
 

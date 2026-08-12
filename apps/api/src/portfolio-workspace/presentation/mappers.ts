@@ -25,6 +25,7 @@ import {
   PlanSnapshotReference,
   PortfolioExecutionCommandContext,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   WorkItemId
 } from "@career-companion/portfolio-workspace";
 import {
@@ -58,6 +59,7 @@ import {
 export function mapInitializePortfolioExecutionRequestToInput(
   request: InitializePortfolioExecutionPresentationRequest,
   commandContext: PortfolioExecutionCommandContext,
+  authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference,
   correlationId: string
 ): Result<InitializePortfolioExecutionInput, PortfolioWorkspacePresentationError> {
   const executionIdResult = createDomainValue("executionId", () => new ExecutionId(request.executionId), correlationId);
@@ -116,6 +118,7 @@ export function mapInitializePortfolioExecutionRequestToInput(
       portfolioPlanReference: portfolioPlanReferenceResult.value as PortfolioPlanReference,
       planSnapshotReference: planSnapshotReferenceResult.value as PlanSnapshotReference,
       approvalReference: approvalReferenceResult.value as ApprovalReference,
+      authorizationResourceReference,
       commandContext,
       workItems,
       candidates

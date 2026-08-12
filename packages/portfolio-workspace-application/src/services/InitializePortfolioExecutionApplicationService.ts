@@ -38,6 +38,7 @@ export class InitializePortfolioExecutionApplicationService {
         portfolioPlanReference: input.portfolioPlanReference,
         planSnapshotReference: input.planSnapshotReference,
         approvalReference: input.approvalReference,
+        authorizationResourceReference: input.authorizationResourceReference,
         commandContext: input.commandContext,
         workItems: input.workItems.map((definition) => new PortfolioWorkItem({
           id: definition.workItemId,

@@ -11,6 +11,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -265,7 +266,10 @@ function createExecution(
       createWorkItem("work-item-1", PortfolioWorkItemLifecycle.Completed),
       createWorkItem("work-item-2", PortfolioWorkItemLifecycle.Cancelled)
     ],
-    ...overrides
+    ...overrides,
+    authorizationResourceReference: overrides.authorizationResourceReference ?? new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    })
   });
 }
 

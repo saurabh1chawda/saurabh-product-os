@@ -14,6 +14,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItemLifecycle,
   WorkItemId
 } from "@career-companion/portfolio-workspace";
@@ -46,6 +47,7 @@ describe("InitializePortfolioExecutionApplicationService", () => {
     expect(repository.saveResultRevision?.toJSON()).toBe(1);
     expect(repository.savedExecution).toBeInstanceOf(PortfolioExecution);
     expect(repository.savedExecution?.lifecycle).toBe(PortfolioExecutionLifecycle.Initialized);
+    expect(repository.savedExecution?.authorizationResourceReference.equals(input.authorizationResourceReference)).toBe(true);
     expect(repository.savedExecution?.workItems().map((workItem) => workItem.toJSON())).toEqual([{
       id: "work-item-1",
       lifecycle: PortfolioWorkItemLifecycle.Pending
@@ -61,6 +63,7 @@ describe("InitializePortfolioExecutionApplicationService", () => {
     expect(Object.isFrozen(value)).toBe(true);
     expect(value.fact).toBeInstanceOf(PortfolioExecutionInitializedFact);
     expect(value.fact.commandContext.equals(input.commandContext)).toBe(true);
+    expect(value.fact.authorizationResourceReference.equals(input.authorizationResourceReference)).toBe(true);
     expect(value.correlationId).toBe(value.fact.commandContext.correlationId);
     expect(value.summary).toBeInstanceOf(PortfolioExecutionSummaryProjection);
     expect(value.summary.toJSON()).toMatchObject({
@@ -102,6 +105,7 @@ describe("InitializePortfolioExecutionApplicationService", () => {
       portfolioPlanReference: portfolioPlanReference().toJSON(),
       planSnapshotReference: planSnapshotReference().toJSON(),
       approvalReference: approvalReference().toJSON(),
+      authorizationResourceReference: authorizationResourceReference().toJSON(),
       commandContext: commandContext().toJSON(),
       workItems: [{ workItemId: "work-item-1" }],
       candidates: [{ candidateId: "candidate-1" }]
@@ -223,6 +227,7 @@ function createInput(overrides: {
     portfolioPlanReference: portfolioPlanReference(),
     planSnapshotReference: planSnapshotReference(),
     approvalReference: approvalReference(),
+    authorizationResourceReference: authorizationResourceReference(),
     commandContext: commandContext(),
     workItems: overrides.workItems ?? [
       new InitializePortfolioWorkItemDefinition({ workItemId: new WorkItemId("work-item-1") })
@@ -250,6 +255,11 @@ function planSnapshotReference(): PlanSnapshotReference {
 function approvalReference(): ApprovalReference {
   return new ApprovalReference({
     approvalReference: "approval:portfolio-plan-1"
+  });
+}
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
   });
 }
 

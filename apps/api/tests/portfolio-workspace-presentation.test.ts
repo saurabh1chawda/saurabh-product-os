@@ -74,6 +74,7 @@ import {
   type PortfolioExecutionLifecycleValue,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   PortfolioWorkItemSummaryProjection,
@@ -281,6 +282,7 @@ describe("Portfolio Workspace presentation success mapping", () => {
         approvalReference: new ApprovalReference({
           approvalReference: "approval:initialized"
         }),
+        authorizationResourceReference: authorizationResourceReference(),
         commandContext: commandContext("initialized")
       })
     ]);
@@ -556,9 +558,10 @@ describe("Portfolio Workspace initialization presentation mapping", () => {
   it("maps trusted primitive initialization requests to Application input without mutating the request", () => {
     const request = initializationRequestFixture();
     const trustedContext = commandContext("presentation-initialize");
+    const trustedAuthorizationResource = authorizationResourceReference();
     const before = request.toJSON();
 
-    const result = mapInitializePortfolioExecutionRequestToInput(request, trustedContext, "correlation:host");
+    const result = mapInitializePortfolioExecutionRequestToInput(request, trustedContext, trustedAuthorizationResource, "correlation:host");
 
     expect(result.isSuccess).toBe(true);
     const input = result.value as InitializePortfolioExecutionInput;
@@ -578,6 +581,7 @@ describe("Portfolio Workspace initialization presentation mapping", () => {
       approvalReference: {
         approvalReference: "approval:init"
       },
+      authorizationResourceReference: trustedAuthorizationResource.toJSON(),
       commandContext: trustedContext.toJSON(),
       workItems: [
         { workItemId: "work-item:first" },
@@ -607,11 +611,14 @@ describe("Portfolio Workspace initialization presentation mapping", () => {
       ...initializationRequestFixture().toJSON(),
       commandId: "command:client",
       actorReference: "actor:client",
-      occurredAt: "1999-01-01T00:00:00.000Z"
+      occurredAt: "1999-01-01T00:00:00.000Z",
+      authorizationResourceReference: "portfolio-workspace:client-spoof"
     } as unknown as ConstructorParameters<typeof InitializePortfolioExecutionPresentationRequest>[0]);
+    const trustedAuthorizationResource = authorizationResourceReference();
     const result = mapInitializePortfolioExecutionRequestToInput(
       request,
       contextResult.value as PortfolioExecutionCommandContext,
+      trustedAuthorizationResource,
       "correlation:host"
     );
 
@@ -622,9 +629,11 @@ describe("Portfolio Workspace initialization presentation mapping", () => {
       actorReference: "user:career-auth:user-123",
       occurredAt: "2026-08-05T10:30:00.000Z"
     });
+    expect((result.value as InitializePortfolioExecutionInput).authorizationResourceReference).toBe(trustedAuthorizationResource);
     expect(JSON.stringify(request)).not.toContain("command:client");
     expect(JSON.stringify(request)).not.toContain("actor:client");
     expect(JSON.stringify(request)).not.toContain("1999-01-01");
+    expect(JSON.stringify(request)).not.toContain("client-spoof");
   });
 
   it("maps invalid initialization identifiers and source references to safe presentation errors", () => {
@@ -664,7 +673,7 @@ describe("Portfolio Workspace initialization presentation mapping", () => {
     ];
 
     for (const item of cases) {
-      const result = mapInitializePortfolioExecutionRequestToInput(item.request, commandContext("invalid-init"), "correlation:host");
+      const result = mapInitializePortfolioExecutionRequestToInput(item.request, commandContext("invalid-init"), authorizationResourceReference(), "correlation:host");
 
       expect(result.isFailure).toBe(true);
       expect(result.error?.toJSON()).toMatchObject({
@@ -729,7 +738,8 @@ describe("Portfolio Workspace presentation boundaries", () => {
     expect(source).not.toContain("InitializePortfolioExecutionApplicationService");
     expect(source).not.toContain(".initialize(");
     expect(source).not.toContain("idempotency");
-    expect(source).not.toContain("authorization");
+    expect(source).not.toContain("authorizeInitialize");
+    expect(source).not.toContain("authorizeGet");
     expect(source).not.toContain("raw fact");
   });
 });
@@ -802,6 +812,7 @@ function initializePortfolioExecutionResult(): InitializePortfolioExecutionResul
     approvalReference: new ApprovalReference({
       approvalReference: "approval:initialize"
     }),
+    authorizationResourceReference: authorizationResourceReference(),
     commandContext: commandContext("initialize"),
     workItems: [new PortfolioWorkItem({
       id: new WorkItemId("work-item:initialize"),
@@ -983,6 +994,7 @@ function executionFixture(
     approvalReference: new ApprovalReference({
       approvalReference: `approval:${suffix}`
     }),
+    authorizationResourceReference: authorizationResourceReference(),
     commandContext: commandContext(`created:${suffix}`),
     lifecycle,
     workItems: owned.workItems,
@@ -1027,4 +1039,11 @@ function portfolioWorkspacePresentationSourcePath(): string {
   }
 
   return join(cwd, "apps", "api", "src", "portfolio-workspace", "presentation");
+}
+
+
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+  });
 }

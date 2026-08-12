@@ -15,6 +15,7 @@ import {
   type PortfolioExecutionFact,
   PortfolioExecutionStartedFact,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItemActivatedFact,
   PortfolioWorkItemCancelledFact,
   PortfolioWorkItemCompletedFact,
@@ -107,6 +108,7 @@ describe("PortfolioExecution immutable domain facts", () => {
       portfolioPlanReference: portfolioPlanReference(),
       planSnapshotReference: planSnapshotReference(),
       approvalReference: approvalReference(),
+      authorizationResourceReference: authorizationResourceReference(),
       commandContext: createCommandContext()
     });
     const started = new PortfolioExecutionStartedFact({
@@ -128,6 +130,7 @@ describe("PortfolioExecution immutable domain facts", () => {
       portfolioPlanReference: portfolioPlanReference(),
       planSnapshotReference: planSnapshotReference(),
       approvalReference: approvalReference(),
+      authorizationResourceReference: authorizationResourceReference(),
       commandContext: createCommandContext()
     }))).toBe(true);
     expect(initialized.toJSON()).toEqual({
@@ -136,7 +139,8 @@ describe("PortfolioExecution immutable domain facts", () => {
       commandContext: commandContextJson(),
       portfolioPlanReference: portfolioPlanReference().toJSON(),
       planSnapshotReference: planSnapshotReference().toJSON(),
-      approvalReference: approvalReference().toJSON()
+      approvalReference: approvalReference().toJSON(),
+      authorizationResourceReference: authorizationResourceReference().toJSON()
     });
     expect(Object.isFrozen(started)).toBe(true);
     expect(started.equals(new PortfolioExecutionStartedFact({
@@ -210,6 +214,7 @@ describe("PortfolioExecution immutable domain facts", () => {
       portfolioPlanReference: new WorkItemId("work-item-1") as never,
       planSnapshotReference: planSnapshotReference(),
       approvalReference: approvalReference(),
+      authorizationResourceReference: authorizationResourceReference(),
       commandContext: createCommandContext()
     })).toThrow(InvalidExecutionOperationError);
   });
@@ -230,6 +235,7 @@ describe("PortfolioExecution immutable domain facts", () => {
         portfolioPlanReference: portfolioPlanReference(),
         planSnapshotReference: planSnapshotReference(),
         approvalReference: approvalReference(),
+        authorizationResourceReference: authorizationResourceReference(),
         commandContext: createCommandContext()
       }),
       new ArtifactCandidateAcceptedFact({
@@ -279,6 +285,12 @@ function planSnapshotReference(): PlanSnapshotReference {
 function approvalReference(): ApprovalReference {
   return new ApprovalReference({
     approvalReference: "approval:portfolio-plan-1"
+  });
+}
+
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
   });
 }
 

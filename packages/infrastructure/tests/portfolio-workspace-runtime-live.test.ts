@@ -16,6 +16,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -554,6 +555,9 @@ function createExecution(input: {
     approvalReference: new ApprovalReference({
       approvalReference: `approval:plan:${id}`
     }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    }),
     commandContext: commandContext(`initialization:${id}`),
     lifecycle: PortfolioExecutionLifecycle.Initialized,
     workItems: input.workItemIds.map((workItemId) => new PortfolioWorkItem({
@@ -589,6 +593,9 @@ async function initializeExecution(
     }),
     approvalReference: new ApprovalReference({
       approvalReference: `approval:plan:${id}`
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext(input.contextSuffix),
     workItems: input.workItemIds.map((workItemId) => new InitializePortfolioWorkItemDefinition({

@@ -9,6 +9,7 @@ import {
   PortfolioExecution,
   PortfolioExecutionCommandContext,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   WorkItemId
 } from "@career-companion/portfolio-workspace";
@@ -104,6 +105,7 @@ function toRecord(execution: PortfolioExecution): PortfolioExecutionRecord {
     portfolioPlanReference: execution.portfolioPlanReference.toJSON(),
     planSnapshotReference: execution.planSnapshotReference.toJSON(),
     approvalReference: execution.approvalReference.toJSON(),
+    authorizationResourceReference: execution.authorizationResourceReference.toJSON(),
     commandContext: execution.commandContext.toJSON(),
     lifecycle: execution.lifecycle,
     workItems: execution.workItems().map((workItem) => workItem.toJSON()),
@@ -125,6 +127,9 @@ function rehydratePortfolioExecution(record: PortfolioExecutionRecord): Portfoli
     }),
     approvalReference: new ApprovalReference({
       approvalReference: record.approvalReference.approvalReference
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: record.authorizationResourceReference.authorizationResourceReference
     }),
     commandContext: new PortfolioExecutionCommandContext({
       commandId: record.commandContext.commandId,
@@ -153,6 +158,7 @@ function cloneRecord(record: PortfolioExecutionRecord): PortfolioExecutionRecord
     portfolioPlanReference: Object.freeze({ ...record.portfolioPlanReference }),
     planSnapshotReference: Object.freeze({ ...record.planSnapshotReference }),
     approvalReference: Object.freeze({ ...record.approvalReference }),
+    authorizationResourceReference: Object.freeze({ ...record.authorizationResourceReference }),
     commandContext: Object.freeze({ ...record.commandContext }),
     lifecycle: record.lifecycle,
     workItems: Object.freeze(record.workItems.map((workItem) => Object.freeze({ ...workItem }))),

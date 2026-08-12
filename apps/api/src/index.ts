@@ -56,6 +56,9 @@ export {
   GetPortfolioExecutionInternalHandler,
   InitializePortfolioExecutionInternalHandler,
   PORTFOLIO_WORKSPACE_CORRELATION_HEADER,
+  PortfolioWorkspaceProductionAuthorization,
+  PortfolioWorkspaceRuntimeAuthorizationResourceResolver,
+  authorizationResourceReferenceForPrincipal,
   internalErrorResponse,
   internalSuccessResponse,
   mapPortfolioWorkspacePresentationErrorToInternalStatus,
@@ -122,4 +125,7 @@ export type {
   PortfolioWorkspaceInternalRequest,
   PortfolioWorkspaceInternalResponse,
   PortfolioWorkspaceInternalStatus
+} from "./portfolio-workspace/internal";
+export type {
+  PortfolioWorkspaceAuthorizationResourceResolver
 } from "./portfolio-workspace/internal";

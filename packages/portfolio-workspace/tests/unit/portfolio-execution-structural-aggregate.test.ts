@@ -16,6 +16,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -43,6 +44,9 @@ describe("PortfolioExecution structural aggregate", () => {
       },
       approvalReference: {
         approvalReference: "approval:portfolio-plan-1"
+      },
+      authorizationResourceReference: {
+        authorizationResourceReference: "portfolio-workspace:execution-owner-1"
       },
       commandContext: {
         commandId: "command-1",
@@ -162,7 +166,8 @@ function createAggregate(overrides: Partial<ConstructorParameters<typeof Portfol
     approvalReference: createApprovalReference(),
     commandContext: createCommandContext(),
     lifecycle: PortfolioExecutionLifecycle.Initialized,
-    ...overrides
+    ...overrides,
+    authorizationResourceReference: overrides.authorizationResourceReference ?? createAuthorizationResourceReference()
   });
 }
 
@@ -183,6 +188,12 @@ function createSnapshotReference(): PlanSnapshotReference {
 function createApprovalReference(): ApprovalReference {
   return new ApprovalReference({
     approvalReference: "approval:portfolio-plan-1"
+  });
+}
+
+function createAuthorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
   });
 }
 

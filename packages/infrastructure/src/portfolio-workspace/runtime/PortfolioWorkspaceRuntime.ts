@@ -9,6 +9,7 @@ import {
   CompleteWorkItemApplicationService,
   GetPortfolioExecutionApplicationService,
   InitializePortfolioExecutionApplicationService,
+  ResolvePortfolioExecutionAuthorizationResourceApplicationService,
   RejectCandidateApplicationService,
   type PortfolioExecutionRepository
 } from "@career-companion/portfolio-workspace-application";
@@ -116,6 +117,7 @@ export class PortfolioWorkspaceRuntimeStatus {
 export interface PortfolioWorkspaceRuntimeServices {
   readonly initializePortfolioExecution: InitializePortfolioExecutionApplicationService;
   readonly getPortfolioExecution: GetPortfolioExecutionApplicationService;
+  readonly resolvePortfolioExecutionAuthorizationResource: ResolvePortfolioExecutionAuthorizationResourceApplicationService;
   readonly beginExecution: BeginExecutionApplicationService;
   readonly activateWorkItem: ActivateWorkItemApplicationService;
   readonly completeWorkItem: CompleteWorkItemApplicationService;
@@ -129,6 +131,7 @@ export interface PortfolioWorkspaceRuntimeServices {
 export class PortfolioWorkspaceRuntime {
   readonly initializePortfolioExecution: InitializePortfolioExecutionApplicationService;
   readonly getPortfolioExecution: GetPortfolioExecutionApplicationService;
+  readonly resolvePortfolioExecutionAuthorizationResource: ResolvePortfolioExecutionAuthorizationResourceApplicationService;
   readonly beginExecution: BeginExecutionApplicationService;
   readonly activateWorkItem: ActivateWorkItemApplicationService;
   readonly completeWorkItem: CompleteWorkItemApplicationService;
@@ -156,6 +159,7 @@ export class PortfolioWorkspaceRuntime {
     this.#readiness = input.readiness;
     this.initializePortfolioExecution = input.services.initializePortfolioExecution;
     this.getPortfolioExecution = input.services.getPortfolioExecution;
+    this.resolvePortfolioExecutionAuthorizationResource = input.services.resolvePortfolioExecutionAuthorizationResource;
     this.beginExecution = input.services.beginExecution;
     this.activateWorkItem = input.services.activateWorkItem;
     this.completeWorkItem = input.services.completeWorkItem;
@@ -404,6 +408,7 @@ export function createPortfolioWorkspaceApplicationServices(
   return Object.freeze({
     initializePortfolioExecution: new InitializePortfolioExecutionApplicationService(input),
     getPortfolioExecution: new GetPortfolioExecutionApplicationService(input),
+    resolvePortfolioExecutionAuthorizationResource: new ResolvePortfolioExecutionAuthorizationResourceApplicationService(input),
     beginExecution: new BeginExecutionApplicationService(input),
     activateWorkItem: new ActivateWorkItemApplicationService(input),
     completeWorkItem: new CompleteWorkItemApplicationService(input),

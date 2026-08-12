@@ -8,6 +8,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -124,6 +125,9 @@ function createExecution(): PortfolioExecution {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: "approval:portfolio-plan-1"
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext("initialization"),
     lifecycle: PortfolioExecutionLifecycle.Initialized,

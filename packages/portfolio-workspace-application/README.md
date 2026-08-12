@@ -36,6 +36,8 @@ Mutation use cases return immutable use-case-specific results containing:
 
 The Get Portfolio Execution query use case returns an immutable summary-only result and may carry caller-supplied correlation metadata. It does not expose facts, aggregates, entities, repository revision, or persistence metadata.
 
+The authorization-resource resolver use case returns only the durable execution authorization resource required by the presentation authorization boundary. It does not expose the aggregate, projections, facts, repository revision, or persistence records.
+
 Aggregates never leave the Application Layer.
 
 ## Application Responsibilities
@@ -50,7 +52,7 @@ Behavioral application services:
 
 The initialization application service consumes already-approved upstream references, invokes Portfolio Workspace domain initialization behavior, saves the new aggregate through repository creation semantics, derives a summary projection, and returns an immutable result with correlation derived from PortfolioExecutionInitializedFact.
 
-The query application service loads `PortfolioExecution` through the same repository port, derives `PortfolioExecutionSummaryProjection`, and returns the projection without mutating or saving aggregate state.
+The query application service loads `PortfolioExecution` through the same repository port, derives `PortfolioExecutionSummaryProjection`, and returns the projection without mutating or saving aggregate state. The authorization-resource resolver loads through the same repository port and returns the stored resource without mutating or saving aggregate state.
 
 ## Domain Boundary
 
@@ -115,7 +117,7 @@ This package does not own:
 
 ## Current Implementation Status
 
-Package scaffold, Initialize Portfolio Execution use case, Begin Execution use case, Activate Work Item use case, Complete Work Item use case, Cancel Work Item use case, Accept Candidate use case, Reject Candidate use case, Complete Execution use case, Cancel Execution use case, Get Portfolio Execution query use case, asynchronous revision-aware repository port, repository save-result contracts, repository failure contracts, and not-found error are implemented.
+Package scaffold, Initialize Portfolio Execution use case, Begin Execution use case, Activate Work Item use case, Complete Work Item use case, Cancel Work Item use case, Accept Candidate use case, Reject Candidate use case, Complete Execution use case, Cancel Execution use case, Get Portfolio Execution query use case, authorization-resource resolver use case, asynchronous revision-aware repository port, repository save-result contracts, repository failure contracts, and not-found error are implemented.
 
 Initialization creates a new PortfolioExecution in Initialized lifecycle from already-approved Portfolio Workspace references and initial owned definitions. Upstream Planning and Approval semantics remain outside this package. Presentation has no initialization handler yet.
 
@@ -123,6 +125,6 @@ Command context and result correlation are aligned: each application service pas
 
 ## Deferred Scope
 
-List/search query services, transaction implementations, controllers, presentation query contracts, authorization, idempotency, messaging, UI, AI, and workflow automation remain deferred. Infrastructure adapters are implemented in infrastructure packages, not in this application package.
+List/search query services, transaction implementations, controllers, provider authentication, idempotency, messaging, UI, AI, and workflow automation remain deferred. Infrastructure adapters are implemented in infrastructure packages, not in this application package.
 
 The package exposes a test-only repository-contract subpath for adapter validation. Test doubles are not exported from the production package root.

@@ -12,6 +12,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId,
@@ -49,6 +50,7 @@ export class PortfolioExecutionRecordMapper {
         portfolioPlanReference: Object.freeze({ ...json.portfolioPlanReference }),
         planSnapshotReference: Object.freeze({ ...json.planSnapshotReference }),
         approvalReference: Object.freeze({ ...json.approvalReference }),
+        authorizationResourceReference: Object.freeze({ ...json.authorizationResourceReference }),
         commandContext: Object.freeze({ ...json.commandContext }),
         lifecycle: json.lifecycle,
         workItems: Object.freeze(json.workItems.map((workItem) => Object.freeze({ ...workItem }))),
@@ -82,6 +84,9 @@ export class PortfolioExecutionRecordMapper {
         }),
         approvalReference: new ApprovalReference({
           approvalReference: payload.approvalReference.approvalReference
+        }),
+        authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+          authorizationResourceReference: payload.authorizationResourceReference.authorizationResourceReference
         }),
         commandContext: new PortfolioExecutionCommandContext({
           commandId: payload.commandContext.commandId,
@@ -154,6 +159,7 @@ function isAggregatePayload(value: unknown): value is PortfolioExecutionAggregat
     && isPortfolioPlanReferenceRecord(value.portfolioPlanReference)
     && isPlanSnapshotReferenceRecord(value.planSnapshotReference)
     && isApprovalReferenceRecord(value.approvalReference)
+    && isAuthorizationResourceReferenceRecord(value.authorizationResourceReference)
     && isCommandContextRecord(value.commandContext)
     && isPortfolioExecutionLifecycle(value.lifecycle)
     && isWorkItemRecords(value.workItems)
@@ -176,6 +182,11 @@ function isPlanSnapshotReferenceRecord(value: unknown): value is PortfolioExecut
 function isApprovalReferenceRecord(value: unknown): value is PortfolioExecutionAggregatePayload["approvalReference"] {
   return isRecordObject(value)
     && isNonEmptyString(value.approvalReference);
+}
+
+function isAuthorizationResourceReferenceRecord(value: unknown): value is PortfolioExecutionAggregatePayload["authorizationResourceReference"] {
+  return isRecordObject(value)
+    && isNonEmptyString(value.authorizationResourceReference);
 }
 
 function isCommandContextRecord(value: unknown): value is PortfolioExecutionAggregatePayload["commandContext"] {
@@ -244,6 +255,7 @@ function freezeRecord(record: PortfolioExecutionRecord): PortfolioExecutionRecor
       portfolioPlanReference: Object.freeze({ ...record.aggregatePayload.portfolioPlanReference }),
       planSnapshotReference: Object.freeze({ ...record.aggregatePayload.planSnapshotReference }),
       approvalReference: Object.freeze({ ...record.aggregatePayload.approvalReference }),
+      authorizationResourceReference: Object.freeze({ ...record.aggregatePayload.authorizationResourceReference }),
       commandContext: Object.freeze({ ...record.aggregatePayload.commandContext }),
       lifecycle: record.aggregatePayload.lifecycle,
       workItems: Object.freeze(record.aggregatePayload.workItems.map((workItem) => Object.freeze({ ...workItem }))),

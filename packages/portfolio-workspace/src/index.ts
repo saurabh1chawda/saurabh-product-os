@@ -60,6 +60,7 @@ export {
 export { PortfolioExecutionLifecycle } from "./models/PortfolioExecutionLifecycle";
 export type { PortfolioExecutionLifecycleValue } from "./models/PortfolioExecutionLifecycle";
 export { PortfolioExecutionCommandContext } from "./value-objects/PortfolioExecutionCommandContext";
+export { PortfolioWorkspaceAuthorizationResourceReference } from "./value-objects/PortfolioWorkspaceAuthorizationResourceReference";
 export { PortfolioWorkspaceDomainError } from "./errors/PortfolioWorkspaceDomainError";
 export { PortfolioPlanReference } from "./value-objects/PortfolioPlanReference";
 export { PortfolioWorkItem } from "./entities/PortfolioWorkItem";
