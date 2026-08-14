@@ -48,6 +48,9 @@ describe("portfolio workspace application boundary", () => {
       "RejectCandidateApplicationService",
       "RejectCandidateInput",
       "RejectCandidateResult",
+      "ResolvePortfolioExecutionAuthorizationResourceApplicationService",
+      "ResolvePortfolioExecutionAuthorizationResourceInput",
+      "ResolvePortfolioExecutionAuthorizationResourceResult",
       "UnsupportedPortfolioExecutionRecordVersionError"
     ].sort());
 
@@ -94,6 +97,7 @@ describe("portfolio workspace application boundary", () => {
       readFileSync(join(packageRoot(), "src", "inputs", "RejectCandidateInput.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "inputs", "InitializePortfolioExecutionInput.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "inputs", "GetPortfolioExecutionInput.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "inputs", "ResolvePortfolioExecutionAuthorizationResourceInput.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "results", "BeginExecutionResult.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "results", "ActivateWorkItemResult.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "results", "CompleteWorkItemResult.ts"), "utf8"),
@@ -104,6 +108,7 @@ describe("portfolio workspace application boundary", () => {
       readFileSync(join(packageRoot(), "src", "results", "RejectCandidateResult.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "results", "InitializePortfolioExecutionResult.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "results", "GetPortfolioExecutionResult.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "results", "ResolvePortfolioExecutionAuthorizationResourceResult.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "ports", "PortfolioExecutionRepository.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "errors", "PortfolioExecutionNotFoundError.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "errors", "PortfolioExecutionRepositoryErrors.ts"), "utf8"),
@@ -119,7 +124,8 @@ describe("portfolio workspace application boundary", () => {
       readFileSync(join(packageRoot(), "src", "services", "AcceptCandidateApplicationService.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "services", "RejectCandidateApplicationService.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "services", "InitializePortfolioExecutionApplicationService.ts"), "utf8"),
-      readFileSync(join(packageRoot(), "src", "services", "GetPortfolioExecutionApplicationService.ts"), "utf8")
+      readFileSync(join(packageRoot(), "src", "services", "GetPortfolioExecutionApplicationService.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "services", "ResolvePortfolioExecutionAuthorizationResourceApplicationService.ts"), "utf8")
     ].join("\n").toLowerCase();
 
     expect(source).not.toContain("@career-companion/persistence");
@@ -186,7 +192,8 @@ describe("portfolio workspace application boundary", () => {
       readFileSync(join(packageRoot(), "src", "services", "AcceptCandidateApplicationService.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "services", "RejectCandidateApplicationService.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "services", "InitializePortfolioExecutionApplicationService.ts"), "utf8"),
-      readFileSync(join(packageRoot(), "src", "services", "GetPortfolioExecutionApplicationService.ts"), "utf8")
+      readFileSync(join(packageRoot(), "src", "services", "GetPortfolioExecutionApplicationService.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "services", "ResolvePortfolioExecutionAuthorizationResourceApplicationService.ts"), "utf8")
     ].join("\n").toLowerCase();
 
     expect(portSource).toContain("promise<loadedportfolioexecution | undefined>");
@@ -236,7 +243,8 @@ function onlyInitializationServiceContains(pattern: string): boolean {
     "AcceptCandidateApplicationService.ts",
     "RejectCandidateApplicationService.ts",
     "InitializePortfolioExecutionApplicationService.ts",
-    "GetPortfolioExecutionApplicationService.ts"
+    "GetPortfolioExecutionApplicationService.ts",
+    "ResolvePortfolioExecutionAuthorizationResourceApplicationService.ts"
   ];
 
   const matches = serviceNames.filter((serviceName) => readFileSync(

@@ -10,7 +10,8 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionStartedFact,
   PortfolioExecutionSummaryProjection,
-  PortfolioPlanReference
+  PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference
 } from "@career-companion/portfolio-workspace";
 import {
   BeginExecutionApplicationService,
@@ -200,7 +201,10 @@ function createExecution(
       occurredAt: "2026-08-01T00:00:00.000Z"
     }),
     lifecycle: PortfolioExecutionLifecycle.Initialized,
-    ...overrides
+    ...overrides,
+    authorizationResourceReference: overrides.authorizationResourceReference ?? new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    })
   });
 }
 

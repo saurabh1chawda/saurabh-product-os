@@ -12,6 +12,8 @@ export {
 export { InitializePortfolioExecutionResult } from "./results/InitializePortfolioExecutionResult";
 export { GetPortfolioExecutionInput } from "./inputs/GetPortfolioExecutionInput";
 export { GetPortfolioExecutionResult } from "./results/GetPortfolioExecutionResult";
+export { ResolvePortfolioExecutionAuthorizationResourceInput } from "./inputs/ResolvePortfolioExecutionAuthorizationResourceInput";
+export { ResolvePortfolioExecutionAuthorizationResourceResult } from "./results/ResolvePortfolioExecutionAuthorizationResourceResult";
 export { CancelExecutionInput } from "./inputs/CancelExecutionInput";
 export { CancelExecutionResult } from "./results/CancelExecutionResult";
 export { CancelWorkItemInput } from "./inputs/CancelWorkItemInput";
@@ -46,6 +48,8 @@ export { InitializePortfolioExecutionApplicationService } from "./services/Initi
 export type { InitializePortfolioExecutionError } from "./services/InitializePortfolioExecutionApplicationService";
 export { GetPortfolioExecutionApplicationService } from "./services/GetPortfolioExecutionApplicationService";
 export type { GetPortfolioExecutionError } from "./services/GetPortfolioExecutionApplicationService";
+export { ResolvePortfolioExecutionAuthorizationResourceApplicationService } from "./services/ResolvePortfolioExecutionAuthorizationResourceApplicationService";
+export type { ResolvePortfolioExecutionAuthorizationResourceError } from "./services/ResolvePortfolioExecutionAuthorizationResourceApplicationService";
 export { CancelExecutionApplicationService } from "./services/CancelExecutionApplicationService";
 export type { CancelExecutionError } from "./services/CancelExecutionApplicationService";
 export { CancelWorkItemApplicationService } from "./services/CancelWorkItemApplicationService";

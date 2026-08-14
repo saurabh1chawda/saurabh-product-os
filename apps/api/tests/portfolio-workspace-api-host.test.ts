@@ -11,7 +11,9 @@ import {
   GetPortfolioExecutionInput,
   GetPortfolioExecutionResult,
   InitializePortfolioExecutionInput,
-  InitializePortfolioExecutionResult
+  InitializePortfolioExecutionResult,
+  ResolvePortfolioExecutionAuthorizationResourceInput,
+  ResolvePortfolioExecutionAuthorizationResourceResult
 } from "@career-companion/portfolio-workspace-application";
 import {
   ApprovalReference,
@@ -24,6 +26,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -36,6 +39,7 @@ import {
   PortfolioWorkspaceApiHostConstructionError,
   PortfolioWorkspaceApiHostDisposalError,
   PortfolioWorkspaceApiHostLifecycle,
+  PortfolioWorkspaceProductionAuthorization,
   PortfolioWorkspacePresentationOutcome,
   PortfolioWorkspacePresentationPrincipal,
   PortfolioWorkspacePresentationPrincipalType,
@@ -118,17 +122,17 @@ describe("Portfolio Workspace API host runtime integration", () => {
     expect(JSON.stringify(result.error)).not.toMatch(/secret|SQLSTATE|08006/i);
   });
 
-  it("requires explicit authorization and never defaults to allow-all", async () => {
+  it("composes production authorization by default and never defaults to allow-all", async () => {
     const dependencies = dependenciesWith();
 
     const result = await createPortfolioWorkspaceApiHostWithDependencies({
-      configuration: configuration(),
-      authorization: undefined as unknown as PortfolioWorkspaceInternalAuthorization
+      configuration: configuration()
     }, dependencies);
 
-    expect(result.isFailure).toBe(true);
-    expect((result.error as PortfolioWorkspaceApiHostConstructionError).reason).toBe("authorization-required");
-    expect(dependencies.createRuntimeCalls).toBe(0);
+    expect(result.isSuccess).toBe(true);
+    expect(dependencies.createRuntimeCalls).toBe(1);
+    expect(dependencies.handlerInputs).toHaveLength(1);
+    expect(dependencies.handlerInputs[0]?.authorization).toBeInstanceOf(PortfolioWorkspaceProductionAuthorization);
   });
 
   it("disposes runtime and returns no host when runtime is not ready or handler composition fails", async () => {
@@ -323,7 +327,7 @@ class RecordingAuthorization implements PortfolioWorkspaceInternalAuthorization 
 
   async authorizeInitialize() {
     this.initializeCalls += 1;
-    return Result.success(undefined);
+    return Result.success(authorizationResourceReference());
   }
 
   async authorizeGet() {
@@ -357,6 +361,21 @@ class FakeGetService {
   }
 }
 
+class FakeResolveAuthorizationResourceService {
+  calls = 0;
+  readonly inputs: ResolvePortfolioExecutionAuthorizationResourceInput[] = [];
+
+  async resolve(input: ResolvePortfolioExecutionAuthorizationResourceInput) {
+    this.calls += 1;
+    this.inputs.push(input);
+    return Result.success(new ResolvePortfolioExecutionAuthorizationResourceResult({
+      executionId: input.executionId,
+      authorizationResourceReference: authorizationResourceReference(),
+      correlationId: input.correlationId
+    }));
+  }
+}
+
 function fakeRuntime(input: {
   readonly ready?: boolean;
   readonly disposeFailure?: Error;
@@ -367,6 +386,7 @@ function fakeRuntime(input: {
   const runtime = {
     initializePortfolioExecution: new FakeInitializeService(),
     getPortfolioExecution: new FakeGetService(),
+    resolvePortfolioExecutionAuthorizationResource: new FakeResolveAuthorizationResourceService(),
     get disposeCalls() {
       return disposeCalls;
     },
@@ -516,6 +536,7 @@ function initializeResultFromInput(input: InitializePortfolioExecutionInput): In
     portfolioPlanReference: input.portfolioPlanReference,
     planSnapshotReference: input.planSnapshotReference,
     approvalReference: input.approvalReference,
+    authorizationResourceReference: input.authorizationResourceReference,
     commandContext: input.commandContext,
     workItems: input.workItems.map((definition) => new PortfolioWorkItem({
       id: definition.workItemId,
@@ -548,6 +569,7 @@ function executionFixture(suffix: string): PortfolioExecution {
     approvalReference: new ApprovalReference({
       approvalReference: `approval:${suffix}`
     }),
+    authorizationResourceReference: authorizationResourceReference(),
     commandContext: new PortfolioExecutionCommandContext({
       commandId: `command:${suffix}`,
       correlationId: `correlation:${suffix}`,
@@ -597,4 +619,11 @@ function hostDirectoryPath(): string {
 
 function hostSourcePath(): string {
   return join(hostDirectoryPath(), "PortfolioWorkspaceApiHost.ts");
+}
+
+
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+  });
 }

@@ -12,6 +12,8 @@ import { Result } from "@career-companion/kernel";
 import {
   GetPortfolioExecutionInternalHandler,
   InitializePortfolioExecutionInternalHandler,
+  PortfolioWorkspaceProductionAuthorization,
+  PortfolioWorkspaceRuntimeAuthorizationResourceResolver,
   type PortfolioWorkspaceInternalAuthorization
 } from "../internal";
 import {
@@ -176,7 +178,6 @@ export type PortfolioWorkspaceApiHostConstructionFailure =
   | PortfolioWorkspaceApiHostConstructionError;
 
 export type PortfolioWorkspaceApiHostConstructionFailureReason =
-  | "authorization-required"
   | "runtime-construction-failed"
   | "runtime-not-ready"
   | "handler-composition-failed"
@@ -266,7 +267,7 @@ export class PortfolioWorkspaceApiHostDisposalError extends Error {
 
 export interface PortfolioWorkspaceApiHostInput {
   readonly configuration: PortfolioWorkspaceRuntimeConfiguration;
-  readonly authorization: PortfolioWorkspaceInternalAuthorization;
+  readonly authorization?: PortfolioWorkspaceInternalAuthorization;
   readonly commandIdGenerator?: PortfolioWorkspaceCommandIdGenerator;
   readonly correlationIdGenerator?: PortfolioWorkspaceCorrelationIdGenerator;
   readonly clock?: PortfolioWorkspacePresentationClock;
@@ -275,7 +276,7 @@ export interface PortfolioWorkspaceApiHostInput {
 
 export interface PortfolioWorkspaceApiHostEnvironmentInput {
   readonly environment: PortfolioWorkspaceRuntimeEnvironmentInput;
-  readonly authorization: PortfolioWorkspaceInternalAuthorization;
+  readonly authorization?: PortfolioWorkspaceInternalAuthorization;
   readonly commandIdGenerator?: PortfolioWorkspaceCommandIdGenerator;
   readonly correlationIdGenerator?: PortfolioWorkspaceCorrelationIdGenerator;
   readonly clock?: PortfolioWorkspacePresentationClock;
@@ -340,12 +341,6 @@ export async function createPortfolioWorkspaceApiHostWithDependencies(
   input: PortfolioWorkspaceApiHostInput,
   dependencies: PortfolioWorkspaceApiHostFactoryDependencies
 ): Promise<Result<PortfolioWorkspaceApiHost, PortfolioWorkspaceApiHostConstructionFailure>> {
-  if (input.authorization === undefined || input.authorization === null) {
-    return Result.failure(new PortfolioWorkspaceApiHostConstructionError({
-      reason: "authorization-required"
-    }));
-  }
-
   const runtimeResult = await dependencies.createRuntime(input.configuration);
   if (runtimeResult.isFailure) {
     return Result.failure(new PortfolioWorkspaceApiHostConstructionError({
@@ -369,9 +364,12 @@ export async function createPortfolioWorkspaceApiHostWithDependencies(
       clock: input.clock ?? new SystemPortfolioWorkspaceClock(),
       ...(input.actorReferenceMapper === undefined ? {} : { actorReferenceMapper: input.actorReferenceMapper })
     });
+    const authorization = input.authorization ?? new PortfolioWorkspaceProductionAuthorization({
+      resourceResolver: new PortfolioWorkspaceRuntimeAuthorizationResourceResolver({ runtime })
+    });
     const handlers = dependencies.createHandlers({
       runtime,
-      authorization: input.authorization,
+      authorization,
       commandContextFactory,
       correlationIdGenerator: input.correlationIdGenerator ?? new RandomUuidIdentifierGenerator("correlation")
     });

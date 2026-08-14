@@ -10,7 +10,7 @@ Object storage, OpenSearch, LiteLLM, cloud SDK composition, APIs, UI, messaging,
 
 PortfolioExecution durable record and mapper contracts are implemented as database-neutral infrastructure code.
 
-The mapper uses explicit `recordVersion` value `1`, keeps optimistic-concurrency revision outside the aggregate payload, and rejects corrupt or unsupported records through technology-neutral repository mapping failures.
+The mapper uses explicit `recordVersion` value `2`, keeps optimistic-concurrency revision outside the aggregate payload, persists the execution authorization resource in the aggregate payload, and rejects corrupt or unsupported records through technology-neutral repository mapping failures.
 
 The initial PostgreSQL/Drizzle schema and migration for the PortfolioExecution aggregate snapshot are implemented under the Infrastructure package.
 
@@ -18,7 +18,7 @@ The schema stores `execution_id`, `record_version`, `revision`, and `aggregate_p
 
 The PostgreSQL PortfolioExecution repository adapter is implemented against the Application-owned asynchronous repository port. It uses the mapper, the `portfolio_executions` schema, revision-aware create/update semantics, and optimistic compare-and-swap updates without automatic retry.
 
-Transaction orchestration, projection tables, fact persistence, and artifact storage remain unimplemented.
+Transaction orchestration, public idempotency-key enforcement, projection tables, fact persistence, and artifact storage remain unimplemented.
 
 ## Portfolio Workspace Runtime Configuration
 
@@ -30,7 +30,7 @@ PostgreSQL Pool creation, Drizzle database construction, and deterministic Pool 
 
 Migration readiness verification is implemented as a database-runtime check that verifies connectivity, interprets `verify-only` and `apply` migration modes, validates Drizzle migration metadata, and confirms the expected PortfolioExecution schema shape without constructing repositories or services. The committed Portfolio Workspace migration folder is resolved by Infrastructure relative to its own module location, not from the caller working directory, so API hosts and package-local tests use the same migration source.
 
-Portfolio Workspace runtime composition is implemented as explicit Infrastructure construction. It validates migration policy, creates the PostgreSQL database runtime, verifies migration readiness, constructs the PostgreSQL PortfolioExecution repository, constructs the ten Portfolio Workspace Application Services, and exposes only those services plus deterministic disposal. Initialize Portfolio Execution and Get Portfolio Execution are composed through the same shared repository as the behavioral services.
+Portfolio Workspace runtime composition is implemented as explicit Infrastructure construction. It validates migration policy, creates the PostgreSQL database runtime, verifies migration readiness, constructs the PostgreSQL PortfolioExecution repository, constructs the ten Portfolio Workspace Application Services plus the authorization-resource resolver, and exposes only those services plus deterministic disposal. Initialize Portfolio Execution, Get Portfolio Execution, and authorization-resource resolution are composed through the same shared repository as the behavioral services.
 
 Production and staging runtime startup use `verify-only` migration mode. `apply` mode is reserved for development and test composition; no production in-memory fallback is provided.
 

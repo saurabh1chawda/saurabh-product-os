@@ -13,6 +13,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -130,6 +131,9 @@ export function definePortfolioExecutionRepositoryContract(
         },
         approvalReference: {
           approvalReference: "approval:plan:rich"
+        },
+        authorizationResourceReference: {
+          authorizationResourceReference: "portfolio-workspace:execution-owner-1"
         },
         commandContext: commandContext("initialization-rich").toJSON(),
         lifecycle: PortfolioExecutionLifecycle.Active,
@@ -281,6 +285,9 @@ function createRichExecution(): PortfolioExecution {
     approvalReference: new ApprovalReference({
       approvalReference: "approval:plan:rich"
     }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    }),
     commandContext: commandContext("initialization-rich"),
     lifecycle: PortfolioExecutionLifecycle.Active,
     workItems: [
@@ -316,6 +323,9 @@ function createExecution(id: string): PortfolioExecution {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: `approval:plan:${id}`
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext(`initialization:${id}`),
     lifecycle: PortfolioExecutionLifecycle.Initialized

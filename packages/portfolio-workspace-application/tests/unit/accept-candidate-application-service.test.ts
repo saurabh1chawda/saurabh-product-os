@@ -18,6 +18,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   UnknownCandidateError
 } from "@career-companion/portfolio-workspace";
 import {
@@ -304,7 +305,10 @@ function createExecution(
     commandContext: commandContext(),
     lifecycle: PortfolioExecutionLifecycle.Active,
     candidates: [createCandidate("candidate-1", ArtifactCandidateLifecycle.Registered)],
-    ...overrides
+    ...overrides,
+    authorizationResourceReference: overrides.authorizationResourceReference ?? new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    })
   });
 }
 

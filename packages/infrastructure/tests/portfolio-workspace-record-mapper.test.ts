@@ -15,6 +15,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -96,6 +97,9 @@ describe("PortfolioExecutionRecordMapper", () => {
       approvalReference: {
         approvalReference: "approval:execution:ordered"
       },
+      authorizationResourceReference: {
+        authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+      },
       commandContext: commandContext("initialization:execution:ordered").toJSON(),
       lifecycle: PortfolioExecutionLifecycle.Active,
       workItems: [
@@ -133,7 +137,7 @@ describe("PortfolioExecutionRecordMapper", () => {
 
   it("returns unsupported-version failure for noncanonical record versions", () => {
     const record = mutableRecord(createExecution("execution:version", PortfolioExecutionLifecycle.Initialized));
-    record.recordVersion = 2;
+    record.recordVersion = PORTFOLIO_EXECUTION_RECORD_VERSION + 1;
 
     const result = PortfolioExecutionRecordMapper.fromUnknownRecord(record);
 
@@ -142,7 +146,23 @@ describe("PortfolioExecutionRecordMapper", () => {
     expect(result.error?.toJSON()).toEqual({
       name: "UnsupportedPortfolioExecutionRecordVersionError",
       code: "UNSUPPORTED_PORTFOLIO_EXECUTION_RECORD_VERSION",
-      recordVersion: 2
+      recordVersion: PORTFOLIO_EXECUTION_RECORD_VERSION + 1
+    });
+  });
+
+  it("intentionally rejects version-one records because they cannot prove trusted authorization ownership", () => {
+    const record = mutableRecord(createExecution("execution:version-one", PortfolioExecutionLifecycle.Initialized));
+    record.recordVersion = 1;
+    delete (record.aggregatePayload as { authorizationResourceReference?: unknown }).authorizationResourceReference;
+
+    const result = PortfolioExecutionRecordMapper.fromUnknownRecord(record);
+
+    expect(result.isFailure).toBe(true);
+    expect(result.error).toBeInstanceOf(UnsupportedPortfolioExecutionRecordVersionError);
+    expect(result.error?.toJSON()).toEqual({
+      name: "UnsupportedPortfolioExecutionRecordVersionError",
+      code: "UNSUPPORTED_PORTFOLIO_EXECUTION_RECORD_VERSION",
+      recordVersion: 1
     });
   });
 
@@ -153,6 +173,8 @@ describe("PortfolioExecutionRecordMapper", () => {
     ["invalid portfolio plan reference", (record: MutablePortfolioExecutionRecord) => { record.aggregatePayload.portfolioPlanReference.planId = ""; }],
     ["invalid plan snapshot reference", (record: MutablePortfolioExecutionRecord) => { record.aggregatePayload.planSnapshotReference.snapshotReference = ""; }],
     ["invalid approval reference", (record: MutablePortfolioExecutionRecord) => { record.aggregatePayload.approvalReference.approvalReference = ""; }],
+    ["missing authorization resource", (record: MutablePortfolioExecutionRecord) => { delete (record.aggregatePayload as { authorizationResourceReference?: unknown }).authorizationResourceReference; }],
+    ["invalid authorization resource", (record: MutablePortfolioExecutionRecord) => { record.aggregatePayload.authorizationResourceReference.authorizationResourceReference = ""; }],
     ["invalid initialization context", (record: MutablePortfolioExecutionRecord) => { record.aggregatePayload.commandContext.commandId = ""; }],
     ["unknown execution lifecycle", (record: MutablePortfolioExecutionRecord) => { record.aggregatePayload.lifecycle = "Started"; }],
     ["unknown work-item lifecycle", (record: MutablePortfolioExecutionRecord) => { record.aggregatePayload.workItems[0].lifecycle = "Waiting"; }],
@@ -254,6 +276,9 @@ type MutablePortfolioExecutionRecord = {
     approvalReference: {
       approvalReference: string;
     };
+    authorizationResourceReference: {
+      authorizationResourceReference: string;
+    };
     commandContext: {
       commandId: string;
       correlationId: string;
@@ -291,6 +316,9 @@ function createExecution(
     }),
     approvalReference: new ApprovalReference({
       approvalReference: `approval:${id}`
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext(`initialization:${id}`),
     lifecycle,

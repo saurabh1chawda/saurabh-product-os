@@ -76,7 +76,8 @@ export class GetPortfolioExecutionInternalHandler {
 
     const authorizationResult = await this.#authorization.authorizeGet({
       principal: input.principal,
-      executionId: applicationInputResult.value!.executionId
+      executionId: applicationInputResult.value!.executionId,
+      correlationId
     });
     if (authorizationResult.isFailure) {
       return presentationErrorResponse(authorizationResult.error!);

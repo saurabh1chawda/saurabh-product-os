@@ -9,7 +9,8 @@ import {
   PortfolioExecution,
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
-  PortfolioPlanReference
+  PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference
 } from "@career-companion/portfolio-workspace";
 import type { PortfolioExecutionRepository } from "@career-companion/portfolio-workspace-application";
 import {
@@ -27,7 +28,8 @@ import {
   type PortfolioExecutionRepositorySaveFailure,
   PortfolioExecutionRevision,
   PortfolioExecutionSaveResult,
-  RejectCandidateApplicationService
+  RejectCandidateApplicationService,
+  ResolvePortfolioExecutionAuthorizationResourceApplicationService
 } from "@career-companion/portfolio-workspace-application";
 import type { Pool } from "pg";
 import { describe, expect, it } from "vitest";
@@ -63,7 +65,7 @@ import * as publicApi from "../src";
 const secretUrl = "postgresql://portfolio_user:super-secret-password@localhost:5432/portfolio_workspace";
 
 describe("Portfolio Workspace runtime composition", () => {
-  it("composes the PostgreSQL runtime, readiness verifier, repository, and all ten services", async () => {
+  it("composes the PostgreSQL runtime, readiness verifier, repository, and all services", async () => {
     const configuration = configurationWith({ migrationMode: PortfolioWorkspaceMigrationMode.VerifyOnly });
     const databaseRuntime = runtimeFor(configuration);
     const repository = fakeRepository();
@@ -79,6 +81,7 @@ describe("Portfolio Workspace runtime composition", () => {
     expect(runtime).toBeInstanceOf(PortfolioWorkspaceRuntime);
     expect(runtime.initializePortfolioExecution).toBeInstanceOf(InitializePortfolioExecutionApplicationService);
     expect(runtime.getPortfolioExecution).toBeInstanceOf(GetPortfolioExecutionApplicationService);
+    expect(runtime.resolvePortfolioExecutionAuthorizationResource).toBeInstanceOf(ResolvePortfolioExecutionAuthorizationResourceApplicationService);
     expect(runtime.beginExecution).toBeInstanceOf(BeginExecutionApplicationService);
     expect(runtime.activateWorkItem).toBeInstanceOf(ActivateWorkItemApplicationService);
     expect(runtime.completeWorkItem).toBeInstanceOf(CompleteWorkItemApplicationService);
@@ -97,10 +100,12 @@ describe("Portfolio Workspace runtime composition", () => {
       "completeWorkItem",
       "getPortfolioExecution",
       "initializePortfolioExecution",
-      "rejectCandidate"
+      "rejectCandidate",
+      "resolvePortfolioExecutionAuthorizationResource"
     ]);
     expect(serviceRepository(runtime.initializePortfolioExecution)).toBe(repository);
     expect(serviceRepository(runtime.getPortfolioExecution)).toBe(repository);
+    expect(serviceRepository(runtime.resolvePortfolioExecutionAuthorizationResource)).toBe(repository);
     expect(serviceRepository(runtime.beginExecution)).toBe(repository);
     expect(serviceRepository(runtime.activateWorkItem)).toBe(repository);
     expect(serviceRepository(runtime.completeWorkItem)).toBe(repository);
@@ -644,6 +649,9 @@ function initializedExecution(id: ExecutionId): PortfolioExecution {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: `approval:plan:${id.toJSON()}`
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: new PortfolioExecutionCommandContext({
       commandId: "command:runtime-query-initialize",

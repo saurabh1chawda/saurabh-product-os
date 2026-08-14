@@ -13,6 +13,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -24,7 +25,7 @@ import {
   PortfolioExecutionPersistenceMappingError,
   UnsupportedPortfolioExecutionRecordVersionError
 } from "@career-companion/portfolio-workspace-application";
-import { PortfolioExecutionRecordMapper } from "../src";
+import { PORTFOLIO_EXECUTION_RECORD_VERSION, PortfolioExecutionRecordMapper } from "../src";
 import { PortfolioWorkspacePostgresTestHarness, assertSafePortfolioWorkspaceTestDatabaseUrl } from "./portfolio-workspace-postgres-test-harness";
 
 const liveDatabaseUrl = process.env.PORTFOLIO_WORKSPACE_TEST_DATABASE_URL?.trim();
@@ -54,7 +55,7 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
     reset: async () => harness.reset()
   });
 
-  it("applies the committed migration and exposes only the PortfolioExecution table", async () => {
+  it("applies the committed migrations and exposes only the approved Portfolio Workspace tables", async () => {
     const tables = await harness.query<{ readonly table_name: string }>(
       "SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema() ORDER BY table_name"
     );
@@ -80,7 +81,9 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
          AND tc.constraint_type = 'PRIMARY KEY'`
     );
 
-    expect(tables.map((row) => row.table_name)).toEqual(["portfolio_executions"]);
+    expect(tables.map((row) => row.table_name)).toEqual([
+      "portfolio_executions"
+    ]);
     expect(columns).toEqual([
       { column_name: "execution_id", is_nullable: "NO", data_type: "text" },
       { column_name: "record_version", is_nullable: "NO", data_type: "integer" },
@@ -105,9 +108,12 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
     }>("SELECT execution_id, record_version, revision, aggregate_payload FROM portfolio_executions");
     expect(rows).toHaveLength(1);
     expect(rows[0]?.execution_id).toBe("execution:rich-live");
-    expect(rows[0]?.record_version).toBe(1);
+    expect(rows[0]?.record_version).toBe(PORTFOLIO_EXECUTION_RECORD_VERSION);
     expect(rows[0]?.revision).toBe(1);
     expect(rows[0]?.aggregate_payload).toEqual(PortfolioExecutionRecordMapper.toRecord(execution).aggregatePayload);
+    expect(rows[0]?.aggregate_payload).toHaveProperty("authorizationResourceReference", {
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    });
     expect(rows[0]?.aggregate_payload).not.toHaveProperty("revision");
 
     const loaded = expectLoaded(await repository.loadByExecutionId(execution.id));
@@ -155,7 +161,7 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
 
     await expect(harness.insertRawPortfolioExecutionRow({
       executionId: "execution:bad-revision",
-      recordVersion: 1,
+      recordVersion: PORTFOLIO_EXECUTION_RECORD_VERSION,
       revision: 0,
       aggregatePayload: payload
     })).rejects.toThrow();
@@ -169,7 +175,7 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
 
     await expect(harness.query(
       "INSERT INTO portfolio_executions (execution_id, record_version, revision, aggregate_payload) VALUES ($1, $2, $3, $4)",
-      ["execution:null-payload", 1, 1, null]
+      ["execution:null-payload", PORTFOLIO_EXECUTION_RECORD_VERSION, 1, null]
     )).rejects.toThrow();
   });
 
@@ -177,10 +183,12 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
     const repository = harness.repository();
     const record = PortfolioExecutionRecordMapper.toRecord(createExecution("execution:corrupt-live"));
     const corruptPayload = { ...record.aggregatePayload, id: "" };
+    const missingAuthorizationPayload = { ...record.aggregatePayload };
+    delete (missingAuthorizationPayload as { authorizationResourceReference?: unknown }).authorizationResourceReference;
 
     await harness.insertRawPortfolioExecutionRow({
       executionId: "execution:corrupt-live",
-      recordVersion: 1,
+      recordVersion: PORTFOLIO_EXECUTION_RECORD_VERSION,
       revision: 1,
       aggregatePayload: corruptPayload
     });
@@ -189,6 +197,24 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
       "SELECT aggregate_payload FROM portfolio_executions WHERE execution_id = $1",
       ["execution:corrupt-live"]
     ))[0]?.aggregate_payload).toEqual(corruptPayload);
+
+    await harness.reset();
+    await harness.insertRawPortfolioExecutionRow({
+      executionId: "execution:missing-authorization-live",
+      recordVersion: PORTFOLIO_EXECUTION_RECORD_VERSION,
+      revision: 1,
+      aggregatePayload: missingAuthorizationPayload
+    });
+    await expect(repository.loadByExecutionId(new ExecutionId("execution:missing-authorization-live"))).rejects.toBeInstanceOf(PortfolioExecutionPersistenceMappingError);
+
+    await harness.reset();
+    await harness.insertRawPortfolioExecutionRow({
+      executionId: "execution:version-one-live",
+      recordVersion: 1,
+      revision: 1,
+      aggregatePayload: record.aggregatePayload
+    });
+    await expect(repository.loadByExecutionId(new ExecutionId("execution:version-one-live"))).rejects.toBeInstanceOf(UnsupportedPortfolioExecutionRecordVersionError);
 
     await harness.reset();
     await harness.insertRawPortfolioExecutionRow({
@@ -229,6 +255,9 @@ function createRichExecution(): PortfolioExecution {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: "approval:plan:rich-live"
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext("initialization-rich-live"),
     lifecycle: PortfolioExecutionLifecycle.Active,
@@ -281,6 +310,9 @@ function createExecution(id: string): PortfolioExecution {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: `approval:plan:${id}`
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext(`initialization:${id}`),
     lifecycle: PortfolioExecutionLifecycle.Initialized

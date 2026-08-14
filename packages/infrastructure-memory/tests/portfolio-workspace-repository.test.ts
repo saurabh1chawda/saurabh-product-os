@@ -10,6 +10,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId
@@ -238,6 +239,9 @@ function createExecution(overrides: {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: `approval:plan:${id}`
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext(`initialization:${id}`),
     lifecycle: overrides.lifecycle ?? PortfolioExecutionLifecycle.Initialized,

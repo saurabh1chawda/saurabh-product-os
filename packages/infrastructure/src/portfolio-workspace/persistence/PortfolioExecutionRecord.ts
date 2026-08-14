@@ -4,7 +4,7 @@ import type {
   PortfolioWorkItemLifecycleValue
 } from "@career-companion/portfolio-workspace";
 
-export const PORTFOLIO_EXECUTION_RECORD_VERSION = 1;
+export const PORTFOLIO_EXECUTION_RECORD_VERSION = 2;
 
 export type PortfolioExecutionRecordVersion = typeof PORTFOLIO_EXECUTION_RECORD_VERSION;
 
@@ -26,6 +26,9 @@ export interface PortfolioExecutionAggregatePayload {
   };
   readonly approvalReference: {
     readonly approvalReference: string;
+  };
+  readonly authorizationResourceReference: {
+    readonly authorizationResourceReference: string;
   };
   readonly commandContext: {
     readonly commandId: string;

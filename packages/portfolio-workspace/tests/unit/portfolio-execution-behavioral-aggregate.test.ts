@@ -24,6 +24,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionStartedFact,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemActivatedFact,
   PortfolioWorkItemCancelledFact,
@@ -44,6 +45,7 @@ describe("PortfolioExecution behavioral aggregate", () => {
       portfolioPlanReference: portfolioPlanReference(),
       planSnapshotReference: planSnapshotReference(),
       approvalReference: approvalReference(),
+      authorizationResourceReference: authorizationResourceReference(),
       commandContext: commandContext(),
       workItems: [workItem],
       candidates: [candidate]
@@ -52,10 +54,12 @@ describe("PortfolioExecution behavioral aggregate", () => {
     expect(initialized).toBeInstanceOf(PortfolioExecutionInitializationResult);
     expect(Object.isFrozen(initialized)).toBe(true);
     expect(initialized.execution.lifecycle).toBe(PortfolioExecutionLifecycle.Initialized);
+    expect(initialized.execution.authorizationResourceReference.equals(authorizationResourceReference())).toBe(true);
     expect(initialized.execution.workItems()).toEqual([workItem]);
     expect(initialized.execution.candidates()).toEqual([candidate]);
     expect(initialized.execution.acceptedArtifacts()).toHaveLength(0);
     expect(initialized.fact).toBeInstanceOf(PortfolioExecutionInitializedFact);
+    expect(initialized.fact.authorizationResourceReference.equals(authorizationResourceReference())).toBe(true);
     expect(initialized.fact.commandContext.equals(commandContext())).toBe(true);
     expect(initialized.fact.toJSON()).toMatchObject({
       type: "PortfolioExecutionInitialized",
@@ -71,6 +75,7 @@ describe("PortfolioExecution behavioral aggregate", () => {
       portfolioPlanReference: portfolioPlanReference(),
       planSnapshotReference: planSnapshotReference(),
       approvalReference: approvalReference(),
+      authorizationResourceReference: authorizationResourceReference(),
       commandContext: commandContext(),
       workItems: [
         createWorkItem("work-item-1", PortfolioWorkItemLifecycle.Pending),
@@ -82,6 +87,7 @@ describe("PortfolioExecution behavioral aggregate", () => {
       portfolioPlanReference: portfolioPlanReference(),
       planSnapshotReference: planSnapshotReference(),
       approvalReference: approvalReference(),
+      authorizationResourceReference: authorizationResourceReference(),
       commandContext: commandContext(),
       candidates: [
         createCandidate("candidate-1", ArtifactCandidateLifecycle.Registered),
@@ -414,6 +420,7 @@ function createAggregate(overrides: Partial<ConstructorParameters<typeof Portfol
     portfolioPlanReference: portfolioPlanReference(),
     planSnapshotReference: planSnapshotReference(),
     approvalReference: approvalReference(),
+    authorizationResourceReference: authorizationResourceReference(),
     commandContext: new PortfolioExecutionCommandContext({
       commandId: "command-1",
       correlationId: "correlation-1",
@@ -442,6 +449,11 @@ function planSnapshotReference(): PlanSnapshotReference {
 function approvalReference(): ApprovalReference {
   return new ApprovalReference({
     approvalReference: "approval:portfolio-plan-1"
+  });
+}
+function authorizationResourceReference(): PortfolioWorkspaceAuthorizationResourceReference {
+  return new PortfolioWorkspaceAuthorizationResourceReference({
+    authorizationResourceReference: "portfolio-workspace:execution-owner-1"
   });
 }
 

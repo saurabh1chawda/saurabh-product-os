@@ -83,7 +83,8 @@ export class InitializePortfolioExecutionInternalHandler {
 
     const authorizationResult = await this.#authorization.authorizeInitialize({
       principal: input.principal,
-      request
+      request,
+      correlationId
     });
     if (authorizationResult.isFailure) {
       return presentationErrorResponse(authorizationResult.error!);
@@ -103,6 +104,7 @@ export class InitializePortfolioExecutionInternalHandler {
     const applicationInputResult = mapInitializePortfolioExecutionRequestToInput(
       request,
       commandContextResult.value!,
+      authorizationResult.value!,
       correlationId
     );
     if (applicationInputResult.isFailure) {

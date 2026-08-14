@@ -11,6 +11,7 @@ import {
   PortfolioExecutionLifecycle,
   PortfolioExecutionSummaryProjection,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   WorkItemId,
@@ -189,6 +190,9 @@ function createExecution(): PortfolioExecution {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: "approval:portfolio-plan:get"
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: new PortfolioExecutionCommandContext({
       commandId: "command:get-created",

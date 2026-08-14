@@ -18,6 +18,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PortfolioWorkItem,
   PortfolioWorkItemLifecycle,
   RecommendationDecision,
@@ -195,7 +196,10 @@ function createAggregate(overrides: Partial<ConstructorParameters<typeof Portfol
       occurredAt: "2026-07-30T00:00:00.000Z"
     }),
     lifecycle: PortfolioExecutionLifecycle.Initialized,
-    ...overrides
+    ...overrides,
+    authorizationResourceReference: overrides.authorizationResourceReference ?? new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
+    })
   });
 }
 

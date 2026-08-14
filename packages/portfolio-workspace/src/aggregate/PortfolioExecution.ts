@@ -31,6 +31,7 @@ import { ExecutionId } from "../value-objects/ExecutionId";
 import { PlanSnapshotReference } from "../value-objects/PlanSnapshotReference";
 import { PortfolioExecutionCommandContext } from "../value-objects/PortfolioExecutionCommandContext";
 import { PortfolioPlanReference } from "../value-objects/PortfolioPlanReference";
+import { PortfolioWorkspaceAuthorizationResourceReference } from "../value-objects/PortfolioWorkspaceAuthorizationResourceReference";
 import { WorkItemId } from "../value-objects/WorkItemId";
 
 export class PortfolioExecution {
@@ -40,6 +41,7 @@ export class PortfolioExecution {
   readonly portfolioPlanReference: PortfolioPlanReference;
   readonly planSnapshotReference: PlanSnapshotReference;
   readonly approvalReference: ApprovalReference;
+  readonly authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference;
   readonly commandContext: PortfolioExecutionCommandContext;
 
   private readonly ownedWorkItems: PortfolioWorkItem[] = [];
@@ -52,6 +54,7 @@ export class PortfolioExecution {
     readonly portfolioPlanReference: PortfolioPlanReference;
     readonly planSnapshotReference: PlanSnapshotReference;
     readonly approvalReference: ApprovalReference;
+    readonly authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference;
     readonly commandContext: PortfolioExecutionCommandContext;
     readonly lifecycle: PortfolioExecutionLifecycleValue;
     readonly workItems?: readonly PortfolioWorkItem[];
@@ -62,6 +65,7 @@ export class PortfolioExecution {
     assertInstance(input.portfolioPlanReference, PortfolioPlanReference);
     assertInstance(input.planSnapshotReference, PlanSnapshotReference);
     assertInstance(input.approvalReference, ApprovalReference);
+    assertInstance(input.authorizationResourceReference, PortfolioWorkspaceAuthorizationResourceReference);
     assertInstance(input.commandContext, PortfolioExecutionCommandContext);
     if (!isPortfolioExecutionLifecycle(input.lifecycle)) {
       throw new InvalidExecutionOperationError();
@@ -71,6 +75,7 @@ export class PortfolioExecution {
     this.portfolioPlanReference = input.portfolioPlanReference;
     this.planSnapshotReference = input.planSnapshotReference;
     this.approvalReference = input.approvalReference;
+    this.authorizationResourceReference = input.authorizationResourceReference;
     this.commandContext = input.commandContext;
     this.currentLifecycle = input.lifecycle;
 
@@ -90,6 +95,7 @@ export class PortfolioExecution {
     readonly portfolioPlanReference: PortfolioPlanReference;
     readonly planSnapshotReference: PlanSnapshotReference;
     readonly approvalReference: ApprovalReference;
+    readonly authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference;
     readonly commandContext: PortfolioExecutionCommandContext;
     readonly workItems?: readonly PortfolioWorkItem[];
     readonly candidates?: readonly ArtifactCandidate[];
@@ -98,6 +104,7 @@ export class PortfolioExecution {
     assertInstance(input.portfolioPlanReference, PortfolioPlanReference);
     assertInstance(input.planSnapshotReference, PlanSnapshotReference);
     assertInstance(input.approvalReference, ApprovalReference);
+    assertInstance(input.authorizationResourceReference, PortfolioWorkspaceAuthorizationResourceReference);
     assertInstance(input.commandContext, PortfolioExecutionCommandContext);
 
     const execution = new PortfolioExecution({
@@ -105,6 +112,7 @@ export class PortfolioExecution {
       portfolioPlanReference: input.portfolioPlanReference,
       planSnapshotReference: input.planSnapshotReference,
       approvalReference: input.approvalReference,
+      authorizationResourceReference: input.authorizationResourceReference,
       commandContext: input.commandContext,
       lifecycle: PortfolioExecutionLifecycle.Initialized,
       workItems: input.workItems,
@@ -119,6 +127,7 @@ export class PortfolioExecution {
         portfolioPlanReference: input.portfolioPlanReference,
         planSnapshotReference: input.planSnapshotReference,
         approvalReference: input.approvalReference,
+        authorizationResourceReference: input.authorizationResourceReference,
         commandContext: input.commandContext
       })
     });
@@ -366,6 +375,7 @@ export class PortfolioExecution {
     readonly portfolioPlanReference: ReturnType<PortfolioPlanReference["toJSON"]>;
     readonly planSnapshotReference: ReturnType<PlanSnapshotReference["toJSON"]>;
     readonly approvalReference: ReturnType<ApprovalReference["toJSON"]>;
+    readonly authorizationResourceReference: ReturnType<PortfolioWorkspaceAuthorizationResourceReference["toJSON"]>;
     readonly commandContext: ReturnType<PortfolioExecutionCommandContext["toJSON"]>;
     readonly lifecycle: PortfolioExecutionLifecycleValue;
     readonly workItems: readonly ReturnType<PortfolioWorkItem["toJSON"]>[];
@@ -377,6 +387,7 @@ export class PortfolioExecution {
       portfolioPlanReference: this.portfolioPlanReference.toJSON(),
       planSnapshotReference: this.planSnapshotReference.toJSON(),
       approvalReference: this.approvalReference.toJSON(),
+      authorizationResourceReference: this.authorizationResourceReference.toJSON(),
       commandContext: this.commandContext.toJSON(),
       lifecycle: this.lifecycle,
       workItems: this.ownedWorkItems.map((workItem) => workItem.toJSON()),

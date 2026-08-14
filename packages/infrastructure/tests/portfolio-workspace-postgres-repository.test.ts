@@ -7,6 +7,7 @@ import {
   PortfolioExecutionCommandContext,
   PortfolioExecutionLifecycle,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   PlanSnapshotReference,
   ApprovalReference
 } from "@career-companion/portfolio-workspace";
@@ -23,7 +24,11 @@ import {
 import { describe, expect, it } from "vitest";
 import { PostgresPortfolioExecutionRepository } from "../src";
 import * as publicApi from "../src";
-import { PortfolioExecutionRecordMapper, type PortfolioExecutionAggregatePayload } from "../src/portfolio-workspace/persistence";
+import {
+  PORTFOLIO_EXECUTION_RECORD_VERSION,
+  PortfolioExecutionRecordMapper,
+  type PortfolioExecutionAggregatePayload
+} from "../src/portfolio-workspace/persistence";
 import type { PortfolioExecutionRow } from "../src/portfolio-workspace/postgres/schema";
 
 describe("PostgresPortfolioExecutionRepository", () => {
@@ -39,7 +44,7 @@ describe("PostgresPortfolioExecutionRepository", () => {
     expect(result.value?.revision.toJSON()).toBe(1);
     expect(database.rows()).toEqual([{
       executionId: "execution:insert",
-      recordVersion: 1,
+      recordVersion: PORTFOLIO_EXECUTION_RECORD_VERSION,
       revision: 1,
       aggregatePayload: PortfolioExecutionRecordMapper.toRecord(execution).aggregatePayload
     }]);
@@ -108,11 +113,20 @@ describe("PostgresPortfolioExecutionRepository", () => {
 
     database.seed({
       executionId: "execution:corrupt",
-      recordVersion: 1,
+      recordVersion: PORTFOLIO_EXECUTION_RECORD_VERSION,
       revision: 1,
       aggregatePayload: { ...record.aggregatePayload, id: "" } as PortfolioExecutionAggregatePayload
     });
     await expect(repository.loadByExecutionId(execution.id)).rejects.toBeInstanceOf(PortfolioExecutionPersistenceMappingError);
+
+    database.clear();
+    database.seed({
+      executionId: "execution:version-one",
+      recordVersion: 1,
+      revision: 1,
+      aggregatePayload: record.aggregatePayload
+    });
+    await expect(repository.loadByExecutionId(new ExecutionId("execution:version-one"))).rejects.toBeInstanceOf(UnsupportedPortfolioExecutionRecordVersionError);
 
     database.clear();
     database.seed({
@@ -342,6 +356,9 @@ function createExecution(id: string): PortfolioExecution {
     }),
     approvalReference: new ApprovalReference({
       approvalReference: `approval:plan:${id}`
+    }),
+    authorizationResourceReference: new PortfolioWorkspaceAuthorizationResourceReference({
+      authorizationResourceReference: "portfolio-workspace:execution-owner-1"
     }),
     commandContext: commandContext(`initialization:${id}`),
     lifecycle: PortfolioExecutionLifecycle.Initialized

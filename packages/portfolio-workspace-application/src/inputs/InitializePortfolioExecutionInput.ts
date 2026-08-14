@@ -5,6 +5,7 @@ import {
   PlanSnapshotReference,
   PortfolioExecutionCommandContext,
   PortfolioPlanReference,
+  PortfolioWorkspaceAuthorizationResourceReference,
   WorkItemId
 } from "@career-companion/portfolio-workspace";
 
@@ -71,6 +72,7 @@ export class InitializePortfolioExecutionInput {
   readonly portfolioPlanReference: PortfolioPlanReference;
   readonly planSnapshotReference: PlanSnapshotReference;
   readonly approvalReference: ApprovalReference;
+  readonly authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference;
   readonly commandContext: PortfolioExecutionCommandContext;
   readonly workItems: readonly InitializePortfolioWorkItemDefinition[];
   readonly candidates: readonly InitializeArtifactCandidateDefinition[];
@@ -80,6 +82,7 @@ export class InitializePortfolioExecutionInput {
     readonly portfolioPlanReference: PortfolioPlanReference;
     readonly planSnapshotReference: PlanSnapshotReference;
     readonly approvalReference: ApprovalReference;
+    readonly authorizationResourceReference: PortfolioWorkspaceAuthorizationResourceReference;
     readonly commandContext: PortfolioExecutionCommandContext;
     readonly workItems?: readonly InitializePortfolioWorkItemDefinition[];
     readonly candidates?: readonly InitializeArtifactCandidateDefinition[];
@@ -88,12 +91,14 @@ export class InitializePortfolioExecutionInput {
     assertInstance(input.portfolioPlanReference, PortfolioPlanReference, "Invalid InitializePortfolioExecutionInput portfolioPlanReference.");
     assertInstance(input.planSnapshotReference, PlanSnapshotReference, "Invalid InitializePortfolioExecutionInput planSnapshotReference.");
     assertInstance(input.approvalReference, ApprovalReference, "Invalid InitializePortfolioExecutionInput approvalReference.");
+    assertInstance(input.authorizationResourceReference, PortfolioWorkspaceAuthorizationResourceReference, "Invalid InitializePortfolioExecutionInput authorizationResourceReference.");
     assertInstance(input.commandContext, PortfolioExecutionCommandContext, "Invalid InitializePortfolioExecutionInput commandContext.");
 
     this.executionId = input.executionId;
     this.portfolioPlanReference = input.portfolioPlanReference;
     this.planSnapshotReference = input.planSnapshotReference;
     this.approvalReference = input.approvalReference;
+    this.authorizationResourceReference = input.authorizationResourceReference;
     this.commandContext = input.commandContext;
     this.workItems = Object.freeze([...(input.workItems ?? [])]);
     this.candidates = Object.freeze([...(input.candidates ?? [])]);
@@ -114,6 +119,7 @@ export class InitializePortfolioExecutionInput {
       && this.portfolioPlanReference.equals(other.portfolioPlanReference)
       && this.planSnapshotReference.equals(other.planSnapshotReference)
       && this.approvalReference.equals(other.approvalReference)
+      && this.authorizationResourceReference.equals(other.authorizationResourceReference)
       && this.commandContext.equals(other.commandContext)
       && definitionsEqual(this.workItems, other.workItems)
       && definitionsEqual(this.candidates, other.candidates);
@@ -124,6 +130,7 @@ export class InitializePortfolioExecutionInput {
     readonly portfolioPlanReference: ReturnType<PortfolioPlanReference["toJSON"]>;
     readonly planSnapshotReference: ReturnType<PlanSnapshotReference["toJSON"]>;
     readonly approvalReference: ReturnType<ApprovalReference["toJSON"]>;
+    readonly authorizationResourceReference: ReturnType<PortfolioWorkspaceAuthorizationResourceReference["toJSON"]>;
     readonly commandContext: ReturnType<PortfolioExecutionCommandContext["toJSON"]>;
     readonly workItems: readonly ReturnType<InitializePortfolioWorkItemDefinition["toJSON"]>[];
     readonly candidates: readonly ReturnType<InitializeArtifactCandidateDefinition["toJSON"]>[];
@@ -133,6 +140,7 @@ export class InitializePortfolioExecutionInput {
       portfolioPlanReference: this.portfolioPlanReference.toJSON(),
       planSnapshotReference: this.planSnapshotReference.toJSON(),
       approvalReference: this.approvalReference.toJSON(),
+      authorizationResourceReference: this.authorizationResourceReference.toJSON(),
       commandContext: this.commandContext.toJSON(),
       workItems: this.workItems.map((workItem) => workItem.toJSON()),
       candidates: this.candidates.map((candidate) => candidate.toJSON())
