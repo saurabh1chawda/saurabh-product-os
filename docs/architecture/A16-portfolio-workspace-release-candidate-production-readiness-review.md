@@ -6,7 +6,7 @@ This document is the A16 release-candidate and production-readiness review for t
 
 The review answers whether Portfolio Workspace is ready to move from architecturally complete internal capability to production-facing rollout work. It distinguishes architecture completeness, release-candidate readiness, internal deployment readiness, public read-only readiness, public mutation readiness, and full production readiness.
 
-This review does not implement new product behavior, HTTP routes, authentication, production authorization, idempotency, observability, CI, persistence changes, retries, dependency injection, list/search, UI, or AI.
+This review originally did not implement new product behavior, HTTP routes, authentication, production authorization, idempotency, observability, CI, persistence changes, retries, dependency injection, list/search, UI, or AI. Later A16 slices added internal production authorization and durable idempotency persistence/orchestration; this document now records that current release-candidate state.
 
 ## 2. Evidence Reviewed
 
@@ -32,7 +32,15 @@ Reviewed repository evidence includes:
 - `.github`
 - current git diff, status, and validation output
 
-A15.8 live API host validation is accepted as authoritative manual evidence: PostgreSQL 17, 1 test file passed, 8 tests passed, 0 failed, 0 skipped.
+A15.8 live API host validation was accepted as authoritative manual evidence for the earlier internal host boundary. Current A16 live API host evidence is PostgreSQL 17, 1 test file passed, 9 tests passed, 0 failed, 0 skipped.
+
+A16.4a.2 live authorization persistence closure is accepted as authoritative manual evidence under Node `v22.23.2`, pnpm `11.9.0`, and a disposable PostgreSQL 17 `portfolio_workspace_test` database:
+
+- repository live suite: 1 test file passed, 17 tests passed, 0 failed, 0 skipped;
+- runtime live suite: 1 test file passed, 9 tests passed, 0 failed, 0 skipped;
+- API host live suite: 1 test file passed, 9 tests passed, 0 failed, 0 skipped.
+
+A16.5 durable mutation idempotency architecture is complete, A16.5a API/presentation contracts are implemented, and A16.5b/A16.4c PostgreSQL storage, reservation, replay persistence, and atomic aggregate mutation orchestration are implemented and live validated. Public mutation routes remain blocked until concrete public transport rollout, provider authentication, operational controls, and public retry policy validation are approved.
 
 ## 3. Completed Architecture Baseline
 
@@ -55,7 +63,7 @@ Application:
 Infrastructure:
 
 - PostgreSQL + Drizzle + node-postgres is implemented for durable persistence.
-- The mapper uses explicit durable records, public constructor rehydration, record version `1`, and technology-neutral mapping failures.
+- The mapper uses explicit durable records, public constructor rehydration, record version `2`, persisted execution authorization resource references, and technology-neutral mapping failures. A16.4a.1 classifies record version `1` as intentionally unsupported because it cannot prove trusted authorization ownership.
 - The PostgreSQL adapter implements revision-aware create/update, optimistic concurrency, duplicate-create detection, stale-save conflict detection, and no automatic retry.
 - Migration readiness is Infrastructure-owned, resolves committed migrations module-relatively, validates metadata/schema, and enforces apply/verify-only policy.
 
@@ -84,7 +92,7 @@ Completed and coherent:
 - Runtime composes concrete Infrastructure and Application pieces manually without generic DI or service locator.
 - Presentation invokes runtime services and maps safe transport contracts without direct repository or aggregate access.
 
-Important distinction: the internal boundary is complete, but public production rollout still requires authentication, production authorization policy, durable idempotency for public mutation, concrete transport routing, observability, Node 22 parity, and CI/live gate decisions.
+Important distinction: the internal boundary is complete, including host authorization and durable idempotency orchestration for the internal mutation path. Public production rollout still requires provider authentication, concrete public transport routing, observability, deployment operations, and public retry/abuse-control policy.
 
 ## 5. Release-Candidate Validation Assessment
 
@@ -96,9 +104,10 @@ Current explicit validation posture:
 | --- | --- |
 | Package build/lint/typecheck/test | Passing for reviewed Portfolio Workspace packages and API |
 | Root build/lint/typecheck/test | Passing |
-| Live PostgreSQL repository suite | Implemented as opt-in command; prior A12.10 live PostgreSQL 17 result accepted |
-| Live runtime suite | Implemented as opt-in command; prior A14.6 live PostgreSQL 17 result accepted |
-| Live API host suite | Implemented as opt-in command; A15.8 manual PostgreSQL 17 result accepted, 8/8 passed |
+| Live PostgreSQL repository suite | A16.4a.2 manual PostgreSQL 17 evidence accepted: 17/17 passed |
+| Live durable idempotency suite | A16.2l manual PostgreSQL 17 evidence accepted: 13/13 passed |
+| Live runtime suite | A16.4a.2 manual PostgreSQL 17 evidence accepted: 9/9 passed |
+| Live API host suite | A16.2m hosted PostgreSQL 17 evidence accepted: 9/9 passed |
 
 The release candidate is ready for merge only with release hygiene conditions: isolate commit groups, validate under Node 22, and decide CI live gate policy before production release.
 
@@ -109,14 +118,15 @@ Repository requirements:
 - `package.json` engines: Node `>=22 <23`
 - `.nvmrc`: `22`
 
-Current local environment:
+Current accepted A16.1 evidence:
 
-- `node --version`: `v24.14.0`
-- visible node path: `C:\Program Files\nodejs\node.exe`
+- `node --version`: `v22.23.2`
+- `pnpm --version`: `11.9.0`
+- frozen install, package validation, root validation, and live PostgreSQL gates passed under Node 22.
 
-Assessment: Node 22 is not currently visible locally. All recent validation has run on Node 24 with warnings. This is not evidence of functional failure, but it is a release parity gap.
+Assessment: Node 22 parity is closed for the release candidate.
 
-Classification: REQUIRED BEFORE PRODUCTION RELEASE and REQUIRED BEFORE MERGE if the merge policy requires engine-parity validation.
+Classification: NO ISSUE for A16.1/A16.2 release-candidate validation.
 
 ## 7. pnpm and Tooling Assessment
 
@@ -180,17 +190,18 @@ Classification: ACCEPTABLE TEST DEPENDENCY.
 
 Repository `.github` originally contained templates but no validation workflow file.
 
-Current CI evidence after A16.2:
+Current CI evidence after A16.2/A16.3:
 
 - `.github/workflows/portfolio-workspace-release-validation.yml` implements the release gate.
 - The `Release Validation` job runs Node 22, pnpm 11.9.0, frozen install, build, lint, typecheck, and root tests without a live database URL.
 - The `Portfolio Workspace PostgreSQL Integration` job runs PostgreSQL 17 and the explicit repository, runtime, and API host live integration commands.
 - Workflow permissions are read-only and no production database credentials are used.
-- First GitHub-hosted execution is still pending.
+- GitHub-hosted PR run `31801161793` passed on commit `3dbb960cbad16b6b451199e35ffc03f41a272990`.
+- Branch protection on `main` requires the exact checks `Release Validation` and `Portfolio Workspace PostgreSQL Integration` before merge.
 
-Assessment: CI gate implementation is complete, but production release should wait for the first hosted workflow run to pass before treating CI as operationally proven.
+Assessment: CI gate implementation, hosted execution, and required-check enforcement are complete.
 
-Classification: READY WITH CONDITIONS. Required before production release: observe a green hosted workflow run and configure required checks as appropriate.
+Classification: READY.
 
 ## 11. Migration Readiness Assessment
 
@@ -261,6 +272,7 @@ Implemented:
 - Trusted presentation principal contract.
 - Principal-to-actor-reference mapping.
 - Handler receives an already-authenticated principal.
+- A16.4 defines the production authentication boundary and provider-neutral trusted-principal flow.
 
 Not implemented:
 
@@ -279,14 +291,18 @@ Implemented:
 - Host-local authorization boundary contract.
 - Handlers invoke authorization before Application Service calls.
 - Tests validate authorization denial and correlation behavior.
+- A16.4 confirms authorization should remain outer-layer/host-owned through explicit resource/capability decisions.
+- Persisted execution authorization resource references.
+- Production Portfolio Workspace authorization resource resolver and ownership/capability policy for the internal API host boundary.
+- Cross-principal live PostgreSQL host validation.
 
 Not implemented:
 
-- Production authorization policy.
-- Ownership/capability model.
 - Role/permission integration.
+- Provider identity and role/permission integration.
+- Public transport authorization rollout.
 
-Assessment: internal architecture is correct. Public access is blocked until production authorization exists.
+Assessment: internal architecture is correct and the current internal API host authorization path is production-policy backed by persisted authorization resource ownership. Public access remains blocked until provider authentication, role/permission integration as needed, and public route rollout exist. Current `PortfolioExecution` plan, snapshot, and approval references remain provenance references, not security ownership.
 
 Classification: P1 before public production; especially required before public mutation.
 
@@ -297,9 +313,10 @@ Current state:
 - `commandId` is operation audit/correlation context, not durable idempotency.
 - `correlationId` is request tracing/correlation, not idempotency.
 - Optimistic concurrency prevents stale overwrites, not duplicate public retries.
-- Duplicate initialization maps to conflict, but no idempotent response replay exists.
+- A16.5 defines the approved durable idempotency architecture: mutation keys are client-owned, operation/resource/principal scoped, fingerprinted, authorized before replay, persisted separately from `portfolio_executions`, and atomically coordinated with aggregate saves through a PostgreSQL transaction boundary.
+- Current implementation includes the separate PostgreSQL idempotency table, record mapper, atomic reservation, duplicate classification, replay persistence, release semantics, host idempotency contracts, atomic orchestration with aggregate mutation, and live PostgreSQL validation.
 
-Assessment: durable idempotency is not required for internal deterministic validation, but it is required before public mutation exposure.
+Assessment: durable idempotency is implemented for the current internal mutation path and live validated. Public mutation exposure still requires provider authentication, public route integration, operational controls, and public retry/abuse policy validation.
 
 Classification: BLOCKING PUBLIC MUTATION.
 
@@ -409,7 +426,7 @@ Strengths:
 Gaps:
 
 - Provider authentication absent.
-- Production authorization absent.
+- Production authorization policy/resolver absent. The durable execution authorization resource model exists as of A16.4a and was live validated in A16.4a.2.
 - Least-privilege DB role not defined.
 - Artifact/content sensitivity and audit retention policy not defined.
 - Public rate limiting and abuse controls absent.
@@ -497,8 +514,8 @@ Do not merge as one opaque commit unless the project intentionally wants a large
 | CI live PostgreSQL gate | P1 | Required before production release | Add CI job with safe disposable PostgreSQL |
 | Corepack/pnpm nested script parity | P1 | Tooling release risk | Ensure CI/developer scripts use pnpm 11.9.0 for nested commands |
 | Production authentication | P1 | Public exposure blocker | Implement provider auth before public routes |
-| Production authorization policy | P1 | Public exposure blocker | Define and implement ownership/capability checks |
-| Durable idempotency | P1 | Public mutation blocker | Design durable idempotency before public mutation |
+| Public authentication and authorization integration | P1 | Public exposure blocker | Bind provider authentication and any required role/permission integration to the existing persisted authorization resource policy |
+| Public mutation idempotency rollout | P1 | Public mutation blocker | Bind public routes to the existing durable orchestration and validate public retry/abuse behavior |
 | Public HTTP/server routes | P1 | Public transport blocker | Design and implement concrete route layer |
 | Observability | P1 | Production operations blocker | Add logging/metrics/tracing/readiness endpoint strategy |
 | Process shutdown/draining | P1 | Production operations blocker | Add concrete host lifecycle handling |
@@ -518,14 +535,14 @@ Do not merge as one opaque commit unless the project intentionally wants a large
 | Persistence | 8 | PostgreSQL adapter and concurrency live validated; ops runbooks deferred |
 | Runtime | 8 | Composition/lifecycle/readiness live validated; process host lifecycle deferred |
 | Presentation | 8 | Internal handlers and host validated; public routes deferred |
-| Live validation | 8 | Repository, runtime, API-host live suites exist and passed manually/locally |
-| Security | 5 | Privacy/redaction good; auth/authz/least privilege/rate limits absent |
+| Live validation | 9 | Repository, idempotency, runtime, and API-host live suites exist and passed manually/locally |
+| Security | 6 | Privacy/redaction and internal authorization are strong; provider auth, rate limits, and operations remain |
 | Authentication | 3 | Trusted principal boundary exists; provider auth absent |
-| Authorization | 4 | Boundary exists and tests pass; production policy absent |
-| Idempotency | 3 | Duplicate conflict exists; durable public retry semantics absent |
+| Authorization | 7 | Persisted authorization resource and internal API host policy are implemented and live validated; public provider/role integration deferred |
+| Idempotency | 8 | Durable contracts, PostgreSQL persistence, atomic orchestration, and live validation exist; public route rollout and operational retry policy deferred |
 | Observability | 4 | Correlation/readiness exists; telemetry/logging/metrics absent |
 | Operations | 5 | Runtime cleanup exists; server/process/DB ops deferred |
-| CI | 2 | No validation workflow/live gate found |
+| CI | 8 | Hosted release workflow is green and required checks are enforced on main |
 | Tooling | 6 | pnpm pinned; nested/global mismatch and expect-type override remain |
 | Documentation | 8 | A10-A16 are detailed; must preserve readiness distinctions |
 | Release hygiene | 4 | Worktree is broad and dirty; commit grouping required |
@@ -535,55 +552,46 @@ Do not merge as one opaque commit unless the project intentionally wants a large
 | Decision | Result | Conditions |
 | --- | --- | --- |
 | Architecture complete? | GO | Complete for approved internal boundary |
-| Release-candidate ready for merge? | GO WITH CONDITIONS | Node 22 parity and release-tree hygiene must be addressed according to merge policy |
+| Release-candidate ready for merge? | GO | Node 22 parity, release-tree hygiene, hosted CI, and branch protection have been addressed for the release candidate |
 | Ready for internal deployment? | GO WITH CONDITIONS | Requires operational deployment configuration, secret provisioning, and Node 22 validation |
 | Ready for public read-only exposure? | GO WITH CONDITIONS | Requires auth, authz, public routes, observability, and operational controls |
-| Ready for public mutation exposure? | NO-GO | Durable idempotency, production auth/authz, public transport, and operations are missing |
-| Ready for full production release? | NO-GO | CI live gate, Node 22 parity, auth/authz, idempotency, observability, DB ops, and release hygiene remain |
+| Ready for public mutation exposure? | NO-GO | Provider authentication, public transport, observability, operations, and public retry/abuse controls remain |
+| Ready for full production release? | NO-GO | Provider authentication, public rollout controls, observability, DB ops, and deployment validation remain |
 
 ## 30. Production Blockers
 
 Blockers before public mutation:
 
-- Durable idempotency.
 - Production authentication.
-- Production authorization.
 - Concrete public transport routes/server.
+- Public route integration for the existing authorization and durable idempotency paths.
+- Public retry/abuse-control validation.
 - Public operational controls.
 
 Blockers before full production release:
 
-- Node 22 validation.
-- CI validation and live PostgreSQL gate.
 - Database production runbook: migrations, backup/restore, least privilege, SSL/TLS.
 - Observability/logging/metrics/tracing.
 - Process lifecycle/shutdown/draining.
-- Release tree cleanup.
+- Deployment validation.
 
 ## 31. Release Conditions
 
 The current release candidate may proceed toward production-facing rollout work only with these conditions:
 
-- Validate under Node 22.
-- Stabilize pnpm/Corepack execution in CI and developer docs.
-- Add CI or explicitly approved manual release gate for live PostgreSQL suites.
-- Keep public mutation blocked until durable idempotency and production auth/authz exist.
+- Keep public mutation blocked until provider authentication, public route integration, and public retry/abuse controls are approved.
 - Keep public routes blocked until concrete transport architecture is approved.
 - Preserve PostgreSQL secrets and error privacy boundaries.
-- Split or approve the large release tree before merge.
+- Complete production deployment, operations, observability, and database runbooks before public rollout.
 
 ## 32. Recommended Next Slice
 
-Recommended next slice: A16.1 - Node 22 and Toolchain Release Validation.
+Recommended next slice: production-facing rollout planning for the remaining non-governance blockers.
 
 Reasoning:
 
-- The repository explicitly requires Node `>=22 <23`.
-- Current validation is under Node 24.
-- Toolchain execution depends on pnpm 11.9.0 and Corepack/PATH behavior.
-- Node/tooling parity is prerequisite evidence for any merge, CI gate, or production-facing rollout.
-
-The next after A16.1 should likely be A16.2 - CI Live PostgreSQL Release Gate.
+- Node 22 parity, hosted CI, live PostgreSQL gates, release-candidate push, branch protection, internal authorization, and durable idempotency orchestration are complete for the current internal release candidate.
+- Remaining work is production deployment posture: provider authentication, public route rollout, observability, database operations, and public rollout controls.
 
 ## 33. Final A16 Decision
 

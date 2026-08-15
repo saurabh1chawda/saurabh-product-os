@@ -1,4 +1,18 @@
 export {
+  PortfolioWorkspaceIdempotencyContractError,
+  PortfolioWorkspaceIdempotencyErrorReason,
+  PortfolioWorkspaceIdempotencyFingerprint,
+  PortfolioWorkspaceIdempotencyFingerprintInput,
+  PortfolioWorkspaceIdempotencyKey,
+  PortfolioWorkspaceIdempotencyOperation,
+  PortfolioWorkspaceIdempotencyOutcome,
+  PortfolioWorkspaceIdempotencyOutcomeKind,
+  PortfolioWorkspaceIdempotencyRecordStatus,
+  PortfolioWorkspaceIdempotencyReplayPayload,
+  PortfolioWorkspaceIdempotencyScope,
+  createInitializePortfolioExecutionFingerprintInput
+} from "./portfolio-workspace/idempotency";
+export {
   AcceptCandidatePresentationRequest,
   ActivateWorkItemPresentationRequest,
   BeginExecutionPresentationRequest,
@@ -64,6 +78,22 @@ export {
   mapPortfolioWorkspacePresentationErrorToInternalStatus,
   readInternalCorrelationHeader
 } from "./portfolio-workspace/internal";
+export type {
+  JsonArray,
+  JsonObject,
+  JsonPrimitive,
+  JsonValue,
+  PortfolioWorkspaceIdempotencyContractErrorJson,
+  PortfolioWorkspaceIdempotencyErrorReasonValue,
+  PortfolioWorkspaceIdempotencyFingerprintInputJson,
+  PortfolioWorkspaceIdempotencyFingerprintJson,
+  PortfolioWorkspaceIdempotencyOperationValue,
+  PortfolioWorkspaceIdempotencyOutcomeJson,
+  PortfolioWorkspaceIdempotencyOutcomeKindValue,
+  PortfolioWorkspaceIdempotencyRecordStatusValue,
+  PortfolioWorkspaceIdempotencyReplayPayloadJson,
+  PortfolioWorkspaceIdempotencyScopeJson
+} from "./portfolio-workspace/idempotency";
 export type {
   AcceptCandidatePresentationRequestJson,
   AcceptCandidatePresentationResponse,

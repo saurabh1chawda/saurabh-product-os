@@ -18,7 +18,11 @@ The schema stores `execution_id`, `record_version`, `revision`, and `aggregate_p
 
 The PostgreSQL PortfolioExecution repository adapter is implemented against the Application-owned asynchronous repository port. It uses the mapper, the `portfolio_executions` schema, revision-aware create/update semantics, and optimistic compare-and-swap updates without automatic retry.
 
-Transaction orchestration, public idempotency-key enforcement, projection tables, fact persistence, and artifact storage remain unimplemented.
+Durable PostgreSQL idempotency persistence is implemented for Portfolio Workspace mutation coordination. The Infrastructure package defines a separate `portfolio_workspace_idempotency_records` table, Drizzle migration, record mapper, `PostgresPortfolioWorkspaceIdempotencyStore`, and `PostgresPortfolioWorkspaceIdempotentMutationOrchestrator`. It supports first-request reservation, duplicate in-progress detection, fingerprint mismatch detection, A16.4a replay payload persistence, rollback-safe aggregate mutation orchestration in one PostgreSQL transaction, and a dedicated live PostgreSQL integration command.
+
+The idempotency store uses a hashed scoped identity and an idempotency-key hash; it does not persist raw idempotency keys, authentication tokens, cookies, actor references, command contexts, Domain facts, aggregate payloads, SQL errors, or framework objects. API/presentation remains the semantic owner of public idempotency contracts, while Infrastructure owns durable storage and PostgreSQL coordination mechanics.
+
+Handler integration, public idempotency-key enforcement, projection tables, fact persistence, cleanup workers, retries, and artifact storage remain unimplemented.
 
 ## Portfolio Workspace Runtime Configuration
 
@@ -54,9 +58,16 @@ $env:PORTFOLIO_WORKSPACE_TEST_DATABASE_URL = "postgresql://<user>:<password>@loc
 pnpm --filter @career-companion/infrastructure test:integration:portfolio-workspace-runtime
 ```
 
+Live Portfolio Workspace idempotency persistence and atomic orchestration validation is available through the A16.4c command:
+
+```powershell
+$env:PORTFOLIO_WORKSPACE_TEST_DATABASE_URL = "postgresql://<user>:<password>@localhost:<port>/<test_database>"
+pnpm --filter @career-companion/infrastructure test:integration:portfolio-workspace-idempotency
+```
+
 The database URL must point to a dedicated disposable test database. The database name must contain `test` and must not contain `prod` or `production`; the runner refuses unsafe targets before executing migrations or cleanup.
 
-The integration harness creates a unique temporary PostgreSQL schema, sets the suite search path to that schema, applies the committed Portfolio Workspace migration, truncates `portfolio_executions` between cases, and drops the temporary schema after the suite. It does not create production connections, read production environment variables, retry operations, or manage application composition.
+The integration harness creates a unique temporary PostgreSQL schema, sets the suite search path to that schema, applies the committed Portfolio Workspace migrations, truncates `portfolio_workspace_idempotency_records` and `portfolio_executions` between cases, and drops the temporary schema after the suite. It does not create production connections, read production environment variables, retry operations, or manage application composition.
 
 The runtime composition suite creates unique temporary PostgreSQL schemas, exercises migration apply and verify-only behavior, composes the real runtime, initializes PortfolioExecution through the runtime-exposed Application Service, drives the behavioral services through durable PostgreSQL persistence, validates lifecycle/readiness/disposal, and cleans up test schemas afterward. The command fails when the safe test database URL is absent; it does not silently skip.
 

@@ -12,12 +12,16 @@ import {
   type PortfolioExecutionRepositorySaveFailure
 } from "@career-companion/portfolio-workspace-application";
 import { and, eq } from "drizzle-orm";
+import type { ExtractTablesWithRelations } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
+import type { NodePgTransaction } from "drizzle-orm/node-postgres/session";
 import { PortfolioExecutionRecordMapper, type PortfolioExecutionRecord } from "../persistence";
 import * as schema from "./schema";
 import { portfolioExecutions } from "./schema";
 
-type PortfolioWorkspacePostgresDatabase = NodePgDatabase<typeof schema>;
+type PortfolioWorkspacePostgresDatabase =
+  | NodePgDatabase<typeof schema>
+  | NodePgTransaction<typeof schema, ExtractTablesWithRelations<typeof schema>>;
 
 const INITIAL_REVISION = new PortfolioExecutionRevision(1);
 const POSTGRES_UNIQUE_VIOLATION_CODE = "23505";

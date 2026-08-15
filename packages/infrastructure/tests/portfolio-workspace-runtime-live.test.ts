@@ -89,7 +89,8 @@ describeLive("PortfolioWorkspaceRuntime live PostgreSQL composition", () => {
         disposed: false
       });
       expect(await harness.tableExists("portfolio_executions")).toBe(true);
-      expect(await harness.appliedMigrationCount()).toBe(1);
+      expect(await harness.tableExists("portfolio_workspace_idempotency_records")).toBe(true);
+      expect(await harness.appliedMigrationCount()).toBe(2);
 
       await runtime.dispose();
       expect(runtime.lifecycle()).toBe(PortfolioWorkspaceRuntimeLifecycle.Disposed);
@@ -109,7 +110,7 @@ describeLive("PortfolioWorkspaceRuntime live PostgreSQL composition", () => {
     const applyingRuntime = await expectRuntime(harness, {
       migrationMode: PortfolioWorkspaceMigrationMode.Apply
     });
-    expect(await harness.appliedMigrationCount()).toBe(1);
+    expect(await harness.appliedMigrationCount()).toBe(2);
     await applyingRuntime.dispose();
 
     const verifyingRuntime = await expectRuntime(harness, {
@@ -120,7 +121,7 @@ describeLive("PortfolioWorkspaceRuntime live PostgreSQL composition", () => {
       migrationMode: PortfolioWorkspaceMigrationMode.VerifyOnly,
       migrationState: "compatible"
     });
-    expect(await harness.appliedMigrationCount()).toBe(1);
+    expect(await harness.appliedMigrationCount()).toBe(2);
     await verifyingRuntime.dispose();
   });
 

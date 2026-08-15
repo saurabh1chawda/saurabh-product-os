@@ -55,10 +55,10 @@ describe("Portfolio Workspace migration readiness", () => {
       databaseReachable: true,
       migrationMode: PortfolioWorkspaceMigrationMode.VerifyOnly,
       migrationState: "compatible",
-      committedMigrationCount: 1,
-      appliedMigrationCount: 1,
-      latestCommittedMigrationTimestamp: migrations[0]?.folderMillis,
-      latestAppliedMigrationTimestamp: migrations[0]?.folderMillis
+      committedMigrationCount: 2,
+      appliedMigrationCount: 2,
+      latestCommittedMigrationTimestamp: migrations.at(-1)?.folderMillis,
+      latestAppliedMigrationTimestamp: migrations.at(-1)?.folderMillis
     });
     expect(readiness.equals(new PortfolioWorkspaceMigrationReadinessResult(readiness.toJSON()))).toBe(true);
     expect(Object.isFrozen(readiness)).toBe(true);
@@ -127,10 +127,10 @@ describe("Portfolio Workspace migration readiness", () => {
       .queueSuccess()
       .queueSuccess({ rows: [{ current_schema: "public" }] })
       .queueSuccess({
-        rows: [{
-          hash: "unexpected-hash",
-          created_at: migrations[0]?.folderMillis
-        }]
+        rows: migrations.map((migration, index) => ({
+          hash: index === 0 ? "unexpected-hash" : migration.hash,
+          created_at: migration.folderMillis
+        }))
       });
 
     const result = await verifyPortfolioWorkspaceMigrationReadinessWithDependencies({
@@ -284,7 +284,7 @@ describe("Portfolio Workspace migration readiness", () => {
         migrationsFolder,
         migrationsSchema: "drizzle",
         migrationsTable: "__drizzle_migrations"
-      })).toHaveLength(1);
+      })).toHaveLength(2);
     } finally {
       process.chdir(originalWorkingDirectory);
     }
@@ -380,10 +380,22 @@ function committedMigrations(): ReturnType<typeof readMigrationFiles> {
 
 function compatibleColumns(): readonly Record<string, unknown>[] {
   return [
-    { column_name: "execution_id", data_type: "text", is_nullable: "NO" },
-    { column_name: "record_version", data_type: "integer", is_nullable: "NO" },
-    { column_name: "revision", data_type: "integer", is_nullable: "NO" },
-    { column_name: "aggregate_payload", data_type: "jsonb", is_nullable: "NO" }
+    { table_name: "portfolio_executions", column_name: "execution_id", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_executions", column_name: "record_version", data_type: "integer", is_nullable: "NO" },
+    { table_name: "portfolio_executions", column_name: "revision", data_type: "integer", is_nullable: "NO" },
+    { table_name: "portfolio_executions", column_name: "aggregate_payload", data_type: "jsonb", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "scope_hash", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "record_version", data_type: "integer", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "operation", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "authorization_resource_reference", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "resource_identity", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "idempotency_key_hash", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "request_fingerprint_algorithm", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "request_fingerprint_value", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "status", data_type: "text", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "created_at", data_type: "timestamp with time zone", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "updated_at", data_type: "timestamp with time zone", is_nullable: "NO" },
+    { table_name: "portfolio_workspace_idempotency_records", column_name: "expires_at", data_type: "timestamp with time zone", is_nullable: "NO" }
   ];
 }
 
@@ -407,8 +419,20 @@ function expectedPublicApi(): readonly string[] {
   return [
     "InvalidPortfolioWorkspaceRuntimeConfigurationError",
     "PORTFOLIO_EXECUTION_RECORD_VERSION",
+    "PORTFOLIO_WORKSPACE_IDEMPOTENCY_FINGERPRINT_ALGORITHM",
+    "PORTFOLIO_WORKSPACE_IDEMPOTENCY_RECORD_VERSION",
     "PORTFOLIO_WORKSPACE_RUNTIME_ENVIRONMENT_VARIABLES",
     "PortfolioExecutionRecordMapper",
+    "PortfolioWorkspaceIdempotencyCompletionResult",
+    "PortfolioWorkspaceIdempotencyPersistenceError",
+    "PortfolioWorkspaceIdempotencyPersistenceOperation",
+    "PortfolioWorkspaceIdempotencyPersistenceStatus",
+    "PortfolioWorkspaceIdempotencyRecordMapper",
+    "PortfolioWorkspaceIdempotencyReleaseResult",
+    "PortfolioWorkspaceIdempotencyReservationKind",
+    "PortfolioWorkspaceIdempotencyReservationResult",
+    "PortfolioWorkspaceIdempotentMutationResult",
+    "PortfolioWorkspaceIdempotentMutationResultKind",
     "PortfolioWorkspaceMigrationMode",
     "PortfolioWorkspaceMigrationReadinessError",
     "PortfolioWorkspaceMigrationReadinessResult",
@@ -422,6 +446,8 @@ function expectedPublicApi(): readonly string[] {
       "PortfolioWorkspaceRuntimeLifecycle",
       "PortfolioWorkspaceRuntimeStatus",
       "PostgresPortfolioExecutionRepository",
+      "PostgresPortfolioWorkspaceIdempotencyStore",
+      "PostgresPortfolioWorkspaceIdempotentMutationOrchestrator",
     "createPortfolioWorkspacePostgresDatabaseRuntime",
     "createPortfolioWorkspaceRuntime",
     "verifyPortfolioWorkspaceMigrationReadiness"

@@ -2,7 +2,42 @@ export {
   PORTFOLIO_EXECUTION_RECORD_VERSION,
   PortfolioExecutionRecordMapper
 } from "./portfolio-workspace/persistence";
-export { PostgresPortfolioExecutionRepository } from "./portfolio-workspace/postgres";
+export {
+  PORTFOLIO_WORKSPACE_IDEMPOTENCY_FINGERPRINT_ALGORITHM,
+  PORTFOLIO_WORKSPACE_IDEMPOTENCY_RECORD_VERSION,
+  PortfolioWorkspaceIdempotentMutationResult,
+  PortfolioWorkspaceIdempotentMutationResultKind,
+  PortfolioWorkspaceIdempotencyCompletionResult,
+  PortfolioWorkspaceIdempotencyPersistenceError,
+  PortfolioWorkspaceIdempotencyPersistenceOperation,
+  PortfolioWorkspaceIdempotencyPersistenceStatus,
+  PortfolioWorkspaceIdempotencyRecordMapper,
+  PortfolioWorkspaceIdempotencyReleaseResult,
+  PortfolioWorkspaceIdempotencyReservationKind,
+  PortfolioWorkspaceIdempotencyReservationResult,
+  PostgresPortfolioWorkspaceIdempotentMutationOrchestrator
+} from "./portfolio-workspace/idempotency";
+export { PostgresPortfolioExecutionRepository, PostgresPortfolioWorkspaceIdempotencyStore } from "./portfolio-workspace/postgres";
+export type {
+  PortfolioWorkspaceIdempotentMutationContext,
+  PortfolioWorkspaceIdempotentMutationExecutionSuccess,
+  PortfolioWorkspaceIdempotentMutationFailure,
+  PortfolioWorkspaceIdempotentMutationInput,
+  PortfolioWorkspaceIdempotentMutationResultKindValue,
+  PortfolioWorkspaceIdempotencyCompleteSuccessInput,
+  PortfolioWorkspaceIdempotencyFingerprintInput,
+  PortfolioWorkspaceIdempotencyPersistenceFailureReason,
+  PortfolioWorkspaceIdempotencyPersistenceOperationValue,
+  PortfolioWorkspaceIdempotencyPersistenceStatusValue,
+  PortfolioWorkspaceIdempotencyRecord,
+  PortfolioWorkspaceIdempotencyReleaseInput,
+  PortfolioWorkspaceIdempotencyReplayPayloadJson,
+  PortfolioWorkspaceIdempotencyReservationInput,
+  PortfolioWorkspaceIdempotencyReservationKindValue,
+  PortfolioWorkspaceIdempotencyReservationResultJson,
+  PortfolioWorkspaceIdempotencyScopeInput,
+  PortfolioWorkspaceIdempotencyStore
+} from "./portfolio-workspace/idempotency";
 export {
   createPortfolioWorkspaceRuntime,
   createPortfolioWorkspacePostgresDatabaseRuntime,

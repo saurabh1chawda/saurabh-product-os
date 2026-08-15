@@ -102,6 +102,9 @@ jobs:
       - name: Portfolio Workspace repository integration
         run: pnpm --filter @career-companion/infrastructure test:integration:portfolio-workspace
 
+      - name: Portfolio Workspace idempotency integration
+        run: pnpm --filter @career-companion/infrastructure test:integration:portfolio-workspace-idempotency
+
       - name: Portfolio Workspace runtime integration
         run: pnpm --filter @career-companion/infrastructure test:integration:portfolio-workspace-runtime
 
