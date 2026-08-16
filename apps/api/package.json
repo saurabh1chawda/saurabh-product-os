@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@career-companion/kernel": "workspace:*",
     "@career-companion/infrastructure": "workspace:*",
+    "@career-companion/kernel": "workspace:*",
     "@career-companion/portfolio-workspace": "workspace:*",
-    "@career-companion/portfolio-workspace-application": "workspace:*"
+    "@career-companion/portfolio-workspace-application": "workspace:*",
+    "jose": "^6.2.8"
   },
   "devDependencies": {
     "@types/pg": "^8.20.3",
@@ -17,6 +18,7 @@
     "lint": "eslint . --no-error-on-unmatched-pattern",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:integration:portfolio-workspace-host": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types tests/portfolio-workspace-api-host-integration-runner.ts",
+    "test:integration:portfolio-workspace-http-host": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types tests/portfolio-workspace-http-host-integration-runner.ts",
     "test": "vitest run --passWithNoTests",
     "clean": "node -e \"process.exit(0)\""
   }

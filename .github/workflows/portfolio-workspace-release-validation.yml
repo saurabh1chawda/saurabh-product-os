@@ -110,3 +110,6 @@ jobs:
 
       - name: Portfolio Workspace API host integration
         run: pnpm --filter @career-companion/api test:integration:portfolio-workspace-host
+
+      - name: Portfolio Workspace HTTP host integration
+        run: pnpm --filter @career-companion/api test:integration:portfolio-workspace-http-host
