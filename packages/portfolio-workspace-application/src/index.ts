@@ -37,6 +37,44 @@ export { LoadedPortfolioExecution } from "./persistence/LoadedPortfolioExecution
 export { PortfolioExecutionRevision } from "./persistence/PortfolioExecutionRevision";
 export { PortfolioExecutionSaveResult } from "./persistence/PortfolioExecutionSaveResult";
 export type { PortfolioExecutionRepository } from "./ports/PortfolioExecutionRepository";
+export {
+  isPortfolioWorkspaceIdempotencyOperation,
+  PORTFOLIO_WORKSPACE_IDEMPOTENCY_OPERATIONS,
+  PortfolioWorkspaceIdempotencyCommandBinding,
+  PortfolioWorkspaceIdempotencyCompletionResult,
+  PortfolioWorkspaceIdempotencyContractError,
+  PortfolioWorkspaceIdempotencyContractErrorReason,
+  PortfolioWorkspaceIdempotencyCorruptRecordError,
+  PortfolioWorkspaceIdempotencyDurableState,
+  PortfolioWorkspaceIdempotencyExpiryMetadata,
+  PortfolioWorkspaceIdempotencyIdentity,
+  PortfolioWorkspaceIdempotencyKeyHash,
+  PortfolioWorkspaceIdempotencyObservationKind,
+  PortfolioWorkspaceIdempotencyOperation,
+  PortfolioWorkspaceIdempotencyOrchestrationContractError,
+  PortfolioWorkspaceIdempotencyPersistenceUnavailableError,
+  PortfolioWorkspaceIdempotencyPortError,
+  PortfolioWorkspaceIdempotencyReplayPayload,
+  PortfolioWorkspaceIdempotencyRequestFingerprint,
+  PortfolioWorkspaceIdempotencyReservationObservation,
+  PortfolioWorkspaceIdempotencyStateTransitionError,
+  UnsupportedPortfolioWorkspaceIdempotencyRecordVersionError
+} from "./idempotency";
+export type {
+  PortfolioWorkspaceIdempotencyCompleteInput,
+  PortfolioWorkspaceIdempotencyContractErrorReasonValue,
+  PortfolioWorkspaceIdempotencyDurableStateValue,
+  PortfolioWorkspaceIdempotencyHashAlgorithm,
+  PortfolioWorkspaceIdempotencyObservationKindValue,
+  PortfolioWorkspaceIdempotencyOperationValue,
+  PortfolioWorkspaceIdempotencyPort,
+  PortfolioWorkspaceIdempotencyPortFailure,
+  PortfolioWorkspaceIdempotencyReplayJsonArray,
+  PortfolioWorkspaceIdempotencyReplayJsonObject,
+  PortfolioWorkspaceIdempotencyReplayJsonPrimitive,
+  PortfolioWorkspaceIdempotencyReplayJsonValue,
+  PortfolioWorkspaceIdempotencyReserveInput
+} from "./idempotency";
 export { PortfolioExecutionNotFoundError } from "./errors/PortfolioExecutionNotFoundError";
 export { AcceptCandidateApplicationService } from "./services/AcceptCandidateApplicationService";
 export type { AcceptCandidateError } from "./services/AcceptCandidateApplicationService";

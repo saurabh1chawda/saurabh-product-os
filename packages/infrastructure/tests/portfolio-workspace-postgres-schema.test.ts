@@ -1,12 +1,12 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { portfolioExecutions } from "../src/portfolio-workspace/postgres/schema";
+import { portfolioExecutions, portfolioWorkspaceIdempotencyRecords } from "../src/portfolio-workspace/postgres/schema";
 import * as publicApi from "../src";
 
 describe("Portfolio Workspace PostgreSQL schema", () => {
   it("defines the PortfolioExecution aggregate snapshot table", () => {
-    const migrationSql = migration();
+    const migrationSql = allMigrations();
 
     expect(portfolioExecutions).toBeDefined();
     expect(migrationSql).toContain("CREATE TABLE \"portfolio_executions\"");
@@ -15,7 +15,6 @@ describe("Portfolio Workspace PostgreSQL schema", () => {
     expect(migrationSql).toContain("\"revision\" integer NOT NULL");
     expect(migrationSql).toContain("\"aggregate_payload\" jsonb NOT NULL");
     expect(migrationSql).not.toContain("DEFAULT");
-    expect(migrationSql).not.toContain("CREATE INDEX");
     expect(migrationSql).not.toContain("work_items");
     expect(migrationSql).not.toContain("artifact_candidates");
     expect(migrationSql).not.toContain("accepted_artifacts");
@@ -27,7 +26,7 @@ describe("Portfolio Workspace PostgreSQL schema", () => {
   it("keeps record version, revision, and JSONB payload boundaries distinct", () => {
     const schemaSource = readFileSync(join(packageRoot(), "src", "portfolio-workspace", "postgres", "schema.ts"), "utf8");
     const recordSource = readFileSync(join(packageRoot(), "src", "portfolio-workspace", "persistence", "PortfolioExecutionRecord.ts"), "utf8");
-    const migrationSql = migration();
+    const migrationSql = allMigrations();
 
     expect(schemaSource).toContain("$type<PortfolioExecutionAggregatePayload>()");
     expect(migrationSql).toContain("CONSTRAINT \"portfolio_executions_record_version_positive\" CHECK (\"portfolio_executions\".\"record_version\" >= 1)");
@@ -37,12 +36,46 @@ describe("Portfolio Workspace PostgreSQL schema", () => {
     expect(recordSource).not.toContain("PortfolioExecutionRevision");
   });
 
+  it("defines the Portfolio Workspace idempotency coordination table", () => {
+    const migrationSql = migration("0001_workable_molly_hayes.sql");
+
+    expect(portfolioWorkspaceIdempotencyRecords).toBeDefined();
+    expect(migrationSql).toContain("CREATE TABLE \"portfolio_workspace_idempotency_records\"");
+    expect(migrationSql).toContain("\"scope_hash\" text PRIMARY KEY NOT NULL");
+    expect(migrationSql).toContain("\"record_version\" integer NOT NULL");
+    expect(migrationSql).toContain("\"operation\" text NOT NULL");
+    expect(migrationSql).toContain("\"authorization_resource_reference\" text NOT NULL");
+    expect(migrationSql).toContain("\"resource_identity\" text NOT NULL");
+    expect(migrationSql).toContain("\"idempotency_key_hash\" text NOT NULL");
+    expect(migrationSql).toContain("\"request_fingerprint_value\" text NOT NULL");
+    expect(migrationSql).toContain("\"original_command_id\" text NOT NULL");
+    expect(migrationSql).toContain("\"replay_contract_version\" text");
+    expect(migrationSql).toContain("\"replay_response_payload\" jsonb");
+    expect(migrationSql).toContain("CREATE UNIQUE INDEX \"portfolio_workspace_idempotency_scope_unique\"");
+    expect(migrationSql).toContain("CREATE INDEX \"portfolio_workspace_idempotency_expires_at_idx\"");
+    expect(migrationSql).not.toContain("Domain");
+    expect(migrationSql).not.toContain("command_context");
+    expect(migrationSql).not.toContain("actor_reference");
+  });
+
   it("keeps schema and migration internals out of the package root API", () => {
     expect(Object.keys(publicApi).sort()).toEqual([
       "InvalidPortfolioWorkspaceRuntimeConfigurationError",
       "PORTFOLIO_EXECUTION_RECORD_VERSION",
+      "PORTFOLIO_WORKSPACE_IDEMPOTENCY_FINGERPRINT_ALGORITHM",
+      "PORTFOLIO_WORKSPACE_IDEMPOTENCY_RECORD_VERSION",
       "PORTFOLIO_WORKSPACE_RUNTIME_ENVIRONMENT_VARIABLES",
       "PortfolioExecutionRecordMapper",
+      "PortfolioWorkspaceIdempotencyCompletionResult",
+      "PortfolioWorkspaceIdempotencyPersistenceError",
+      "PortfolioWorkspaceIdempotencyPersistenceOperation",
+      "PortfolioWorkspaceIdempotencyPersistenceStatus",
+      "PortfolioWorkspaceIdempotencyRecordMapper",
+      "PortfolioWorkspaceIdempotencyReleaseResult",
+      "PortfolioWorkspaceIdempotencyReservationKind",
+      "PortfolioWorkspaceIdempotencyReservationResult",
+      "PortfolioWorkspaceIdempotentMutationResult",
+      "PortfolioWorkspaceIdempotentMutationResultKind",
       "PortfolioWorkspaceMigrationMode",
       "PortfolioWorkspaceMigrationReadinessError",
       "PortfolioWorkspaceMigrationReadinessResult",
@@ -56,6 +89,8 @@ describe("Portfolio Workspace PostgreSQL schema", () => {
       "PortfolioWorkspaceRuntimeLifecycle",
       "PortfolioWorkspaceRuntimeStatus",
       "PostgresPortfolioExecutionRepository",
+      "PostgresPortfolioWorkspaceIdempotencyStore",
+      "PostgresPortfolioWorkspaceIdempotentMutationOrchestrator",
       "createPortfolioWorkspacePostgresDatabaseRuntime",
       "createPortfolioWorkspaceRuntime",
       "verifyPortfolioWorkspaceMigrationReadiness"
@@ -97,13 +132,25 @@ describe("Portfolio Workspace PostgreSQL schema", () => {
     const migrationFiles = readdirSync(join(packageRoot(), "drizzle", "portfolio-workspace"))
       .filter((entry) => entry.endsWith(".sql"));
 
-    expect(migrationFiles).toHaveLength(1);
-    expect(migration()).toContain("CREATE TABLE \"portfolio_executions\"");
+    expect(migrationFiles).toEqual([
+      "0000_shocking_firebrand.sql",
+      "0001_workable_molly_hayes.sql"
+    ]);
+    expect(migration("0000_shocking_firebrand.sql")).toContain("CREATE TABLE \"portfolio_executions\"");
+    expect(migration("0001_workable_molly_hayes.sql")).toContain("CREATE TABLE \"portfolio_workspace_idempotency_records\"");
   });
 });
 
-function migration(): string {
-  return readFileSync(join(packageRoot(), "drizzle", "portfolio-workspace", "0000_shocking_firebrand.sql"), "utf8");
+function migration(fileName: string): string {
+  return readFileSync(join(packageRoot(), "drizzle", "portfolio-workspace", fileName), "utf8");
+}
+
+function allMigrations(): string {
+  return readdirSync(join(packageRoot(), "drizzle", "portfolio-workspace"))
+    .filter((entry) => entry.endsWith(".sql"))
+    .sort()
+    .map((entry) => migration(entry))
+    .join("\n");
 }
 
 function packageJson(path: string): {

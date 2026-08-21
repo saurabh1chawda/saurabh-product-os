@@ -1,4 +1,38 @@
 export {
+  NodeHttpApiServer,
+  NodeHttpApiServerConfigurationError,
+  NodeHttpApiServerLifecycle,
+  NodeHttpApiServerStatus
+} from "./http";
+export {
+  PortfolioWorkspaceAuthenticatedIdentity,
+  PortfolioWorkspaceAuthenticationError,
+  PortfolioWorkspaceAuthenticationFailureReason,
+  PortfolioWorkspaceBearerTokenCredential,
+  PortfolioWorkspaceJoseJwtVerifier,
+  PortfolioWorkspaceJoseJwtVerifierConfiguration,
+  PortfolioWorkspaceOidcJwtAuthenticationAdapter,
+  PortfolioWorkspaceOidcJwtAuthenticationConfiguration,
+  authenticatePortfolioWorkspacePrincipal,
+  createPortfolioWorkspaceOidcJwtAuthenticationAdapter,
+  mapAuthenticatedIdentityToPresentationPrincipal,
+  mapPortfolioWorkspaceAuthenticationErrorToPresentationError
+} from "./portfolio-workspace/authentication";
+export {
+  PortfolioWorkspaceIdempotencyContractError,
+  PortfolioWorkspaceIdempotencyErrorReason,
+  PortfolioWorkspaceIdempotencyFingerprint,
+  PortfolioWorkspaceIdempotencyFingerprintInput,
+  PortfolioWorkspaceIdempotencyKey,
+  PortfolioWorkspaceIdempotencyOperation,
+  PortfolioWorkspaceIdempotencyOutcome,
+  PortfolioWorkspaceIdempotencyOutcomeKind,
+  PortfolioWorkspaceIdempotencyRecordStatus,
+  PortfolioWorkspaceIdempotencyReplayPayload,
+  PortfolioWorkspaceIdempotencyScope,
+  createInitializePortfolioExecutionFingerprintInput
+} from "./portfolio-workspace/idempotency";
+export {
   AcceptCandidatePresentationRequest,
   ActivateWorkItemPresentationRequest,
   BeginExecutionPresentationRequest,
@@ -64,6 +98,84 @@ export {
   mapPortfolioWorkspacePresentationErrorToInternalStatus,
   readInternalCorrelationHeader
 } from "./portfolio-workspace/internal";
+export {
+  PORTFOLIO_WORKSPACE_AUTHORIZATION_HEADER_MAX_LENGTH,
+  PORTFOLIO_WORKSPACE_BEARER_CHALLENGE,
+  PORTFOLIO_WORKSPACE_PUBLIC_AUTHORIZATION_HEADER,
+  PORTFOLIO_WORKSPACE_PUBLIC_CORRELATION_HEADER,
+  PORTFOLIO_WORKSPACE_WWW_AUTHENTICATE_HEADER,
+  GetPortfolioExecutionPublicBinding,
+  GetPortfolioExecutionPublicResponse,
+  PortfolioWorkspacePublicAuthenticationBoundary,
+  PortfolioWorkspacePublicAuthenticationFailure,
+  PortfolioWorkspacePublicAuthenticationSuccess,
+  extractPortfolioWorkspacePublicBearerCredential,
+  mapPortfolioWorkspaceAuthenticationErrorToPublicFailure,
+  publicCorrelationId
+} from "./portfolio-workspace/public";
+export {
+  PORTFOLIO_WORKSPACE_HTTP_LIVENESS_ROUTE,
+  PORTFOLIO_WORKSPACE_HTTP_READINESS_ROUTE,
+  PORTFOLIO_WORKSPACE_PUBLIC_GET_EXECUTION_ROUTE,
+  PortfolioWorkspaceExecutableHttpHost,
+  PortfolioWorkspaceExecutableHttpHostShutdownError,
+  PortfolioWorkspaceExecutableHttpHostStartupError,
+  PortfolioWorkspaceExecutableHttpHostStatus,
+  createPortfolioWorkspaceExecutableHttpHandler,
+  createPortfolioWorkspaceExecutableHttpHost,
+  createPortfolioWorkspaceExecutableHttpHostWithDependencies,
+  createPortfolioWorkspacePublicGetExecutionHttpRoute
+} from "./portfolio-workspace/http";
+export type {
+  NodeHttpApiServerConfigurationErrorReason,
+  NodeHttpApiServerLifecycleValue,
+  NodeHttpApiServerListenOptions,
+  NodeHttpApiServerStatusJSON,
+  NodeHttpHeaderValue,
+  NodeHttpHeaders,
+  NodeHttpJsonPrimitive,
+  NodeHttpJsonValue,
+  NodeHttpRequest,
+  NodeHttpRequestHandler,
+  NodeHttpResponse
+} from "./http";
+export type {
+  PortfolioWorkspaceAuthenticatedIdentityJson,
+  PortfolioWorkspaceAuthenticationAdapter,
+  PortfolioWorkspaceAuthenticationClock,
+  PortfolioWorkspaceAuthenticationErrorJson,
+  PortfolioWorkspaceAuthenticationFailureReasonValue,
+  PortfolioWorkspaceBearerTokenCredentialJson,
+  PortfolioWorkspaceExternalAuthenticationContext,
+  PortfolioWorkspaceJwtVerificationRequirements,
+  PortfolioWorkspaceJwtVerifier,
+  PortfolioWorkspaceJwtVerifierInput,
+  PortfolioWorkspaceJoseJwtVerifierConfigurationInput,
+  PortfolioWorkspaceJoseJwtVerifierConfigurationJson,
+  PortfolioWorkspaceJoseJwtVerifierInput,
+  PortfolioWorkspaceOidcJwtAuthenticationAdapterInput,
+  PortfolioWorkspaceOidcJwtAuthenticationConfigurationInput,
+  PortfolioWorkspaceOidcJwtAuthenticationConfigurationJson,
+  PortfolioWorkspaceOidcJwtHostAuthenticationInput,
+  PortfolioWorkspaceOidcJwtPrincipalTypeStrategy,
+  PortfolioWorkspaceVerifiedJwtClaims
+} from "./portfolio-workspace/authentication";
+export type {
+  JsonArray,
+  JsonObject,
+  JsonPrimitive,
+  JsonValue,
+  PortfolioWorkspaceIdempotencyContractErrorJson,
+  PortfolioWorkspaceIdempotencyErrorReasonValue,
+  PortfolioWorkspaceIdempotencyFingerprintInputJson,
+  PortfolioWorkspaceIdempotencyFingerprintJson,
+  PortfolioWorkspaceIdempotencyOperationValue,
+  PortfolioWorkspaceIdempotencyOutcomeJson,
+  PortfolioWorkspaceIdempotencyOutcomeKindValue,
+  PortfolioWorkspaceIdempotencyRecordStatusValue,
+  PortfolioWorkspaceIdempotencyReplayPayloadJson,
+  PortfolioWorkspaceIdempotencyScopeJson
+} from "./portfolio-workspace/idempotency";
 export type {
   AcceptCandidatePresentationRequestJson,
   AcceptCandidatePresentationResponse,
@@ -129,3 +241,27 @@ export type {
 export type {
   PortfolioWorkspaceAuthorizationResourceResolver
 } from "./portfolio-workspace/internal";
+export type {
+  PortfolioWorkspacePublicAuthenticationFailureJson,
+  PortfolioWorkspacePublicAuthenticationRequest,
+  PortfolioWorkspacePublicAuthenticationResponseHeaders,
+  PortfolioWorkspacePublicAuthenticationStatus,
+  PortfolioWorkspacePublicAuthenticationSuccessJson,
+  PortfolioWorkspacePublicHeaderValue,
+  PortfolioWorkspacePublicHeaders,
+  GetPortfolioExecutionPublicRequest,
+  GetPortfolioExecutionPublicResponseBody,
+  GetPortfolioExecutionPublicResponseJson,
+  PortfolioWorkspacePublicGetResponseHeaders
+} from "./portfolio-workspace/public";
+export type {
+  PortfolioWorkspaceExecutableHttpHostFactoryDependencies,
+  PortfolioWorkspaceExecutableHttpHostInput,
+  PortfolioWorkspaceExecutableHttpHostShutdownFailureReason,
+  PortfolioWorkspaceExecutableHttpHostStartupFailure,
+  PortfolioWorkspaceExecutableHttpHostStartupFailureReason,
+  PortfolioWorkspaceExecutableHttpHostStatusJSON,
+  PortfolioWorkspacePublicGetExecutionHttpRouteInput,
+  PortfolioWorkspaceTrustedPrincipalResolutionRequest,
+  PortfolioWorkspaceTrustedPrincipalResolver
+} from "./portfolio-workspace/http";

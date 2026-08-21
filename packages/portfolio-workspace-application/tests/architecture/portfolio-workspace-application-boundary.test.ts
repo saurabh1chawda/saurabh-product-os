@@ -37,6 +37,7 @@ describe("portfolio workspace application boundary", () => {
       "InitializePortfolioExecutionResult",
       "InitializePortfolioWorkItemDefinition",
       "LoadedPortfolioExecution",
+      "PORTFOLIO_WORKSPACE_IDEMPOTENCY_OPERATIONS",
       "PortfolioExecutionAlreadyExistsError",
       "PortfolioExecutionConcurrencyConflictError",
       "PortfolioExecutionNotFoundError",
@@ -45,13 +46,33 @@ describe("portfolio workspace application boundary", () => {
       "PortfolioExecutionRepositoryError",
       "PortfolioExecutionRevision",
       "PortfolioExecutionSaveResult",
+      "PortfolioWorkspaceIdempotencyCommandBinding",
+      "PortfolioWorkspaceIdempotencyCompletionResult",
+      "PortfolioWorkspaceIdempotencyContractError",
+      "PortfolioWorkspaceIdempotencyContractErrorReason",
+      "PortfolioWorkspaceIdempotencyCorruptRecordError",
+      "PortfolioWorkspaceIdempotencyDurableState",
+      "PortfolioWorkspaceIdempotencyExpiryMetadata",
+      "PortfolioWorkspaceIdempotencyIdentity",
+      "PortfolioWorkspaceIdempotencyKeyHash",
+      "PortfolioWorkspaceIdempotencyObservationKind",
+      "PortfolioWorkspaceIdempotencyOperation",
+      "PortfolioWorkspaceIdempotencyOrchestrationContractError",
+      "PortfolioWorkspaceIdempotencyPersistenceUnavailableError",
+      "PortfolioWorkspaceIdempotencyPortError",
+      "PortfolioWorkspaceIdempotencyReplayPayload",
+      "PortfolioWorkspaceIdempotencyRequestFingerprint",
+      "PortfolioWorkspaceIdempotencyReservationObservation",
+      "PortfolioWorkspaceIdempotencyStateTransitionError",
       "RejectCandidateApplicationService",
       "RejectCandidateInput",
       "RejectCandidateResult",
       "ResolvePortfolioExecutionAuthorizationResourceApplicationService",
       "ResolvePortfolioExecutionAuthorizationResourceInput",
       "ResolvePortfolioExecutionAuthorizationResourceResult",
-      "UnsupportedPortfolioExecutionRecordVersionError"
+      "UnsupportedPortfolioExecutionRecordVersionError",
+      "UnsupportedPortfolioWorkspaceIdempotencyRecordVersionError",
+      "isPortfolioWorkspaceIdempotencyOperation"
     ].sort());
 
     expect(publicApi).not.toHaveProperty("PortfolioExecution");
@@ -115,6 +136,12 @@ describe("portfolio workspace application boundary", () => {
       readFileSync(join(packageRoot(), "src", "persistence", "LoadedPortfolioExecution.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "persistence", "PortfolioExecutionRevision.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "persistence", "PortfolioExecutionSaveResult.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "idempotency", "PortfolioWorkspaceIdempotencyErrors.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "idempotency", "PortfolioWorkspaceIdempotencyOperation.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "idempotency", "PortfolioWorkspaceIdempotencyOutcomes.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "idempotency", "PortfolioWorkspaceIdempotencyPort.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "idempotency", "PortfolioWorkspaceIdempotencyReplayPayload.ts"), "utf8"),
+      readFileSync(join(packageRoot(), "src", "idempotency", "PortfolioWorkspaceIdempotencyValues.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "services", "BeginExecutionApplicationService.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "services", "ActivateWorkItemApplicationService.ts"), "utf8"),
       readFileSync(join(packageRoot(), "src", "services", "CompleteWorkItemApplicationService.ts"), "utf8"),
@@ -175,7 +202,10 @@ describe("portfolio workspace application boundary", () => {
     expect(source).not.toContain("planningrepository");
     expect(source).not.toContain("approvalrepository");
     expect(source).not.toContain("initializeworkflow");
-    expect(source).not.toContain("idempotency");
+    expect(source).not.toContain("unitofwork");
+    expect(source).not.toContain("transactionmanager");
+    expect(source).not.toContain("servicelocator");
+    expect(source).not.toContain("retry");
     expect(readFileSync(join(packageRoot(), "src", "services", "InitializePortfolioExecutionApplicationService.ts"), "utf8").toLowerCase()).not.toContain(".beginexecution(");
   });
 

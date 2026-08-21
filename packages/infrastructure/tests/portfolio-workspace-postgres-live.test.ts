@@ -82,7 +82,8 @@ describeLive("PostgresPortfolioExecutionRepository live PostgreSQL integration",
     );
 
     expect(tables.map((row) => row.table_name)).toEqual([
-      "portfolio_executions"
+      "portfolio_executions",
+      "portfolio_workspace_idempotency_records"
     ]);
     expect(columns).toEqual([
       { column_name: "execution_id", is_nullable: "NO", data_type: "text" },

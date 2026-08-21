@@ -324,14 +324,15 @@ async function verifySchemaCompatibility(
 ): Promise<Result<true, false>> {
   try {
     const result = await database.execute(sql`
-      select column_name, data_type, is_nullable
+      select table_name, column_name, data_type, is_nullable
       from information_schema.columns
       where table_schema = current_schema()
-        and table_name = 'portfolio_executions'
-      order by ordinal_position asc
+        and table_name in ('portfolio_executions', 'portfolio_workspace_idempotency_records')
+      order by table_name asc, ordinal_position asc
     `);
     const columns = rowsFrom(result);
     return hasCompatiblePortfolioExecutionColumns(columns)
+      && hasCompatiblePortfolioWorkspaceIdempotencyColumns(columns)
       ? Result.success(true)
       : Result.failure(false);
   } catch {
@@ -350,7 +351,35 @@ function hasCompatiblePortfolioExecutionColumns(
   ]);
 
   for (const [columnName, dataType] of expectedColumns) {
-    const column = columns.find((candidate) => candidate.column_name === columnName);
+    const column = columns.find((candidate) => candidate.table_name === "portfolio_executions" && candidate.column_name === columnName);
+    if (column === undefined || column.data_type !== dataType || column.is_nullable !== "NO") {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function hasCompatiblePortfolioWorkspaceIdempotencyColumns(
+  columns: readonly Record<string, unknown>[]
+): boolean {
+  const expectedColumns = new Map([
+    ["scope_hash", "text"],
+    ["record_version", "integer"],
+    ["operation", "text"],
+    ["authorization_resource_reference", "text"],
+    ["resource_identity", "text"],
+    ["idempotency_key_hash", "text"],
+    ["request_fingerprint_algorithm", "text"],
+    ["request_fingerprint_value", "text"],
+    ["status", "text"],
+    ["created_at", "timestamp with time zone"],
+    ["updated_at", "timestamp with time zone"],
+    ["expires_at", "timestamp with time zone"]
+  ]);
+
+  for (const [columnName, dataType] of expectedColumns) {
+    const column = columns.find((candidate) => candidate.table_name === "portfolio_workspace_idempotency_records" && candidate.column_name === columnName);
     if (column === undefined || column.data_type !== dataType || column.is_nullable !== "NO") {
       return false;
     }

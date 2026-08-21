@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
@@ -51,6 +51,7 @@ export class PortfolioWorkspacePostgresTestHarness {
   }
 
   async reset(): Promise<void> {
+    await this.pool.query("DELETE FROM portfolio_workspace_idempotency_records");
     await this.pool.query("DELETE FROM portfolio_executions");
   }
 
@@ -111,7 +112,12 @@ export function assertSafePortfolioWorkspaceTestDatabaseUrl(value: string): void
 }
 
 function migrationSql(): string {
-  return readFileSync(join(packageRoot(), "drizzle", "portfolio-workspace", "0000_shocking_firebrand.sql"), "utf8");
+  const migrationsFolder = join(packageRoot(), "drizzle", "portfolio-workspace");
+  return readdirSync(migrationsFolder)
+    .filter((entry) => entry.endsWith(".sql"))
+    .sort()
+    .map((entry) => readFileSync(join(migrationsFolder, entry), "utf8"))
+    .join("\n");
 }
 
 function packageRoot(): string {

@@ -23,6 +23,7 @@
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
     "lint": "eslint . --no-error-on-unmatched-pattern",
     "test:integration:portfolio-workspace": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types tests/portfolio-workspace-postgres-integration-runner.ts",
+    "test:integration:portfolio-workspace-idempotency": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types tests/portfolio-workspace-idempotency-integration-runner.ts",
     "test:integration:portfolio-workspace-runtime": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types tests/portfolio-workspace-runtime-integration-runner.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests",
