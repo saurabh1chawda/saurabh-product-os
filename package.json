@@ -32,6 +32,7 @@
     "resume-os:validate-assembly": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-assembly.ts",
     "validate-narrative": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-narrative.ts",
     "validate-export": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/export-resume.ts && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/resume-os/validate-export.ts",
+    "career-os:intake": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/career-os/intake.ts",
     "application-intelligence:validate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-intelligence/generate-application-intelligence.ts",
     "application-registry:init": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/init-registry.ts",
     "application-registry:create": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/create-application.ts",
