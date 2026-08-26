@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ const now = "2026-08-24T11:00:00.000Z";
 
 describe("career-os resume strategy", () => {
   it("consumes a valid COS-2 handoff and produces a blocked human-review dry run without durable writes", () => {
-    const fixture = createFixture();
+    const fixture = createFixture({ outcome: "proceed" });
 
     const result = runCareerOsResumeStrategy({
       cwd: fixture.workspace,
@@ -20,7 +20,7 @@ describe("career-os resume strategy", () => {
     expect(result.dry_run).toBe(true);
     expect(result.strategy.target.company).toBe("Acme AI");
     expect(result.strategy.target.role).toBe("Senior Product Manager, AI Platform");
-    expect(result.strategy.decision_state.outcome).toBe("pause");
+    expect(result.strategy.decision_state.outcome).toBe("proceed");
     expect(result.strategy.decision_state.readiness_state).toBe("blocked");
     expect(result.strategy.evidence_to_requirement_mapping.some((item) => item.status === "evidence-backed")).toBe(true);
     expect(result.strategy.evidence_to_requirement_mapping.some((item) => item.status === "gap")).toBe(true);
@@ -96,6 +96,29 @@ describe("career-os resume strategy", () => {
     ).toThrow(/Path traversal/u);
   });
 
+  it("rejects symlink inputs", () => {
+    const fixture = createFixture({ outcome: "proceed" });
+    const link = path.join(fixture.workspace, "handoff-link.json");
+    try {
+      symlinkSync(fixture.paths.handoff, link);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "EPERM") {
+        const source = readFileSync(path.join(process.cwd(), "scripts", "career-os", "resume-strategy.ts"), "utf8");
+        expect(source).toContain("lstatSync(file).isSymbolicLink()");
+        return;
+      }
+      throw error;
+    }
+
+    expect(() =>
+      runCareerOsResumeStrategy({
+        cwd: fixture.workspace,
+        now,
+        argv: ["--handoff", link, "--candidate-evidence", fixture.paths.evidence, "--dry-run"]
+      })
+    ).toThrow(/Symlink inputs/u);
+  });
+
   it("rejects decline decisions", () => {
     const fixture = createFixture({ outcome: "decline" });
 
@@ -108,16 +131,16 @@ describe("career-os resume strategy", () => {
     ).toThrow(/declined this opportunity/u);
   });
 
-  it("allows pause decisions only as clearly blocked strategies", () => {
+  it("requires reconciliation before a paused decision can reach resume strategy", () => {
     const fixture = createFixture({ outcome: "pause" });
-    const result = runCareerOsResumeStrategy({
-      cwd: fixture.workspace,
-      now,
-      argv: ["--handoff", fixture.paths.handoff, "--candidate-evidence", fixture.paths.evidence, "--dry-run"]
-    });
 
-    expect(result.strategy.decision_state.readiness_state).toBe("blocked");
-    expect(result.strategy.limitations.join(" ")).toMatch(/not application-ready/u);
+    expect(() =>
+      runCareerOsResumeStrategy({
+        cwd: fixture.workspace,
+        now,
+        argv: ["--handoff", fixture.paths.handoff, "--candidate-evidence", fixture.paths.evidence, "--dry-run"]
+      })
+    ).toThrow(/require a valid decision reconciliation/u);
   });
 
   it("rejects missing or untrusted candidate evidence", () => {
@@ -141,7 +164,7 @@ describe("career-os resume strategy", () => {
   });
 
   it("is deterministic for identical inputs", () => {
-    const fixture = createFixture();
+    const fixture = createFixture({ outcome: "proceed" });
     const argv = ["--handoff", fixture.paths.handoff, "--candidate-evidence", fixture.paths.evidence, "--dry-run"];
 
     const first = runCareerOsResumeStrategy({ cwd: fixture.workspace, now, argv });
@@ -153,7 +176,7 @@ describe("career-os resume strategy", () => {
   });
 
   it("preserves evidence gaps and unsupported claims", () => {
-    const fixture = createFixture();
+    const fixture = createFixture({ outcome: "proceed" });
     const result = runCareerOsResumeStrategy({
       cwd: fixture.workspace,
       now,
@@ -165,7 +188,7 @@ describe("career-os resume strategy", () => {
   });
 
   it("apply writes the approved private output", () => {
-    const fixture = createFixture();
+    const fixture = createFixture({ outcome: "proceed" });
     const result = runCareerOsResumeStrategy({
       cwd: fixture.workspace,
       now,
@@ -179,7 +202,7 @@ describe("career-os resume strategy", () => {
   });
 
   it("duplicate identical apply is idempotent", () => {
-    const fixture = createFixture();
+    const fixture = createFixture({ outcome: "proceed" });
     const argv = ["--handoff", fixture.paths.handoff, "--candidate-evidence", fixture.paths.evidence, "--apply"];
 
     const first = runCareerOsResumeStrategy({ cwd: fixture.workspace, now, argv });
@@ -191,7 +214,7 @@ describe("career-os resume strategy", () => {
   });
 
   it("rejects conflicting existing output without overwriting it", () => {
-    const fixture = createFixture();
+    const fixture = createFixture({ outcome: "proceed" });
     const first = runCareerOsResumeStrategy({
       cwd: fixture.workspace,
       now,
@@ -213,7 +236,7 @@ describe("career-os resume strategy", () => {
   });
 
   it("preserves pre-existing files when write fails before persistence", () => {
-    const fixture = createFixture();
+    const fixture = createFixture({ outcome: "proceed" });
     const marker = path.join(fixture.registryRoot, "resume-strategies", "pre-existing.json");
     writeJson(marker, { preserved: true });
 

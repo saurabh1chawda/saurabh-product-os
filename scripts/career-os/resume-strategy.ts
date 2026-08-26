@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, lstatSync, mkdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -13,6 +13,7 @@ type ReadinessState = "human_review_required" | "blocked";
 type CliFlags = {
   handoff?: string;
   "candidate-evidence"?: string;
+  "decision-reconciliation"?: string;
   apply?: boolean;
   "dry-run"?: boolean;
   format?: string;
@@ -168,6 +169,9 @@ type ResumeStrategy = {
   };
   decision_state: {
     outcome: DecisionOutcome;
+    original_outcome?: DecisionOutcome;
+    effective_outcome?: DecisionOutcome;
+    decision_reconciliation_id?: string | null;
     readiness_state: ReadinessState;
     blocking_reasons: string[];
   };
@@ -206,6 +210,13 @@ type ResumeStrategy = {
     verified_by: string;
     verified_at: string;
   };
+  decision_reconciliation?: {
+    reconciliation_id: string;
+    source_path: string;
+    original_decision_outcome: DecisionOutcome;
+    effective_reconciled_outcome: "proceed" | "pause";
+    reconciliation_hash: string;
+  };
   integrity: {
     handoff_hash: string;
     decision_hash: string;
@@ -213,6 +224,7 @@ type ResumeStrategy = {
     jd_snapshot_hash: string;
     application_hash: string;
     candidate_evidence_hash: string;
+    decision_reconciliation_hash?: string;
     material_hash: string;
   };
   limitations: string[];
@@ -232,6 +244,34 @@ type RunOptions = {
   cwd?: string;
   now?: string;
   simulateWriteFailure?: boolean;
+};
+
+type DecisionReconciliation = {
+  schema_version: "1.0.0";
+  reconciliation_id: string;
+  artifact_type: "trusted-evidence-decision-reconciliation";
+  created_at: string;
+  application_id: string;
+  opportunity_id: string;
+  jd_snapshot_id: string;
+  handoff_id: string;
+  original_decision_id: string;
+  original_decision_outcome: DecisionOutcome;
+  effective_reconciled_outcome: "proceed" | "pause";
+  trusted_candidate_evidence_source_id: string;
+  candidate_evidence_hash: string;
+  linked_hashes: {
+    handoff_hash: string;
+    decision_hash: string;
+    opportunity_hash: string;
+    jd_snapshot_hash: string;
+    application_hash: string;
+    candidate_evidence_hash: string;
+  };
+  requirement_to_evidence_mapping: Array<{ requirement: string; status: "supported" | "gap"; evidence_ids: string[]; notes: string }>;
+  unresolved_gaps: Array<{ requirement: string; reason: string }>;
+  requested_next_workflow_stage: string;
+  integrity: { material_hash: string };
 };
 
 const MAX_JSON_BYTES = 500_000;
@@ -285,10 +325,6 @@ export function runCareerOsResumeStrategy(options: RunOptions = {}): StrategyRes
   validateLinkedRecords({ handoff, decision, opportunity, jd, application });
   validateTrustedEvidence(evidence);
 
-  if (decision.outcome === "decline") {
-    throw new ResumeStrategyError("decision-declined", "COS-2 declined this opportunity. Resume strategy generation is not permitted.");
-  }
-
   const hashes = {
     handoffHash: fileHash(handoffPath),
     decisionHash: fileHash(decisionPath),
@@ -297,6 +333,21 @@ export function runCareerOsResumeStrategy(options: RunOptions = {}): StrategyRes
     applicationHash: fileHash(applicationPath),
     candidateEvidenceHash: fileHash(candidateEvidencePath)
   };
+  const reconciliationPath = flags["decision-reconciliation"] ? resolveExistingJsonPath(cwd, flags["decision-reconciliation"]) : null;
+  const reconciliation = reconciliationPath ? readJson<DecisionReconciliation>(reconciliationPath) : null;
+  const reconciliationHash = reconciliationPath ? fileHash(reconciliationPath) : null;
+  if (reconciliationPath && reconciliation) {
+    assertPrivatePath(reconciliationPath, cwd, "Decision reconciliation");
+    assertInside(reconciliationPath, registryRoot, "Decision reconciliation");
+    validateDecisionReconciliation(reconciliation, { handoff, decision, hashes });
+  }
+
+  if (decision.outcome === "decline") {
+    throw new ResumeStrategyError("decision-declined", "COS-2 declined this opportunity. Resume strategy generation is not permitted.");
+  }
+  if (decision.outcome === "pause" && !reconciliation) {
+    throw new ResumeStrategyError("decision-reconciliation-required", "Paused COS-2 decisions require a valid decision reconciliation before resume strategy generation.");
+  }
   const outputPath = path.join(registryRoot, "resume-strategies", `${strategyId(handoff, hashes.candidateEvidenceHash)}.json`);
   assertPrivatePath(outputPath, cwd, "Resume strategy output");
 
@@ -310,6 +361,9 @@ export function runCareerOsResumeStrategy(options: RunOptions = {}): StrategyRes
     jd,
     application,
     evidence,
+    reconciliation,
+    reconciliationPath,
+    reconciliationHash,
     hashes
   });
 
@@ -366,6 +420,7 @@ function resolveMode(flags: CliFlags): Mode {
 }
 
 function readJson<T>(file: string): T {
+  rejectSymlink(file);
   if (!existsSync(file)) {
     throw new ResumeStrategyError("missing-record", `File not found: ${file}`);
   }
@@ -388,6 +443,9 @@ function readJson<T>(file: string): T {
 }
 
 function resolveExistingJsonPath(cwd: string, input: string): string {
+  if (containsTraversal(input)) {
+    throw new ResumeStrategyError("unsafe-reference", `Path traversal is not allowed: ${input}`);
+  }
   const resolved = path.resolve(cwd, input);
   if (!existsSync(resolved)) {
     throw new ResumeStrategyError("missing-record", `File not found: ${resolved}`);
@@ -395,6 +453,7 @@ function resolveExistingJsonPath(cwd: string, input: string): string {
   if (path.extname(resolved).toLowerCase() !== ".json") {
     throw new ResumeStrategyError("invalid-input", "Only JSON files are supported for COS-3.");
   }
+  rejectSymlink(resolved);
   return resolved;
 }
 
@@ -407,6 +466,7 @@ function resolveRegistryReference(cwd: string, registryRoot: string, reference: 
   if (!existsSync(resolved)) {
     throw new ResumeStrategyError("missing-record", `Referenced record not found: ${reference}`);
   }
+  rejectSymlink(resolved);
   return resolved;
 }
 
@@ -493,6 +553,45 @@ function validateTrustedEvidence(evidence: TrustedEvidenceSource): void {
   }
 }
 
+function validateDecisionReconciliation(input: DecisionReconciliation, expected: {
+  handoff: ResumeHandoff;
+  decision: DecisionRecord;
+  hashes: {
+    handoffHash: string;
+    decisionHash: string;
+    opportunityHash: string;
+    jdSnapshotHash: string;
+    applicationHash: string;
+    candidateEvidenceHash: string;
+  };
+}): void {
+  requireSchema(input, "decision reconciliation");
+  if (input.artifact_type !== "trusted-evidence-decision-reconciliation") {
+    throw new ResumeStrategyError("invalid-reconciliation", "Input must be a trusted evidence decision reconciliation.");
+  }
+  const expectedMaterialHash = hashJson({ ...input, created_at: "stable", integrity: { material_hash: "stable" } });
+  assertEqual(input.integrity.material_hash, expectedMaterialHash, "reconciliation material hash");
+  assertEqual(input.application_id, expected.handoff.application_id, "reconciliation/application ID");
+  assertEqual(input.opportunity_id, expected.handoff.opportunity_id, "reconciliation/opportunity ID");
+  assertEqual(input.jd_snapshot_id, expected.handoff.jd_snapshot_id, "reconciliation/JD ID");
+  assertEqual(input.handoff_id, expected.handoff.resume_os_handoff_id, "reconciliation/handoff ID");
+  assertEqual(input.original_decision_id, expected.decision.decision_id, "reconciliation/decision ID");
+  assertEqual(input.original_decision_outcome, expected.decision.outcome, "reconciliation original outcome");
+  assertEqual(input.candidate_evidence_hash, expected.hashes.candidateEvidenceHash, "reconciliation candidate evidence hash");
+  assertEqual(input.linked_hashes.handoff_hash, expected.hashes.handoffHash, "reconciliation handoff hash");
+  assertEqual(input.linked_hashes.decision_hash, expected.hashes.decisionHash, "reconciliation decision hash");
+  assertEqual(input.linked_hashes.opportunity_hash, expected.hashes.opportunityHash, "reconciliation opportunity hash");
+  assertEqual(input.linked_hashes.jd_snapshot_hash, expected.hashes.jdSnapshotHash, "reconciliation JD snapshot hash");
+  assertEqual(input.linked_hashes.application_hash, expected.hashes.applicationHash, "reconciliation application hash");
+  assertEqual(input.linked_hashes.candidate_evidence_hash, expected.hashes.candidateEvidenceHash, "reconciliation linked evidence hash");
+  if (!["proceed", "pause"].includes(input.effective_reconciled_outcome)) {
+    throw new ResumeStrategyError("invalid-reconciliation", "Decision reconciliation effective outcome must be proceed or pause.");
+  }
+  if (input.effective_reconciled_outcome === "proceed" && input.unresolved_gaps.length > 0) {
+    throw new ResumeStrategyError("invalid-reconciliation", "Reconciliation cannot proceed while unresolved gaps remain.");
+  }
+}
+
 function buildStrategy(input: {
   cwd: string;
   nowValue: string;
@@ -503,6 +602,9 @@ function buildStrategy(input: {
   jd: JdSnapshot;
   application: ApplicationRecord;
   evidence: TrustedEvidenceSource;
+  reconciliation: DecisionReconciliation | null;
+  reconciliationPath: string | null;
+  reconciliationHash: string | null;
   hashes: {
     handoffHash: string;
     decisionHash: string;
@@ -513,15 +615,18 @@ function buildStrategy(input: {
   };
 }): ResumeStrategy {
   const requirements = roleRequirements(input.jd, input.decision);
-  const mappings = requirements.map((requirement) => mapRequirement(requirement.requirement, input.evidence.evidence_items));
+  const effectiveOutcome = input.reconciliation?.effective_reconciled_outcome ?? input.decision.outcome;
+  const mappings = input.reconciliation
+    ? requirements.map((requirement) => mapReconciledRequirement(requirement.requirement, input.reconciliation as DecisionReconciliation))
+    : requirements.map((requirement) => mapRequirement(requirement.requirement, input.evidence.evidence_items));
   const supported = mappings.filter((mapping) => mapping.status === "evidence-backed");
   const gaps = mappings.filter((mapping) => mapping.status !== "evidence-backed");
   const blockingReasons = [
-    ...(input.decision.outcome === "pause" ? ["COS-2 paused this opportunity before resume preparation; this strategy is blocked until human evidence review clears the pause."] : []),
-    ...input.decision.risks_or_gaps,
+    ...(input.decision.outcome === "pause" && effectiveOutcome !== "proceed" ? ["COS-2 paused this opportunity and reconciliation did not clear every deterministic evidence gap."] : []),
+    ...(effectiveOutcome === "proceed" ? [] : input.decision.risks_or_gaps),
     ...gaps.map((gap) => `Evidence gap remains for ${gap.requirement}.`)
   ];
-  const readinessState: ReadinessState = input.decision.outcome === "proceed" && gaps.length === 0 ? "human_review_required" : "blocked";
+  const readinessState: ReadinessState = effectiveOutcome === "proceed" && gaps.length === 0 ? "human_review_required" : "blocked";
   const strategy: ResumeStrategy = {
     schema_version: schemaVersion,
     strategy_id: strategyId(input.handoff, input.hashes.candidateEvidenceHash),
@@ -553,6 +658,9 @@ function buildStrategy(input: {
     },
     decision_state: {
       outcome: input.decision.outcome,
+      original_outcome: input.decision.outcome,
+      effective_outcome: effectiveOutcome,
+      decision_reconciliation_id: input.reconciliation?.reconciliation_id ?? null,
       readiness_state: readinessState,
       blocking_reasons: [...new Set(blockingReasons)]
     },
@@ -583,6 +691,15 @@ function buildStrategy(input: {
       verified_by: input.evidence.trust.verified_by,
       verified_at: input.evidence.trust.verified_at
     },
+    decision_reconciliation: input.reconciliation && input.reconciliationPath && input.reconciliationHash
+      ? {
+          reconciliation_id: input.reconciliation.reconciliation_id,
+          source_path: toRelative(input.cwd, input.reconciliationPath),
+          original_decision_outcome: input.reconciliation.original_decision_outcome,
+          effective_reconciled_outcome: input.reconciliation.effective_reconciled_outcome,
+          reconciliation_hash: input.reconciliationHash
+        }
+      : undefined,
     integrity: {
       handoff_hash: input.hashes.handoffHash,
       decision_hash: input.hashes.decisionHash,
@@ -590,6 +707,7 @@ function buildStrategy(input: {
       jd_snapshot_hash: input.hashes.jdSnapshotHash,
       application_hash: input.hashes.applicationHash,
       candidate_evidence_hash: input.hashes.candidateEvidenceHash,
+      ...(input.reconciliationHash ? { decision_reconciliation_hash: input.reconciliationHash } : {}),
       material_hash: ""
     },
     limitations: [
@@ -614,6 +732,7 @@ function roleRequirements(jd: JdSnapshot, decision: DecisionRecord): ResumeStrat
     source: "jd.deterministic_analysis.required_competencies"
   }));
   const missing = decision.missing_evidence
+    .map((item) => normalizeRequirementLabel(item))
     .filter((item) => !competencies.some((competency) => normalize(competency.requirement) === normalize(item)))
     .map((requirement, index) => ({
       requirement,
@@ -621,6 +740,10 @@ function roleRequirements(jd: JdSnapshot, decision: DecisionRecord): ResumeStrat
       source: "decision.missing_evidence"
     }));
   return [...competencies, ...missing];
+}
+
+function normalizeRequirementLabel(value: string): string {
+  return value.replace(/^Evidence should demonstrate\s+/iu, "").replace(/\.$/u, "").trim();
 }
 
 function prioritizedSignals(jd: JdSnapshot): string[] {
@@ -635,7 +758,7 @@ function prioritizedSignals(jd: JdSnapshot): string[] {
 
 function mapRequirement(requirement: string, evidenceItems: EvidenceItem[]): ResumeStrategy["evidence_to_requirement_mapping"][number] {
   const normalizedRequirement = normalize(requirement);
-  const matched = evidenceItems.filter((item) => item.tags.some((tag) => normalizedRequirement.includes(normalize(tag)) || normalize(tag).includes(normalizedRequirement)));
+  const matched = evidenceItems.filter((item) => item.tags.some((tag) => normalize(tag) === normalizedRequirement));
   const verified = matched.filter((item) => item.status === "verified");
   if (verified.length > 0) {
     return {
@@ -658,6 +781,24 @@ function mapRequirement(requirement: string, evidenceItems: EvidenceItem[]): Res
     status: "gap",
     evidence_ids: [],
     notes: "No trusted candidate evidence supports this requirement yet."
+  };
+}
+
+function mapReconciledRequirement(requirement: string, reconciliation: DecisionReconciliation): ResumeStrategy["evidence_to_requirement_mapping"][number] {
+  const mapping = reconciliation.requirement_to_evidence_mapping.find((item) => normalize(item.requirement) === normalize(requirement));
+  if (!mapping || mapping.status === "gap") {
+    return {
+      requirement,
+      status: "gap",
+      evidence_ids: [],
+      notes: mapping?.notes ?? "No verified candidate evidence supports this requirement yet."
+    };
+  }
+  return {
+    requirement,
+    status: "evidence-backed",
+    evidence_ids: mapping.evidence_ids,
+    notes: "Validated by append-only trusted evidence decision reconciliation."
   };
 }
 
@@ -774,6 +915,12 @@ function isInside(file: string, root: string): boolean {
 
 function containsTraversal(reference: string): boolean {
   return reference.split(/[\\/]+/u).some((part) => part === "..");
+}
+
+function rejectSymlink(file: string): void {
+  if (existsSync(file) && lstatSync(file).isSymbolicLink()) {
+    throw new ResumeStrategyError("unsafe-reference", `Symlink inputs are not allowed: ${file}`);
+  }
 }
 
 function strategyId(handoff: ResumeHandoff, evidenceHash: string): string {
