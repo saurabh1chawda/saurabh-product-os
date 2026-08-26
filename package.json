@@ -37,6 +37,7 @@
     "career-os:resume-draft": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/career-os/resume-draft.ts",
     "career-os:resume-approve": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/career-os/resume-approve.ts",
     "career-os:resume-export": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/career-os/resume-export.ts",
+    "career-os:reconcile-decision": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/career-os/decision-reconciliation.ts",
     "application-intelligence:validate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-intelligence/generate-application-intelligence.ts",
     "application-registry:init": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/init-registry.ts",
     "application-registry:create": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/application-registry/create-application.ts",
