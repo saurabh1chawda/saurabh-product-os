@@ -4,6 +4,14 @@ import { existsSync, lstatSync, mkdirSync, readFileSync, renameSync, rmSync, sta
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import {
+  applicationGapRegisterReference,
+  readAndValidateApplicationGapRegister,
+  unresolvedApplicationGaps,
+  type ApplicationGapRegister,
+  type ApplicationGapRegisterReference,
+  type ApplicationLevelGap
+} from "./application-gap-register.ts";
 
 type Mode = "dry-run" | "apply";
 type DecisionOutcome = "proceed" | "pause" | "decline";
@@ -14,6 +22,7 @@ type CliFlags = {
   handoff?: string;
   "candidate-evidence"?: string;
   "decision-reconciliation"?: string;
+  "application-gap-register"?: string;
   apply?: boolean;
   "dry-run"?: boolean;
   format?: string;
@@ -217,6 +226,8 @@ type ResumeStrategy = {
     effective_reconciled_outcome: "proceed" | "pause";
     reconciliation_hash: string;
   };
+  application_level_gap_register?: ApplicationGapRegisterReference;
+  application_level_gaps?: ApplicationLevelGap[];
   integrity: {
     handoff_hash: string;
     decision_hash: string;
@@ -225,6 +236,8 @@ type ResumeStrategy = {
     application_hash: string;
     candidate_evidence_hash: string;
     decision_reconciliation_hash?: string;
+    application_gap_register_hash?: string;
+    application_level_gaps_hash?: string;
     material_hash: string;
   };
   limitations: string[];
@@ -341,6 +354,25 @@ export function runCareerOsResumeStrategy(options: RunOptions = {}): StrategyRes
     assertInside(reconciliationPath, registryRoot, "Decision reconciliation");
     validateDecisionReconciliation(reconciliation, { handoff, decision, hashes });
   }
+  const applicationGapRegisterPath = flags["application-gap-register"] ? resolveExistingJsonPath(cwd, flags["application-gap-register"]) : null;
+  const applicationGapRegisterResult = applicationGapRegisterPath
+    ? readAndValidateApplicationGapRegister({
+        file: applicationGapRegisterPath,
+        cwd,
+        registryRoot,
+        expected: {
+          application_id: handoff.application_id,
+          jd_snapshot_id: handoff.jd_snapshot_id,
+          opportunity_id: handoff.opportunity_id,
+          handoff_id: handoff.resume_os_handoff_id,
+          decision_id: decision.decision_id,
+          decision_reconciliation_id: reconciliation?.reconciliation_id ?? null,
+          candidate_evidence_id: evidence.evidence_source_id,
+          candidate_evidence_hash: hashes.candidateEvidenceHash,
+          candidate_evidence_ids: evidence.evidence_items.map((item) => item.evidence_id)
+        }
+      })
+    : null;
 
   if (decision.outcome === "decline") {
     throw new ResumeStrategyError("decision-declined", "COS-2 declined this opportunity. Resume strategy generation is not permitted.");
@@ -348,7 +380,7 @@ export function runCareerOsResumeStrategy(options: RunOptions = {}): StrategyRes
   if (decision.outcome === "pause" && !reconciliation) {
     throw new ResumeStrategyError("decision-reconciliation-required", "Paused COS-2 decisions require a valid decision reconciliation before resume strategy generation.");
   }
-  const outputPath = path.join(registryRoot, "resume-strategies", `${strategyId(handoff, hashes.candidateEvidenceHash)}.json`);
+  const outputPath = path.join(registryRoot, "resume-strategies", `${strategyId(handoff, hashes.candidateEvidenceHash, applicationGapRegisterResult?.fileHash)}.json`);
   assertPrivatePath(outputPath, cwd, "Resume strategy output");
 
   const strategy = buildStrategy({
@@ -364,6 +396,9 @@ export function runCareerOsResumeStrategy(options: RunOptions = {}): StrategyRes
     reconciliation,
     reconciliationPath,
     reconciliationHash,
+    applicationGapRegister: applicationGapRegisterResult?.register ?? null,
+    applicationGapRegisterPath,
+    applicationGapRegisterHash: applicationGapRegisterResult?.fileHash ?? null,
     hashes
   });
 
@@ -605,6 +640,9 @@ function buildStrategy(input: {
   reconciliation: DecisionReconciliation | null;
   reconciliationPath: string | null;
   reconciliationHash: string | null;
+  applicationGapRegister: ApplicationGapRegister | null;
+  applicationGapRegisterPath: string | null;
+  applicationGapRegisterHash: string | null;
   hashes: {
     handoffHash: string;
     decisionHash: string;
@@ -621,6 +659,8 @@ function buildStrategy(input: {
     : requirements.map((requirement) => mapRequirement(requirement.requirement, input.evidence.evidence_items));
   const supported = mappings.filter((mapping) => mapping.status === "evidence-backed");
   const gaps = mappings.filter((mapping) => mapping.status !== "evidence-backed");
+  const applicationLevelGaps = input.applicationGapRegister?.gaps ?? [];
+  const unresolvedGaps = unresolvedApplicationGaps(applicationLevelGaps);
   const blockingReasons = [
     ...(input.decision.outcome === "pause" && effectiveOutcome !== "proceed" ? ["COS-2 paused this opportunity and reconciliation did not clear every deterministic evidence gap."] : []),
     ...(effectiveOutcome === "proceed" ? [] : input.decision.risks_or_gaps),
@@ -629,7 +669,7 @@ function buildStrategy(input: {
   const readinessState: ReadinessState = effectiveOutcome === "proceed" && gaps.length === 0 ? "human_review_required" : "blocked";
   const strategy: ResumeStrategy = {
     schema_version: schemaVersion,
-    strategy_id: strategyId(input.handoff, input.hashes.candidateEvidenceHash),
+    strategy_id: strategyId(input.handoff, input.hashes.candidateEvidenceHash, input.applicationGapRegisterHash),
     created_at: input.nowValue,
     artifact_type: "human-review-only-resume-strategy",
     application: {
@@ -672,16 +712,26 @@ function buildStrategy(input: {
       status: "evidence-backed",
       evidence_ids: mapping.evidence_ids
     })),
-    evidence_gaps_and_unsupported_claims: gaps.map((gap) => ({
-      claim_or_requirement: gap.requirement,
-      status: gap.status === "gap" ? "gap" : "unsupported",
-      handling: "Do not convert this requirement into a resume claim until a human reviewer supplies verified evidence."
-    })),
+    evidence_gaps_and_unsupported_claims: [
+      ...gaps.map((gap) => ({
+        claim_or_requirement: gap.requirement,
+        status: gap.status === "gap" ? "gap" as const : "unsupported" as const,
+        handling: "Do not convert this requirement into a resume claim until a human reviewer supplies verified evidence."
+      })),
+      ...unresolvedGaps.map((gap) => ({
+        claim_or_requirement: gap.requirement,
+        status: gap.status === "unresolved" ? "gap" as const : "unsupported" as const,
+        handling: `Application-level gap ${gap.gap_id}: ${gap.explanation} ${gap.claim_boundary} Do not convert this requirement into a positive resume claim.`
+      }))
+    ],
     recommended_resume_sections_or_emphasis: recommendedSections(supported, gaps),
     human_review_checklist: [
       "Confirm the COS-2 pause or proceed state before any resume assembly.",
       "Approve every evidence-backed mapping before converting it into resume language.",
       "Reject unsupported claims, missing metrics, unverified employers, unverified dates, and inferred skills.",
+      ...(applicationLevelGaps.length > 0
+        ? ["Review every application-level gap and keep unresolved or bounded gaps visible in downstream draft/review artifacts."]
+        : []),
       "Confirm gaps remain visible in the next Resume OS stage.",
       "Confirm this artifact is not used as a final resume, DOCX, PDF, or application submission."
     ],
@@ -700,6 +750,15 @@ function buildStrategy(input: {
           reconciliation_hash: input.reconciliationHash
         }
       : undefined,
+    application_level_gap_register: input.applicationGapRegister && input.applicationGapRegisterPath && input.applicationGapRegisterHash
+      ? applicationGapRegisterReference({
+          cwd: input.cwd,
+          registerPath: input.applicationGapRegisterPath,
+          register: input.applicationGapRegister,
+          fileHash: input.applicationGapRegisterHash
+        })
+      : undefined,
+    application_level_gaps: applicationLevelGaps.length > 0 ? applicationLevelGaps : undefined,
     integrity: {
       handoff_hash: input.hashes.handoffHash,
       decision_hash: input.hashes.decisionHash,
@@ -708,6 +767,15 @@ function buildStrategy(input: {
       application_hash: input.hashes.applicationHash,
       candidate_evidence_hash: input.hashes.candidateEvidenceHash,
       ...(input.reconciliationHash ? { decision_reconciliation_hash: input.reconciliationHash } : {}),
+      ...(input.applicationGapRegisterHash ? { application_gap_register_hash: input.applicationGapRegisterHash } : {}),
+      ...(applicationLevelGaps.length > 0 && input.applicationGapRegister
+        ? { application_level_gaps_hash: applicationGapRegisterReference({
+            cwd: input.cwd,
+            registerPath: input.applicationGapRegisterPath as string,
+            register: input.applicationGapRegister,
+            fileHash: input.applicationGapRegisterHash as string
+          }).gaps_hash }
+        : {}),
       material_hash: ""
     },
     limitations: [
@@ -720,7 +788,7 @@ function buildStrategy(input: {
     ...strategy,
     integrity: {
       ...strategy.integrity,
-      material_hash: hashJson({ ...strategy, created_at: "stable", integrity: { ...strategy.integrity, material_hash: "stable" } })
+      material_hash: hashResumeStrategyMaterial(strategy)
     }
   };
 }
@@ -923,8 +991,11 @@ function rejectSymlink(file: string): void {
   }
 }
 
-function strategyId(handoff: ResumeHandoff, evidenceHash: string): string {
-  return `RSTRAT-${handoff.application_id}-${hash(`${handoff.resume_os_handoff_id}:${evidenceHash}`, 8)}`;
+function strategyId(handoff: ResumeHandoff, evidenceHash: string, applicationGapRegisterHash?: string | null): string {
+  const identity = applicationGapRegisterHash
+    ? `${handoff.resume_os_handoff_id}:${evidenceHash}:${applicationGapRegisterHash}`
+    : `${handoff.resume_os_handoff_id}:${evidenceHash}`;
+  return `RSTRAT-${handoff.application_id}-${hash(identity, 8)}`;
 }
 
 function hash(input: string, length: number): string {
@@ -933,6 +1004,10 @@ function hash(input: string, length: number): string {
 
 function fileHash(file: string): string {
   return createHash("sha256").update(readFileSync(file)).digest("hex");
+}
+
+export function hashResumeStrategyMaterial(strategy: { created_at?: string; integrity?: Record<string, unknown> }): string {
+  return hashJson({ ...strategy, created_at: "stable", integrity: { ...strategy.integrity, material_hash: "stable" } });
 }
 
 function hashJson(value: unknown): string {

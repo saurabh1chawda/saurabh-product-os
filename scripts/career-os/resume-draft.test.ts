@@ -4,7 +4,9 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFil
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { hashApplicationLevelGaps, normalizeApplicationRequirement, type ApplicationLevelGap } from "./application-gap-register";
 import { ResumeDraftError, runCareerOsResumeDraft } from "./resume-draft";
+import { hashResumeStrategyMaterial } from "./resume-strategy";
 
 const now = "2026-08-25T09:00:00.000Z";
 
@@ -144,6 +146,134 @@ describe("career-os resume draft", () => {
 
     expect(result.draft?.evidence_gaps.map((gap) => gap.requirement)).toContain("Deep compliance ownership");
     expect(result.draft?.excluded_unsupported_claims.map((claim) => claim.claim)).toContain("Deep compliance ownership");
+  });
+
+  it("preserves application-level gaps in the draft and review checklist", () => {
+    const fixture = createFixture({ withApplicationGaps: true });
+    const result = runDraft(fixture, "--apply");
+    const activeGaps = result.draft?.application_level_gaps.filter((gap) => ["unresolved", "bounded-claim"].includes(gap.status)) ?? [];
+    const checklistByGapId = new Map(
+      result.checklist?.items
+        .filter((item) => item.category === "Application-level gap review")
+        .map((item) => [item.check_id.replace(/^application-gap-/u, "").toUpperCase(), item]) ?? []
+    );
+
+    expect(result.draft?.references.application_gap_register_id).toBe("GAPREG-synthetic-labs");
+    expect(result.draft?.application_level_gaps.map((gap) => gap.gap_id)).toEqual(["G01", "G02"]);
+    expect(activeGaps.map((gap) => gap.gap_id)).toEqual(["G01", "G02"]);
+    expect(result.draft?.evidence_gaps.map((gap) => gap.requirement)).toContain("Ten years of product management experience");
+    expect(result.draft?.evidence_gaps.map((gap) => gap.requirement)).toContain("Restaurant technology experience");
+    expect(result.draft?.excluded_unsupported_claims.map((claim) => claim.claim)).toContain("Ten years of product management experience");
+    expect(result.draft?.excluded_unsupported_claims.map((claim) => claim.claim)).toContain("Restaurant technology experience");
+    expect(checklistByGapId.size).toBe(activeGaps.length);
+    expect(result.checklist?.approval_state).toBe("human_review_required");
+    for (const gap of activeGaps) {
+      const checklistItem = checklistByGapId.get(gap.gap_id);
+      expect(checklistItem?.status).toBe("pending");
+      expect(checklistItem?.prompt).toContain(`application-level gap ${gap.gap_id}`);
+      expect(checklistItem?.prompt).toContain(gap.requirement);
+      expect(checklistItem?.prompt).toContain("Preserve the claim boundary");
+      expect(checklistItem?.prompt).toContain("Do not convert it into a positive resume claim");
+      expect(gap.human_review_required).toBe(true);
+    }
+    expect(activeGaps.find((gap) => gap.gap_id === "G01")?.positive_claim_prohibited).toBe(true);
+    expect(activeGaps.find((gap) => gap.gap_id === "G02")?.claim_boundary).toContain("bounded adjacent platform experience");
+    expect(result.draft?.excluded_unsupported_claims.find((claim) => claim.claim === "Restaurant technology experience")?.reason).toContain("bounded adjacent platform experience");
+    expect(result.summary.lifecycle_state).toBe("human_review_required");
+    expect(result.draft?.label).toContain("NOT FOR APPLICATION USE");
+    const positiveResumeText = JSON.stringify({
+      headline: result.draft?.professional_headline,
+      summary: result.draft?.professional_summary,
+      skills: result.draft?.core_skills,
+      bullets: result.draft?.role_specific_experience_bullets,
+      achievements: result.draft?.selected_achievements
+    });
+    expect(positiveResumeText).not.toMatch(/10\+ years|ten years of product management/iu);
+    expect(positiveResumeText).not.toMatch(/restaurant technology experience/iu);
+  });
+
+  it("rejects tampered application-level gap strategy fields", () => {
+    const staleHash = createFixture({ withApplicationGaps: true, strategyPatch: { integrity: { application_level_gaps_hash: "stale-gap-hash" } } });
+    expect(() => runDraft(staleHash, "--dry-run")).toThrow(/application level gaps hash mismatch/u);
+
+    const resolvedWithoutEvidence = createFixture({
+      withApplicationGaps: true,
+      strategyPatch: {
+        application_level_gaps: [
+          {
+            gap_id: "G01",
+            requirement: "Ten years of product management experience",
+            normalized_requirement_key: normalizeApplicationRequirement("Ten years of product management experience"),
+            status: "resolved-with-verified-evidence",
+            resolution_state: "resolved",
+            explanation: "Synthetic invalid resolved gap.",
+            closest_supported_evidence_ids: [],
+            source_reference: "strategy.application_level_gaps",
+            human_review_required: false,
+            positive_claim_prohibited: false,
+            claim_boundary: "Do not claim ten years unless verified."
+          }
+        ]
+      }
+    });
+    expect(() => runDraft(resolvedWithoutEvidence, "--dry-run")).toThrow(/cannot be resolved without verified evidence/u);
+  });
+
+  it("rejects stale or malformed containing strategy material hashes before consuming fields", () => {
+    const staleMaterialHash = createFixture({ preserveStrategyMaterialHash: true, strategyPatch: { integrity: { material_hash: "0".repeat(64) } } });
+    expect(() => runDraft(staleMaterialHash, "--dry-run")).toThrow(/strategy material hash mismatch/u);
+
+    const malformedMaterialHash = createFixture({ preserveStrategyMaterialHash: true, strategyPatch: { integrity: { material_hash: "not-a-sha" } } });
+    expect(() => runDraft(malformedMaterialHash, "--dry-run")).toThrow(/material hash is missing or malformed/u);
+
+    const materialFieldTampered = createFixture();
+    const materialStrategy = JSON.parse(readFileSync(materialFieldTampered.paths.strategy, "utf8")) as Record<string, unknown>;
+    materialStrategy.target = { company: "Altered Synthetic Labs", role: "Lead Product Manager" };
+    writeJson(materialFieldTampered.paths.strategy, materialStrategy);
+    expect(() => runDraft(materialFieldTampered, "--dry-run")).toThrow(/strategy material hash mismatch/u);
+  });
+
+  it("rejects internally rehashed application-gap tampering when the containing strategy hash is stale", () => {
+    const fixture = createFixture({ withApplicationGaps: true });
+    const strategy = JSON.parse(readFileSync(fixture.paths.strategy, "utf8")) as {
+      application_level_gap_register: { gap_count: number; unresolved_gap_count: number; gaps_hash: string };
+      application_level_gaps: ApplicationLevelGap[];
+      integrity: { application_level_gaps_hash: string };
+    };
+    strategy.application_level_gaps = [
+      {
+        ...strategy.application_level_gaps[0],
+        requirement: "Seven years of synthetic product management experience",
+        normalized_requirement_key: normalizeApplicationRequirement("Seven years of synthetic product management experience")
+      }
+    ];
+    const rehashedGaps = hashApplicationLevelGaps(strategy.application_level_gaps);
+    strategy.application_level_gap_register.gap_count = strategy.application_level_gaps.length;
+    strategy.application_level_gap_register.unresolved_gap_count = strategy.application_level_gaps.length;
+    strategy.application_level_gap_register.gaps_hash = rehashedGaps;
+    strategy.integrity.application_level_gaps_hash = rehashedGaps;
+    writeJson(fixture.paths.strategy, strategy);
+
+    expect(() => runDraft(fixture, "--dry-run")).toThrow(/strategy material hash mismatch/u);
+  });
+
+  it("rejects stale application-gap register linkage even when embedded gaps are unchanged", () => {
+    const fixture = createFixture({ withApplicationGaps: true });
+    const strategy = JSON.parse(readFileSync(fixture.paths.strategy, "utf8")) as {
+      application_level_gap_register: { gap_register_id: string };
+    };
+    strategy.application_level_gap_register.gap_register_id = "GAPREG-altered-synthetic-labs";
+    writeJson(fixture.paths.strategy, strategy);
+
+    expect(() => runDraft(fixture, "--dry-run")).toThrow(/strategy material hash mismatch/u);
+  });
+
+  it("rejects independent application-gap register references and structured gaps", () => {
+    const missingReference = createFixture({ withApplicationGaps: true, strategyPatch: { application_level_gap_register: undefined } });
+    expect(() => runDraft(missingReference, "--dry-run")).toThrow(/reference and embedded gaps must be present together/u);
+
+    const missingGaps = createFixture({ withApplicationGaps: true, strategyPatch: { application_level_gaps: undefined } });
+    expect(() => runDraft(missingGaps, "--dry-run")).toThrow(/reference and embedded gaps must be present together/u);
   });
 
   it("keeps metrics attached to the correct employer evidence record", () => {
@@ -291,6 +421,8 @@ type FixtureOptions = {
   strategyPatch?: Record<string, unknown>;
   applicationPatch?: Record<string, unknown>;
   evidencePatch?: Record<string, unknown>;
+  withApplicationGaps?: boolean;
+  preserveStrategyMaterialHash?: boolean;
 };
 
 function runDraft(fixture: ReturnType<typeof createFixture>, mode: "--dry-run" | "--apply") {
@@ -471,6 +603,37 @@ function createFixture(options: FixtureOptions = {}) {
   }
 
   const evidenceHash = fileHash(paths.evidence);
+  const applicationLevelGaps: ApplicationLevelGap[] = options.withApplicationGaps
+    ? [
+        {
+          gap_id: "G01",
+          requirement: "Ten years of product management experience",
+          normalized_requirement_key: normalizeApplicationRequirement("Ten years of product management experience"),
+          status: "unresolved",
+          resolution_state: "requires-human-review",
+          explanation: "Synthetic evidence supports less than the stated requirement.",
+          closest_supported_evidence_ids: ["EV-summary"],
+          source_reference: "strategy.application_level_gaps:G01",
+          human_review_required: true,
+          positive_claim_prohibited: true,
+          claim_boundary: "Do not claim ten years of product management experience unless verified evidence is added."
+        },
+        {
+          gap_id: "G02",
+          requirement: "Restaurant technology experience",
+          normalized_requirement_key: normalizeApplicationRequirement("Restaurant technology experience"),
+          status: "bounded-claim",
+          resolution_state: "bounded",
+          explanation: "Synthetic evidence supports adjacent platform work but not direct restaurant technology ownership.",
+          closest_supported_evidence_ids: ["EV-summary"],
+          source_reference: "strategy.application_level_gaps:G02",
+          human_review_required: true,
+          positive_claim_prohibited: true,
+          claim_boundary: "May describe bounded adjacent platform experience, not direct restaurant technology ownership."
+        }
+      ]
+    : [];
+  const applicationLevelGapsHash = hashApplicationLevelGaps(applicationLevelGaps);
   const strategy = mergeRecord(
     {
       schema_version: "1.0.0",
@@ -501,6 +664,20 @@ function createFixture(options: FixtureOptions = {}) {
         verified_by: "synthetic-reviewer",
         verified_at: now
       },
+      ...(options.withApplicationGaps
+        ? {
+            application_level_gap_register: {
+              gap_register_id: "GAPREG-synthetic-labs",
+              source_path: "registry/application-gap-registers/GAPREG-synthetic-labs.json",
+              material_hash: "gap-register-material-hash",
+              file_hash: "gap-register-file-hash",
+              gap_count: applicationLevelGaps.length,
+              unresolved_gap_count: applicationLevelGaps.length,
+              gaps_hash: applicationLevelGapsHash
+            },
+            application_level_gaps: applicationLevelGaps
+          }
+        : {}),
       integrity: {
         handoff_hash: fileHash(paths.handoff),
         decision_hash: fileHash(paths.decision),
@@ -508,12 +685,25 @@ function createFixture(options: FixtureOptions = {}) {
         jd_snapshot_hash: fileHash(paths.jd),
         application_hash: fileHash(paths.application),
         candidate_evidence_hash: evidenceHash,
+        ...(options.withApplicationGaps
+          ? {
+              application_gap_register_hash: "gap-register-file-hash",
+              application_level_gaps_hash: applicationLevelGapsHash
+            }
+          : {}),
         material_hash: "strategy-material"
       },
       limitations: ["Human-review-only strategy; not application-ready."]
     },
     options.strategyPatch
   );
+  if (!options.preserveStrategyMaterialHash) {
+    const typedStrategy = strategy as Parameters<typeof hashResumeStrategyMaterial>[0];
+    typedStrategy.integrity = {
+      ...typedStrategy.integrity,
+      material_hash: hashResumeStrategyMaterial(typedStrategy)
+    };
+  }
   writeJson(paths.strategy, strategy);
 
   return { workspace, registryRoot, paths };
