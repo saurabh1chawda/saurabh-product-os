@@ -13,6 +13,13 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import {
+  unresolvedApplicationGaps,
+  validateApplicationGapStrategyFields,
+  type ApplicationGapRegisterReference,
+  type ApplicationLevelGap
+} from "./application-gap-register.ts";
+import { hashResumeStrategyMaterial } from "./resume-strategy.ts";
 
 type Mode = "dry-run" | "apply";
 type ReviewState = "draft" | "human_review_required";
@@ -48,6 +55,8 @@ type StrategyArtifact = {
   recommended_resume_sections_or_emphasis: Array<{ section: string; recommendation: string; status: string; evidence_ids: string[] }>;
   human_review_checklist: string[];
   candidate_evidence_source: { evidence_source_id: string; source_hash: string; verified_by: string; verified_at: string };
+  application_level_gap_register?: ApplicationGapRegisterReference;
+  application_level_gaps?: ApplicationLevelGap[];
   integrity: {
     handoff_hash: string;
     decision_hash: string;
@@ -55,6 +64,8 @@ type StrategyArtifact = {
     jd_snapshot_hash: string;
     application_hash: string;
     candidate_evidence_hash: string;
+    application_gap_register_hash?: string;
+    application_level_gaps_hash?: string;
     material_hash: string;
   };
   limitations: string[];
@@ -125,6 +136,7 @@ type ResumeDraft = {
     opportunity_id: string;
     jd_snapshot_id: string;
     handoff_id: string;
+    application_gap_register_id?: string;
   };
   professional_headline: DraftStatement | null;
   professional_summary: DraftStatement[];
@@ -136,9 +148,10 @@ type ResumeDraft = {
   certifications: DraftStatement[];
   projects_or_portfolio_evidence: DraftStatement[];
   evidence_gaps: Array<{ requirement: string; reason: string; source: string }>;
+  application_level_gaps: ApplicationLevelGap[];
   excluded_unsupported_claims: Array<{ claim: string; reason: string }>;
   review_flags: string[];
-  source_provenance: { strategy_path: string; candidate_evidence_path: string };
+  source_provenance: { strategy_path: string; candidate_evidence_path: string; application_gap_register_path?: string };
   integrity: {
     strategy_hash: string;
     candidate_evidence_hash: string;
@@ -216,8 +229,8 @@ export function runCareerOsResumeDraft(options: RunOptions = {}): DraftResult {
 
   const strategy = readJson<StrategyArtifact>(strategyPath);
   const evidence = readJson<TrustedEvidenceSource>(evidencePath);
-  validateStrategy(strategy);
   validateTrustedEvidence(evidence);
+  validateStrategy(strategy, evidence);
 
   const strategyHash = fileHash(strategyPath);
   const evidenceHash = fileHash(evidencePath);
@@ -324,6 +337,12 @@ function buildDraft(input: {
   const bullets = byCategory("achievement").map((item) => statement(item, "verbatim"));
   const summarySources = byCategory("summary").length > 0 ? byCategory("summary") : usableEvidence.filter((item) => ["Product Strategy", "Analytics", "Leadership"].some((tag) => item.tags.includes(tag))).slice(0, 3);
   const gapRequirements = new Set(input.strategy.evidence_gaps_and_unsupported_claims.map((gap) => normalize(gap.claim_or_requirement)));
+  const applicationLevelGaps = input.strategy.application_level_gaps ?? [];
+  const unresolvedGaps = unresolvedApplicationGaps(applicationLevelGaps);
+  const applicationGapsNotInStrategy = unresolvedGaps.filter((gap) => !gapRequirements.has(normalize(gap.requirement)));
+  for (const gap of unresolvedGaps) {
+    gapRequirements.add(normalize(gap.requirement));
+  }
   const allStatements = [
     ...(headlineSource ? [statement(headlineSource, "condensed")] : []),
     ...summarySources.map((item) => statement(item, "condensed")),
@@ -369,7 +388,10 @@ function buildDraft(input: {
       application_id: input.strategy.application.application_id,
       opportunity_id: input.strategy.opportunity.opportunity_id,
       jd_snapshot_id: input.strategy.jd.jd_snapshot_id,
-      handoff_id: input.strategy.handoff.resume_os_handoff_id
+      handoff_id: input.strategy.handoff.resume_os_handoff_id,
+      ...(input.strategy.application_level_gap_register
+        ? { application_gap_register_id: input.strategy.application_level_gap_register.gap_register_id }
+        : {})
     },
     professional_headline: headlineSource ? statement(headlineSource, "condensed") : null,
     professional_summary: summarySources.map((item) => statement(item, "condensed")),
@@ -380,18 +402,35 @@ function buildDraft(input: {
     education: byCategory("education").map((item) => statement(item, "verbatim")),
     certifications: byCategory("certification").map((item) => statement(item, "verbatim")),
     projects_or_portfolio_evidence: byCategory("project").map((item) => statement(item, "verbatim")),
-    evidence_gaps: input.strategy.evidence_gaps_and_unsupported_claims.map((gap) => ({
-      requirement: gap.claim_or_requirement,
-      reason: gap.handling,
-      source: "strategy.evidence_gaps_and_unsupported_claims"
-    })),
+    evidence_gaps: [
+      ...input.strategy.evidence_gaps_and_unsupported_claims.map((gap) => ({
+        requirement: gap.claim_or_requirement,
+        reason: gap.handling,
+        source: "strategy.evidence_gaps_and_unsupported_claims"
+      })),
+      ...applicationGapsNotInStrategy.map((gap) => ({
+        requirement: gap.requirement,
+        reason: `Application-level gap ${gap.gap_id}: ${gap.explanation} ${gap.claim_boundary}`,
+        source: "strategy.application_level_gaps"
+      }))
+    ],
+    application_level_gaps: applicationLevelGaps,
     excluded_unsupported_claims: input.strategy.evidence_to_requirement_mapping
       .filter((mapping) => mapping.status !== "evidence-backed" || gapRequirements.has(normalize(mapping.requirement)))
-      .map((mapping) => ({ claim: mapping.requirement, reason: mapping.notes })),
-    review_flags: [...new Set(reviewFlags)],
+      .map((mapping) => ({ claim: mapping.requirement, reason: mapping.notes }))
+      .concat(unresolvedGaps.map((gap) => ({ claim: gap.requirement, reason: `Application-level gap ${gap.gap_id}: ${gap.claim_boundary}` }))),
+    review_flags: [
+      ...new Set([
+        ...reviewFlags,
+        ...unresolvedGaps.map((gap) => `${gap.gap_id}: application-level gap requires human review before any positive resume claim.`)
+      ])
+    ],
     source_provenance: {
       strategy_path: toRelative(input.cwd, input.strategyPath),
-      candidate_evidence_path: toRelative(input.cwd, input.evidencePath)
+      candidate_evidence_path: toRelative(input.cwd, input.evidencePath),
+      ...(input.strategy.application_level_gap_register
+        ? { application_gap_register_path: input.strategy.application_level_gap_register.source_path }
+        : {})
     },
     integrity: {
       strategy_hash: input.hashes.strategyHash,
@@ -408,11 +447,15 @@ function buildDraft(input: {
   };
 }
 
-function validateStrategy(strategy: StrategyArtifact): void {
+function validateStrategy(strategy: StrategyArtifact, evidence: TrustedEvidenceSource): void {
   requireSchema(strategy, "strategy");
   if (strategy.artifact_type !== "human-review-only-resume-strategy") {
     throw new ResumeDraftError("invalid-strategy", "Input must be a COS-3 human-review-only resume strategy.");
   }
+  if (typeof strategy.integrity?.material_hash !== "string" || !/^[a-f0-9]{64}$/u.test(strategy.integrity.material_hash)) {
+    throw new ResumeDraftError("invalid-strategy", "Strategy material hash is missing or malformed.");
+  }
+  assertEqual(strategy.integrity.material_hash, hashResumeStrategyMaterial(strategy), "strategy material hash");
   if (!strategy.strategy_id || !strategy.application?.application_id || !strategy.opportunity?.opportunity_id || !strategy.jd?.jd_snapshot_id || !strategy.handoff?.resume_os_handoff_id) {
     throw new ResumeDraftError("invalid-strategy", "Strategy is missing required identifiers.");
   }
@@ -425,6 +468,7 @@ function validateStrategy(strategy: StrategyArtifact): void {
   if (containsForbiddenFinalState(strategy)) {
     throw new ResumeDraftError("invalid-strategy", "Strategy contains a final application/export state outside COS-4 scope.");
   }
+  validateApplicationGapStrategyFields(strategy, evidence.evidence_items.map((item) => item.evidence_id));
 }
 
 function containsForbiddenFinalState(value: unknown): boolean {
@@ -482,6 +526,11 @@ function validateTrustedEvidence(evidence: TrustedEvidenceSource): void {
 }
 
 function buildChecklist(draft: ResumeDraft): ReviewChecklist {
+  const applicationGapItems = unresolvedApplicationGaps(draft.application_level_gaps).map((gap) => [
+    `application-gap-${gap.gap_id.toLowerCase().replace(/[^a-z0-9]+/gu, "-")}`,
+    "Application-level gap review",
+    `Review application-level gap ${gap.gap_id}: ${gap.requirement}. Preserve the claim boundary. Do not convert it into a positive resume claim.`
+  ]);
   return {
     schema_version: schemaVersion,
     draft_id: draft.draft_id,
@@ -492,6 +541,7 @@ function buildChecklist(draft: ResumeDraft): ReviewChecklist {
       ["metric-verification", "Metric verification", "Confirm metrics remain attached to the correct employer and evidence record."],
       ["jd-alignment", "JD alignment review", "Confirm alignment without inserting unsupported JD keywords."],
       ["unsupported-gap-review", "Unsupported/gap review", "Approve all exclusions and unresolved evidence gaps."],
+      ...applicationGapItems,
       ["duplication-review", "Duplication review", "Reduce repeated phrasing or repeated evidence if needed."],
       ["formatting-review", "Spelling and formatting review", "Review readability, spelling, and section order before export."]
     ].map(([check_id, category, prompt]) => ({
@@ -549,6 +599,10 @@ function renderMarkdown(draft: ResumeDraft): string {
     "## Evidence Gaps",
     "",
     ...draft.evidence_gaps.map((gap) => `- ${gap.requirement}: ${gap.reason}`),
+    "",
+    "## Application-Level Gaps",
+    "",
+    ...draft.application_level_gaps.map((gap) => `- ${gap.gap_id}: ${gap.requirement} (${gap.status}) - ${gap.claim_boundary}`),
     "",
     "## Excluded Unsupported Claims",
     "",
