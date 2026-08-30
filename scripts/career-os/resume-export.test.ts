@@ -6,8 +6,10 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { runCareerOsResumeApprove } from "./resume-approve";
 import { runCareerOsResumeExport } from "./resume-export";
-import { CareerOsExportError, countPdfPages, renderDocx, renderPdf, requiredConfirmations, resumeLines } from "./resume-export-shared";
-import type { ResumeDraft } from "./resume-export-shared";
+import { buildEvidenceConstructionProof, type TrustedEvidenceItem } from "./resume-construction-proof";
+import { CareerOsExportError, countPdfPages, hashJson, renderDocx, renderPdf, requiredConfirmations, resumeLines } from "./resume-export-shared";
+import type { ResumeApproval, ResumeDraft } from "./resume-export-shared";
+import { hashResumeReviewDecisionMaterial, type ResumeReviewDecisionArtifact } from "./resume-review-decision";
 
 const now = "2026-08-25T10:00:00.000Z";
 
@@ -98,6 +100,108 @@ describe("career-os controlled resume approval and export", () => {
     expect(result.approval?.approval_scope).toBe("document_export_only_not_application_submission");
   });
 
+  it("approves Draft 1.1.0 only with a satisfactory review-decision overlay and independent approver", () => {
+    const fixture = createOverlayFixture();
+    const result = approveOverlay(fixture, "--apply");
+
+    expect(result.status).toBe("created");
+    expect(result.approval?.schema_version).toBe("1.1.0");
+    expect(result.approval?.review_decision?.review_decision_id).toBe("RREVIEW-APP-synthetic");
+    expect(result.approval?.review_decision?.reviewer).toBe("Synthetic Candidate");
+    expect(result.approval?.reviewer).toBe("Synthetic Reviewer");
+  });
+
+  it("rejects Draft 1.1.0 approval without a satisfactory overlay", () => {
+    const missing = createOverlayFixture({ skipReview: true });
+    expect(() =>
+      runCareerOsResumeApprove({
+        cwd: missing.workspace,
+        now,
+        argv: ["--draft", missing.paths.draft, "--candidate-evidence", missing.paths.evidence, "--reviewer", "Synthetic Reviewer", "--approver-id", "reviewer:synthetic-reviewer", "--dry-run", ...confirmationFlags()]
+      })
+    ).toThrow(/review-decision/u);
+
+    const revisionRequired = createOverlayFixture({ reviewPatch: { lifecycle_state: "revision_required" } });
+    expect(() => approveOverlay(revisionRequired, "--dry-run")).toThrow(/reviewed_not_approved/u);
+  });
+
+  it("does not let Draft 1.0.0 gain compatibility through a review overlay", () => {
+    const fixture = createFixture();
+    const overlay = createOverlayFixture();
+
+    expect(() =>
+      runCareerOsResumeApprove({
+        cwd: fixture.workspace,
+        now,
+        argv: ["--draft", fixture.paths.draft, "--reviewer", "Synthetic Reviewer", "--review-decision", overlay.paths.review, "--dry-run", ...confirmationFlags()]
+      })
+    ).toThrow(/Draft 1.0.0 cannot gain/u);
+  });
+
+  it("rejects Draft 1.1.0 approval when reviewer and approver stable IDs overlap", () => {
+    const fixture = createOverlayFixture();
+    expect(() =>
+      runCareerOsResumeApprove({
+        cwd: fixture.workspace,
+        now,
+        argv: ["--draft", fixture.paths.draft, "--candidate-evidence", fixture.paths.evidence, "--reviewer", "Synthetic Candidate", "--approver-id", "candidate:synthetic", "--review-decision", fixture.paths.review, "--dry-run", ...confirmationFlags()]
+      })
+    ).toThrow(/candidate|reviewer/i);
+  });
+
+  it("rejects non-satisfactory application-fit decisions during approval", () => {
+    const fixture = createOverlayFixture({
+      reviewPatch: {
+        gap_decisions: [{ gap_id: "G01", source_gap_class: "acknowledged-application-fit-gap", decision: "require-evidence", reviewed_statement_ids: [], checklist_item_id: "application-gap-g01", resolution_reason: "content-reviewed" }]
+      }
+    });
+    expect(() => approveOverlay(fixture, "--dry-run")).toThrow(/Incompatible gap decision|not satisfactory|not approvable/u);
+  });
+
+  it("requires exact non-empty bounded statement review sets", () => {
+    const fixture = createBoundedOverlayFixture();
+    expect(approveOverlay(fixture, "--dry-run").summary.draft_id).toBe("RDRAFT-APP-synthetic");
+
+    const empty = createBoundedOverlayFixture({
+      reviewPatch: {
+        gap_decisions: [{ gap_id: "G02", source_gap_class: "bounded-claim-control", decision: "accept-bounded-representation", reviewed_statement_ids: [], checklist_item_id: "application-gap-g02", resolution_reason: "bounded-claim-verified" }]
+      }
+    });
+    expect(() => approveOverlay(empty, "--dry-run")).toThrow(/non-empty|match exactly/u);
+
+    const superset = createBoundedOverlayFixture({
+      reviewPatch: {
+        gap_decisions: [{ gap_id: "G02", source_gap_class: "bounded-claim-control", decision: "accept-bounded-representation", reviewed_statement_ids: ["stmt:bounded-g02", "stmt:missing"], checklist_item_id: "application-gap-g02", resolution_reason: "bounded-claim-verified" }]
+      }
+    });
+    expect(() => approveOverlay(superset, "--dry-run")).toThrow(/Unknown reviewed statement|match exactly/u);
+  });
+
+  it("export rejects forged construction proofs against current evidence", () => {
+    const fixture = createBoundedOverlayFixture();
+    const approval = approveOverlay(fixture, "--apply");
+    const draft = readJson<ResumeDraft>(fixture.paths.draft);
+    draft.role_specific_experience_bullets[0].construction!.primary_evidence_record_hash = "0".repeat(64);
+    draft.integrity.material_hash = "forged-material";
+    writeJson(fixture.paths.draft, draft);
+    const forgedReview = readJson<ResumeReviewDecisionArtifact>(fixture.paths.review);
+    forgedReview.draft.file_hash = fileHash(fixture.paths.draft);
+    forgedReview.draft.material_hash = "forged-material";
+    forgedReview.integrity.material_hash = hashResumeReviewDecisionMaterial(forgedReview);
+    writeJson(fixture.paths.review, forgedReview);
+    const forgedApproval = readJson<ResumeApproval>(approval.output);
+    forgedApproval.draft.draft_hash = fileHash(fixture.paths.draft);
+    forgedApproval.draft.material_hash = "forged-material";
+    forgedApproval.review_decision!.file_hash = fileHash(fixture.paths.review);
+    forgedApproval.review_decision!.material_hash = forgedReview.integrity.material_hash;
+    forgedApproval.integrity.draft_hash = forgedApproval.draft.draft_hash;
+    forgedApproval.integrity.review_decision_hash = forgedApproval.review_decision!.file_hash;
+    forgedApproval.integrity.approval_material_hash = hashJson({ ...forgedApproval, approved_at: "stable", integrity: { ...forgedApproval.integrity, approval_material_hash: "stable" } });
+    writeJson(approval.output, forgedApproval);
+
+    expect(() => exportResume(fixture, approval.output, "--dry-run")).toThrow(/construction proof|stale or forged/u);
+  });
+
   it("exports approved DOCX and PDF with a validated manifest", () => {
     const fixture = createFixture();
     const approval = approve(fixture, "--apply");
@@ -110,6 +214,39 @@ describe("career-os controlled resume approval and export", () => {
     expect(existsSync(result.outputs.manifest)).toBe(true);
     expect(readFileSync(result.outputs.pdf).subarray(0, 5).toString()).toBe("%PDF-");
     expect(result.manifest?.validation.page_count).toBe(countPdfPages(readFileSync(result.outputs.pdf)));
+  });
+
+  it("exports approved Draft 1.1.0 without leaking review or application-fit metadata", () => {
+    const fixture = createOverlayFixture();
+    const approval = approveOverlay(fixture, "--apply");
+    const result = exportResume(fixture, approval.output, "--apply");
+    const docx = readFileSync(result.outputs.docx, "utf8");
+    const pdf = readFileSync(result.outputs.pdf, "latin1");
+
+    expect(result.manifest?.lifecycle_state).toBe("export_validated");
+    expect(docx).not.toContain("application_fit_gaps");
+    expect(docx).not.toContain("review_decision");
+    expect(pdf).not.toContain("application-fit gap");
+  });
+
+  it("rejects stale Draft 1.1.0 review-decision linkage at export", () => {
+    const fixture = createOverlayFixture();
+    const approval = approveOverlay(fixture, "--apply");
+    const review = readJson<Record<string, unknown>>(fixture.paths.review);
+    writeJson(fixture.paths.review, { ...review, section_decision: "stop-and-reconsider-scope" });
+
+    expect(() => exportResume(fixture, approval.output, "--dry-run")).toThrow(/Review decision file hash changed|material hash/u);
+  });
+
+  it("export reruns compatibility and rejects a forged approval with reviewer overlap", () => {
+    const fixture = createOverlayFixture();
+    const approval = approveOverlay(fixture, "--apply").approval;
+    if (!approval) throw new Error("expected approval");
+    approval.approver = { approver_id: "candidate:synthetic", display_name: "Synthetic Candidate" };
+    approval.integrity.approval_material_hash = hashJson({ ...approval, approved_at: "stable", integrity: { ...approval.integrity, approval_material_hash: "stable" } });
+    writeJson(fixture.paths.approval, approval);
+
+    expect(() => exportResume(fixture, fixture.paths.approval, "--dry-run")).toThrow(/candidate|reviewer/i);
   });
 
   it("renders the approved candidate name from the draft", () => {
@@ -334,12 +471,207 @@ function approve(fixture: ReturnType<typeof createFixture>, mode: "--dry-run" | 
   });
 }
 
+function approveOverlay(fixture: ReturnType<typeof createOverlayFixture>, mode: "--dry-run" | "--apply") {
+  return runCareerOsResumeApprove({
+    cwd: fixture.workspace,
+    now,
+    argv: ["--draft", fixture.paths.draft, "--candidate-evidence", fixture.paths.evidence, "--reviewer", "Synthetic Reviewer", "--approver-id", "reviewer:synthetic-reviewer", "--review-decision", fixture.paths.review, mode, ...confirmationFlags()]
+  });
+}
+
 function exportResume(fixture: ReturnType<typeof createFixture>, approvalPath: string, mode: "--dry-run" | "--apply") {
-  return runCareerOsResumeExport({ cwd: fixture.workspace, now, argv: ["--approval", approvalPath, mode] });
+  return runCareerOsResumeExport({ cwd: fixture.workspace, now, argv: ["--approval", approvalPath, "--candidate-evidence", fixture.paths.evidence, mode] });
 }
 
 function confirmationFlags(): string[] {
   return requiredConfirmations.map((confirmation) => `--confirm-${confirmation}`);
+}
+
+function createOverlayFixture(options: { reviewPatch?: Record<string, unknown>; skipReview?: boolean } = {}) {
+  const fixture = createFixture({
+    draftPatch: {
+      schema_version: "1.1.0",
+      professional_summary: [{ statement_id: "stmt:EV-summary", text: "Sensitive Resume Marker: led synthetic product strategy with measurable outcomes.", provenance: { evidence_record_id: "EV-summary" } }],
+      core_skills: [{ statement_id: "stmt:EV-skill", text: "Product Strategy", provenance: { evidence_record_id: "EV-skill" } }],
+      role_specific_experience_bullets: [{ statement_id: "stmt:EV-bullet", text: "Reduced synthetic platform latency by 42% through focused roadmap execution.", provenance: { evidence_record_id: "EV-bullet" } }],
+      selected_achievements: [{ statement_id: "stmt:EV-achievement", text: "Reduced synthetic platform latency by 42% through focused roadmap execution.", provenance: { evidence_record_id: "EV-achievement" } }],
+      evidence_gaps: [],
+      excluded_unsupported_claims: [],
+      application_fit_gaps: [
+        {
+          gap_id: "G01",
+          gap_register_id: "GAPREG-synthetic",
+          requirement: "Direct restaurant technology experience",
+          normalized_requirement_key: "direct-restaurant-technology-experience",
+          gap_class: "acknowledged-application-fit-gap",
+          generated_disposition: "generated-exclusion",
+          allowed_review_dispositions: ["acknowledge-and-exclude"],
+          claim_boundary: "Do not claim direct restaurant technology experience.",
+          closest_supported_evidence_ids: ["EV-summary"],
+          included_statement_ids: [],
+          excluded_from_positive_claims: true,
+          human_review_required: true,
+          positive_claim_prohibited: true,
+          source_reference: "synthetic.application_fit_gaps:G01"
+        }
+      ]
+    }
+  });
+  const checklist = {
+    schema_version: "1.1.0",
+    checklist_id: "RCHK-RDRAFT-APP-synthetic",
+    draft_id: "RDRAFT-APP-synthetic",
+    approval_state: "human_review_required",
+    draft: { material_hash: "draft-material" },
+    items: [
+      {
+        check_id: "claim-verification",
+        category: "Claim verification",
+        prompt: "Verify every statement against its evidence record.",
+        status: "pending",
+            evidence_ids: ["EV-summary", "EV-bullet", "EV-achievement"],
+        applicable_gap_ids: [],
+        required_resolution_reason_classes: ["content-reviewed"]
+      },
+      {
+        check_id: "application-gap-g01",
+        category: "Application-fit gap review",
+        prompt: "Review synthetic application-fit gap.",
+        status: "pending",
+        evidence_ids: ["EV-summary"],
+        applicable_gap_ids: ["G01"],
+        required_resolution_reason_classes: ["acknowledged-gap-claim-excluded"]
+      }
+    ]
+  };
+  writeJson(fixture.paths.checklist, checklist);
+  const paths = {
+    ...fixture.paths,
+    review: path.join(fixture.registryRoot, "resume-review-decisions", "RREVIEW-APP-synthetic", "resume-review-decision.json")
+  };
+  const review: ResumeReviewDecisionArtifact = mergeRecord(
+    {
+      schema_version: "1.0.0",
+      artifact_type: "resume-review-decision",
+      review_decision_id: "RREVIEW-APP-synthetic",
+      application_id: "APP-synthetic",
+      lifecycle_state: "reviewed_not_approved",
+      approval_granted: false,
+      reviewer: { reviewer_id: "candidate:synthetic", display_name: "Synthetic Candidate", reviewer_role: "candidate-content-reviewer" },
+      reviewed_at: now,
+      draft: { draft_id: "RDRAFT-APP-synthetic", source_path: fixture.paths.draft, file_hash: fileHash(fixture.paths.draft), material_hash: "draft-material" },
+      checklist: { checklist_id: "RCHK-RDRAFT-APP-synthetic", source_path: fixture.paths.checklist, file_hash: fileHash(fixture.paths.checklist) },
+      statement_decisions: [
+        { statement_id: "stmt:EV-summary", decision: "retain" },
+        { statement_id: "stmt:EV-skill", decision: "retain" },
+        { statement_id: "stmt:EV-bullet", decision: "retain" },
+        { statement_id: "stmt:EV-achievement", decision: "retain" }
+      ],
+      gap_decisions: [{ gap_id: "G01", source_gap_class: "acknowledged-application-fit-gap", decision: "acknowledge-and-exclude", reviewed_statement_ids: [], checklist_item_id: "application-gap-g01", resolution_reason: "acknowledged-gap-claim-excluded" }],
+      checklist_decisions: [
+        { check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" },
+        { check_id: "application-gap-g01", decision: "resolved", resolution_reason: "acknowledged-gap-claim-excluded" }
+      ],
+      section_decision: "keep-sparse-review-draft",
+      integrity: { material_hash: "" }
+    },
+    options.reviewPatch
+  ) as ResumeReviewDecisionArtifact;
+  review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
+  if (!options.skipReview) writeJson(paths.review, review);
+  return { ...fixture, paths, checklist, review };
+}
+
+function createBoundedOverlayFixture(options: { reviewPatch?: Record<string, unknown> } = {}) {
+  const fixture = createOverlayFixture({ skipReview: true });
+  const evidence = readJson<{ evidence_items: TrustedEvidenceItem[] }>(fixture.paths.evidence);
+  const boundedEvidence = {
+    evidence_id: "EV-bounded",
+    statement: "Supported restaurant-adjacent platform workflows at Synthetic Labs.",
+    status: "verified",
+    employer: "Synthetic Labs",
+    collaboration_scope: "supported"
+  } as const;
+  evidence.evidence_items.push(boundedEvidence);
+  writeJson(fixture.paths.evidence, evidence);
+  const evidenceHash = fileHash(fixture.paths.evidence);
+  const boundedStatement = {
+    statement_id: "stmt:bounded-g02",
+    target_section: "experience-bullets" as const,
+    template_id: "bounded-product-work" as const,
+    claim_atoms: { bounded_qualifier: "supported", action: "Supported", object: "restaurant-adjacent platform workflows", employer: "Synthetic Labs" },
+    primary_evidence_id: "EV-bounded",
+    supporting_evidence_ids: [],
+    trusted_evidence_ids: ["EV-bounded"],
+    strategy_support_references: ["strategy.mapping:bounded"],
+    related_application_fit_gap_ids: ["G02"],
+    boundary_class: "bounded-claim-control" as const,
+    human_review_required: true as const
+  };
+  const draft = readJson<ResumeDraft>(fixture.paths.draft);
+  draft.integrity.candidate_evidence_hash = evidenceHash;
+  draft.role_specific_experience_bullets = [
+    {
+      statement_id: "stmt:bounded-g02",
+      text: "supported Supported restaurant-adjacent platform workflows for Synthetic Labs.",
+      provenance: { evidence_record_id: "EV-bounded" },
+      construction: buildEvidenceConstructionProof(boundedStatement, evidence.evidence_items)
+    }
+  ];
+  draft.application_fit_gaps = [
+    {
+      gap_id: "G02",
+      gap_register_id: "GAPREG-synthetic",
+      requirement: "Direct restaurant technology experience",
+      normalized_requirement_key: "direct-restaurant-technology-experience",
+      gap_class: "bounded-claim-control",
+      generated_disposition: "generated-bounded-control",
+      allowed_review_dispositions: ["accept-bounded-representation"],
+      claim_boundary: "May describe bounded adjacent platform experience, not direct restaurant technology ownership.",
+      closest_supported_evidence_ids: ["EV-bounded"],
+      included_statement_ids: ["stmt:bounded-g02"],
+      excluded_from_positive_claims: true,
+      human_review_required: true,
+      positive_claim_prohibited: true,
+      source_reference: "synthetic.application_fit_gaps:G02"
+    }
+  ];
+  writeJson(fixture.paths.draft, draft);
+  const checklist = {
+    ...fixture.checklist,
+    items: [
+      fixture.checklist.items[0],
+      {
+        check_id: "application-gap-g02",
+        category: "Application-fit gap review",
+        prompt: "Review bounded synthetic application-fit gap.",
+        status: "pending",
+        evidence_ids: ["EV-bounded"],
+        applicable_gap_ids: ["G02"],
+        required_resolution_reason_classes: ["bounded-claim-verified"]
+      }
+    ]
+  };
+  writeJson(fixture.paths.checklist, checklist);
+  const review = mergeRecord(fixture.review, {
+    draft: { file_hash: fileHash(fixture.paths.draft) },
+    checklist: { file_hash: fileHash(fixture.paths.checklist) },
+    statement_decisions: [
+      { statement_id: "stmt:EV-summary", decision: "retain" },
+      { statement_id: "stmt:EV-skill", decision: "retain" },
+      { statement_id: "stmt:bounded-g02", decision: "retain" },
+      { statement_id: "stmt:EV-achievement", decision: "retain" }
+    ],
+    gap_decisions: [{ gap_id: "G02", source_gap_class: "bounded-claim-control", decision: "accept-bounded-representation", reviewed_statement_ids: ["stmt:bounded-g02"], checklist_item_id: "application-gap-g02", resolution_reason: "bounded-claim-verified" }],
+    checklist_decisions: [
+      { check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" },
+      { check_id: "application-gap-g02", decision: "resolved", resolution_reason: "bounded-claim-verified" }
+    ],
+    ...(options.reviewPatch ?? {})
+  }) as ResumeReviewDecisionArtifact;
+  review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
+  writeJson(fixture.paths.review, review);
+  return { ...fixture, checklist, review };
 }
 
 function createFixture(options: FixtureOptions = {}) {
@@ -358,7 +690,19 @@ function createFixture(options: FixtureOptions = {}) {
   };
   for (const [file, value] of [
     [paths.strategy, { schema_version: "1.0.0", strategy_id: "RSTRAT-APP-synthetic" }],
-    [paths.evidence, { schema_version: "1.0.0", evidence_source_id: "CEV-synthetic" }],
+    [paths.evidence, {
+      schema_version: "1.0.0",
+      evidence_source_id: "CEV-synthetic",
+      source_type: "trusted-candidate-profile",
+      trust: { verified: true, verified_at: now, verified_by: "synthetic-reviewer", basis: "synthetic fixture" },
+      candidate_profile: { candidate_name: "Synthetic Candidate" },
+      evidence_items: [
+        { evidence_id: "EV-summary", statement: "Sensitive Resume Marker: led synthetic product strategy with measurable outcomes.", status: "verified", employer: "Synthetic Labs" },
+        { evidence_id: "EV-skill", statement: "Product Strategy", status: "verified" },
+        { evidence_id: "EV-bullet", statement: "Reduced synthetic platform latency by 42% through focused roadmap execution.", status: "verified", employer: "Synthetic Labs", metric_state: "achieved" },
+        { evidence_id: "EV-achievement", statement: "Reduced synthetic platform latency by 42% through focused roadmap execution.", status: "verified", employer: "Synthetic Labs", metric_state: "achieved" }
+      ]
+    }],
     [paths.application, { schema_version: "1.0.0", application_id: "APP-synthetic" }],
     [paths.opportunity, { schema_version: "1.0.0", opportunity_id: "OPP-synthetic" }],
     [paths.jd, { schema_version: "1.0.0", jd_snapshot_id: "JD-synthetic" }]
@@ -421,4 +765,17 @@ function readJson<T>(file: string): T {
 
 function fileHash(file: string): string {
   return createHash("sha256").update(readFileSync(file)).digest("hex");
+}
+
+function mergeRecord(base: Record<string, unknown>, patch: Record<string, unknown> | undefined): Record<string, unknown> {
+  if (!patch) return base;
+  const next = { ...base };
+  for (const [key, value] of Object.entries(patch)) {
+    next[key] = isPlainObject(value) && isPlainObject(next[key]) ? mergeRecord(next[key] as Record<string, unknown>, value) : value;
+  }
+  return next;
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }

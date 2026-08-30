@@ -4,7 +4,7 @@ import { existsSync, lstatSync, readFileSync, statSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-export const applicationGapRegisterSchemaVersion = "1.0.0";
+export const applicationGapRegisterSchemaVersion = "1.1.0";
 
 export type ApplicationGapStatus = "unresolved" | "resolved-with-verified-evidence" | "waived-by-human-reviewer" | "bounded-claim";
 export type ApplicationGapResolutionState = "requires-human-review" | "resolved" | "waived" | "bounded";
@@ -23,8 +23,16 @@ export type ApplicationLevelGap = {
   claim_boundary: string;
 };
 
+export type ApplicationGapRegisterLineage = {
+  predecessor_gap_register_id: string;
+  predecessor_file_hash: string;
+  predecessor_material_hash: string;
+  revision_reason: "claim-boundary-correction" | "evidence-update" | "human-review-correction" | "workflow-correction";
+  revision_number: number;
+};
+
 export type ApplicationGapRegister = {
-  schema_version: "1.0.0";
+  schema_version: "1.0.0" | "1.1.0";
   artifact_type: "application-level-gap-register";
   gap_register_id: string;
   application_id: string;
@@ -38,6 +46,7 @@ export type ApplicationGapRegister = {
   created_at: string;
   created_by: string;
   source_reference: string;
+  lineage?: ApplicationGapRegisterLineage;
   gaps: ApplicationLevelGap[];
   integrity: {
     material_hash: string;
@@ -132,8 +141,34 @@ export function validateApplicationGapRegister(register: ApplicationGapRegister,
   if (!Array.isArray(register.gaps) || register.gaps.length === 0) {
     throw new ApplicationGapRegisterError("invalid-gap-register", "Application gap register must include at least one gap.");
   }
+  validateLineage(register);
   validateApplicationLevelGaps(register.gaps, expected.candidate_evidence_ids);
   assertEqual(register.integrity?.material_hash, hashApplicationGapRegisterMaterial(register), "application gap register material hash");
+}
+
+export function validateApplicationGapRegisterSuccessor(input: {
+  successor: ApplicationGapRegister;
+  predecessor: ApplicationGapRegister;
+  predecessorFileHash: string;
+}): void {
+  const lineage = input.successor.lineage;
+  if (!lineage) {
+    throw new ApplicationGapRegisterError("invalid-gap-register", "Successor application gap register must include lineage.");
+  }
+  assertEqual(lineage.predecessor_gap_register_id, input.predecessor.gap_register_id, "predecessor gap register ID");
+  assertEqual(lineage.predecessor_file_hash, input.predecessorFileHash, "predecessor gap register file hash");
+  assertEqual(lineage.predecessor_material_hash, input.predecessor.integrity.material_hash, "predecessor gap register material hash");
+  if (input.successor.gap_register_id === input.predecessor.gap_register_id) {
+    throw new ApplicationGapRegisterError("invalid-gap-register", "Successor gap register ID must differ from predecessor.");
+  }
+  for (const field of ["application_id", "jd_snapshot_id", "opportunity_id", "handoff_id", "decision_id", "candidate_evidence_id", "candidate_evidence_hash"] as const) {
+    assertEqual(input.successor[field], input.predecessor[field], `successor ${field}`);
+  }
+  assertEqual(
+    normalizeOptionalId(input.successor.decision_reconciliation_id, "successor decision reconciliation ID"),
+    normalizeOptionalId(input.predecessor.decision_reconciliation_id, "predecessor decision reconciliation ID"),
+    "successor decision_reconciliation_id"
+  );
 }
 
 export function validateApplicationGapStrategyFields(input: {
@@ -282,8 +317,39 @@ function readJson<T>(file: string): T {
 }
 
 function requireSchema(value: { schema_version?: string }, label: string): void {
-  if (value.schema_version !== applicationGapRegisterSchemaVersion) {
+  if (!["1.0.0", applicationGapRegisterSchemaVersion].includes(String(value.schema_version))) {
     throw new ApplicationGapRegisterError("unsupported-schema", `Unsupported ${label} schema_version: ${String(value.schema_version)}`);
+  }
+}
+
+function validateLineage(register: ApplicationGapRegister): void {
+  if (register.schema_version === "1.0.0" && register.lineage) {
+    throw new ApplicationGapRegisterError("unsupported-schema", "Application gap register lineage requires schema_version 1.1.0.");
+  }
+  if (!register.lineage) {
+    return;
+  }
+  if (register.lineage.predecessor_gap_register_id === register.gap_register_id) {
+    throw new ApplicationGapRegisterError("invalid-gap-register", "Application gap register lineage cannot reference itself.");
+  }
+  for (const [field, value] of Object.entries({
+    predecessor_gap_register_id: register.lineage.predecessor_gap_register_id,
+    predecessor_file_hash: register.lineage.predecessor_file_hash,
+    predecessor_material_hash: register.lineage.predecessor_material_hash,
+    revision_reason: register.lineage.revision_reason
+  })) {
+    if (typeof value !== "string" || !value.trim()) {
+      throw new ApplicationGapRegisterError("invalid-gap-register", `Missing required lineage field: ${field}.`);
+    }
+  }
+  if (!/^[a-f0-9]{64}$/u.test(register.lineage.predecessor_file_hash) || !/^[a-f0-9]{64}$/u.test(register.lineage.predecessor_material_hash)) {
+    throw new ApplicationGapRegisterError("invalid-gap-register", "Lineage predecessor hashes must be SHA-256 values.");
+  }
+  if (!["claim-boundary-correction", "evidence-update", "human-review-correction", "workflow-correction"].includes(register.lineage.revision_reason)) {
+    throw new ApplicationGapRegisterError("invalid-gap-register", "Unsupported lineage revision_reason.");
+  }
+  if (!Number.isInteger(register.lineage.revision_number) || register.lineage.revision_number < 1) {
+    throw new ApplicationGapRegisterError("invalid-gap-register", "Lineage revision_number must be a positive integer.");
   }
 }
 
