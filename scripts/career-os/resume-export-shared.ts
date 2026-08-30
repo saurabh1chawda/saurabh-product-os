@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, lstatSync, mkdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import type { EvidenceConstructionProof } from "./resume-construction-proof.ts";
 
 export type Mode = "dry-run" | "apply";
 
@@ -16,12 +17,14 @@ export class CareerOsExportError extends Error {
 }
 
 export type DraftStatement = {
+  statement_id?: string;
   text: string;
   provenance: { evidence_record_id: string };
+  construction?: EvidenceConstructionProof;
 };
 
 export type ResumeDraft = {
-  schema_version: "1.0.0";
+  schema_version: "1.0.0" | "1.1.0";
   draft_id: string;
   created_at: string;
   artifact_type: "evidence-backed-resume-draft";
@@ -36,6 +39,10 @@ export type ResumeDraft = {
     opportunity_id: string;
     jd_snapshot_id: string;
     handoff_id: string;
+    application_gap_register_id?: string;
+    predecessor_draft_id?: string;
+    prior_review_decision_id?: string;
+    revision_input_id?: string;
   };
   professional_headline: DraftStatement | null;
   professional_summary: DraftStatement[];
@@ -47,6 +54,22 @@ export type ResumeDraft = {
   certifications: DraftStatement[];
   projects_or_portfolio_evidence: DraftStatement[];
   evidence_gaps: Array<{ requirement: string; reason: string; source: string }>;
+  application_fit_gaps?: Array<{
+    gap_id: string;
+    gap_register_id: string;
+    requirement: string;
+    normalized_requirement_key: string;
+    gap_class: "acknowledged-application-fit-gap" | "bounded-claim-control";
+    generated_disposition: "pending-human-review" | "generated-exclusion" | "generated-bounded-control";
+    allowed_review_dispositions: Array<"acknowledge-and-exclude" | "accept-bounded-representation" | "revise" | "require-evidence" | "reject-contradictory-content">;
+    claim_boundary: string;
+    closest_supported_evidence_ids: string[];
+    included_statement_ids: string[];
+    excluded_from_positive_claims: boolean;
+    human_review_required: true;
+    positive_claim_prohibited: true;
+    source_reference: string;
+  }>;
   excluded_unsupported_claims: Array<{ claim: string; reason: string }>;
   review_flags: string[];
   source_provenance: { strategy_path: string; candidate_evidence_path: string };
@@ -54,25 +77,37 @@ export type ResumeDraft = {
 };
 
 export type ReviewChecklist = {
-  schema_version: "1.0.0";
+  schema_version: "1.0.0" | "1.1.0";
+  checklist_id?: string;
   draft_id: string;
   approval_state: string;
-  items: Array<{ check_id: string; status: string; evidence_ids: string[] }>;
+  draft?: { material_hash: string };
+  items: Array<{
+    check_id: string;
+    status: string;
+    evidence_ids: string[];
+    applicable_gap_ids?: string[];
+    required_resolution_reason_classes?: Array<
+      "acknowledged-gap-claim-excluded" | "bounded-claim-verified" | "blocking-content-removed" | "evidence-verified" | "content-reviewed"
+    >;
+  }>;
 };
 
 export type ResumeApproval = {
-  schema_version: "1.0.0";
+  schema_version: "1.0.0" | "1.1.0";
   approval_id: string;
   artifact_type: "human-approved-resume-export-approval";
   lifecycle_state: "approved_for_export";
   approval_scope: "document_export_only_not_application_submission";
   approved_at: string;
   reviewer: string;
+  approver?: { approver_id: string; display_name: string };
   draft: { draft_id: string; source_path: string; draft_hash: string; material_hash: string };
-  checklist: { source_path: string; checklist_hash: string; resolved_item_count: number };
+  checklist: { checklist_id?: string; source_path: string; checklist_hash: string; resolved_item_count: number };
+  review_decision?: { review_decision_id: string; source_path: string; file_hash: string; material_hash: string; reviewer: string; reviewer_id?: string };
   references: ResumeDraft["references"];
   confirmations: Record<string, true>;
-  integrity: { draft_hash: string; checklist_hash: string; evidence_hash: string; approval_material_hash: string };
+  integrity: { draft_hash: string; checklist_hash: string; review_decision_hash?: string; evidence_hash: string; approval_material_hash: string };
 };
 
 export type RenderLine = {

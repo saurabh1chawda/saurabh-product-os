@@ -28,6 +28,9 @@ import {
   validateOfficeOpenXml
 } from "./resume-export-shared.ts";
 import type { ResumeApproval, ResumeDraft } from "./resume-export-shared.ts";
+import { validateResumeApprovalCompatibility } from "./resume-approve.ts";
+import type { TrustedEvidenceItem } from "./resume-construction-proof.ts";
+import { readAndValidateResumeReviewDecision } from "./resume-review-decision.ts";
 
 type ExportState = "export_pending" | "export_generated" | "export_validation_failed" | "export_validated";
 
@@ -70,6 +73,14 @@ type RunOptions = {
   simulateWriteFailure?: boolean;
 };
 
+type TrustedEvidenceSource = {
+  schema_version: "1.0.0";
+  evidence_source_id: string;
+  source_type: "trusted-candidate-profile";
+  trust: { verified: true; verified_at: string; verified_by: string; basis: string };
+  evidence_items: TrustedEvidenceItem[];
+};
+
 export function runCareerOsResumeExport(options: RunOptions = {}): ExportResult {
   const cwd = options.cwd ?? process.cwd();
   const flags = parseArgs(options.argv ?? process.argv.slice(2));
@@ -84,7 +95,7 @@ export function runCareerOsResumeExport(options: RunOptions = {}): ExportResult 
   const draftPath = path.resolve(cwd, approval.draft.source_path);
   assertInside(draftPath, registryRoot, "Approved draft");
   const draft = readJson<ResumeDraft>(draftPath);
-  validateDraftAgainstApproval(draft, approval, draftPath);
+  validateDraftAgainstApproval({ cwd, registryRoot, draft, approval, draftPath, candidateEvidencePathFlag: flags["candidate-evidence"] });
 
   const lines = resumeLines(draft);
   const docx = renderDocx(lines);
@@ -123,7 +134,7 @@ export function runCareerOsResumeExport(options: RunOptions = {}): ExportResult 
 }
 
 function validateApproval(approval: ResumeApproval): void {
-  if (approval.schema_version !== schemaVersion || approval.artifact_type !== "human-approved-resume-export-approval") {
+  if (!["1.0.0", "1.1.0"].includes(approval.schema_version) || approval.artifact_type !== "human-approved-resume-export-approval") {
     throw new CareerOsExportError("invalid-approval", "Input must be a COS-5 resume export approval.");
   }
   if (approval.lifecycle_state !== "approved_for_export") {
@@ -134,7 +145,8 @@ function validateApproval(approval: ResumeApproval): void {
   }
 }
 
-function validateDraftAgainstApproval(draft: ResumeDraft, approval: ResumeApproval, draftPath: string): void {
+function validateDraftAgainstApproval(input: { cwd: string; registryRoot: string; draft: ResumeDraft; approval: ResumeApproval; draftPath: string; candidateEvidencePathFlag: string | boolean | undefined }): void {
+  const { cwd, registryRoot, draft, approval, draftPath } = input;
   if (draft.draft_id !== approval.draft.draft_id) throw new CareerOsExportError("integrity-mismatch", "Draft ID does not match approval.");
   if (existsSync(draftPath) && fileHash(draftPath) !== approval.draft.draft_hash) throw new CareerOsExportError("stale-approval", "Draft file hash changed after approval.");
   if (draft.integrity.material_hash !== approval.draft.material_hash) throw new CareerOsExportError("stale-approval", "Draft material hash changed after approval.");
@@ -142,6 +154,65 @@ function validateDraftAgainstApproval(draft: ResumeDraft, approval: ResumeApprov
     throw new CareerOsExportError("stale-approval", "Approval integrity hash is invalid.");
   }
   if (draft.evidence_gaps.length || draft.excluded_unsupported_claims.length) throw new CareerOsExportError("unsupported-content", "Approved export cannot include unresolved evidence gaps.");
+  if (draft.schema_version === "1.1.0") {
+    if (!approval.review_decision) throw new CareerOsExportError("missing-review-decision", "Draft 1.1.0 export requires review-decision linkage.");
+    const candidateEvidence = loadCandidateEvidenceForExport({ cwd, registryRoot, draft, approval, explicitPath: input.candidateEvidencePathFlag });
+    const checklistPath = path.resolve(cwd, approval.checklist.source_path);
+    const reviewDecisionPath = path.resolve(cwd, approval.review_decision.source_path);
+    assertInside(checklistPath, registryRoot, "Approved checklist");
+    assertInside(reviewDecisionPath, registryRoot, "Approved review decision");
+    const checklist = readJson<import("./resume-export-shared.ts").ReviewChecklist>(checklistPath);
+    const { reviewDecision, fileHash: reviewDecisionFileHash } = readAndValidateResumeReviewDecision({
+      file: reviewDecisionPath,
+      cwd,
+      registryRoot,
+      draft,
+      draftPath,
+      checklist,
+      checklistPath
+    });
+    if (fileHash(checklistPath) !== approval.checklist.checklist_hash) throw new CareerOsExportError("stale-approval", "Checklist file hash changed after approval.");
+    if (reviewDecisionFileHash !== approval.review_decision.file_hash || reviewDecisionFileHash !== approval.integrity.review_decision_hash) {
+      throw new CareerOsExportError("stale-approval", "Review decision file hash changed after approval.");
+    }
+    if (reviewDecision.integrity.material_hash !== approval.review_decision.material_hash) {
+      throw new CareerOsExportError("stale-approval", "Review decision material hash changed after approval.");
+    }
+    if (reviewDecision.lifecycle_state !== "reviewed_not_approved" || reviewDecision.approval_granted !== false) {
+      throw new CareerOsExportError("approval-not-exportable", "Review decision is not satisfactory for export.");
+    }
+    if (!approval.approver) throw new CareerOsExportError("missing-approver-id", "Draft 1.1.0 export requires stable approver identity.");
+    validateResumeApprovalCompatibility({ draft, checklist, reviewDecision, approver: approval.approver, candidateEvidence });
+  } else if (approval.review_decision) {
+    throw new CareerOsExportError("invalid-approval", "Draft 1.0.0 export approval must not include review-decision compatibility linkage.");
+  }
+}
+
+function loadCandidateEvidenceForExport(input: { cwd: string; registryRoot: string; draft: ResumeDraft; approval: ResumeApproval; explicitPath: string | boolean | undefined }): TrustedEvidenceSource {
+  if (typeof input.explicitPath !== "string") throw new CareerOsExportError("untrusted-candidate-evidence", "Draft 1.1.0 export requires --candidate-evidence.");
+  const evidencePath = resolveExistingJsonPath(input.cwd, input.explicitPath);
+  assertPrivatePath(evidencePath, input.cwd, "Candidate evidence source");
+  assertInside(evidencePath, input.registryRoot, "Candidate evidence source");
+  const evidence = readJson<TrustedEvidenceSource>(evidencePath);
+  const evidenceHash = fileHash(evidencePath);
+  if (evidenceHash !== input.draft.integrity.candidate_evidence_hash || evidenceHash !== input.approval.integrity.evidence_hash) {
+    throw new CareerOsExportError("stale-approval", "Candidate evidence hash changed after approval.");
+  }
+  if (evidence.evidence_source_id !== input.draft.candidate_identity.evidence_source_id) {
+    throw new CareerOsExportError("integrity-mismatch", "Candidate evidence source ID does not match draft.");
+  }
+  validateTrustedCandidateEvidence(evidence);
+  return evidence;
+}
+
+function validateTrustedCandidateEvidence(evidence: TrustedEvidenceSource): void {
+  if (evidence.schema_version !== "1.0.0" || evidence.source_type !== "trusted-candidate-profile" || evidence.trust?.verified !== true) {
+    throw new CareerOsExportError("untrusted-candidate-evidence", "Candidate evidence source must be explicitly trusted and verified.");
+  }
+  if (Number.isNaN(Date.parse(evidence.trust.verified_at)) || !evidence.trust.verified_by.trim() || !evidence.trust.basis.trim()) {
+    throw new CareerOsExportError("untrusted-candidate-evidence", "Candidate evidence trust metadata is incomplete.");
+  }
+  if (!Array.isArray(evidence.evidence_items) || evidence.evidence_items.length === 0) throw new CareerOsExportError("untrusted-candidate-evidence", "Candidate evidence must include evidence items.");
 }
 
 function validateExport(input: { draft: ResumeDraft; docx: Buffer; pdf: Buffer }): ExportManifest["validation"] {
@@ -158,6 +229,7 @@ function validateExport(input: { draft: ResumeDraft; docx: Buffer; pdf: Buffer }
     if (!normalizeText(pdfText).includes(normalizeText(value).slice(0, Math.min(24, normalizeText(value).length)))) failures.push(`PDF missing approved content: ${value}`);
   }
   const forbidden = ["DRAFT", "NOT FOR APPLICATION USE", "data/private", "integrity", "material_hash", "evidence_record_id", "password", "api_key", "secret"];
+  forbidden.push("application_fit_gaps", "review_decision", "checklist", "revision_input", "application-fit gap");
   for (const marker of forbidden) {
     if (docxText.includes(marker) || pdfText.includes(marker)) failures.push(`Export leaked internal marker: ${marker}`);
   }

@@ -16,9 +16,13 @@ import { pathToFileURL } from "node:url";
 import {
   unresolvedApplicationGaps,
   validateApplicationGapStrategyFields,
+  type ApplicationGapRegister,
   type ApplicationGapRegisterReference,
   type ApplicationLevelGap
 } from "./application-gap-register.ts";
+import { buildEvidenceConstructionProof, renderRevisionStatementText, type EvidenceConstructionProof } from "./resume-construction-proof.ts";
+import { readAndValidateResumeRevisionInput, type ResumeRevisionInputArtifact, type RevisionStatement } from "./resume-revision-input.ts";
+import { type ResumeReviewDecisionArtifact, type ReviewableChecklist } from "./resume-review-decision.ts";
 import { hashResumeStrategyMaterial } from "./resume-strategy.ts";
 
 type Mode = "dry-run" | "apply";
@@ -34,6 +38,7 @@ type CliFlags = {
   "dry-run"?: boolean;
   format?: string;
   now?: string;
+  "revision-input"?: string;
 };
 
 type StrategyArtifact = {
@@ -115,10 +120,31 @@ type DraftStatement = {
   statement_id: string;
   text: string;
   provenance: Provenance;
+  construction?: {
+    construction_mode: "evidence-template";
+  } & EvidenceConstructionProof;
+};
+
+type DraftSchemaVersion = "1.0.0" | "1.1.0";
+type ApplicationFitGap = {
+  gap_id: string;
+  gap_register_id: string;
+  requirement: string;
+  normalized_requirement_key: string;
+  gap_class: "acknowledged-application-fit-gap" | "bounded-claim-control";
+  generated_disposition: "pending-human-review" | "generated-exclusion" | "generated-bounded-control";
+  allowed_review_dispositions: Array<"acknowledge-and-exclude" | "accept-bounded-representation" | "revise" | "require-evidence" | "reject-contradictory-content">;
+  claim_boundary: string;
+  closest_supported_evidence_ids: string[];
+  included_statement_ids: string[];
+  excluded_from_positive_claims: boolean;
+  human_review_required: true;
+  positive_claim_prohibited: true;
+  source_reference: string;
 };
 
 type ResumeDraft = {
-  schema_version: "1.0.0";
+  schema_version: DraftSchemaVersion;
   draft_id: string;
   created_at: string;
   artifact_type: "evidence-backed-resume-draft";
@@ -137,6 +163,9 @@ type ResumeDraft = {
     jd_snapshot_id: string;
     handoff_id: string;
     application_gap_register_id?: string;
+    predecessor_draft_id?: string;
+    prior_review_decision_id?: string;
+    revision_input_id?: string;
   };
   professional_headline: DraftStatement | null;
   professional_summary: DraftStatement[];
@@ -149,6 +178,7 @@ type ResumeDraft = {
   projects_or_portfolio_evidence: DraftStatement[];
   evidence_gaps: Array<{ requirement: string; reason: string; source: string }>;
   application_level_gaps: ApplicationLevelGap[];
+  application_fit_gaps?: ApplicationFitGap[];
   excluded_unsupported_claims: Array<{ claim: string; reason: string }>;
   review_flags: string[];
   source_provenance: { strategy_path: string; candidate_evidence_path: string; application_gap_register_path?: string };
@@ -160,10 +190,20 @@ type ResumeDraft = {
 };
 
 type ReviewChecklist = {
-  schema_version: "1.0.0";
+  schema_version: DraftSchemaVersion;
+  checklist_id?: string;
   draft_id: string;
   approval_state: "human_review_required";
-  items: Array<{ check_id: string; category: string; prompt: string; status: "pending"; evidence_ids: string[] }>;
+  draft?: { material_hash: string };
+  items: Array<{
+    check_id: string;
+    category: string;
+    prompt: string;
+    status: "pending";
+    evidence_ids: string[];
+    applicable_gap_ids?: string[];
+    required_resolution_reason_classes?: Array<"acknowledged-gap-claim-excluded" | "bounded-claim-verified" | "blocking-content-removed" | "evidence-verified" | "content-reviewed">;
+  }>;
 };
 
 type DraftResult = {
@@ -195,6 +235,7 @@ type RunOptions = {
 };
 
 const schemaVersion = "1.0.0";
+const draftSchemaVersion = "1.1.0";
 const maxJsonBytes = 750_000;
 const credentialPattern = /(password|api[_-]?key|secret|token|private[_-]?key|credential)/i;
 
@@ -240,6 +281,17 @@ export function runCareerOsResumeDraft(options: RunOptions = {}): DraftResult {
 
   validateLinkedPrivateRecords(cwd, registryRoot, strategy);
 
+  const revisionContext = flags["revision-input"]
+    ? loadRevisionContext({
+        cwd,
+        registryRoot,
+        revisionInputPath: resolveExistingJsonPath(cwd, flags["revision-input"]),
+        strategy,
+        strategyPath,
+        evidence,
+        evidencePath
+      })
+    : null;
   const draft = buildDraft({
     cwd,
     nowValue,
@@ -247,7 +299,8 @@ export function runCareerOsResumeDraft(options: RunOptions = {}): DraftResult {
     evidencePath,
     strategy,
     evidence,
-    hashes: { strategyHash, evidenceHash }
+    hashes: { strategyHash, evidenceHash, revisionInputHash: revisionContext?.revisionInputHash ?? null },
+    revisionInput: revisionContext?.revisionInput ?? null
   });
   const checklist = buildChecklist(draft);
   const markdown = renderMarkdown(draft);
@@ -322,7 +375,8 @@ function buildDraft(input: {
   evidencePath: string;
   strategy: StrategyArtifact;
   evidence: TrustedEvidenceSource;
-  hashes: { strategyHash: string; evidenceHash: string };
+  hashes: { strategyHash: string; evidenceHash: string; revisionInputHash?: string | null };
+  revisionInput?: ResumeRevisionInputArtifact | null;
 }): ResumeDraft {
   const usableEvidence = input.evidence.evidence_items.filter((item) => item.status === "verified");
   const byCategory = (category: EvidenceItem["category"]) => usableEvidence.filter((item) => item.category === category);
@@ -336,13 +390,9 @@ function buildDraft(input: {
   }));
   const bullets = byCategory("achievement").map((item) => statement(item, "verbatim"));
   const summarySources = byCategory("summary").length > 0 ? byCategory("summary") : usableEvidence.filter((item) => ["Product Strategy", "Analytics", "Leadership"].some((tag) => item.tags.includes(tag))).slice(0, 3);
-  const gapRequirements = new Set(input.strategy.evidence_gaps_and_unsupported_claims.map((gap) => normalize(gap.claim_or_requirement)));
   const applicationLevelGaps = input.strategy.application_level_gaps ?? [];
   const unresolvedGaps = unresolvedApplicationGaps(applicationLevelGaps);
-  const applicationGapsNotInStrategy = unresolvedGaps.filter((gap) => !gapRequirements.has(normalize(gap.requirement)));
-  for (const gap of unresolvedGaps) {
-    gapRequirements.add(normalize(gap.requirement));
-  }
+  const applicationFitGaps = applicationFitGapsFrom(applicationLevelGaps, input.strategy.application_level_gap_register);
   const allStatements = [
     ...(headlineSource ? [statement(headlineSource, "condensed")] : []),
     ...summarySources.map((item) => statement(item, "condensed")),
@@ -359,9 +409,10 @@ function buildDraft(input: {
     ...repetitionFlags(allStatements),
     ...superlativeFlags(allStatements)
   ];
+  const revisionStatements = input.revisionInput ? statementsFromRevisionInput(input.revisionInput, usableEvidence) : emptyRevisionStatements();
   const draft: ResumeDraft = {
-    schema_version: schemaVersion,
-    draft_id: draftId(input.strategy, input.hashes.evidenceHash),
+    schema_version: applicationFitGaps.length || input.revisionInput ? draftSchemaVersion : schemaVersion,
+    draft_id: draftId(input.strategy, input.hashes.evidenceHash, input.hashes.revisionInputHash),
     created_at: input.nowValue,
     artifact_type: "evidence-backed-resume-draft",
     lifecycle_state: "human_review_required",
@@ -391,38 +442,38 @@ function buildDraft(input: {
       handoff_id: input.strategy.handoff.resume_os_handoff_id,
       ...(input.strategy.application_level_gap_register
         ? { application_gap_register_id: input.strategy.application_level_gap_register.gap_register_id }
+        : {}),
+      ...(input.revisionInput
+        ? {
+            predecessor_draft_id: input.revisionInput.predecessor_draft.draft_id,
+            prior_review_decision_id: input.revisionInput.prior_review_decision.review_decision_id,
+            revision_input_id: input.revisionInput.revision_input_id
+          }
         : {})
     },
-    professional_headline: headlineSource ? statement(headlineSource, "condensed") : null,
-    professional_summary: summarySources.map((item) => statement(item, "condensed")),
-    core_skills: byCategory("skill").map((item) => statement(item, "selected")),
+    professional_headline: revisionStatements.headline[0] ?? (headlineSource ? statement(headlineSource, "condensed") : null),
+    professional_summary: revisionStatements.summary.length ? revisionStatements.summary : summarySources.map((item) => statement(item, "condensed")),
+    core_skills: revisionStatements["core-skills"].length ? revisionStatements["core-skills"] : byCategory("skill").map((item) => statement(item, "selected")),
     employment_history: employment,
-    role_specific_experience_bullets: bullets,
-    selected_achievements: bullets,
+    role_specific_experience_bullets: revisionStatements["experience-bullets"].length ? revisionStatements["experience-bullets"] : bullets,
+    selected_achievements: revisionStatements.achievements.length ? revisionStatements.achievements : bullets,
     education: byCategory("education").map((item) => statement(item, "verbatim")),
     certifications: byCategory("certification").map((item) => statement(item, "verbatim")),
-    projects_or_portfolio_evidence: byCategory("project").map((item) => statement(item, "verbatim")),
-    evidence_gaps: [
-      ...input.strategy.evidence_gaps_and_unsupported_claims.map((gap) => ({
+    projects_or_portfolio_evidence: revisionStatements.projects.length ? revisionStatements.projects : byCategory("project").map((item) => statement(item, "verbatim")),
+    evidence_gaps: input.strategy.evidence_gaps_and_unsupported_claims.map((gap) => ({
         requirement: gap.claim_or_requirement,
         reason: gap.handling,
         source: "strategy.evidence_gaps_and_unsupported_claims"
       })),
-      ...applicationGapsNotInStrategy.map((gap) => ({
-        requirement: gap.requirement,
-        reason: `Application-level gap ${gap.gap_id}: ${gap.explanation} ${gap.claim_boundary}`,
-        source: "strategy.application_level_gaps"
-      }))
-    ],
     application_level_gaps: applicationLevelGaps,
+    ...(applicationFitGaps.length ? { application_fit_gaps: applicationFitGaps } : {}),
     excluded_unsupported_claims: input.strategy.evidence_to_requirement_mapping
-      .filter((mapping) => mapping.status !== "evidence-backed" || gapRequirements.has(normalize(mapping.requirement)))
-      .map((mapping) => ({ claim: mapping.requirement, reason: mapping.notes }))
-      .concat(unresolvedGaps.map((gap) => ({ claim: gap.requirement, reason: `Application-level gap ${gap.gap_id}: ${gap.claim_boundary}` }))),
+      .filter((mapping) => mapping.status !== "evidence-backed" && !applicationFitGaps.some((gap) => normalize(gap.requirement) === normalize(mapping.requirement)))
+      .map((mapping) => ({ claim: mapping.requirement, reason: mapping.notes })),
     review_flags: [
       ...new Set([
         ...reviewFlags,
-        ...unresolvedGaps.map((gap) => `${gap.gap_id}: application-level gap requires human review before any positive resume claim.`)
+        ...unresolvedGaps.map((gap) => `${gap.gap_id}: application-fit gap requires human review before any positive resume claim.`)
       ])
     ],
     source_provenance: {
@@ -445,6 +496,125 @@ function buildDraft(input: {
       material_hash: hashJson({ ...draft, created_at: "stable", integrity: { ...draft.integrity, material_hash: "stable" } })
     }
   };
+}
+
+type RevisionStatementBuckets = Record<"headline" | "summary" | "core-skills" | "experience-bullets" | "achievements" | "projects", DraftStatement[]>;
+
+function emptyRevisionStatements(): RevisionStatementBuckets {
+  return {
+    headline: [],
+    summary: [],
+    "core-skills": [],
+    "experience-bullets": [],
+    achievements: [],
+    projects: []
+  };
+}
+
+function applicationFitGapsFrom(gaps: ApplicationLevelGap[], reference: ApplicationGapRegisterReference | undefined): ApplicationFitGap[] {
+  if (!gaps.length) return [];
+  if (!reference) throw new ResumeDraftError("invalid-gap-register", "Application-fit gaps require an application gap register reference.");
+  return unresolvedApplicationGaps(gaps).map((gap) => ({
+    gap_id: gap.gap_id,
+    gap_register_id: reference.gap_register_id,
+    requirement: gap.requirement,
+    normalized_requirement_key: gap.normalized_requirement_key,
+    gap_class: gap.status === "bounded-claim" ? "bounded-claim-control" : "acknowledged-application-fit-gap",
+    generated_disposition: gap.status === "bounded-claim" ? "generated-bounded-control" : "generated-exclusion",
+    allowed_review_dispositions: gap.status === "bounded-claim"
+      ? ["accept-bounded-representation", "revise", "require-evidence", "reject-contradictory-content"]
+      : ["acknowledge-and-exclude", "revise", "require-evidence", "reject-contradictory-content"],
+    claim_boundary: gap.claim_boundary,
+    closest_supported_evidence_ids: gap.closest_supported_evidence_ids,
+    included_statement_ids: [],
+    excluded_from_positive_claims: true,
+    human_review_required: true,
+    positive_claim_prohibited: true,
+    source_reference: gap.source_reference
+  }));
+}
+
+function statementsFromRevisionInput(revisionInput: ResumeRevisionInputArtifact, evidence: EvidenceItem[]): RevisionStatementBuckets {
+  const buckets = emptyRevisionStatements();
+  const evidenceById = new Map(evidence.map((item) => [item.evidence_id, item]));
+  for (const item of [...revisionInput.revised_statements, ...revisionInput.expansion_items]) {
+    const source = evidenceById.get(item.primary_evidence_id);
+    if (!source) throw new ResumeDraftError("invalid-revision-input", `Revision statement references unknown evidence: ${item.primary_evidence_id}`);
+    const renderedText = renderRevisionStatementText(item);
+    const construction = constructionFromRevisionStatement(item, evidence);
+    buckets[item.target_section].push({
+      statement_id: item.statement_id,
+      text: renderedText,
+      provenance: {
+        evidence_record_id: source.evidence_id,
+        source_field: source.source_field ?? "statement",
+        source_fragment_reference: source.source_reference,
+        evidence_classification: source.evidence_classification ?? source.category ?? "candidate_evidence",
+        transformation_type: item.predecessor_statement_id ? "condensed" : "selected",
+        confidence_category: "requires-human-review",
+        human_review_required: true,
+        integrity_hash: hashJson({
+          statement_id: item.statement_id,
+          text: renderedText,
+          evidence_ids: construction.evidence_ids,
+          revision_input_id: revisionInput.revision_input_id
+        })
+      },
+      construction
+    });
+  }
+  return buckets;
+}
+
+function constructionFromRevisionStatement(item: RevisionStatement, evidence: EvidenceItem[]): NonNullable<DraftStatement["construction"]> {
+  try {
+    return buildEvidenceConstructionProof(item, evidence);
+  } catch (error) {
+    throw new ResumeDraftError("invalid-revision-input", error instanceof Error ? error.message : String(error));
+  }
+}
+
+function loadRevisionContext(input: {
+  cwd: string;
+  registryRoot: string;
+  revisionInputPath: string;
+  strategy: StrategyArtifact;
+  strategyPath: string;
+  evidence: TrustedEvidenceSource;
+  evidencePath: string;
+}): { revisionInput: ResumeRevisionInputArtifact; revisionInputHash: string } {
+  assertPrivatePath(input.revisionInputPath, input.cwd, "Resume revision input");
+  assertInside(input.revisionInputPath, input.registryRoot, "Resume revision input");
+  const revision = readJson<ResumeRevisionInputArtifact>(input.revisionInputPath);
+  const predecessorDraftPath = resolveRegistryPath(input.cwd, input.registryRoot, revision.predecessor_draft.source_path);
+  const predecessorChecklistPath = resolveRegistryPath(input.cwd, input.registryRoot, revision.predecessor_checklist.source_path);
+  const priorReviewPath = resolveRegistryPath(input.cwd, input.registryRoot, revision.prior_review_decision.source_path);
+  const applicationGapRegisterPath = resolveRegistryPath(input.cwd, input.registryRoot, revision.application_gap_register.source_path);
+  const predecessorDraft = readJson<ResumeDraft>(predecessorDraftPath);
+  const predecessorChecklist = readJson<ReviewableChecklist>(predecessorChecklistPath);
+  const priorReviewDecision = readJson<ResumeReviewDecisionArtifact>(priorReviewPath);
+  const applicationGapRegister = readJson<ApplicationGapRegister>(applicationGapRegisterPath);
+  const result = readAndValidateResumeRevisionInput({
+    file: input.revisionInputPath,
+    cwd: input.cwd,
+    registryRoot: input.registryRoot,
+    predecessorDraft,
+    predecessorDraftPath,
+    predecessorChecklist,
+    predecessorChecklistPath,
+    priorReviewDecision,
+    priorReviewDecisionPath: priorReviewPath,
+    strategy: input.strategy,
+    strategyPath: input.strategyPath,
+    candidateEvidence: input.evidence,
+    candidateEvidencePath: input.evidencePath,
+    applicationGapRegister,
+    applicationGapRegisterPath
+  });
+  if (result.revisionInput.application_id !== input.strategy.application.application_id) {
+    throw new ResumeDraftError("invalid-revision-input", "Revision input application ID does not match strategy.");
+  }
+  return { revisionInput: result.revisionInput, revisionInputHash: result.fileHash };
 }
 
 function validateStrategy(strategy: StrategyArtifact, evidence: TrustedEvidenceSource): void {
@@ -526,30 +696,40 @@ function validateTrustedEvidence(evidence: TrustedEvidenceSource): void {
 }
 
 function buildChecklist(draft: ResumeDraft): ReviewChecklist {
-  const applicationGapItems = unresolvedApplicationGaps(draft.application_level_gaps).map((gap) => [
-    `application-gap-${gap.gap_id.toLowerCase().replace(/[^a-z0-9]+/gu, "-")}`,
-    "Application-level gap review",
-    `Review application-level gap ${gap.gap_id}: ${gap.requirement}. Preserve the claim boundary. Do not convert it into a positive resume claim.`
-  ]);
+  const applicationGapItems = (draft.application_fit_gaps ?? []).map((gap) => ({
+    check_id: `application-gap-${gap.gap_id.toLowerCase().replace(/[^a-z0-9]+/gu, "-")}`,
+    category: "Application-fit gap review",
+    prompt: `Review application-fit gap ${gap.gap_id}: ${gap.requirement}. Preserve the claim boundary. Do not convert it into a positive resume claim.`,
+    applicable_gap_ids: [gap.gap_id],
+    required_resolution_reason_classes: gap.gap_class === "bounded-claim-control" ? ["bounded-claim-verified" as const] : ["acknowledged-gap-claim-excluded" as const]
+  }));
+  const baseItems = [
+    { check_id: "claim-verification", category: "Claim verification", prompt: "Verify every statement against its evidence record.", required_resolution_reason_classes: ["content-reviewed" as const, "evidence-verified" as const] },
+    { check_id: "chronology-review", category: "Chronology review", prompt: "Review dates, sequencing, overlaps, and current-role representation.", required_resolution_reason_classes: ["content-reviewed" as const] },
+    { check_id: "metric-verification", category: "Metric verification", prompt: "Confirm metrics remain attached to the correct employer and evidence record.", required_resolution_reason_classes: ["evidence-verified" as const] },
+    { check_id: "jd-alignment", category: "JD alignment review", prompt: "Confirm alignment without inserting unsupported JD keywords.", required_resolution_reason_classes: ["content-reviewed" as const] },
+    { check_id: "unsupported-gap-review", category: "Unsupported/gap review", prompt: "Approve all exclusions and unresolved evidence gaps.", required_resolution_reason_classes: ["blocking-content-removed" as const, "content-reviewed" as const] },
+    ...applicationGapItems,
+    { check_id: "duplication-review", category: "Duplication review", prompt: "Reduce repeated phrasing or repeated evidence if needed.", required_resolution_reason_classes: ["content-reviewed" as const] },
+    { check_id: "formatting-review", category: "Spelling and formatting review", prompt: "Review readability, spelling, and section order before export.", required_resolution_reason_classes: ["content-reviewed" as const] }
+  ];
   return {
-    schema_version: schemaVersion,
+    schema_version: draft.schema_version,
+    ...(draft.schema_version === draftSchemaVersion ? { checklist_id: `RCHK-${draft.draft_id}`, draft: { material_hash: draft.integrity.material_hash } } : {}),
     draft_id: draft.draft_id,
     approval_state: "human_review_required",
-    items: [
-      ["claim-verification", "Claim verification", "Verify every statement against its evidence record."],
-      ["chronology-review", "Chronology review", "Review dates, sequencing, overlaps, and current-role representation."],
-      ["metric-verification", "Metric verification", "Confirm metrics remain attached to the correct employer and evidence record."],
-      ["jd-alignment", "JD alignment review", "Confirm alignment without inserting unsupported JD keywords."],
-      ["unsupported-gap-review", "Unsupported/gap review", "Approve all exclusions and unresolved evidence gaps."],
-      ...applicationGapItems,
-      ["duplication-review", "Duplication review", "Reduce repeated phrasing or repeated evidence if needed."],
-      ["formatting-review", "Spelling and formatting review", "Review readability, spelling, and section order before export."]
-    ].map(([check_id, category, prompt]) => ({
-      check_id,
-      category,
-      prompt,
+    items: baseItems.map((item) => ({
+      check_id: item.check_id,
+      category: item.category,
+      prompt: item.prompt,
       status: "pending" as const,
-      evidence_ids: statementEvidenceIds(draft)
+      evidence_ids: statementEvidenceIds(draft),
+      ...(draft.schema_version === draftSchemaVersion
+        ? {
+            applicable_gap_ids: "applicable_gap_ids" in item ? item.applicable_gap_ids : [],
+            required_resolution_reason_classes: item.required_resolution_reason_classes
+          }
+        : {})
     }))
   };
 }
@@ -912,8 +1092,9 @@ function containsTraversal(reference: string): boolean {
   return reference.split(/[\\/]+/u).some((part) => part === "..");
 }
 
-function draftId(strategy: StrategyArtifact, evidenceHash: string): string {
-  return `RDRAFT-${strategy.application.application_id}-${hash(`${strategy.strategy_id}:${evidenceHash}`, 8)}`;
+function draftId(strategy: StrategyArtifact, evidenceHash: string, revisionInputHash?: string | null): string {
+  const identity = revisionInputHash ? `${strategy.strategy_id}:${evidenceHash}:${revisionInputHash}` : `${strategy.strategy_id}:${evidenceHash}`;
+  return `RDRAFT-${strategy.application.application_id}-${hash(identity, 8)}`;
 }
 
 function fileHash(file: string): string {

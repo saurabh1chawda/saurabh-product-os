@@ -4,8 +4,10 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFil
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { hashApplicationLevelGaps, normalizeApplicationRequirement, type ApplicationLevelGap } from "./application-gap-register";
+import { hashApplicationGapRegisterMaterial, hashApplicationLevelGaps, normalizeApplicationRequirement, type ApplicationGapRegister, type ApplicationLevelGap } from "./application-gap-register";
 import { ResumeDraftError, runCareerOsResumeDraft } from "./resume-draft";
+import { hashResumeReviewDecisionMaterial, type ResumeReviewDecisionArtifact } from "./resume-review-decision";
+import { hashResumeRevisionInputMaterial, renderRevisionStatementText, type ResumeRevisionInputArtifact, type RevisionStatement } from "./resume-revision-input";
 import { hashResumeStrategyMaterial } from "./resume-strategy";
 
 const now = "2026-08-25T09:00:00.000Z";
@@ -154,23 +156,25 @@ describe("career-os resume draft", () => {
     const activeGaps = result.draft?.application_level_gaps.filter((gap) => ["unresolved", "bounded-claim"].includes(gap.status)) ?? [];
     const checklistByGapId = new Map(
       result.checklist?.items
-        .filter((item) => item.category === "Application-level gap review")
+        .filter((item) => item.category === "Application-fit gap review")
         .map((item) => [item.check_id.replace(/^application-gap-/u, "").toUpperCase(), item]) ?? []
     );
 
     expect(result.draft?.references.application_gap_register_id).toBe("GAPREG-synthetic-labs");
+    expect(result.draft?.schema_version).toBe("1.1.0");
     expect(result.draft?.application_level_gaps.map((gap) => gap.gap_id)).toEqual(["G01", "G02"]);
+    expect(result.draft?.application_fit_gaps?.map((gap) => gap.gap_id)).toEqual(["G01", "G02"]);
     expect(activeGaps.map((gap) => gap.gap_id)).toEqual(["G01", "G02"]);
-    expect(result.draft?.evidence_gaps.map((gap) => gap.requirement)).toContain("Ten years of product management experience");
-    expect(result.draft?.evidence_gaps.map((gap) => gap.requirement)).toContain("Restaurant technology experience");
-    expect(result.draft?.excluded_unsupported_claims.map((claim) => claim.claim)).toContain("Ten years of product management experience");
-    expect(result.draft?.excluded_unsupported_claims.map((claim) => claim.claim)).toContain("Restaurant technology experience");
+    expect(result.draft?.evidence_gaps.map((gap) => gap.requirement)).not.toContain("Ten years of product management experience");
+    expect(result.draft?.evidence_gaps.map((gap) => gap.requirement)).not.toContain("Restaurant technology experience");
+    expect(result.draft?.excluded_unsupported_claims.map((claim) => claim.claim)).not.toContain("Ten years of product management experience");
+    expect(result.draft?.excluded_unsupported_claims.map((claim) => claim.claim)).not.toContain("Restaurant technology experience");
     expect(checklistByGapId.size).toBe(activeGaps.length);
     expect(result.checklist?.approval_state).toBe("human_review_required");
     for (const gap of activeGaps) {
       const checklistItem = checklistByGapId.get(gap.gap_id);
       expect(checklistItem?.status).toBe("pending");
-      expect(checklistItem?.prompt).toContain(`application-level gap ${gap.gap_id}`);
+      expect(checklistItem?.prompt).toContain(`application-fit gap ${gap.gap_id}`);
       expect(checklistItem?.prompt).toContain(gap.requirement);
       expect(checklistItem?.prompt).toContain("Preserve the claim boundary");
       expect(checklistItem?.prompt).toContain("Do not convert it into a positive resume claim");
@@ -178,7 +182,7 @@ describe("career-os resume draft", () => {
     }
     expect(activeGaps.find((gap) => gap.gap_id === "G01")?.positive_claim_prohibited).toBe(true);
     expect(activeGaps.find((gap) => gap.gap_id === "G02")?.claim_boundary).toContain("bounded adjacent platform experience");
-    expect(result.draft?.excluded_unsupported_claims.find((claim) => claim.claim === "Restaurant technology experience")?.reason).toContain("bounded adjacent platform experience");
+    expect(result.draft?.application_fit_gaps?.find((gap) => gap.gap_id === "G02")?.gap_class).toBe("bounded-claim-control");
     expect(result.summary.lifecycle_state).toBe("human_review_required");
     expect(result.draft?.label).toContain("NOT FOR APPLICATION USE");
     const positiveResumeText = JSON.stringify({
@@ -274,6 +278,50 @@ describe("career-os resume draft", () => {
 
     const missingGaps = createFixture({ withApplicationGaps: true, strategyPatch: { application_level_gaps: undefined } });
     expect(() => runDraft(missingGaps, "--dry-run")).toThrow(/reference and embedded gaps must be present together/u);
+  });
+
+  it("consumes structured revision input through deterministic templates", () => {
+    const fixture = createFixture({ withApplicationGaps: true });
+    const revision = createRevisionInputFixture(fixture);
+    const result = runDraftWithRevision(fixture, revision.path, "--apply");
+
+    const revised = result.draft?.professional_summary[0];
+    expect(revised?.text).toBe(renderRevisionStatementText(revision.statement));
+    expect(revised?.construction?.construction_mode).toBe("evidence-template");
+    expect(revised?.construction?.primary_evidence_id).toBe("EV-summary");
+    expect(revised?.construction?.primary_evidence_record_hash).toMatch(/^[a-f0-9]{64}$/u);
+    expect(revised?.construction?.claim_atom_projection_hash).toMatch(/^[a-f0-9]{64}$/u);
+    expect(revised?.construction?.construction_proof_hash).toMatch(/^[a-f0-9]{64}$/u);
+    expect(revised?.construction?.rendered_text_hash).toBeDefined();
+    expect(result.draft?.references.revision_input_id).toBe("RREVINPUT-synthetic");
+    expect(result.checklist?.items.every((item) => item.status === "pending")).toBe(true);
+
+    const alternate = createFixture({ withApplicationGaps: true });
+    const alternateRevision = createRevisionInputFixture(alternate, { statementPatch: { claim_atoms: { action: "Built", object: "product systems", outcome: "platform", employer: "Synthetic Labs" } } });
+    const alternateResult = runDraftWithRevision(alternate, alternateRevision.path, "--apply");
+    expect(alternateResult.draft?.draft_id).not.toBe(result.draft?.draft_id);
+  });
+
+  it("rejects arbitrary or unsupported structured revision input before Draft generation", () => {
+    const arbitrary = createFixture({ withApplicationGaps: true });
+    const arbitraryRevision = createRevisionInputFixture(arbitrary, { statementPatch: { text: "Unrelated restaurant AI leadership claim." } });
+    expect(() => runDraftWithRevision(arbitrary, arbitraryRevision.path, "--dry-run")).toThrow(/templates, not free-form text/u);
+
+    const unsupportedMetric = createFixture({ withApplicationGaps: true });
+    const unsupportedRevision = createRevisionInputFixture(unsupportedMetric, {
+      statementPatch: { template_id: "metric-outcome", claim_atoms: { action: "Reduced", object: "query latency", metric_value: "900", metric_unit: "%" } }
+    });
+    expect(() => runDraftWithRevision(unsupportedMetric, unsupportedRevision.path, "--dry-run")).toThrow(/Unsupported action|Unsupported metric_value/u);
+
+    const crossRecord = createFixture({ withApplicationGaps: true });
+    const crossRecordRevision = createRevisionInputFixture(crossRecord, {
+      statementPatch: {
+        claim_atoms: { action: "Built", object: "product systems", outcome: "verified evidence", employer: "Other Labs" },
+        supporting_evidence_ids: ["EV-achievement-platform-latency"],
+        trusted_evidence_ids: ["EV-summary", "EV-achievement-platform-latency"]
+      }
+    });
+    expect(() => runDraftWithRevision(crossRecord, crossRecordRevision.path, "--dry-run")).toThrow(/Unsupported employer/u);
   });
 
   it("keeps metrics attached to the correct employer evidence record", () => {
@@ -433,6 +481,14 @@ function runDraft(fixture: ReturnType<typeof createFixture>, mode: "--dry-run" |
   });
 }
 
+function runDraftWithRevision(fixture: ReturnType<typeof createFixture>, revisionPath: string, mode: "--dry-run" | "--apply") {
+  return runCareerOsResumeDraft({
+    cwd: fixture.workspace,
+    now,
+    argv: ["--strategy", fixture.paths.strategy, "--candidate-evidence", fixture.paths.evidence, "--revision-input", revisionPath, mode]
+  });
+}
+
 function createFixture(options: FixtureOptions = {}) {
   const workspace = mkdtempSync(path.join(os.tmpdir(), "career-os-resume-draft-"));
   const registryRoot = path.join(workspace, "registry");
@@ -443,7 +499,8 @@ function createFixture(options: FixtureOptions = {}) {
     jd: path.join(registryRoot, "jd-snapshots", "JD-2026-content.json"),
     application: path.join(registryRoot, "applications", "APP-synthetic-labs-lead-product-manager-source.json"),
     strategy: path.join(registryRoot, "resume-strategies", "RSTRAT-APP-synthetic-labs-lead-product-manager-source.json"),
-    evidence: path.join(workspace, "private", "trusted-candidate-evidence.json")
+    evidence: path.join(workspace, "private", "trusted-candidate-evidence.json"),
+    register: path.join(registryRoot, "application-gap-registers", "GAPREG-synthetic-labs.json")
   };
 
   const handoff = {
@@ -495,7 +552,7 @@ function createFixture(options: FixtureOptions = {}) {
         },
         {
           evidence_id: "EV-summary",
-          statement: "Built product systems across platform, analytics, and customer discovery using verified evidence.",
+          statement: "Built product systems at Synthetic Labs across platform, analytics, and customer discovery using verified evidence.",
           tags: ["Product Strategy", "Analytics"],
           status: "verified",
           source_reference: "candidate.summary",
@@ -705,13 +762,126 @@ function createFixture(options: FixtureOptions = {}) {
     };
   }
   writeJson(paths.strategy, strategy);
+  if (options.withApplicationGaps) {
+    const register = withApplicationGapRegisterHash({
+      schema_version: "1.0.0",
+      artifact_type: "application-level-gap-register",
+      gap_register_id: "GAPREG-synthetic-labs",
+      application_id: "APP-synthetic-labs-lead-product-manager-source",
+      jd_snapshot_id: "JD-2026-content",
+      opportunity_id: "OPP-2026-link",
+      handoff_id: "HANDOFF-2026-link",
+      decision_id: "DEC-2026-link",
+      decision_reconciliation_id: null,
+      candidate_evidence_id: "CEV-synthetic-profile",
+      candidate_evidence_hash: evidenceHash,
+      created_at: now,
+      created_by: "Synthetic Reviewer",
+      source_reference: "synthetic",
+      gaps: applicationLevelGaps,
+      integrity: { material_hash: "" }
+    });
+    writeJson(paths.register, register);
+  }
 
   return { workspace, registryRoot, paths };
+}
+
+function createRevisionInputFixture(
+  fixture: ReturnType<typeof createFixture>,
+  options: { statementPatch?: Record<string, unknown> } = {}
+): { path: string; statement: RevisionStatement } {
+  const predecessorDraftPath = path.join(fixture.registryRoot, "resume-drafts", "RDRAFT-predecessor", "resume-draft.json");
+  const predecessorChecklistPath = path.join(fixture.registryRoot, "resume-drafts", "RDRAFT-predecessor", "review-checklist.json");
+  const reviewPath = path.join(fixture.registryRoot, "resume-review-decisions", "RREVIEW-synthetic", "resume-review-decision.json");
+  const revisionPath = path.join(fixture.registryRoot, "resume-revision-inputs", "RREVINPUT-synthetic", "resume-revision-input.json");
+  const predecessorDraft = {
+    schema_version: "1.1.0",
+    draft_id: "RDRAFT-predecessor",
+    references: { application_id: "APP-synthetic-labs-lead-product-manager-source" },
+    professional_summary: [{ statement_id: "stmt:EV-summary", text: "Built product systems across platform, analytics, and customer discovery using verified evidence." }],
+    core_skills: [],
+    role_specific_experience_bullets: [],
+    selected_achievements: [],
+    education: [],
+    certifications: [],
+    projects_or_portfolio_evidence: [],
+    application_fit_gaps: [{ gap_id: "G01", gap_class: "acknowledged-application-fit-gap", allowed_review_dispositions: ["acknowledge-and-exclude"], included_statement_ids: [] }],
+    integrity: { material_hash: "predecessor-material" }
+  };
+  const predecessorChecklist = { schema_version: "1.1.0", checklist_id: "RCHK-RDRAFT-predecessor", draft_id: "RDRAFT-predecessor", items: [{ check_id: "claim-verification", status: "pending", evidence_ids: ["EV-summary"], applicable_gap_ids: [], required_resolution_reason_classes: ["content-reviewed"] }] };
+  writeJson(predecessorDraftPath, predecessorDraft);
+  writeJson(predecessorChecklistPath, predecessorChecklist);
+  const review: ResumeReviewDecisionArtifact = {
+    schema_version: "1.0.0",
+    artifact_type: "resume-review-decision",
+    review_decision_id: "RREVIEW-synthetic",
+    application_id: "APP-synthetic-labs-lead-product-manager-source",
+    lifecycle_state: "revision_required",
+    approval_granted: false,
+    reviewer: { reviewer_id: "candidate:synthetic", display_name: "Synthetic Candidate", reviewer_role: "candidate-content-reviewer" },
+    reviewed_at: now,
+    draft: { draft_id: "RDRAFT-predecessor", source_path: predecessorDraftPath, file_hash: fileHash(predecessorDraftPath), material_hash: "predecessor-material" },
+    checklist: { checklist_id: "RCHK-RDRAFT-predecessor", source_path: predecessorChecklistPath, file_hash: fileHash(predecessorChecklistPath) },
+    statement_decisions: [{ statement_id: "stmt:EV-summary", decision: "revise" }],
+    gap_decisions: [{ gap_id: "G01", source_gap_class: "acknowledged-application-fit-gap", decision: "acknowledge-and-exclude", reviewed_statement_ids: [], checklist_item_id: "claim-verification", resolution_reason: "acknowledged-gap-claim-excluded" }],
+    checklist_decisions: [{ check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" }],
+    section_decision: "authorize-evidence-backed-expansion",
+    integrity: { material_hash: "" }
+  };
+  review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
+  writeJson(reviewPath, review);
+  const statement = mergeRecord(
+    {
+      statement_id: "stmt:revision-summary",
+      predecessor_statement_id: "stmt:EV-summary",
+      target_section: "summary",
+      template_id: "action-outcome",
+      claim_atoms: { action: "Built", object: "product systems", outcome: "verified evidence", employer: "Synthetic Labs" },
+      primary_evidence_id: "EV-summary",
+      supporting_evidence_ids: ["EV-achievement-platform-latency"],
+      trusted_evidence_ids: ["EV-summary", "EV-achievement-platform-latency"],
+      strategy_support_references: ["strategy.mapping:product"],
+      related_application_fit_gap_ids: [],
+      boundary_class: "ordinary-evidence-backed",
+      human_review_required: true
+    },
+    options.statementPatch
+  ) as RevisionStatement;
+  const revision: ResumeRevisionInputArtifact = {
+    schema_version: "1.0.0",
+    artifact_type: "resume-revision-input",
+    revision_input_id: "RREVINPUT-synthetic",
+    application_id: "APP-synthetic-labs-lead-product-manager-source",
+    created_at: now,
+    created_by: "Synthetic Candidate",
+    lifecycle_state: "human_review_required",
+    predecessor_draft: { draft_id: "RDRAFT-predecessor", source_path: predecessorDraftPath, file_hash: fileHash(predecessorDraftPath), material_hash: "predecessor-material" },
+    predecessor_checklist: { checklist_id: "RCHK-RDRAFT-predecessor", source_path: predecessorChecklistPath, file_hash: fileHash(predecessorChecklistPath) },
+    prior_review_decision: { review_decision_id: "RREVIEW-synthetic", source_path: reviewPath, file_hash: fileHash(reviewPath), material_hash: review.integrity.material_hash },
+    strategy: { strategy_id: "RSTRAT-APP-synthetic-labs-lead-product-manager-source", source_path: fixture.paths.strategy, file_hash: fileHash(fixture.paths.strategy), material_hash: readJson<{ integrity: { material_hash: string } }>(fixture.paths.strategy).integrity.material_hash },
+    candidate_evidence: { evidence_source_id: "CEV-synthetic-profile", source_path: fixture.paths.evidence, file_hash: fileHash(fixture.paths.evidence) },
+    application_gap_register: { gap_register_id: "GAPREG-synthetic-labs", source_path: fixture.paths.register, file_hash: fileHash(fixture.paths.register), material_hash: readJson<{ integrity: { material_hash: string } }>(fixture.paths.register).integrity.material_hash },
+    revised_statements: [statement],
+    expansion_items: [],
+    integrity: { material_hash: "" }
+  };
+  revision.integrity.material_hash = hashResumeRevisionInputMaterial(revision);
+  writeJson(revisionPath, revision);
+  return { path: revisionPath, statement };
+}
+
+function withApplicationGapRegisterHash(register: ApplicationGapRegister): ApplicationGapRegister {
+  return { ...register, integrity: { material_hash: hashApplicationGapRegisterMaterial(register) } };
 }
 
 function writeJson(file: string, value: unknown): void {
   mkdirSync(path.dirname(file), { recursive: true });
   writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+function readJson<T>(file: string): T {
+  return JSON.parse(readFileSync(file, "utf8")) as T;
 }
 
 function fileHash(file: string): string {
