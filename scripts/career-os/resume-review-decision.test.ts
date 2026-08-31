@@ -6,6 +6,8 @@ import { describe, expect, it } from "vitest";
 import {
   buildResumeReviewDecision,
   hashResumeReviewDecisionMaterial,
+  legacyDraftReviewMigrationMode,
+  legacyDraftReviewMigrationSchemaVersion,
   readAndValidateResumeReviewDecision,
   type ReviewableChecklist,
   type ReviewableDraft,
@@ -188,6 +190,97 @@ describe("career-os resume review decision", () => {
     });
     expect(() => validateFixture(requireEvidenceGap)).toThrow(/Incompatible gap decision|not satisfactory/u);
   });
+
+  it("accepts a valid Draft 1.0.0 legacy migration-only review", () => {
+    const fixture = createLegacyMigrationFixture();
+
+    const result = validateFixture(fixture);
+
+    expect(result.reviewDecision.schema_version).toBe("1.1.0");
+    expect(result.reviewDecision.review_mode).toBe(legacyDraftReviewMigrationMode);
+    expect(result.reviewDecision.migration_only).toBe(true);
+    expect(result.reviewDecision.lifecycle_state).toBe("revision_required");
+    expect(result.reviewDecision.statement_decisions).toHaveLength(3);
+    expect(result.reviewDecision.gap_decisions).toHaveLength(2);
+    expect(result.reviewDecision.checklist_decisions).toHaveLength(3);
+  });
+
+  it("rejects malformed legacy migration discriminators and approval-like states", () => {
+    const wrongDraftSchema = createLegacyMigrationFixture({ draftPatch: { schema_version: "1.1.0" } });
+    expect(() => validateFixture(wrongDraftSchema)).toThrow(/only Draft schema_version 1\.0\.0/u);
+
+    const missingMode = createLegacyMigrationFixture({ reviewPatch: { review_mode: undefined } });
+    expect(() => validateFixture(missingMode)).toThrow(/legacy migration discriminator/u);
+
+    const wrongMode = createLegacyMigrationFixture({ reviewPatch: { review_mode: "ordinary-review" } });
+    expect(() => validateFixture(wrongMode)).toThrow(/legacy migration discriminator/u);
+
+    const missingMigrationOnly = createLegacyMigrationFixture({ reviewPatch: { migration_only: undefined } });
+    expect(() => validateFixture(missingMigrationOnly)).toThrow(/legacy migration discriminator/u);
+
+    const wrongLifecycle = createLegacyMigrationFixture({ reviewPatch: { lifecycle_state: "reviewed_not_approved" } });
+    expect(() => validateFixture(wrongLifecycle)).toThrow(/revision_required/u);
+
+    const approvalGranted = createLegacyMigrationFixture({ reviewPatch: { approval_granted: true } });
+    expect(() => validateFixture(approvalGranted)).toThrow(/must not grant export approval/u);
+  });
+
+  it("rejects incomplete legacy migration statement, gap and checklist coverage", () => {
+    const duplicateDraftStatement = createLegacyMigrationFixture({
+      draftPatch: { selected_achievements: [{ statement_id: "stmt:S1", text: "Duplicate synthetic statement." }] }
+    });
+    expect(() => validateFixture(duplicateDraftStatement)).toThrow(/Duplicate or missing draft statement/u);
+
+    const missingStatement = createLegacyMigrationFixture({ reviewPatch: { statement_decisions: [{ statement_id: "stmt:S1", decision: "revise" }, { statement_id: "stmt:S2", decision: "revise" }] } });
+    expect(() => validateFixture(missingStatement)).toThrow(/Missing statement decision/u);
+
+    const duplicateStatement = createLegacyMigrationFixture({ reviewPatch: { statement_decisions: [{ statement_id: "stmt:S1", decision: "revise" }, { statement_id: "stmt:S1", decision: "revise" }] } });
+    expect(() => validateFixture(duplicateStatement)).toThrow(/Duplicate/u);
+
+    const unknownStatement = createLegacyMigrationFixture({ reviewPatch: { statement_decisions: [...legacyStatementDecisions(), { statement_id: "stmt:missing", decision: "revise" }] } });
+    expect(() => validateFixture(unknownStatement)).toThrow(/Unknown statement|exactly match/u);
+
+    const duplicateGap = createLegacyMigrationFixture({ draftPatch: { application_level_gaps: [...legacyGaps(), legacyGaps()[0]] } });
+    expect(() => validateFixture(duplicateGap)).toThrow(/Duplicate or missing legacy gap/u);
+
+    const missingGap = createLegacyMigrationFixture({ reviewPatch: { gap_decisions: [legacyGapDecisions()[0]] } });
+    expect(() => validateFixture(missingGap)).toThrow(/Missing gap decision/u);
+
+    const duplicateGapDecision = createLegacyMigrationFixture({ reviewPatch: { gap_decisions: [legacyGapDecisions()[0], legacyGapDecisions()[0]] } });
+    expect(() => validateFixture(duplicateGapDecision)).toThrow(/Duplicate/u);
+
+    const unknownGap = createLegacyMigrationFixture({ reviewPatch: { gap_decisions: [...legacyGapDecisions(), { ...legacyGapDecisions()[0], gap_id: "G99" }] } });
+    expect(() => validateFixture(unknownGap)).toThrow(/Unknown gap decision/u);
+
+    const missingChecklist = createLegacyMigrationFixture({ reviewPatch: { checklist_decisions: legacyChecklistDecisions().slice(0, 2) } });
+    expect(() => validateFixture(missingChecklist)).toThrow(/Missing checklist decision/u);
+
+    const duplicateChecklist = createLegacyMigrationFixture({ reviewPatch: { checklist_decisions: [legacyChecklistDecisions()[0], legacyChecklistDecisions()[0]] } });
+    expect(() => validateFixture(duplicateChecklist)).toThrow(/Duplicate/u);
+
+    const unknownChecklist = createLegacyMigrationFixture({ reviewPatch: { checklist_decisions: [...legacyChecklistDecisions(), { check_id: "missing", decision: "resolved", resolution_reason: "content-reviewed" }] } });
+    expect(() => validateFixture(unknownChecklist)).toThrow(/Unknown checklist decision/u);
+  });
+
+  it("rejects invalid legacy gap matrix, stale hashes and material tampering", () => {
+    const invalidUnresolved = createLegacyMigrationFixture({ reviewPatch: { gap_decisions: [{ ...legacyGapDecisions()[0], decision: "accept-bounded-representation", resolution_reason: "bounded-claim-verified" }, legacyGapDecisions()[1]] } });
+    expect(() => validateFixture(invalidUnresolved)).toThrow(/Invalid unresolved legacy gap decision/u);
+
+    const invalidBounded = createLegacyMigrationFixture({ reviewPatch: { gap_decisions: [legacyGapDecisions()[0], { ...legacyGapDecisions()[1], decision: "acknowledge-and-exclude", resolution_reason: "acknowledged-gap-claim-excluded" }] } });
+    expect(() => validateFixture(invalidBounded)).toThrow(/Invalid bounded legacy gap decision/u);
+
+    const unsupportedGapState = createLegacyMigrationFixture({ draftPatch: { application_level_gaps: [{ ...legacyGaps()[0], status: "resolved", resolution_state: "resolved" }, legacyGaps()[1]] } });
+    expect(() => validateFixture(unsupportedGapState)).toThrow(/Unsupported legacy gap state/u);
+
+    const staleDraft = createLegacyMigrationFixture({ reviewPatch: { draft: { file_hash: "0".repeat(64) } } });
+    expect(() => validateFixture(staleDraft)).toThrow(/draft file hash/u);
+
+    const staleChecklist = createLegacyMigrationFixture({ reviewPatch: { checklist: { file_hash: "0".repeat(64) } } });
+    expect(() => validateFixture(staleChecklist)).toThrow(/checklist file hash/u);
+
+    const invalidHash = createLegacyMigrationFixture({ preserveReviewHash: true, reviewPatch: { section_decision: "stop-and-reconsider-scope" } });
+    expect(() => validateFixture(invalidHash)).toThrow(/material hash/u);
+  });
 });
 
 function validateFixture(fixture: ReturnType<typeof createFixture>) {
@@ -272,6 +365,104 @@ function createFixture(options: { lifecycle_state?: "revision_required" | "revie
   }
   writeJson(paths.review, reviewBase);
   return { workspace, registryRoot, paths, draft, checklist };
+}
+
+function createLegacyMigrationFixture(options: { draftPatch?: Record<string, unknown>; reviewPatch?: Record<string, unknown>; preserveReviewHash?: boolean } = {}) {
+  const workspace = mkdtempSync(path.join(os.tmpdir(), "career-os-legacy-review-decision-"));
+  const registryRoot = path.join(workspace, "registry");
+  const paths = {
+    draft: path.join(registryRoot, "resume-drafts", "RDRAFT-legacy", "resume-draft.json"),
+    checklist: path.join(registryRoot, "resume-drafts", "RDRAFT-legacy", "review-checklist.json"),
+    review: path.join(registryRoot, "resume-review-decisions", "RREVIEW-legacy", "resume-review-decision.json")
+  };
+  const draft = mergeRecord(
+    {
+      schema_version: "1.0.0",
+      artifact_type: "evidence-backed-resume-draft",
+      draft_id: "RDRAFT-legacy",
+      references: { application_id: "APP-synthetic" },
+      professional_summary: [
+        { statement_id: "stmt:S1", text: "Synthetic reviewed statement one." },
+        { statement_id: "stmt:S2", text: "Synthetic reviewed statement two." },
+        { statement_id: "stmt:S3", text: "Synthetic reviewed statement three." }
+      ],
+      core_skills: [],
+      role_specific_experience_bullets: [],
+      selected_achievements: [],
+      education: [],
+      certifications: [],
+      projects_or_portfolio_evidence: [],
+      application_level_gaps: legacyGaps(),
+      integrity: { material_hash: "legacy-draft-material" }
+    },
+    options.draftPatch
+  ) as ReviewableDraft;
+  const checklist: ReviewableChecklist = {
+    schema_version: "1.0.0",
+    draft_id: "RDRAFT-legacy",
+    items: [
+      { check_id: "claim-verification", status: "pending", required_resolution_reason_classes: ["content-reviewed", "evidence-verified"] },
+      { check_id: "application-gap-g01", status: "pending", applicable_gap_ids: ["G01"], required_resolution_reason_classes: ["acknowledged-gap-claim-excluded"] },
+      { check_id: "application-gap-g02", status: "pending", applicable_gap_ids: ["G02"], required_resolution_reason_classes: ["bounded-claim-verified", "content-reviewed"] }
+    ]
+  };
+  writeJson(paths.draft, draft);
+  writeJson(paths.checklist, checklist);
+  const review = mergeRecord(
+    {
+      schema_version: legacyDraftReviewMigrationSchemaVersion,
+      artifact_type: "resume-review-decision",
+      review_mode: legacyDraftReviewMigrationMode,
+      migration_only: true,
+      review_decision_id: "RREVIEW-legacy",
+      application_id: "APP-synthetic",
+      lifecycle_state: "revision_required",
+      approval_granted: false,
+      reviewer: { reviewer_id: "candidate:synthetic", display_name: "Synthetic Candidate", reviewer_role: "candidate-content-reviewer" },
+      reviewed_at: now,
+      draft: { draft_id: "RDRAFT-legacy", source_path: paths.draft, file_hash: fileHash(paths.draft), material_hash: "legacy-draft-material" },
+      checklist: { checklist_id: "RCHK-RDRAFT-legacy", source_path: paths.checklist, file_hash: fileHash(paths.checklist) },
+      statement_decisions: legacyStatementDecisions(),
+      gap_decisions: legacyGapDecisions(),
+      checklist_decisions: legacyChecklistDecisions(),
+      section_decision: "authorize-evidence-backed-expansion",
+      integrity: { material_hash: "" }
+    },
+    options.reviewPatch
+  ) as ResumeReviewDecisionArtifact;
+  if (!options.preserveReviewHash) review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
+  writeJson(paths.review, review);
+  return { workspace, registryRoot, paths, draft, checklist };
+}
+
+function legacyStatementDecisions(): ResumeReviewDecisionArtifact["statement_decisions"] {
+  return [
+    { statement_id: "stmt:S1", decision: "revise" },
+    { statement_id: "stmt:S2", decision: "revise" },
+    { statement_id: "stmt:S3", decision: "revise" }
+  ];
+}
+
+function legacyGapDecisions(): ResumeReviewDecisionArtifact["gap_decisions"] {
+  return [
+    { gap_id: "G01", source_gap_class: "legacy-unresolved-application-level-gap", decision: "acknowledge-and-exclude", reviewed_statement_ids: [], checklist_item_id: "application-gap-g01", resolution_reason: "acknowledged-gap-claim-excluded" },
+    { gap_id: "G02", source_gap_class: "legacy-bounded-application-level-gap", decision: "revise", reviewed_statement_ids: [], checklist_item_id: "application-gap-g02", resolution_reason: "content-reviewed" }
+  ];
+}
+
+function legacyChecklistDecisions(): ResumeReviewDecisionArtifact["checklist_decisions"] {
+  return [
+    { check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" },
+    { check_id: "application-gap-g01", decision: "resolved", resolution_reason: "acknowledged-gap-claim-excluded" },
+    { check_id: "application-gap-g02", decision: "unresolved", resolution_reason: "content-reviewed" }
+  ];
+}
+
+function legacyGaps(): NonNullable<ReviewableDraft["application_level_gaps"]> {
+  return [
+    { gap_id: "G01", status: "unresolved", resolution_state: "requires-human-review" },
+    { gap_id: "G02", status: "bounded-claim", resolution_state: "bounded" }
+  ];
 }
 
 function writeJson(file: string, value: unknown): void {

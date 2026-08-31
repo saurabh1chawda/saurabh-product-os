@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { hashResumeReviewDecisionMaterial, type ResumeReviewDecisionArtifact, type ReviewableChecklist, type ReviewableDraft } from "./resume-review-decision";
+import { hashResumeReviewDecisionMaterial, legacyDraftReviewMigrationMode, legacyDraftReviewMigrationSchemaVersion, type ResumeReviewDecisionArtifact, type ReviewableChecklist, type ReviewableDraft } from "./resume-review-decision";
 import {
   buildResumeRevisionInput,
   hashResumeRevisionInputMaterial,
@@ -185,6 +185,48 @@ describe("career-os resume revision input", () => {
       if ((error as NodeJS.ErrnoException).code !== "EPERM") throw error;
     }
   });
+
+  it("accepts a legacy migration review as Draft 1.0.0 revision provenance", () => {
+    const fixture = createLegacyRevisionFixture();
+
+    const result = validateFixture(fixture);
+
+    expect(result.revisionInput.prior_review_decision.review_decision_id).toBe("RREVIEW-legacy");
+    expect(result.revisionInput.lifecycle_state).toBe("human_review_required");
+  });
+
+  it("rejects ordinary Draft 1.0.0 reviews and migration reviews targeting Draft 1.1.0", () => {
+    const ordinary = createLegacyRevisionFixture({
+      reviewPatch: { schema_version: "1.0.0", review_mode: undefined, migration_only: undefined }
+    });
+    expect(() => validateFixture(ordinary)).toThrow(/requires a legacy migration review decision/u);
+
+    const wrongTarget = createFixture({
+      reviewPatch: {
+        schema_version: legacyDraftReviewMigrationSchemaVersion,
+        review_mode: legacyDraftReviewMigrationMode,
+        migration_only: true
+      }
+    });
+    expect(() => validateFixture(wrongTarget)).toThrow(/cannot target Draft 1\.1\.0/u);
+  });
+
+  it("rejects stale legacy migration review linkage and approval-like revision lifecycle", () => {
+    const staleFileHash = createLegacyRevisionFixture({ revisionPatch: { prior_review_decision: { file_hash: "0".repeat(64) } } });
+    expect(() => validateFixture(staleFileHash)).toThrow(/prior review decision file hash/u);
+
+    const staleMaterialHash = createLegacyRevisionFixture({ revisionPatch: { prior_review_decision: { material_hash: "0".repeat(64) } } });
+    expect(() => validateFixture(staleMaterialHash)).toThrow(/prior review decision material hash/u);
+
+    const wrongDraft = createLegacyRevisionFixture({ revisionPatch: { predecessor_draft: { draft_id: "RDRAFT-other" } } });
+    expect(() => validateFixture(wrongDraft)).toThrow(/predecessor draft ID/u);
+
+    const wrongChecklist = createLegacyRevisionFixture({ revisionPatch: { predecessor_checklist: { checklist_id: "RCHK-other" } } });
+    expect(() => validateFixture(wrongChecklist)).toThrow(/predecessor checklist ID/u);
+
+    const approvalLifecycle = createLegacyRevisionFixture({ revisionPatch: { lifecycle_state: "approved_for_export" } });
+    expect(() => validateFixture(approvalLifecycle)).toThrow(/human_review_required/u);
+  });
 });
 
 function validateFixture(fixture: ReturnType<typeof createFixture>) {
@@ -231,7 +273,7 @@ function validStatement() {
   };
 }
 
-function createFixture(options: { revisionPatch?: Record<string, unknown>; evidencePatch?: Record<string, unknown>; preserveRevisionHash?: boolean } = {}) {
+function createFixture(options: { revisionPatch?: Record<string, unknown>; reviewPatch?: Record<string, unknown>; evidencePatch?: Record<string, unknown>; preserveRevisionHash?: boolean } = {}) {
   const workspace = mkdtempSync(path.join(os.tmpdir(), "career-os-revision-input-"));
   const registryRoot = path.join(workspace, "registry");
   const paths = {
@@ -275,23 +317,26 @@ function createFixture(options: { revisionPatch?: Record<string, unknown>; evide
   writeJson(paths.strategy, strategy);
   writeJson(paths.evidence, evidence);
   writeJson(paths.register, register);
-  const review: ResumeReviewDecisionArtifact = {
-    schema_version: "1.0.0",
-    artifact_type: "resume-review-decision",
-    review_decision_id: "RREVIEW-synthetic",
-    application_id: "APP-synthetic",
-    lifecycle_state: "revision_required",
-    approval_granted: false,
-    reviewer: { reviewer_id: "candidate:synthetic", display_name: "Synthetic Candidate", reviewer_role: "candidate-content-reviewer" },
-    reviewed_at: now,
-    draft: { draft_id: "RDRAFT-synthetic", source_path: paths.draft, file_hash: fileHash(paths.draft), material_hash: "draft-material" },
-    checklist: { checklist_id: "RCHK-RDRAFT-synthetic", source_path: paths.checklist, file_hash: fileHash(paths.checklist) },
-    statement_decisions: [{ statement_id: "stmt:EV-summary", decision: "revise" }],
-    gap_decisions: [{ gap_id: "G01", source_gap_class: "acknowledged-application-fit-gap", decision: "acknowledge-and-exclude", reviewed_statement_ids: [], checklist_item_id: "claim-verification", resolution_reason: "acknowledged-gap-claim-excluded" }],
-    checklist_decisions: [{ check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" }],
-    section_decision: "authorize-evidence-backed-expansion",
-    integrity: { material_hash: "" }
-  };
+  const review: ResumeReviewDecisionArtifact = mergeRecord(
+    {
+      schema_version: "1.0.0",
+      artifact_type: "resume-review-decision",
+      review_decision_id: "RREVIEW-synthetic",
+      application_id: "APP-synthetic",
+      lifecycle_state: "revision_required",
+      approval_granted: false,
+      reviewer: { reviewer_id: "candidate:synthetic", display_name: "Synthetic Candidate", reviewer_role: "candidate-content-reviewer" },
+      reviewed_at: now,
+      draft: { draft_id: "RDRAFT-synthetic", source_path: paths.draft, file_hash: fileHash(paths.draft), material_hash: "draft-material" },
+      checklist: { checklist_id: "RCHK-RDRAFT-synthetic", source_path: paths.checklist, file_hash: fileHash(paths.checklist) },
+      statement_decisions: [{ statement_id: "stmt:EV-summary", decision: "revise" }],
+      gap_decisions: [{ gap_id: "G01", source_gap_class: "acknowledged-application-fit-gap", decision: "acknowledge-and-exclude", reviewed_statement_ids: [], checklist_item_id: "claim-verification", resolution_reason: "acknowledged-gap-claim-excluded" }],
+      checklist_decisions: [{ check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" }],
+      section_decision: "authorize-evidence-backed-expansion",
+      integrity: { material_hash: "" }
+    },
+    options.reviewPatch
+  ) as ResumeReviewDecisionArtifact;
   review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
   writeJson(paths.review, review);
   const revisionBase: ResumeRevisionInputArtifact = mergeRecord(
@@ -311,6 +356,97 @@ function createFixture(options: { revisionPatch?: Record<string, unknown>; evide
       application_gap_register: { gap_register_id: "GAPREG-synthetic", source_path: paths.register, file_hash: fileHash(paths.register), material_hash: "register-material" },
       revised_statements: [validStatement()],
       expansion_items: [{ ...validStatement(), statement_id: "stmt:expansion", predecessor_statement_id: undefined, target_section: "experience-bullets" }],
+      integrity: { material_hash: "" }
+    },
+    options.revisionPatch
+  ) as ResumeRevisionInputArtifact;
+  if (!options.preserveRevisionHash) revisionBase.integrity.material_hash = hashResumeRevisionInputMaterial(revisionBase);
+  writeJson(paths.revision, revisionBase);
+  return { workspace, registryRoot, paths, draft, checklist, review, strategy, evidence, register };
+}
+
+function createLegacyRevisionFixture(options: { revisionPatch?: Record<string, unknown>; reviewPatch?: Record<string, unknown>; preserveRevisionHash?: boolean } = {}) {
+  const workspace = mkdtempSync(path.join(os.tmpdir(), "career-os-legacy-revision-input-"));
+  const registryRoot = path.join(workspace, "registry");
+  const paths = {
+    draft: path.join(registryRoot, "resume-drafts", "RDRAFT-legacy", "resume-draft.json"),
+    checklist: path.join(registryRoot, "resume-drafts", "RDRAFT-legacy", "review-checklist.json"),
+    review: path.join(registryRoot, "resume-review-decisions", "RREVIEW-legacy", "resume-review-decision.json"),
+    strategy: path.join(registryRoot, "resume-strategies", "RSTRAT-synthetic.json"),
+    evidence: path.join(registryRoot, "candidate-evidence", "CEV-synthetic.json"),
+    register: path.join(registryRoot, "application-gap-registers", "GAPREG-synthetic-successor.json"),
+    revision: path.join(registryRoot, "resume-revision-inputs", "RREVINPUT-legacy", "resume-revision-input.json")
+  };
+  const draft: ReviewableDraft = {
+    schema_version: "1.0.0",
+    artifact_type: "evidence-backed-resume-draft",
+    draft_id: "RDRAFT-legacy",
+    references: { application_id: "APP-synthetic" },
+    professional_summary: [{ statement_id: "stmt:S1", text: "Synthetic predecessor statement." }],
+    core_skills: [],
+    role_specific_experience_bullets: [],
+    selected_achievements: [],
+    education: [],
+    certifications: [],
+    projects_or_portfolio_evidence: [],
+    application_level_gaps: [{ gap_id: "G01", status: "unresolved", resolution_state: "requires-human-review" }],
+    integrity: { material_hash: "legacy-draft-material" }
+  };
+  const checklist: ReviewableChecklist = { schema_version: "1.0.0", draft_id: "RDRAFT-legacy", items: [{ check_id: "claim-verification", status: "pending", applicable_gap_ids: [] }] };
+  const strategy = { strategy_id: "RSTRAT-synthetic", integrity: { material_hash: "strategy-material" } };
+  const evidence = {
+    evidence_source_id: "CEV-synthetic",
+    evidence_items: [
+      { evidence_id: "EV-summary", statement: "Improved synthetic product strategy at Synthetic Labs during 2024-Present with measurable outcomes.", employer: "Synthetic Labs", dates: "2024-Present", status: "verified" }
+    ]
+  } as TrustedEvidenceSource;
+  const register = { gap_register_id: "GAPREG-synthetic-successor", integrity: { material_hash: "register-material" }, gaps: [{ gap_id: "G01" }] };
+  writeJson(paths.draft, draft);
+  writeJson(paths.checklist, checklist);
+  writeJson(paths.strategy, strategy);
+  writeJson(paths.evidence, evidence);
+  writeJson(paths.register, register);
+  const review = mergeRecord(
+    {
+      schema_version: legacyDraftReviewMigrationSchemaVersion,
+      artifact_type: "resume-review-decision",
+      review_mode: legacyDraftReviewMigrationMode,
+      migration_only: true,
+      review_decision_id: "RREVIEW-legacy",
+      application_id: "APP-synthetic",
+      lifecycle_state: "revision_required",
+      approval_granted: false,
+      reviewer: { reviewer_id: "candidate:synthetic", display_name: "Synthetic Candidate", reviewer_role: "candidate-content-reviewer" },
+      reviewed_at: now,
+      draft: { draft_id: "RDRAFT-legacy", source_path: paths.draft, file_hash: fileHash(paths.draft), material_hash: "legacy-draft-material" },
+      checklist: { checklist_id: "RCHK-RDRAFT-legacy", source_path: paths.checklist, file_hash: fileHash(paths.checklist) },
+      statement_decisions: [{ statement_id: "stmt:S1", decision: "revise" }],
+      gap_decisions: [{ gap_id: "G01", source_gap_class: "legacy-unresolved-application-level-gap", decision: "acknowledge-and-exclude", reviewed_statement_ids: [], checklist_item_id: "claim-verification", resolution_reason: "acknowledged-gap-claim-excluded" }],
+      checklist_decisions: [{ check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" }],
+      section_decision: "authorize-evidence-backed-expansion",
+      integrity: { material_hash: "" }
+    },
+    options.reviewPatch
+  ) as ResumeReviewDecisionArtifact;
+  review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
+  writeJson(paths.review, review);
+  const revisionBase = mergeRecord(
+    {
+      schema_version: "1.0.0",
+      artifact_type: "resume-revision-input",
+      revision_input_id: "RREVINPUT-legacy",
+      application_id: "APP-synthetic",
+      created_at: now,
+      created_by: "Synthetic Candidate",
+      lifecycle_state: "human_review_required",
+      predecessor_draft: { draft_id: "RDRAFT-legacy", source_path: paths.draft, file_hash: fileHash(paths.draft), material_hash: "legacy-draft-material" },
+      predecessor_checklist: { checklist_id: "RCHK-RDRAFT-legacy", source_path: paths.checklist, file_hash: fileHash(paths.checklist) },
+      prior_review_decision: { review_decision_id: "RREVIEW-legacy", source_path: paths.review, file_hash: fileHash(paths.review), material_hash: review.integrity.material_hash },
+      strategy: { strategy_id: "RSTRAT-synthetic", source_path: paths.strategy, file_hash: fileHash(paths.strategy), material_hash: "strategy-material" },
+      candidate_evidence: { evidence_source_id: "CEV-synthetic", source_path: paths.evidence, file_hash: fileHash(paths.evidence) },
+      application_gap_register: { gap_register_id: "GAPREG-synthetic-successor", source_path: paths.register, file_hash: fileHash(paths.register), material_hash: "register-material" },
+      revised_statements: [{ ...validStatement(), predecessor_statement_id: "stmt:S1" }],
+      expansion_items: [],
       integrity: { material_hash: "" }
     },
     options.revisionPatch

@@ -3,7 +3,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, lstatSync, readFileSync, statSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { allDraftStatementIds, checklistId, type ResumeReviewDecisionArtifact, type ReviewableChecklist, type ReviewableDraft } from "./resume-review-decision.ts";
+import { allDraftStatementIds, checklistId, isLegacyMigrationReview, type ResumeReviewDecisionArtifact, type ReviewableChecklist, type ReviewableDraft } from "./resume-review-decision.ts";
 import {
   buildEvidenceConstructionProof,
   hashRenderedRevisionStatement,
@@ -127,7 +127,7 @@ export function readAndValidateResumeRevisionInput(input: {
   strategyPath: string;
   candidateEvidence: TrustedEvidenceSource;
   candidateEvidencePath: string;
-  applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string } };
+  applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string }; gaps?: Array<{ gap_id: string }> };
   applicationGapRegisterPath: string;
 }): { revisionInput: ResumeRevisionInputArtifact; fileHash: string } {
   assertPrivatePath(input.file, input.cwd, "Resume revision input");
@@ -150,7 +150,7 @@ export function validateResumeRevisionInput(
     strategyPath: string;
     candidateEvidence: TrustedEvidenceSource;
     candidateEvidencePath: string;
-    applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string } };
+    applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string }; gaps?: Array<{ gap_id: string }> };
     applicationGapRegisterPath: string;
   }
 ): void {
@@ -173,6 +173,7 @@ export function validateResumeRevisionInput(
   if (input.priorReviewDecision.lifecycle_state !== "revision_required") {
     throw new ResumeRevisionInputError("invalid-revision-input", "Revision input must be based on a revision_required review decision.");
   }
+  validatePriorReviewCompatibility(input.predecessorDraft, input.priorReviewDecision);
   assertEqual(revision.prior_review_decision.file_hash, fileHash(input.priorReviewDecisionPath), "prior review decision file hash");
   assertEqual(revision.prior_review_decision.material_hash, input.priorReviewDecision.integrity.material_hash, "prior review decision material hash");
   assertEqual(revision.strategy.strategy_id, input.strategy.strategy_id, "revision input strategy ID");
@@ -191,13 +192,18 @@ function validateStatements(
   revision: ResumeRevisionInputArtifact,
   input: {
     predecessorDraft: ReviewableDraft;
+    applicationGapRegister: { gaps?: Array<{ gap_id: string }> };
     candidateEvidence: TrustedEvidenceSource;
   }
 ): void {
   const statementIds = [...revision.revised_statements, ...revision.expansion_items].map((item) => item.statement_id);
   assertNoDuplicates(statementIds, "revision statement");
   const predecessorStatementIds = new Set(allDraftStatementIds(input.predecessorDraft));
-  const gapIds = new Set((input.predecessorDraft.application_fit_gaps ?? []).map((gap) => gap.gap_id));
+  const gapIds = new Set(
+    input.predecessorDraft.schema_version === "1.0.0"
+      ? (input.applicationGapRegister.gaps ?? []).map((gap) => gap.gap_id)
+      : (input.predecessorDraft.application_fit_gaps ?? []).map((gap) => gap.gap_id)
+  );
   for (const item of [...revision.revised_statements, ...revision.expansion_items]) {
     if (!["headline", "summary", "core-skills", "experience-bullets", "achievements", "projects"].includes(item.target_section)) {
       throw new ResumeRevisionInputError("invalid-revision-input", `Unsupported revision target section: ${item.target_section}.`);
@@ -236,6 +242,21 @@ function validateStatements(
     if (item.boundary_class === "bounded-claim-control" && item.template_id !== "bounded-product-work") {
       throw new ResumeRevisionInputError("invalid-revision-input", "Bounded claim controls must use a bounded template.");
     }
+  }
+}
+
+function validatePriorReviewCompatibility(predecessorDraft: ReviewableDraft, reviewDecision: ResumeReviewDecisionArtifact): void {
+  if (predecessorDraft.schema_version === "1.0.0") {
+    if (!isLegacyMigrationReview(reviewDecision)) {
+      throw new ResumeRevisionInputError("invalid-revision-input", "Draft 1.0.0 revision input requires a legacy migration review decision.");
+    }
+    if (reviewDecision.lifecycle_state !== "revision_required" || reviewDecision.approval_granted !== false) {
+      throw new ResumeRevisionInputError("invalid-revision-input", "Legacy migration review decision must remain non-approval revision provenance.");
+    }
+    return;
+  }
+  if (isLegacyMigrationReview(reviewDecision)) {
+    throw new ResumeRevisionInputError("invalid-revision-input", "Legacy migration review decisions cannot target Draft 1.1.0 revision inputs.");
   }
 }
 

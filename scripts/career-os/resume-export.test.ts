@@ -9,7 +9,7 @@ import { runCareerOsResumeExport } from "./resume-export";
 import { buildEvidenceConstructionProof, type TrustedEvidenceItem } from "./resume-construction-proof";
 import { CareerOsExportError, countPdfPages, hashJson, renderDocx, renderPdf, requiredConfirmations, resumeLines } from "./resume-export-shared";
 import type { ResumeApproval, ResumeDraft } from "./resume-export-shared";
-import { hashResumeReviewDecisionMaterial, type ResumeReviewDecisionArtifact } from "./resume-review-decision";
+import { hashResumeReviewDecisionMaterial, legacyDraftReviewMigrationMode, legacyDraftReviewMigrationSchemaVersion, type ResumeReviewDecisionArtifact } from "./resume-review-decision";
 
 const now = "2026-08-25T10:00:00.000Z";
 
@@ -128,6 +128,26 @@ describe("career-os controlled resume approval and export", () => {
   it("does not let Draft 1.0.0 gain compatibility through a review overlay", () => {
     const fixture = createFixture();
     const overlay = createOverlayFixture();
+
+    expect(() =>
+      runCareerOsResumeApprove({
+        cwd: fixture.workspace,
+        now,
+        argv: ["--draft", fixture.paths.draft, "--reviewer", "Synthetic Reviewer", "--review-decision", overlay.paths.review, "--dry-run", ...confirmationFlags()]
+      })
+    ).toThrow(/Draft 1.0.0 cannot gain/u);
+  });
+
+  it("does not let Draft 1.0.0 gain compatibility through a migration-only review overlay", () => {
+    const fixture = createFixture();
+    const overlay = createOverlayFixture({
+      reviewPatch: {
+        schema_version: legacyDraftReviewMigrationSchemaVersion,
+        review_mode: legacyDraftReviewMigrationMode,
+        migration_only: true,
+        lifecycle_state: "revision_required"
+      }
+    });
 
     expect(() =>
       runCareerOsResumeApprove({
@@ -344,6 +364,35 @@ describe("career-os controlled resume approval and export", () => {
     writeJson(fixture.paths.approval, { schema_version: "1.0.0", artifact_type: "human-approved-resume-export-approval", lifecycle_state: "review_required" });
 
     expect(() => exportResume(fixture, fixture.paths.approval, "--dry-run")).toThrow(/approved_for_export/u);
+  });
+
+  it("rejects Draft 1.0.0 export approvals with migration-only review linkage", () => {
+    const fixture = createFixture();
+    const approval = approve(fixture, "--apply");
+    const overlay = createOverlayFixture({
+      reviewPatch: {
+        schema_version: legacyDraftReviewMigrationSchemaVersion,
+        review_mode: legacyDraftReviewMigrationMode,
+        migration_only: true,
+        lifecycle_state: "revision_required"
+      }
+    });
+    const approvalRecord = readJson<ResumeApproval>(approval.output);
+    const forgedApproval = {
+      ...approvalRecord,
+      review_decision: {
+        review_decision_id: "RREVIEW-migration",
+        source_path: overlay.paths.review,
+        file_hash: fileHash(overlay.paths.review),
+        material_hash: readJson<ResumeReviewDecisionArtifact>(overlay.paths.review).integrity.material_hash,
+        reviewer: "Synthetic Candidate",
+        reviewer_id: "candidate:synthetic"
+      }
+    };
+    forgedApproval.integrity.approval_material_hash = hashJson({ ...forgedApproval, approved_at: "stable", integrity: { ...forgedApproval.integrity, approval_material_hash: "stable" } });
+    writeJson(approval.output, forgedApproval);
+
+    expect(() => exportResume(fixture, approval.output, "--dry-run")).toThrow(/Draft 1.0.0 export approval must not include review-decision/u);
   });
 
   it("changed draft invalidates approval", () => {

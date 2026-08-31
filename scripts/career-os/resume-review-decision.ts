@@ -5,6 +5,8 @@ import os from "node:os";
 import path from "node:path";
 
 export const resumeReviewDecisionSchemaVersion = "1.0.0" as const;
+export const legacyDraftReviewMigrationSchemaVersion = "1.1.0" as const;
+export const legacyDraftReviewMigrationMode = "legacy-draft-1.0-revision-migration" as const;
 
 export type ReviewLifecycleState = "revision_required" | "reviewed_not_approved";
 export type StatementReviewDecision = "retain" | "revise" | "reject";
@@ -18,10 +20,14 @@ export type ReviewResolutionReason =
   | "evidence-verified"
   | "content-reviewed";
 export type ReviewGapClass = "acknowledged-application-fit-gap" | "bounded-claim-control";
+export type LegacyReviewGapClass = "legacy-unresolved-application-level-gap" | "legacy-bounded-application-level-gap";
+export type LegacyDraftReviewMigrationMode = typeof legacyDraftReviewMigrationMode;
 
 export type ResumeReviewDecisionArtifact = {
-  schema_version: typeof resumeReviewDecisionSchemaVersion;
+  schema_version: typeof resumeReviewDecisionSchemaVersion | typeof legacyDraftReviewMigrationSchemaVersion;
   artifact_type: "resume-review-decision";
+  review_mode?: LegacyDraftReviewMigrationMode;
+  migration_only?: true;
   review_decision_id: string;
   application_id: string;
   lifecycle_state: ReviewLifecycleState;
@@ -50,7 +56,7 @@ export type ResumeReviewDecisionArtifact = {
   }>;
   gap_decisions: Array<{
     gap_id: string;
-    source_gap_class: ReviewGapClass;
+    source_gap_class: ReviewGapClass | LegacyReviewGapClass;
     decision: GapReviewDecision;
     reviewed_statement_ids: string[];
     checklist_item_id: string;
@@ -71,6 +77,7 @@ export type ResumeReviewDecisionArtifact = {
 
 export type ReviewableDraft = {
   schema_version: string;
+  artifact_type?: string;
   draft_id: string;
   references: { application_id: string };
   application_fit_gaps?: Array<{
@@ -80,6 +87,11 @@ export type ReviewableDraft = {
     included_statement_ids: string[];
     excluded_from_positive_claims?: boolean;
     claim_boundary?: string;
+  }>;
+  application_level_gaps?: Array<{
+    gap_id: string;
+    status: string;
+    resolution_state: string;
   }>;
   integrity: { material_hash: string };
   professional_headline?: { statement_id?: string; text: string } | null;
@@ -154,7 +166,7 @@ export function validateResumeReviewDecision(
     checklistPath: string;
   }
 ): void {
-  if (review.schema_version !== resumeReviewDecisionSchemaVersion || review.artifact_type !== "resume-review-decision") {
+  if ((review.schema_version !== resumeReviewDecisionSchemaVersion && review.schema_version !== legacyDraftReviewMigrationSchemaVersion) || review.artifact_type !== "resume-review-decision") {
     throw new ResumeReviewDecisionError("invalid-review-decision", "Input must be a resume-review-decision artifact.");
   }
   if (!["revision_required", "reviewed_not_approved"].includes(review.lifecycle_state)) {
@@ -180,7 +192,17 @@ export function validateResumeReviewDecision(
   assertEqual(review.checklist.file_hash, fileHash(input.checklistPath), "review decision checklist file hash");
   assertEqual(review.integrity?.material_hash, hashResumeReviewDecisionMaterial(review), "review decision material hash");
   validateResumeReviewDecisionMaterial(review);
-  validateCoverage(review, input.draft, input.checklist);
+  if (isLegacyMigrationReview(review)) {
+    validateLegacyMigrationCoverage(review, input.draft, input.checklist);
+  } else {
+    validateCoverage(review, input.draft, input.checklist);
+  }
+}
+
+export function isLegacyMigrationReview(review: ResumeReviewDecisionArtifact): boolean {
+  return review.schema_version === legacyDraftReviewMigrationSchemaVersion
+    && review.review_mode === legacyDraftReviewMigrationMode
+    && review.migration_only === true;
 }
 
 export function allDraftStatementIds(draft: ReviewableDraft): string[] {
@@ -204,10 +226,14 @@ export function checklistId(checklist: ReviewableChecklist): string {
 }
 
 function validateCoverage(review: ResumeReviewDecisionArtifact, draft: ReviewableDraft, checklist: ReviewableChecklist): void {
+  if (review.schema_version !== resumeReviewDecisionSchemaVersion || review.review_mode || "migration_only" in review) {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Non-migration review decisions must not carry migration-only fields.");
+  }
   const allStatementIds = allDraftStatementIds(draft);
   assertNoDuplicates(allStatementIds, "draft statement");
   const statementIds = new Set(allStatementIds);
   const gapById = new Map((draft.application_fit_gaps ?? []).map((gap) => [gap.gap_id, gap]));
+  assertNoDuplicates(checklist.items.map((item) => item.check_id), "checklist item");
   const checkById = new Map(checklist.items.map((item) => [item.check_id, item]));
   assertNoDuplicates(review.statement_decisions.map((item) => item.statement_id), "statement decision");
   assertNoDuplicates(review.gap_decisions.map((item) => item.gap_id), "gap decision");
@@ -293,9 +319,110 @@ function validateCoverage(review: ResumeReviewDecisionArtifact, draft: Reviewabl
   }
 }
 
+function validateLegacyMigrationCoverage(review: ResumeReviewDecisionArtifact, draft: ReviewableDraft, checklist: ReviewableChecklist): void {
+  if (draft.schema_version !== "1.0.0") {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Legacy review migration may target only Draft schema_version 1.0.0.");
+  }
+  if (draft.artifact_type !== "evidence-backed-resume-draft") {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Legacy review migration requires an evidence-backed resume draft.");
+  }
+  if (review.lifecycle_state !== "revision_required") {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Legacy review migration must remain revision_required.");
+  }
+  const allStatementIds = allDraftStatementIds(draft);
+  assertNoDuplicates(allStatementIds, "draft statement");
+  const statementIds = new Set(allStatementIds);
+  const legacyGaps = draft.application_level_gaps ?? [];
+  if (!legacyGaps.length) {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Legacy review migration requires application_level_gaps.");
+  }
+  assertNoDuplicates(legacyGaps.map((gap) => gap.gap_id), "legacy gap");
+  assertNoDuplicates(checklist.items.map((item) => item.check_id), "checklist item");
+  const gapById = new Map(legacyGaps.map((gap) => [gap.gap_id, gap]));
+  const checkById = new Map(checklist.items.map((item) => [item.check_id, item]));
+  assertNoDuplicates(review.statement_decisions.map((item) => item.statement_id), "statement decision");
+  assertNoDuplicates(review.gap_decisions.map((item) => item.gap_id), "gap decision");
+  assertNoDuplicates(review.checklist_decisions.map((item) => item.check_id), "checklist decision");
+  for (const statementId of statementIds) {
+    if (!review.statement_decisions.some((decision) => decision.statement_id === statementId)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Missing statement decision for ${statementId}.`);
+    }
+  }
+  for (const decision of review.statement_decisions) {
+    if (!statementIds.has(decision.statement_id)) throw new ResumeReviewDecisionError("invalid-review-decision", `Unknown statement decision ID: ${decision.statement_id}.`);
+    if (!["retain", "revise", "reject"].includes(decision.decision)) throw new ResumeReviewDecisionError("invalid-review-decision", "Unsupported statement decision.");
+  }
+  if (review.statement_decisions.length !== statementIds.size) {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Statement decisions must exactly match Draft statement IDs.");
+  }
+  for (const gap of gapById.values()) {
+    if (!review.gap_decisions.some((decision) => decision.gap_id === gap.gap_id)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Missing gap decision for ${gap.gap_id}.`);
+    }
+  }
+  for (const decision of review.gap_decisions) {
+    const sourceGap = gapById.get(decision.gap_id);
+    if (!sourceGap) throw new ResumeReviewDecisionError("invalid-review-decision", `Unknown gap decision ID: ${decision.gap_id}.`);
+    validateLegacyGapDecision(sourceGap, decision);
+    if (!checkById.has(decision.checklist_item_id)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Unknown checklist item for gap ${decision.gap_id}.`);
+    }
+    if (decision.reviewed_statement_ids.some((statementId) => !statementIds.has(statementId))) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Unknown reviewed statement ID for gap ${decision.gap_id}.`);
+    }
+  }
+  for (const item of checklist.items) {
+    if (!review.checklist_decisions.some((decision) => decision.check_id === item.check_id)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Missing checklist decision for ${item.check_id}.`);
+    }
+  }
+  for (const decision of review.checklist_decisions) {
+    const checklistItem = checkById.get(decision.check_id);
+    if (!checklistItem) throw new ResumeReviewDecisionError("invalid-review-decision", `Unknown checklist decision ID: ${decision.check_id}.`);
+    if (!["resolved", "unresolved"].includes(decision.decision) || !validResolutionReason(decision.resolution_reason)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", "Unsupported checklist decision.");
+    }
+    if (checklistItem.required_resolution_reason_classes?.length && !checklistItem.required_resolution_reason_classes.includes(decision.resolution_reason)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Invalid resolution reason for checklist item ${decision.check_id}.`);
+    }
+  }
+  if (!["keep-sparse-review-draft", "authorize-evidence-backed-expansion", "stop-and-reconsider-scope"].includes(review.section_decision)) {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Unsupported section decision.");
+  }
+}
+
+function validateLegacyGapDecision(
+  gap: { gap_id: string; status: string; resolution_state: string },
+  decision: ResumeReviewDecisionArtifact["gap_decisions"][number]
+): void {
+  if (gap.status === "unresolved" && gap.resolution_state === "requires-human-review") {
+    if (decision.source_gap_class !== "legacy-unresolved-application-level-gap" || !["acknowledge-and-exclude", "revise", "require-evidence"].includes(decision.decision)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Invalid unresolved legacy gap decision for ${gap.gap_id}.`);
+    }
+    return;
+  }
+  if (gap.status === "bounded-claim" && gap.resolution_state === "bounded") {
+    if (decision.source_gap_class !== "legacy-bounded-application-level-gap" || !["accept-bounded-representation", "revise", "require-evidence"].includes(decision.decision)) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", `Invalid bounded legacy gap decision for ${gap.gap_id}.`);
+    }
+    return;
+  }
+  throw new ResumeReviewDecisionError("invalid-review-decision", `Unsupported legacy gap state for ${gap.gap_id}.`);
+}
+
 function validateResumeReviewDecisionMaterial(review: ResumeReviewDecisionArtifact): void {
-  if (review.schema_version !== resumeReviewDecisionSchemaVersion || review.artifact_type !== "resume-review-decision") {
+  if ((review.schema_version !== resumeReviewDecisionSchemaVersion && review.schema_version !== legacyDraftReviewMigrationSchemaVersion) || review.artifact_type !== "resume-review-decision") {
     throw new ResumeReviewDecisionError("invalid-review-decision", "Input must be a resume-review-decision artifact.");
+  }
+  if (review.schema_version === legacyDraftReviewMigrationSchemaVersion) {
+    if (review.review_mode !== legacyDraftReviewMigrationMode || review.migration_only !== true) {
+      throw new ResumeReviewDecisionError("invalid-review-decision", "Schema 1.1.0 review decisions must use the legacy migration discriminator.");
+    }
+    if (review.lifecycle_state !== "revision_required") {
+      throw new ResumeReviewDecisionError("invalid-review-decision", "Legacy migration review decisions must remain revision_required.");
+    }
+  } else if (review.review_mode || "migration_only" in review) {
+    throw new ResumeReviewDecisionError("invalid-review-decision", "Schema 1.0.0 review decisions must not carry migration-only fields.");
   }
   if (!review.review_decision_id || !review.application_id || !normalizeIdentity(review.reviewer?.reviewer_id) || !review.reviewer?.display_name?.trim()) {
     throw new ResumeReviewDecisionError("invalid-review-decision", "Review decision is missing required identity fields.");
