@@ -56,6 +56,8 @@ Legacy schema `1.0.0` registers may omit lineage. A register carrying lineage mu
 
 Draft `1.0.0` keeps the existing COS-5 behavior. Non-empty legacy gap arrays remain blocking, and a review-decision overlay cannot add Draft `1.1.0` semantics to a legacy Draft.
 
+Historical Draft `1.0.0` artifacts may be referenced by a schema `1.1.0` migration-only review decision only when the artifact declares `review_mode: "legacy-draft-1.0-revision-migration"`, `migration_only: true`, `lifecycle_state: "revision_required"`, and `approval_granted: false`. This mode validates statements, legacy `application_level_gaps`, and generated checklist items for complete HR provenance, but it is usable only as upstream revision-input provenance. It does not make the predecessor Draft reviewed, approved, exportable, application-ready, or compatible with Draft `1.1.0` application-fit semantics.
+
 Draft `1.1.0` approval requires:
 
 - empty blocking gap arrays;
