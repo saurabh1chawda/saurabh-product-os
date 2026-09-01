@@ -31,6 +31,8 @@ import type { ResumeApproval, ResumeDraft } from "./resume-export-shared.ts";
 import { validateResumeApprovalCompatibility } from "./resume-approve.ts";
 import type { TrustedEvidenceItem } from "./resume-construction-proof.ts";
 import { readAndValidateResumeReviewDecision } from "./resume-review-decision.ts";
+import type { GapRegisterReferenceLike } from "./resume-construction-proof.ts";
+import { readAndValidateApplicationGapRegister, type ApplicationLevelGap } from "./application-gap-register.ts";
 
 type ExportState = "export_pending" | "export_generated" | "export_validation_failed" | "export_validated";
 
@@ -182,10 +184,49 @@ function validateDraftAgainstApproval(input: { cwd: string; registryRoot: string
       throw new CareerOsExportError("approval-not-exportable", "Review decision is not satisfactory for export.");
     }
     if (!approval.approver) throw new CareerOsExportError("missing-approver-id", "Draft 1.1.0 export requires stable approver identity.");
-    validateResumeApprovalCompatibility({ draft, checklist, reviewDecision, approver: approval.approver, candidateEvidence });
+    validateResumeApprovalCompatibility({ draft, checklist, reviewDecision, approver: approval.approver, candidateEvidence, gapRegisterContext: loadGapRegisterContext({ cwd, registryRoot, draft, candidateEvidence }) });
   } else if (approval.review_decision) {
     throw new CareerOsExportError("invalid-approval", "Draft 1.0.0 export approval must not include review-decision compatibility linkage.");
   }
+}
+
+function loadGapRegisterContext(input: { cwd: string; registryRoot: string; draft: ResumeDraft; candidateEvidence: TrustedEvidenceSource }): { reference: GapRegisterReferenceLike; currentRegisterGaps: ApplicationLevelGap[] } | null {
+  if (!input.draft.application_fit_gaps?.length) return null;
+  const sourcePath = input.draft.source_provenance.application_gap_register_path;
+  if (!sourcePath) return null;
+  const registerPath = path.resolve(input.cwd, sourcePath);
+  assertInside(registerPath, input.registryRoot, "Application gap register");
+  const strategyPath = path.resolve(input.cwd, input.draft.source_provenance.strategy_path);
+  assertInside(strategyPath, input.registryRoot, "Resume strategy");
+  const strategy = readJson<{ decision_state?: { decision_reconciliation_id?: string | null } }>(strategyPath);
+  const opportunityPath = path.join(input.registryRoot, "opportunities", `${input.draft.references.opportunity_id}.json`);
+  assertInside(opportunityPath, input.registryRoot, "Opportunity record");
+  const opportunity = readJson<{ decision_id?: string }>(opportunityPath);
+  const result = readAndValidateApplicationGapRegister({
+    file: registerPath,
+    cwd: input.cwd,
+    registryRoot: input.registryRoot,
+    expected: {
+      application_id: input.draft.references.application_id,
+      jd_snapshot_id: input.draft.references.jd_snapshot_id,
+      opportunity_id: input.draft.references.opportunity_id,
+      handoff_id: input.draft.references.handoff_id,
+      decision_id: String(opportunity.decision_id ?? ""),
+      decision_reconciliation_id: strategy.decision_state?.decision_reconciliation_id ?? null,
+      candidate_evidence_id: input.draft.candidate_identity.evidence_source_id,
+      candidate_evidence_hash: input.draft.integrity.candidate_evidence_hash,
+      candidate_evidence_ids: input.candidateEvidence.evidence_items.map((item) => item.evidence_id)
+    }
+  });
+  if (result.register.gap_register_id !== input.draft.references.application_gap_register_id) throw new CareerOsExportError("integrity-mismatch", "Application gap register ID does not match draft.");
+  return {
+    reference: {
+      gap_register_id: result.register.gap_register_id,
+      file_hash: result.fileHash,
+      material_hash: result.register.integrity.material_hash
+    },
+    currentRegisterGaps: result.register.gaps
+  };
 }
 
 function loadCandidateEvidenceForExport(input: { cwd: string; registryRoot: string; draft: ResumeDraft; approval: ResumeApproval; explicitPath: string | boolean | undefined }): TrustedEvidenceSource {

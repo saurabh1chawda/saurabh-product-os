@@ -20,7 +20,7 @@ import {
   type ApplicationGapRegisterReference,
   type ApplicationLevelGap
 } from "./application-gap-register.ts";
-import { buildEvidenceConstructionProof, renderRevisionStatementText, type EvidenceConstructionProof } from "./resume-construction-proof.ts";
+import { buildEvidenceConstructionProof, constructionProofSchemaVersion, renderRevisionStatementText, type EvidenceConstructionProof, type GapRegisterReferenceLike } from "./resume-construction-proof.ts";
 import { readAndValidateResumeRevisionInput, type ResumeRevisionInputArtifact, type RevisionStatement } from "./resume-revision-input.ts";
 import { type ResumeReviewDecisionArtifact, type ReviewableChecklist } from "./resume-review-decision.ts";
 import { hashResumeStrategyMaterial } from "./resume-strategy.ts";
@@ -101,6 +101,7 @@ type EvidenceItem = {
   title?: string;
   dates?: string;
   category?: "headline" | "summary" | "skill" | "employment" | "achievement" | "education" | "certification" | "project";
+  metric?: { value: string; unit: string; state: string } | null;
   metric_state?: "achieved" | "projected" | "estimated" | "target";
   collaboration_scope?: "individual" | "team" | "partnered" | "supported";
 };
@@ -392,7 +393,7 @@ function buildDraft(input: {
   const summarySources = byCategory("summary").length > 0 ? byCategory("summary") : usableEvidence.filter((item) => ["Product Strategy", "Analytics", "Leadership"].some((tag) => item.tags.includes(tag))).slice(0, 3);
   const applicationLevelGaps = input.strategy.application_level_gaps ?? [];
   const unresolvedGaps = unresolvedApplicationGaps(applicationLevelGaps);
-  const applicationFitGaps = applicationFitGapsFrom(applicationLevelGaps, input.strategy.application_level_gap_register);
+  let applicationFitGaps = applicationFitGapsFrom(applicationLevelGaps, input.strategy.application_level_gap_register);
   const allStatements = [
     ...(headlineSource ? [statement(headlineSource, "condensed")] : []),
     ...summarySources.map((item) => statement(item, "condensed")),
@@ -409,7 +410,8 @@ function buildDraft(input: {
     ...repetitionFlags(allStatements),
     ...superlativeFlags(allStatements)
   ];
-  const revisionStatements = input.revisionInput ? statementsFromRevisionInput(input.revisionInput, usableEvidence) : emptyRevisionStatements();
+  const revisionStatements = input.revisionInput ? statementsFromRevisionInput(input.revisionInput, usableEvidence, applicationLevelGaps, input.strategy.application_level_gap_register) : emptyRevisionStatements();
+  applicationFitGaps = withBoundedRevisionStatementIds(applicationFitGaps, revisionStatements);
   const draft: ResumeDraft = {
     schema_version: applicationFitGaps.length || input.revisionInput ? draftSchemaVersion : schemaVersion,
     draft_id: draftId(input.strategy, input.hashes.evidenceHash, input.hashes.revisionInputHash),
@@ -534,14 +536,27 @@ function applicationFitGapsFrom(gaps: ApplicationLevelGap[], reference: Applicat
   }));
 }
 
-function statementsFromRevisionInput(revisionInput: ResumeRevisionInputArtifact, evidence: EvidenceItem[]): RevisionStatementBuckets {
+function statementsFromRevisionInput(
+  revisionInput: ResumeRevisionInputArtifact,
+  evidence: EvidenceItem[],
+  applicationGaps: ApplicationLevelGap[],
+  gapRegisterReference: GapRegisterReferenceLike | undefined
+): RevisionStatementBuckets {
   const buckets = emptyRevisionStatements();
   const evidenceById = new Map(evidence.map((item) => [item.evidence_id, item]));
+  const proofSchemaVersion = revisionInput.schema_version === "1.1.0" ? constructionProofSchemaVersion : "1.0.0";
+  const proofGapRegisterReference = revisionInput.schema_version === "1.1.0"
+    ? {
+        gap_register_id: revisionInput.application_gap_register.gap_register_id,
+        file_hash: revisionInput.application_gap_register.file_hash,
+        material_hash: revisionInput.application_gap_register.material_hash
+      }
+    : gapRegisterReference;
   for (const item of [...revisionInput.revised_statements, ...revisionInput.expansion_items]) {
     const source = evidenceById.get(item.primary_evidence_id);
     if (!source) throw new ResumeDraftError("invalid-revision-input", `Revision statement references unknown evidence: ${item.primary_evidence_id}`);
-    const renderedText = renderRevisionStatementText(item);
-    const construction = constructionFromRevisionStatement(item, evidence);
+    const renderedText = renderRevisionStatementText(item, { proofSchemaVersion });
+    const construction = constructionFromRevisionStatement(item, evidence, proofSchemaVersion, applicationGaps, proofGapRegisterReference);
     buckets[item.target_section].push({
       statement_id: item.statement_id,
       text: renderedText,
@@ -566,12 +581,29 @@ function statementsFromRevisionInput(revisionInput: ResumeRevisionInputArtifact,
   return buckets;
 }
 
-function constructionFromRevisionStatement(item: RevisionStatement, evidence: EvidenceItem[]): NonNullable<DraftStatement["construction"]> {
+function constructionFromRevisionStatement(
+  item: RevisionStatement,
+  evidence: EvidenceItem[],
+  proofSchemaVersion: "1.0.0" | typeof constructionProofSchemaVersion,
+  applicationGaps: ApplicationLevelGap[],
+  gapRegisterReference: GapRegisterReferenceLike | undefined
+): NonNullable<DraftStatement["construction"]> {
   try {
-    return buildEvidenceConstructionProof(item, evidence);
+    return buildEvidenceConstructionProof(item, evidence, { proofSchemaVersion, currentRegisterGaps: applicationGaps, gapRegisterReference });
   } catch (error) {
     throw new ResumeDraftError("invalid-revision-input", error instanceof Error ? error.message : String(error));
   }
+}
+
+function withBoundedRevisionStatementIds(gaps: ApplicationFitGap[], buckets: RevisionStatementBuckets): ApplicationFitGap[] {
+  const statements = Object.values(buckets).flat();
+  return gaps.map((gap) => {
+    if (gap.gap_class !== "bounded-claim-control") return gap;
+    const included = statements
+      .filter((statement) => statement.construction?.boundary_class === "bounded-claim-control" && statement.construction.related_application_fit_gap_ids.includes(gap.gap_id))
+      .map((statement) => statement.statement_id);
+    return { ...gap, included_statement_ids: [...new Set(included)].sort() };
+  });
 }
 
 function loadRevisionContext(input: {

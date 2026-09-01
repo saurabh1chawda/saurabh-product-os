@@ -5,8 +5,9 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { hashApplicationGapRegisterMaterial, hashApplicationLevelGaps, normalizeApplicationRequirement, type ApplicationGapRegister, type ApplicationLevelGap } from "./application-gap-register";
+import { canonicalMetricProjection, constructionProofSchemaVersion } from "./resume-construction-proof";
 import { ResumeDraftError, runCareerOsResumeDraft } from "./resume-draft";
-import { hashResumeReviewDecisionMaterial, type ResumeReviewDecisionArtifact } from "./resume-review-decision";
+import { hashResumeReviewDecisionMaterial, legacyDraftReviewMigrationMode, legacyDraftReviewMigrationSchemaVersion, type ResumeReviewDecisionArtifact } from "./resume-review-decision";
 import { hashResumeRevisionInputMaterial, renderRevisionStatementText, type ResumeRevisionInputArtifact, type RevisionStatement } from "./resume-revision-input";
 import { hashResumeStrategyMaterial } from "./resume-strategy";
 
@@ -300,6 +301,43 @@ describe("career-os resume draft", () => {
     const alternateRevision = createRevisionInputFixture(alternate, { statementPatch: { claim_atoms: { action: "Built", object: "product systems", outcome: "platform", employer: "Synthetic Labs" } } });
     const alternateResult = runDraftWithRevision(alternate, alternateRevision.path, "--apply");
     expect(alternateResult.draft?.draft_id).not.toBe(result.draft?.draft_id);
+  });
+
+  it("consumes revision-input 1.1 metric and bounded proof v2 through the real Draft path", () => {
+    const fixture = createProofV2DraftConsumerFixture();
+    const dryRun = runDraftWithRevision(fixture, fixture.paths.revision, "--dry-run");
+
+    expect(dryRun.status).toBe("planned");
+    expect(existsSync(dryRun.output_dir)).toBe(false);
+
+    const result = runDraftWithRevision(fixture, fixture.paths.revision, "--apply");
+    const metric = result.draft?.selected_achievements.find((item) => item.statement_id === "stmt:metric-v2");
+    const bounded = result.draft?.role_specific_experience_bullets.find((item) => item.statement_id === "stmt:bounded-g05-v2");
+    const g05 = result.draft?.application_fit_gaps?.find((gap) => gap.gap_id === "G05");
+
+    expect(result.draft?.schema_version).toBe("1.1.0");
+    expect(result.draft?.references.revision_input_id).toBe("RREVINPUT-proof-v2");
+    expect(result.draft?.references.predecessor_draft_id).toBe("RDRAFT-legacy-v2");
+    expect(result.draft?.lifecycle_state).toBe("human_review_required");
+    expect(result.draft?.readiness_state).toBe("human_review_required");
+    expect(metric?.construction?.proof_schema_version).toBe(constructionProofSchemaVersion);
+    expect(metric?.construction?.selected_metric_projection).toMatchObject(canonicalMetricProjection(readJson<{ evidence_items: Array<{ evidence_id: string }> }>(fixture.paths.evidence).evidence_items.find((item) => item.evidence_id === "EV-metric-v2") as never));
+    expect(metric?.text).toBe("Improved synthetic product strategy by 42% for Synthetic Labs to measurable outcomes.");
+    expect(metric?.text).not.toContain("claimed in source");
+    expect(bounded?.construction?.proof_schema_version).toBe(constructionProofSchemaVersion);
+    expect(bounded?.construction?.boundary_control_projection?.related_gap_id).toBe("G05");
+    expect(bounded?.text).toBe("AI prioritization framework for Synthetic Labs.");
+    expect(bounded?.text).not.toMatch(/boundary|proof|G05|gap|bounded/iu);
+    expect(g05?.included_statement_ids).toEqual(["stmt:bounded-g05-v2"]);
+    expect(result.draft?.application_fit_gaps?.filter((gap) => ["G01", "G02", "G03", "G04"].includes(gap.gap_id)).every((gap) => gap.included_statement_ids.length === 0)).toBe(true);
+    expect(result.draft?.evidence_gaps).toEqual([]);
+    expect(result.draft?.excluded_unsupported_claims).toEqual([]);
+    expect(result.checklist?.items.every((item) => item.status === "pending")).toBe(true);
+
+    const duplicate = runDraftWithRevision(fixture, fixture.paths.revision, "--apply");
+    expect(duplicate.status).toBe("duplicate");
+    writeJson(result.outputs.json, { conflict: true });
+    expect(() => runDraftWithRevision(fixture, fixture.paths.revision, "--apply")).toThrow(/conflicts/u);
   });
 
   it("rejects arbitrary or unsupported structured revision input before Draft generation", () => {
@@ -869,6 +907,238 @@ function createRevisionInputFixture(
   revision.integrity.material_hash = hashResumeRevisionInputMaterial(revision);
   writeJson(revisionPath, revision);
   return { path: revisionPath, statement };
+}
+
+function createProofV2DraftConsumerFixture(): ReturnType<typeof createFixture> & { paths: ReturnType<typeof createFixture>["paths"] & { revision: string } } {
+  const fixture = createFixture({
+    withApplicationGaps: true,
+    strategyPatch: {
+      evidence_to_requirement_mapping: [
+        { requirement: "Product Strategy", status: "evidence-backed", evidence_ids: ["EV-summary"], notes: "Supported." }
+      ],
+      evidence_gaps_and_unsupported_claims: []
+    }
+  }) as ReturnType<typeof createFixture> & { paths: ReturnType<typeof createFixture>["paths"] & { revision: string } };
+  fixture.paths.revision = path.join(fixture.registryRoot, "resume-revision-inputs", "RREVINPUT-proof-v2", "resume-revision-input.json");
+
+  const evidence = readJson<{ evidence_items: Array<Record<string, unknown>> }>(fixture.paths.evidence);
+  evidence.evidence_items.push(
+    {
+      evidence_id: "EV-metric-v2",
+      statement: "Improved synthetic product strategy by 42% at Synthetic Labs during 2024-Present to measurable outcomes.",
+      tags: ["Product Strategy", "Analytics"],
+      status: "verified",
+      source_reference: "achievements.metric-v2",
+      category: "achievement",
+      employer: "Synthetic Labs",
+      dates: "2024-Present",
+      metric: { value: "42", unit: "%", state: "claimed in source" }
+    },
+    {
+      evidence_id: "EV-bounded-v2",
+      statement: "AI prioritization framework for Synthetic Labs product planning.",
+      tags: ["Product Strategy"],
+      status: "verified",
+      source_reference: "achievements.bounded-v2",
+      category: "achievement",
+      employer: "Synthetic Labs"
+    }
+  );
+  writeJson(fixture.paths.evidence, evidence);
+  const evidenceHash = fileHash(fixture.paths.evidence);
+
+  const applicationLevelGaps: ApplicationLevelGap[] = [
+    ...["G01", "G02", "G03", "G04"].map((gapId) => ({
+      gap_id: gapId,
+      requirement: `${gapId} unresolved synthetic requirement`,
+      normalized_requirement_key: normalizeApplicationRequirement(`${gapId} unresolved synthetic requirement`),
+      status: "unresolved" as const,
+      resolution_state: "requires-human-review" as const,
+      explanation: "Synthetic unresolved predecessor gap.",
+      closest_supported_evidence_ids: ["EV-summary"],
+      source_reference: `strategy.application_level_gaps:${gapId}`,
+      human_review_required: true,
+      positive_claim_prohibited: true,
+      claim_boundary: `Do not claim ${gapId} synthetic requirement.`
+    })),
+    {
+      gap_id: "G05",
+      requirement: "Restaurant AI product experience",
+      normalized_requirement_key: normalizeApplicationRequirement("Restaurant AI product experience"),
+      status: "bounded-claim",
+      resolution_state: "bounded",
+      explanation: "Synthetic evidence supports adjacent AI prioritization framework work only.",
+      closest_supported_evidence_ids: ["EV-bounded-v2"],
+      source_reference: "strategy.application_level_gaps:G05",
+      human_review_required: true,
+      positive_claim_prohibited: true,
+      claim_boundary: "May describe bounded AI prioritization framework work, not direct restaurant AI ownership."
+    }
+  ];
+  const register = withApplicationGapRegisterHash({
+    schema_version: "1.0.0",
+    artifact_type: "application-level-gap-register",
+    gap_register_id: "GAPREG-synthetic-labs",
+    application_id: "APP-synthetic-labs-lead-product-manager-source",
+    jd_snapshot_id: "JD-2026-content",
+    opportunity_id: "OPP-2026-link",
+    handoff_id: "HANDOFF-2026-link",
+    decision_id: "DEC-2026-link",
+    decision_reconciliation_id: null,
+    candidate_evidence_id: "CEV-synthetic-profile",
+    candidate_evidence_hash: evidenceHash,
+    created_at: now,
+    created_by: "Synthetic Reviewer",
+    source_reference: "synthetic",
+    gaps: applicationLevelGaps,
+    integrity: { material_hash: "" }
+  });
+  writeJson(fixture.paths.register, register);
+  const registerFileHash = fileHash(fixture.paths.register);
+  const applicationLevelGapsHash = hashApplicationLevelGaps(applicationLevelGaps);
+  const strategy = readJson<Record<string, unknown> & {
+    candidate_evidence_source: Record<string, unknown>;
+    application_level_gap_register: Record<string, unknown>;
+    integrity: Record<string, unknown>;
+  }>(fixture.paths.strategy);
+  strategy.candidate_evidence_source.source_hash = evidenceHash;
+  strategy.application_level_gaps = applicationLevelGaps;
+  strategy.application_level_gap_register = {
+    gap_register_id: "GAPREG-synthetic-labs",
+    source_path: "registry/application-gap-registers/GAPREG-synthetic-labs.json",
+    material_hash: register.integrity.material_hash,
+    file_hash: registerFileHash,
+    gap_count: applicationLevelGaps.length,
+    unresolved_gap_count: applicationLevelGaps.length,
+    gaps_hash: applicationLevelGapsHash
+  };
+  strategy.integrity = {
+    ...strategy.integrity,
+    candidate_evidence_hash: evidenceHash,
+    application_gap_register_hash: registerFileHash,
+    application_level_gaps_hash: applicationLevelGapsHash,
+    material_hash: ""
+  };
+  strategy.integrity.material_hash = hashResumeStrategyMaterial(strategy as Parameters<typeof hashResumeStrategyMaterial>[0]);
+  writeJson(fixture.paths.strategy, strategy);
+
+  const predecessorDraftPath = path.join(fixture.registryRoot, "resume-drafts", "RDRAFT-legacy-v2", "resume-draft.json");
+  const predecessorChecklistPath = path.join(fixture.registryRoot, "resume-drafts", "RDRAFT-legacy-v2", "review-checklist.json");
+  const reviewPath = path.join(fixture.registryRoot, "resume-review-decisions", "RREVIEW-legacy-v2", "resume-review-decision.json");
+  const predecessorDraft = {
+    schema_version: "1.0.0",
+    artifact_type: "evidence-backed-resume-draft",
+    draft_id: "RDRAFT-legacy-v2",
+    references: { application_id: "APP-synthetic-labs-lead-product-manager-source" },
+    professional_summary: [{ statement_id: "stmt:S1", text: "Historical metric statement." }],
+    core_skills: [],
+    role_specific_experience_bullets: [{ statement_id: "stmt:S2", text: "Historical bounded statement." }],
+    selected_achievements: [],
+    education: [],
+    certifications: [],
+    projects_or_portfolio_evidence: [],
+    application_level_gaps: applicationLevelGaps,
+    integrity: { material_hash: "legacy-v2-draft-material" }
+  };
+  const predecessorChecklist = {
+    schema_version: "1.0.0",
+    draft_id: "RDRAFT-legacy-v2",
+    items: [
+      { check_id: "claim-verification", status: "pending", applicable_gap_ids: [] },
+      ...applicationLevelGaps.map((gap) => ({ check_id: `application-gap-${gap.gap_id.toLowerCase()}`, status: "pending", applicable_gap_ids: [gap.gap_id] }))
+    ]
+  };
+  writeJson(predecessorDraftPath, predecessorDraft);
+  writeJson(predecessorChecklistPath, predecessorChecklist);
+  const review = {
+    schema_version: legacyDraftReviewMigrationSchemaVersion,
+    artifact_type: "resume-review-decision",
+    review_mode: legacyDraftReviewMigrationMode,
+    migration_only: true,
+    review_decision_id: "RREVIEW-legacy-v2",
+    application_id: "APP-synthetic-labs-lead-product-manager-source",
+    lifecycle_state: "revision_required",
+    approval_granted: false,
+    reviewer: { reviewer_id: "candidate:synthetic", display_name: "Synthetic Candidate", reviewer_role: "candidate-content-reviewer" },
+    reviewed_at: now,
+    draft: { draft_id: "RDRAFT-legacy-v2", source_path: predecessorDraftPath, file_hash: fileHash(predecessorDraftPath), material_hash: "legacy-v2-draft-material" },
+    checklist: { checklist_id: "RCHK-RDRAFT-legacy-v2", source_path: predecessorChecklistPath, file_hash: fileHash(predecessorChecklistPath) },
+    statement_decisions: [{ statement_id: "stmt:S1", decision: "revise" }, { statement_id: "stmt:S2", decision: "revise" }],
+    gap_decisions: applicationLevelGaps.map((gap) => ({
+      gap_id: gap.gap_id,
+      source_gap_class: gap.status === "bounded-claim" ? "legacy-bounded-application-level-gap" : "legacy-unresolved-application-level-gap",
+      decision: gap.status === "bounded-claim" ? "accept-bounded-representation" : "acknowledge-and-exclude",
+      reviewed_statement_ids: [],
+      checklist_item_id: `application-gap-${gap.gap_id.toLowerCase()}`,
+      resolution_reason: gap.status === "bounded-claim" ? "bounded-claim-verified" : "acknowledged-gap-claim-excluded"
+    })),
+    checklist_decisions: [
+      { check_id: "claim-verification", decision: "resolved", resolution_reason: "content-reviewed" },
+      ...applicationLevelGaps.map((gap) => ({
+        check_id: `application-gap-${gap.gap_id.toLowerCase()}`,
+        decision: "resolved",
+        resolution_reason: gap.status === "bounded-claim" ? "bounded-claim-verified" : "acknowledged-gap-claim-excluded"
+      }))
+    ],
+    section_decision: "authorize-evidence-backed-expansion",
+    integrity: { material_hash: "" }
+  } as ResumeReviewDecisionArtifact;
+  review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
+  writeJson(reviewPath, review);
+
+  const metricEvidence = evidence.evidence_items.find((item) => item.evidence_id === "EV-metric-v2");
+  const metricKey = canonicalMetricProjection(metricEvidence as Parameters<typeof canonicalMetricProjection>[0]).metric_key;
+  const revision = {
+    schema_version: "1.1.0",
+    artifact_type: "resume-revision-input",
+    revision_input_id: "RREVINPUT-proof-v2",
+    application_id: "APP-synthetic-labs-lead-product-manager-source",
+    created_at: now,
+    created_by: "Synthetic Candidate",
+    lifecycle_state: "human_review_required",
+    predecessor_draft: { draft_id: "RDRAFT-legacy-v2", source_path: predecessorDraftPath, file_hash: fileHash(predecessorDraftPath), material_hash: "legacy-v2-draft-material" },
+    predecessor_checklist: { checklist_id: "RCHK-RDRAFT-legacy-v2", source_path: predecessorChecklistPath, file_hash: fileHash(predecessorChecklistPath) },
+    prior_review_decision: { review_decision_id: "RREVIEW-legacy-v2", source_path: reviewPath, file_hash: fileHash(reviewPath), material_hash: review.integrity.material_hash },
+    strategy: { strategy_id: strategy.strategy_id, source_path: fixture.paths.strategy, file_hash: fileHash(fixture.paths.strategy), material_hash: strategy.integrity.material_hash },
+    candidate_evidence: { evidence_source_id: "CEV-synthetic-profile", source_path: fixture.paths.evidence, file_hash: fileHash(fixture.paths.evidence) },
+    application_gap_register: { gap_register_id: "GAPREG-synthetic-labs", source_path: fixture.paths.register, file_hash: fileHash(fixture.paths.register), material_hash: register.integrity.material_hash },
+    revised_statements: [
+      {
+        statement_id: "stmt:metric-v2",
+        predecessor_statement_id: "stmt:S1",
+        target_section: "achievements",
+        template_id: "metric-outcome",
+        claim_atoms: { action: "Improved", object: "synthetic product strategy", metric_value: "42", metric_unit: "%", employer: "Synthetic Labs", outcome: "measurable outcomes" },
+        primary_evidence_id: "EV-metric-v2",
+        supporting_evidence_ids: [],
+        trusted_evidence_ids: ["EV-metric-v2"],
+        strategy_support_references: ["strategy.mapping:metric-v2"],
+        related_application_fit_gap_ids: [],
+        boundary_class: "ordinary-evidence-backed",
+        human_review_required: true,
+        selected_metric_key: metricKey
+      },
+      {
+        statement_id: "stmt:bounded-g05-v2",
+        predecessor_statement_id: "stmt:S2",
+        target_section: "experience-bullets",
+        template_id: "bounded-product-work",
+        claim_atoms: { action: "AI prioritization", object: "framework", employer: "Synthetic Labs" },
+        primary_evidence_id: "EV-bounded-v2",
+        supporting_evidence_ids: [],
+        trusted_evidence_ids: ["EV-bounded-v2"],
+        strategy_support_references: ["strategy.mapping:g05"],
+        related_application_fit_gap_ids: ["G05"],
+        boundary_class: "bounded-claim-control",
+        human_review_required: true
+      }
+    ],
+    expansion_items: [],
+    integrity: { material_hash: "" }
+  } as ResumeRevisionInputArtifact;
+  revision.integrity.material_hash = hashResumeRevisionInputMaterial(revision);
+  writeJson(fixture.paths.revision, revision);
+  return fixture;
 }
 
 function withApplicationGapRegisterHash(register: ApplicationGapRegister): ApplicationGapRegister {

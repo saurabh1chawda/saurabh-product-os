@@ -20,7 +20,8 @@ import {
   toRelative
 } from "./resume-export-shared.ts";
 import type { ResumeApproval, ResumeDraft, ReviewChecklist } from "./resume-export-shared.ts";
-import { validateDraftStatementConstruction, type RevisionBoundaryClass, type TrustedEvidenceItem } from "./resume-construction-proof.ts";
+import { readAndValidateApplicationGapRegister, type ApplicationLevelGap } from "./application-gap-register.ts";
+import { constructionProofSchemaVersion, validateDraftStatementConstruction, type GapRegisterReferenceLike, type RevisionBoundaryClass, type TrustedEvidenceItem } from "./resume-construction-proof.ts";
 import { checklistId, normalizeIdentity, readAndValidateResumeReviewDecision, type ResumeReviewDecisionArtifact } from "./resume-review-decision.ts";
 
 type ApprovalResult = {
@@ -54,6 +55,11 @@ type TrustedEvidenceSource = {
   evidence_items: TrustedEvidenceItem[];
 };
 
+type GapRegisterContext = {
+  reference: GapRegisterReferenceLike;
+  currentRegisterGaps: ApplicationLevelGap[];
+};
+
 export function runCareerOsResumeApprove(options: RunOptions = {}): ApprovalResult {
   const cwd = options.cwd ?? process.cwd();
   const flags = parseArgs(options.argv ?? process.argv.slice(2));
@@ -77,7 +83,14 @@ export function runCareerOsResumeApprove(options: RunOptions = {}): ApprovalResu
   validateDraft(draft, Boolean(reviewDecisionContext));
   validateChecklist(draft, checklist, reviewDecisionContext?.reviewDecision ?? null);
   const approver = approverForDraft(draft, reviewer, approverId);
-  validateResumeApprovalCompatibility({ draft, checklist, reviewDecision: reviewDecisionContext?.reviewDecision ?? null, approver, candidateEvidence: candidateEvidence?.evidence ?? null });
+  validateResumeApprovalCompatibility({
+    draft,
+    checklist,
+    reviewDecision: reviewDecisionContext?.reviewDecision ?? null,
+    approver,
+    candidateEvidence: candidateEvidence?.evidence ?? null,
+    gapRegisterContext: loadGapRegisterContext({ cwd, registryRoot, draft, candidateEvidence: candidateEvidence?.evidence ?? null })
+  });
   validateConfirmations(flags);
   validateLinkedHashes(cwd, registryRoot, draft);
 
@@ -293,8 +306,9 @@ export function validateResumeApprovalCompatibility(input: {
   reviewDecision: ResumeReviewDecisionArtifact | null;
   approver: { approver_id: string; display_name: string };
   candidateEvidence?: TrustedEvidenceSource | null;
+  gapRegisterContext?: GapRegisterContext | null;
 }): void {
-  const { draft, checklist, reviewDecision, approver, candidateEvidence } = input;
+  const { draft, checklist, reviewDecision, approver, candidateEvidence, gapRegisterContext } = input;
   if (draft.evidence_gaps.length || draft.excluded_unsupported_claims.length) throw new CareerOsExportError("unsupported-content", "Approved export cannot include unresolved evidence gaps.");
   if (draft.schema_version !== "1.1.0") {
     validateLegacyReviewer(approver.display_name, draft);
@@ -307,8 +321,8 @@ export function validateResumeApprovalCompatibility(input: {
   validateStableApprover(approver, draft, reviewDecision);
   validateChecklistCoverage(checklist, reviewDecision);
   validateStatementCoverage(draft, reviewDecision);
-  validateAllConstructedStatements(draft, candidateEvidence);
-  validateReviewDecisionCompatibility(draft, reviewDecision, candidateEvidence);
+  validateAllConstructedStatements(draft, candidateEvidence, gapRegisterContext ?? null);
+  validateReviewDecisionCompatibility(draft, reviewDecision, candidateEvidence, gapRegisterContext ?? null);
 }
 
 function validateStableApprover(approver: { approver_id: string; display_name: string }, draft: ResumeDraft, reviewDecision: ResumeReviewDecisionArtifact): void {
@@ -348,7 +362,7 @@ function validateStatementCoverage(draft: ResumeDraft, reviewDecision: ResumeRev
   }
 }
 
-function validateReviewDecisionCompatibility(draft: ResumeDraft, reviewDecision: ResumeReviewDecisionArtifact, candidateEvidence: TrustedEvidenceSource): void {
+function validateReviewDecisionCompatibility(draft: ResumeDraft, reviewDecision: ResumeReviewDecisionArtifact, candidateEvidence: TrustedEvidenceSource, gapRegisterContext: GapRegisterContext | null): void {
   const statements = statementsFromDraft(draft);
   assertNoDuplicates(reviewDecision.gap_decisions.map((item) => item.gap_id), "gap decision");
   for (const gap of draft.application_fit_gaps ?? []) {
@@ -374,15 +388,32 @@ function validateReviewDecisionCompatibility(draft: ResumeDraft, reviewDecision:
       for (const statementId of gap.included_statement_ids) {
         const statement = statements.find((item) => item.statement_id === statementId);
         if (!statement) throw new CareerOsExportError("unsupported-content", `Bounded statement ${statementId} is missing from draft.`);
-        validateEvidenceTemplateStatement(statement, candidateEvidence, gap.gap_id, "bounded-claim-control");
+        validateEvidenceTemplateStatement(statement, candidateEvidence, gapRegisterContext, draft.application_fit_gaps, gap.gap_id, "bounded-claim-control", true);
       }
     }
   }
 }
 
-function validateEvidenceTemplateStatement(statement: NonNullable<ReturnType<typeof statementsFromDraft>[number]>, candidateEvidence: TrustedEvidenceSource, gapId?: string, boundaryClass?: RevisionBoundaryClass): void {
+function validateEvidenceTemplateStatement(
+  statement: NonNullable<ReturnType<typeof statementsFromDraft>[number]>,
+  candidateEvidence: TrustedEvidenceSource,
+  gapRegisterContext?: GapRegisterContext | null,
+  draftApplicationFitGaps?: ResumeDraft["application_fit_gaps"],
+  gapId?: string,
+  boundaryClass?: RevisionBoundaryClass,
+  requireProofV2 = false
+): void {
   try {
-    validateDraftStatementConstruction({ statement, evidenceItems: candidateEvidence.evidence_items, requiredGapId: gapId, requiredBoundaryClass: boundaryClass });
+    validateDraftStatementConstruction({
+      statement,
+      evidenceItems: candidateEvidence.evidence_items,
+      requiredGapId: gapId,
+      requiredBoundaryClass: boundaryClass,
+      currentRegisterGaps: gapRegisterContext?.currentRegisterGaps,
+      draftApplicationFitGaps,
+      gapRegisterReference: gapRegisterContext?.reference,
+      requiredProofSchemaVersion: requireProofV2 ? constructionProofSchemaVersion : undefined
+    });
   } catch (error) {
     throw new CareerOsExportError("unsupported-content", error instanceof Error ? error.message : String(error));
   }
@@ -412,11 +443,59 @@ function validateApplicationFitGaps(draft: ResumeDraft): void {
   }
 }
 
-function validateAllConstructedStatements(draft: ResumeDraft, candidateEvidence: TrustedEvidenceSource): void {
+function validateAllConstructedStatements(draft: ResumeDraft, candidateEvidence: TrustedEvidenceSource, gapRegisterContext: GapRegisterContext | null): void {
+  const constructed = statementsFromDraft(draft).filter((statement) => statement.construction?.construction_mode === "evidence-template");
+  if (constructed.some((statement) => statement.construction?.proof_schema_version === constructionProofSchemaVersion)
+    && constructed.some((statement) => statement.construction?.proof_schema_version !== constructionProofSchemaVersion)) {
+    throw new CareerOsExportError("unsupported-content", "Mixed construction proof versions are not approvable.");
+  }
   for (const statement of statementsFromDraft(draft)) {
-    if (statement.construction?.construction_mode === "evidence-template") validateEvidenceTemplateStatement(statement, candidateEvidence);
+    if (statement.construction?.construction_mode === "evidence-template") {
+      validateEvidenceTemplateStatement(statement, candidateEvidence, gapRegisterContext, draft.application_fit_gaps);
+    }
   }
 }
+
+function loadGapRegisterContext(input: { cwd: string; registryRoot: string; draft: ResumeDraft; candidateEvidence: TrustedEvidenceSource | null }): GapRegisterContext | null {
+  if (!input.draft.application_fit_gaps?.length) return null;
+  if (!input.candidateEvidence) throw new CareerOsExportError("untrusted-candidate-evidence", "Draft 1.1.0 approval requires current candidate evidence.");
+  const sourcePath = input.draft.source_provenance.application_gap_register_path;
+  if (!sourcePath) return null;
+  const registerPath = path.resolve(input.cwd, sourcePath);
+  assertInside(registerPath, input.registryRoot, "Application gap register");
+  const strategyPath = path.resolve(input.cwd, input.draft.source_provenance.strategy_path);
+  assertInside(strategyPath, input.registryRoot, "Resume strategy");
+  const strategy = readJson<{ decision_state?: { decision_reconciliation_id?: string | null } }>(strategyPath);
+  const opportunityPath = path.join(input.registryRoot, "opportunities", `${input.draft.references.opportunity_id}.json`);
+  assertInside(opportunityPath, input.registryRoot, "Opportunity record");
+  const opportunity = readJson<{ decision_id?: string }>(opportunityPath);
+  const result = readAndValidateApplicationGapRegister({
+    file: registerPath,
+    cwd: input.cwd,
+    registryRoot: input.registryRoot,
+    expected: {
+      application_id: input.draft.references.application_id,
+      jd_snapshot_id: input.draft.references.jd_snapshot_id,
+      opportunity_id: input.draft.references.opportunity_id,
+      handoff_id: input.draft.references.handoff_id,
+      decision_id: String(opportunity.decision_id ?? ""),
+      decision_reconciliation_id: strategy.decision_state?.decision_reconciliation_id ?? null,
+      candidate_evidence_id: input.draft.candidate_identity.evidence_source_id,
+      candidate_evidence_hash: input.draft.integrity.candidate_evidence_hash,
+      candidate_evidence_ids: input.candidateEvidence.evidence_items.map((item) => item.evidence_id)
+    }
+  });
+  if (result.register.gap_register_id !== input.draft.references.application_gap_register_id) throw new CareerOsExportError("integrity-mismatch", "Application gap register ID does not match draft.");
+  return {
+    reference: {
+      gap_register_id: result.register.gap_register_id,
+      file_hash: result.fileHash,
+      material_hash: result.register.integrity.material_hash
+    },
+    currentRegisterGaps: result.register.gaps
+  };
+}
+
 
 function loadCandidateEvidenceForDraft(input: { cwd: string; registryRoot: string; draft: ResumeDraft; explicitPath: string | boolean | undefined }): { evidence: TrustedEvidenceSource; evidencePath: string; evidenceHash: string } {
   if (typeof input.explicitPath !== "string") throw new CareerOsExportError("untrusted-candidate-evidence", "Draft 1.1.0 approval requires --candidate-evidence.");

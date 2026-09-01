@@ -11,6 +11,7 @@ import {
   type ResumeRevisionInputArtifact,
   type TrustedEvidenceSource
 } from "./resume-revision-input";
+import { canonicalMetricProjection } from "./resume-construction-proof";
 
 const now = "2026-08-25T12:00:00.000Z";
 
@@ -87,6 +88,48 @@ describe("career-os resume revision input", () => {
 
     const action = createFixture({ revisionPatch: { revised_statements: [{ ...validStatement(), claim_atoms: { ...validStatement().claim_atoms, action: "Invented" } }] } });
     expect(() => validateFixture(action)).toThrow(/Unsupported action/u);
+  });
+
+  it("accepts revision-input 1.1 structured metrics without granting them to schema 1.0", () => {
+    const fixture = createFixture({
+      evidencePatch: {
+        evidence_items: [
+          {
+            evidence_id: "EV-summary",
+            statement: "Improved synthetic product strategy at Synthetic Labs during 2024-Present with measurable outcomes.",
+            employer: "Synthetic Labs",
+            dates: "2024-Present",
+            status: "verified",
+            metric: { value: "42", unit: "%", state: "claimed in source" }
+          }
+        ]
+      }
+    });
+    const metricKey = canonicalMetricProjection(fixture.evidence.evidence_items[0]).metric_key;
+    const metricStatement = {
+      ...validStatement(),
+      template_id: "metric-outcome",
+      claim_atoms: { ...validStatement().claim_atoms, metric_value: "42", metric_unit: "%" },
+      selected_metric_key: metricKey
+    };
+    const valid = createFixture({
+      evidencePatch: fixture.evidence,
+      revisionPatch: {
+        schema_version: "1.1.0",
+        revised_statements: [metricStatement],
+        expansion_items: []
+      }
+    });
+    expect(validateFixture(valid).revisionInput.schema_version).toBe("1.1.0");
+
+    const downgraded = createFixture({
+      evidencePatch: fixture.evidence,
+      revisionPatch: {
+        revised_statements: [metricStatement],
+        expansion_items: []
+      }
+    });
+    expect(() => validateFixture(downgraded)).toThrow(/1\.0\.0 cannot use proof v2/u);
   });
 
   it("rejects cross-record atom composition and supporting evidence substitutes", () => {

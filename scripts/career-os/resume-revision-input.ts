@@ -6,8 +6,12 @@ import path from "node:path";
 import { allDraftStatementIds, checklistId, isLegacyMigrationReview, type ResumeReviewDecisionArtifact, type ReviewableChecklist, type ReviewableDraft } from "./resume-review-decision.ts";
 import {
   buildEvidenceConstructionProof,
+  constructionProofSchemaVersion,
   hashRenderedRevisionStatement,
   renderRevisionStatementText,
+  type ApplicationFitGapLike,
+  type ConstructionProofSchemaVersion,
+  type GapRegisterReferenceLike,
   type RevisionBoundaryClass,
   type RevisionClaimAtoms,
   type RevisionTargetSection,
@@ -16,11 +20,12 @@ import {
 } from "./resume-construction-proof.ts";
 
 export const resumeRevisionInputSchemaVersion = "1.0.0" as const;
+export const resumeRevisionInputSchemaVersionV2 = "1.1.0" as const;
 
-export type { RevisionBoundaryClass, RevisionClaimAtoms, RevisionTargetSection, RevisionTemplateId };
+export type { ConstructionProofSchemaVersion, RevisionBoundaryClass, RevisionClaimAtoms, RevisionTargetSection, RevisionTemplateId };
 
 export type ResumeRevisionInputArtifact = {
-  schema_version: typeof resumeRevisionInputSchemaVersion;
+  schema_version: typeof resumeRevisionInputSchemaVersion | typeof resumeRevisionInputSchemaVersionV2;
   artifact_type: "resume-revision-input";
   revision_input_id: string;
   application_id: string;
@@ -81,6 +86,7 @@ export type RevisionStatement = {
   related_application_fit_gap_ids: string[];
   boundary_class: RevisionBoundaryClass;
   human_review_required: true;
+  selected_metric_key?: string;
 };
 
 export type TrustedEvidenceSource = {
@@ -127,7 +133,7 @@ export function readAndValidateResumeRevisionInput(input: {
   strategyPath: string;
   candidateEvidence: TrustedEvidenceSource;
   candidateEvidencePath: string;
-  applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string }; gaps?: Array<{ gap_id: string }> };
+  applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string }; gaps?: ApplicationFitGapLike[] };
   applicationGapRegisterPath: string;
 }): { revisionInput: ResumeRevisionInputArtifact; fileHash: string } {
   assertPrivatePath(input.file, input.cwd, "Resume revision input");
@@ -150,11 +156,11 @@ export function validateResumeRevisionInput(
     strategyPath: string;
     candidateEvidence: TrustedEvidenceSource;
     candidateEvidencePath: string;
-    applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string }; gaps?: Array<{ gap_id: string }> };
+    applicationGapRegister: { gap_register_id: string; integrity: { material_hash: string }; gaps?: ApplicationFitGapLike[] };
     applicationGapRegisterPath: string;
   }
 ): void {
-  if (revision.schema_version !== resumeRevisionInputSchemaVersion || revision.artifact_type !== "resume-revision-input") {
+  if (![resumeRevisionInputSchemaVersion, resumeRevisionInputSchemaVersionV2].includes(revision.schema_version) || revision.artifact_type !== "resume-revision-input") {
     throw new ResumeRevisionInputError("invalid-revision-input", "Input must be a resume-revision-input artifact.");
   }
   if (revision.lifecycle_state !== "human_review_required") {
@@ -192,7 +198,8 @@ function validateStatements(
   revision: ResumeRevisionInputArtifact,
   input: {
     predecessorDraft: ReviewableDraft;
-    applicationGapRegister: { gaps?: Array<{ gap_id: string }> };
+    applicationGapRegister: { gap_register_id?: string; integrity?: { material_hash?: string }; gaps?: ApplicationFitGapLike[] };
+    applicationGapRegisterPath?: string;
     candidateEvidence: TrustedEvidenceSource;
   }
 ): void {
@@ -204,6 +211,14 @@ function validateStatements(
       ? (input.applicationGapRegister.gaps ?? []).map((gap) => gap.gap_id)
       : (input.predecessorDraft.application_fit_gaps ?? []).map((gap) => gap.gap_id)
   );
+  const proofVersion = revision.schema_version === resumeRevisionInputSchemaVersionV2 ? constructionProofSchemaVersion : "1.0.0";
+  const gapRegisterReference: GapRegisterReferenceLike | undefined = revision.schema_version === resumeRevisionInputSchemaVersionV2
+    ? {
+        gap_register_id: revision.application_gap_register.gap_register_id,
+        file_hash: revision.application_gap_register.file_hash,
+        material_hash: revision.application_gap_register.material_hash
+      }
+    : undefined;
   for (const item of [...revision.revised_statements, ...revision.expansion_items]) {
     if (!["headline", "summary", "core-skills", "experience-bullets", "achievements", "projects"].includes(item.target_section)) {
       throw new ResumeRevisionInputError("invalid-revision-input", `Unsupported revision target section: ${item.target_section}.`);
@@ -223,8 +238,23 @@ function validateStatements(
     if (!item.strategy_support_references.length) {
       throw new ResumeRevisionInputError("invalid-revision-input", "Revision statements must cite Strategy support references.");
     }
+    if (revision.schema_version === resumeRevisionInputSchemaVersion && (item.selected_metric_key || (item.template_id === "bounded-product-work" && !item.claim_atoms.bounded_qualifier))) {
+      throw new ResumeRevisionInputError("invalid-revision-input", "Revision input 1.0.0 cannot use proof v2 metric or boundary semantics.");
+    }
+    if (revision.schema_version === resumeRevisionInputSchemaVersionV2) {
+      if (item.template_id === "metric-outcome" && !item.selected_metric_key) {
+        throw new ResumeRevisionInputError("invalid-revision-input", "Revision input 1.1.0 metric statements require a selected metric key.");
+      }
+      if (item.template_id === "bounded-product-work" && item.claim_atoms.bounded_qualifier) {
+        throw new ResumeRevisionInputError("invalid-revision-input", "Revision input 1.1.0 bounded statements must use non-rendered boundary controls.");
+      }
+    }
     try {
-      buildEvidenceConstructionProof(item, input.candidateEvidence.evidence_items);
+      buildEvidenceConstructionProof(item, input.candidateEvidence.evidence_items, {
+        proofSchemaVersion: proofVersion,
+        currentRegisterGaps: revision.schema_version === resumeRevisionInputSchemaVersionV2 ? input.applicationGapRegister.gaps : undefined,
+        gapRegisterReference
+      });
     } catch (error) {
       throw new ResumeRevisionInputError("invalid-revision-input", error instanceof Error ? error.message : String(error));
     }

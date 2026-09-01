@@ -72,7 +72,7 @@ export type ResumeDraft = {
   }>;
   excluded_unsupported_claims: Array<{ claim: string; reason: string }>;
   review_flags: string[];
-  source_provenance: { strategy_path: string; candidate_evidence_path: string };
+  source_provenance: { strategy_path: string; candidate_evidence_path: string; application_gap_register_path?: string };
   integrity: { strategy_hash: string; candidate_evidence_hash: string; material_hash: string };
 };
 
