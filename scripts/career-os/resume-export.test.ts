@@ -6,7 +6,8 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { runCareerOsResumeApprove } from "./resume-approve";
 import { runCareerOsResumeExport } from "./resume-export";
-import { buildEvidenceConstructionProof, type TrustedEvidenceItem } from "./resume-construction-proof";
+import { hashApplicationGapRegisterMaterial, type ApplicationGapRegister, type ApplicationLevelGap } from "./application-gap-register";
+import { buildEvidenceConstructionProof, constructionProofSchemaVersion, renderRevisionStatementText, type TrustedEvidenceItem } from "./resume-construction-proof";
 import { CareerOsExportError, countPdfPages, hashJson, renderDocx, renderPdf, requiredConfirmations, resumeLines } from "./resume-export-shared";
 import type { ResumeApproval, ResumeDraft } from "./resume-export-shared";
 import { hashResumeReviewDecisionMaterial, legacyDraftReviewMigrationMode, legacyDraftReviewMigrationSchemaVersion, type ResumeReviewDecisionArtifact } from "./resume-review-decision";
@@ -195,6 +196,44 @@ describe("career-os controlled resume approval and export", () => {
       }
     });
     expect(() => approveOverlay(superset, "--dry-run")).toThrow(/Unknown reviewed statement|match exactly/u);
+  });
+
+  it("approval rejects current bounded register row drift with refreshed hashes and stale Draft row", () => {
+    const fixture = createBoundedOverlayFixture();
+    rewriteCurrentRegisterGap(fixture, { claim_boundary: "Altered current boundary.", explanation: "Synthetic boundary mutation." });
+
+    expect(() => approveOverlay(fixture, "--dry-run")).toThrow(/Draft\/current-register gap mismatch/u);
+    expect(existsSync(path.join(fixture.registryRoot, "resume-approvals"))).toBe(false);
+  });
+
+  it("approval rejects stale proof when current bounded row and Draft row are aligned", () => {
+    const fixture = createBoundedOverlayFixture();
+    const register = rewriteCurrentRegisterGap(fixture, { claim_boundary: "Altered current boundary.", explanation: "Synthetic boundary mutation." });
+    alignDraftGapWithCurrentRegister(fixture, register.gaps[0]);
+    relinkReviewToCurrentDraft(fixture);
+
+    expect(() => approveOverlay(fixture, "--dry-run")).toThrow(/stale or forged/u);
+    expect(existsSync(path.join(fixture.registryRoot, "resume-approvals"))).toBe(false);
+  });
+
+  it("export rejects current bounded register row drift after approval with refreshed hashes and stale Draft row", () => {
+    const fixture = createBoundedOverlayFixture();
+    const approval = approveOverlay(fixture, "--apply");
+    rewriteCurrentRegisterGap(fixture, { status: "unresolved", resolution_state: "requires-human-review", explanation: "Synthetic status mutation." });
+
+    expect(() => exportResume(fixture, approval.output, "--dry-run")).toThrow(/Draft\/current-register gap mismatch|not a bounded claim/u);
+    expect(existsSync(path.join(fixture.registryRoot, "resume-exports"))).toBe(false);
+  });
+
+  it("export rejects stale proof when current bounded row and approval linkage are refreshed", () => {
+    const fixture = createBoundedOverlayFixture();
+    const approval = approveOverlay(fixture, "--apply");
+    const register = rewriteCurrentRegisterGap(fixture, { claim_boundary: "Altered current boundary.", explanation: "Synthetic boundary mutation." });
+    alignDraftGapWithCurrentRegister(fixture, register.gaps[0]);
+    relinkReviewAndApprovalToCurrentDraft(fixture, approval.output);
+
+    expect(() => exportResume(fixture, approval.output, "--dry-run")).toThrow(/stale or forged/u);
+    expect(existsSync(path.join(fixture.registryRoot, "resume-exports"))).toBe(false);
   });
 
   it("export rejects forged construction proofs against current evidence", () => {
@@ -633,22 +672,55 @@ function createOverlayFixture(options: { reviewPatch?: Record<string, unknown>; 
 
 function createBoundedOverlayFixture(options: { reviewPatch?: Record<string, unknown> } = {}) {
   const fixture = createOverlayFixture({ skipReview: true });
+  const paths = { ...fixture.paths, register: path.join(fixture.registryRoot, "application-gap-registers", "GAPREG-synthetic.json") };
+  const registerPath = paths.register;
   const evidence = readJson<{ evidence_items: TrustedEvidenceItem[] }>(fixture.paths.evidence);
   const boundedEvidence = {
     evidence_id: "EV-bounded",
-    statement: "Supported restaurant-adjacent platform workflows at Synthetic Labs.",
+    statement: "Restaurant-adjacent platform workflows at Synthetic Labs.",
     status: "verified",
-    employer: "Synthetic Labs",
-    collaboration_scope: "supported"
+    employer: "Synthetic Labs"
   } as const;
   evidence.evidence_items.push(boundedEvidence);
   writeJson(fixture.paths.evidence, evidence);
   const evidenceHash = fileHash(fixture.paths.evidence);
+  const registerGap: ApplicationLevelGap = {
+    gap_id: "G02",
+    requirement: "Direct restaurant technology experience",
+    normalized_requirement_key: "direct-restaurant-technology-experience",
+    status: "bounded-claim",
+    resolution_state: "bounded",
+    explanation: "Synthetic evidence supports adjacent platform workflow experience only.",
+    claim_boundary: "May describe bounded adjacent platform experience, not direct restaurant technology ownership.",
+    closest_supported_evidence_ids: ["EV-bounded"],
+    source_reference: "synthetic.application_fit_gaps:G02",
+    human_review_required: true,
+    positive_claim_prohibited: true
+  };
+  const register = withRegisterMaterialHash({
+    schema_version: "1.1.0",
+    artifact_type: "application-level-gap-register",
+    gap_register_id: "GAPREG-synthetic",
+    application_id: "APP-synthetic",
+    jd_snapshot_id: "JD-synthetic",
+    opportunity_id: "OPP-synthetic",
+    handoff_id: "HANDOFF-synthetic",
+    decision_id: "DEC-synthetic",
+    decision_reconciliation_id: null,
+    candidate_evidence_id: "CEV-synthetic",
+    candidate_evidence_hash: evidenceHash,
+    created_at: now,
+    created_by: "Synthetic Reviewer",
+    source_reference: "synthetic.application_gap_register",
+    gaps: [registerGap],
+    integrity: { material_hash: "" }
+  });
+  writeJson(registerPath, register);
   const boundedStatement = {
     statement_id: "stmt:bounded-g02",
     target_section: "experience-bullets" as const,
     template_id: "bounded-product-work" as const,
-    claim_atoms: { bounded_qualifier: "supported", action: "Supported", object: "restaurant-adjacent platform workflows", employer: "Synthetic Labs" },
+    claim_atoms: { action: "Restaurant-adjacent", object: "platform workflows", employer: "Synthetic Labs" },
     primary_evidence_id: "EV-bounded",
     supporting_evidence_ids: [],
     trusted_evidence_ids: ["EV-bounded"],
@@ -657,34 +729,27 @@ function createBoundedOverlayFixture(options: { reviewPatch?: Record<string, unk
     boundary_class: "bounded-claim-control" as const,
     human_review_required: true as const
   };
+  const boundedGap = {
+    ...draftGapFromRegister(registerGap, "GAPREG-synthetic"),
+    included_statement_ids: ["stmt:bounded-g02"]
+  };
   const draft = readJson<ResumeDraft>(fixture.paths.draft);
   draft.integrity.candidate_evidence_hash = evidenceHash;
+  draft.references.application_gap_register_id = "GAPREG-synthetic";
+  draft.source_provenance.application_gap_register_path = registerPath;
   draft.role_specific_experience_bullets = [
     {
       statement_id: "stmt:bounded-g02",
-      text: "supported Supported restaurant-adjacent platform workflows for Synthetic Labs.",
+      text: renderRevisionStatementText(boundedStatement, { proofSchemaVersion: constructionProofSchemaVersion }),
       provenance: { evidence_record_id: "EV-bounded" },
-      construction: buildEvidenceConstructionProof(boundedStatement, evidence.evidence_items)
+      construction: buildEvidenceConstructionProof(boundedStatement, evidence.evidence_items, {
+        proofSchemaVersion: constructionProofSchemaVersion,
+        currentRegisterGaps: [registerGap],
+        gapRegisterReference: { gap_register_id: "GAPREG-synthetic", file_hash: fileHash(registerPath), material_hash: register.integrity.material_hash }
+      })
     }
   ];
-  draft.application_fit_gaps = [
-    {
-      gap_id: "G02",
-      gap_register_id: "GAPREG-synthetic",
-      requirement: "Direct restaurant technology experience",
-      normalized_requirement_key: "direct-restaurant-technology-experience",
-      gap_class: "bounded-claim-control",
-      generated_disposition: "generated-bounded-control",
-      allowed_review_dispositions: ["accept-bounded-representation"],
-      claim_boundary: "May describe bounded adjacent platform experience, not direct restaurant technology ownership.",
-      closest_supported_evidence_ids: ["EV-bounded"],
-      included_statement_ids: ["stmt:bounded-g02"],
-      excluded_from_positive_claims: true,
-      human_review_required: true,
-      positive_claim_prohibited: true,
-      source_reference: "synthetic.application_fit_gaps:G02"
-    }
-  ];
+  draft.application_fit_gaps = [boundedGap];
   writeJson(fixture.paths.draft, draft);
   const checklist = {
     ...fixture.checklist,
@@ -720,7 +785,72 @@ function createBoundedOverlayFixture(options: { reviewPatch?: Record<string, unk
   }) as ResumeReviewDecisionArtifact;
   review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
   writeJson(fixture.paths.review, review);
-  return { ...fixture, checklist, review };
+  return { ...fixture, paths, checklist, review };
+}
+
+function draftGapFromRegister(gap: ApplicationLevelGap, gapRegisterId: string): NonNullable<ResumeDraft["application_fit_gaps"]>[number] {
+  return {
+    gap_id: "G02",
+    gap_register_id: gapRegisterId,
+    requirement: gap.requirement,
+    normalized_requirement_key: gap.normalized_requirement_key,
+    gap_class: "bounded-claim-control" as const,
+    generated_disposition: "generated-bounded-control" as const,
+    allowed_review_dispositions: ["accept-bounded-representation" as const],
+    claim_boundary: gap.claim_boundary,
+    closest_supported_evidence_ids: gap.closest_supported_evidence_ids,
+    included_statement_ids: [],
+    excluded_from_positive_claims: true,
+    human_review_required: true as const,
+    positive_claim_prohibited: true as const,
+    source_reference: gap.source_reference
+  };
+}
+
+function rewriteCurrentRegisterGap(fixture: ReturnType<typeof createBoundedOverlayFixture>, patch: Partial<ApplicationLevelGap>): ApplicationGapRegister {
+  const register = readJson<ApplicationGapRegister>(fixture.paths.register);
+  const next = withRegisterMaterialHash({
+    ...register,
+    gaps: [{ ...register.gaps[0], ...patch }],
+    integrity: { material_hash: "" }
+  });
+  writeJson(fixture.paths.register, next);
+  return next;
+}
+
+function alignDraftGapWithCurrentRegister(fixture: ReturnType<typeof createBoundedOverlayFixture>, gap: ApplicationLevelGap): void {
+  const draft = readJson<ResumeDraft>(fixture.paths.draft);
+  draft.application_fit_gaps = [{ ...draftGapFromRegister(gap, "GAPREG-synthetic"), included_statement_ids: ["stmt:bounded-g02"] }];
+  writeJson(fixture.paths.draft, draft);
+}
+
+function relinkReviewAndApprovalToCurrentDraft(fixture: ReturnType<typeof createBoundedOverlayFixture>, approvalPath: string): void {
+  const review = relinkReviewToCurrentDraft(fixture);
+
+  const approval = readJson<ResumeApproval>(approvalPath);
+  approval.draft.draft_hash = fileHash(fixture.paths.draft);
+  approval.integrity.draft_hash = approval.draft.draft_hash;
+  approval.review_decision!.file_hash = fileHash(fixture.paths.review);
+  approval.review_decision!.material_hash = review.integrity.material_hash;
+  approval.integrity.review_decision_hash = approval.review_decision!.file_hash;
+  approval.integrity.approval_material_hash = hashJson({
+    ...approval,
+    approved_at: "stable",
+    integrity: { ...approval.integrity, approval_material_hash: "stable" }
+  });
+  writeJson(approvalPath, approval);
+}
+
+function relinkReviewToCurrentDraft(fixture: ReturnType<typeof createBoundedOverlayFixture>): ResumeReviewDecisionArtifact {
+  const review = readJson<ResumeReviewDecisionArtifact>(fixture.paths.review);
+  review.draft.file_hash = fileHash(fixture.paths.draft);
+  review.integrity.material_hash = hashResumeReviewDecisionMaterial(review);
+  writeJson(fixture.paths.review, review);
+  return review;
+}
+
+function withRegisterMaterialHash(register: ApplicationGapRegister): ApplicationGapRegister {
+  return { ...register, integrity: { material_hash: hashApplicationGapRegisterMaterial(register) } };
 }
 
 function createFixture(options: FixtureOptions = {}) {
@@ -738,7 +868,7 @@ function createFixture(options: FixtureOptions = {}) {
     approval: path.join(registryRoot, "resume-approvals", "manual.json")
   };
   for (const [file, value] of [
-    [paths.strategy, { schema_version: "1.0.0", strategy_id: "RSTRAT-APP-synthetic" }],
+    [paths.strategy, { schema_version: "1.0.0", strategy_id: "RSTRAT-APP-synthetic", decision_state: { decision_reconciliation_id: null } }],
     [paths.evidence, {
       schema_version: "1.0.0",
       evidence_source_id: "CEV-synthetic",
@@ -753,7 +883,7 @@ function createFixture(options: FixtureOptions = {}) {
       ]
     }],
     [paths.application, { schema_version: "1.0.0", application_id: "APP-synthetic" }],
-    [paths.opportunity, { schema_version: "1.0.0", opportunity_id: "OPP-synthetic" }],
+    [paths.opportunity, { schema_version: "1.0.0", opportunity_id: "OPP-synthetic", decision_id: "DEC-synthetic" }],
     [paths.jd, { schema_version: "1.0.0", jd_snapshot_id: "JD-synthetic" }]
   ] as Array<[string, unknown]>) writeJson(file, value);
 
