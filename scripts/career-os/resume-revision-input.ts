@@ -18,6 +18,10 @@ import {
   type RevisionTemplateId,
   type TrustedEvidenceItem
 } from "./resume-construction-proof.ts";
+import {
+  canonicalStrategySupportReferences,
+  type StrategySupportReferenceStrategy
+} from "./resume-strategy-support-reference.ts";
 
 export const resumeRevisionInputSchemaVersion = "1.0.0" as const;
 export const resumeRevisionInputSchemaVersionV2 = "1.1.0" as const;
@@ -113,7 +117,10 @@ export function buildResumeRevisionInput(
   input: Omit<ResumeRevisionInputArtifact, "integrity">,
   context: Parameters<typeof validateResumeRevisionInput>[1]
 ): ResumeRevisionInputArtifact {
-  const revision = { ...input, integrity: { material_hash: "" } };
+  const normalized = input.schema_version === resumeRevisionInputSchemaVersionV2
+    ? normalizeRevisionInputStrategyReferences(input, context.strategy)
+    : input;
+  const revision = { ...normalized, integrity: { material_hash: "" } };
   revision.integrity.material_hash = hashResumeRevisionInputMaterial(revision);
   validateResumeRevisionInput(revision, context);
   return revision;
@@ -129,7 +136,7 @@ export function readAndValidateResumeRevisionInput(input: {
   predecessorChecklistPath: string;
   priorReviewDecision: ResumeReviewDecisionArtifact;
   priorReviewDecisionPath: string;
-  strategy: { strategy_id: string; integrity: { material_hash: string } };
+  strategy: StrategySupportReferenceStrategy & { strategy_id: string; integrity: { material_hash: string } };
   strategyPath: string;
   candidateEvidence: TrustedEvidenceSource;
   candidateEvidencePath: string;
@@ -152,7 +159,7 @@ export function validateResumeRevisionInput(
     predecessorChecklistPath: string;
     priorReviewDecision: ResumeReviewDecisionArtifact;
     priorReviewDecisionPath: string;
-    strategy: { strategy_id: string; integrity: { material_hash: string } };
+    strategy: StrategySupportReferenceStrategy & { strategy_id: string; integrity: { material_hash: string } };
     strategyPath: string;
     candidateEvidence: TrustedEvidenceSource;
     candidateEvidencePath: string;
@@ -190,6 +197,9 @@ export function validateResumeRevisionInput(
   assertEqual(revision.application_gap_register.gap_register_id, input.applicationGapRegister.gap_register_id, "revision input gap register ID");
   assertEqual(revision.application_gap_register.file_hash, fileHash(input.applicationGapRegisterPath), "revision input gap register file hash");
   assertEqual(revision.application_gap_register.material_hash, input.applicationGapRegister.integrity.material_hash, "revision input gap register material hash");
+  if (revision.schema_version === resumeRevisionInputSchemaVersionV2) {
+    validateRevisionInputStrategyReferences(revision, input.strategy);
+  }
   assertEqual(revision.integrity?.material_hash, hashResumeRevisionInputMaterial(revision), "revision input material hash");
   validateStatements(revision, input);
 }
@@ -287,6 +297,33 @@ function validatePriorReviewCompatibility(predecessorDraft: ReviewableDraft, rev
   }
   if (isLegacyMigrationReview(reviewDecision)) {
     throw new ResumeRevisionInputError("invalid-revision-input", "Legacy migration review decisions cannot target Draft 1.1.0 revision inputs.");
+  }
+}
+
+function normalizeRevisionInputStrategyReferences(
+  revision: Omit<ResumeRevisionInputArtifact, "integrity">,
+  strategy: StrategySupportReferenceStrategy
+): Omit<ResumeRevisionInputArtifact, "integrity"> {
+  return {
+    ...revision,
+    revised_statements: revision.revised_statements.map((item) => ({
+      ...item,
+      strategy_support_references: canonicalStrategySupportReferences(strategy, item, "builder")
+    })),
+    expansion_items: revision.expansion_items.map((item) => ({
+      ...item,
+      strategy_support_references: canonicalStrategySupportReferences(strategy, item, "builder")
+    }))
+  };
+}
+
+function validateRevisionInputStrategyReferences(revision: ResumeRevisionInputArtifact, strategy: StrategySupportReferenceStrategy): void {
+  try {
+    for (const item of [...revision.revised_statements, ...revision.expansion_items]) {
+      canonicalStrategySupportReferences(strategy, item, "persisted");
+    }
+  } catch (error) {
+    throw new ResumeRevisionInputError("invalid-revision-input", error instanceof Error ? error.message : String(error));
   }
 }
 

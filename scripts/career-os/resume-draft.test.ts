@@ -999,9 +999,14 @@ function createProofV2DraftConsumerFixture(): ReturnType<typeof createFixture> &
   const strategy = readJson<Record<string, unknown> & {
     candidate_evidence_source: Record<string, unknown>;
     application_level_gap_register: Record<string, unknown>;
+    evidence_to_requirement_mapping: Array<Record<string, unknown>>;
     integrity: Record<string, unknown>;
   }>(fixture.paths.strategy);
   strategy.candidate_evidence_source.source_hash = evidenceHash;
+  strategy.evidence_to_requirement_mapping = [
+    ...(strategy.evidence_to_requirement_mapping ?? []),
+    { requirement: "Synthetic metric execution", status: "evidence-backed", evidence_ids: ["EV-metric-v2"], notes: "Supported by synthetic metric evidence." }
+  ];
   strategy.application_level_gaps = applicationLevelGaps;
   strategy.application_level_gap_register = {
     gap_register_id: "GAPREG-synthetic-labs",
@@ -1112,7 +1117,7 @@ function createProofV2DraftConsumerFixture(): ReturnType<typeof createFixture> &
         primary_evidence_id: "EV-metric-v2",
         supporting_evidence_ids: [],
         trusted_evidence_ids: ["EV-metric-v2"],
-        strategy_support_references: ["strategy.mapping:metric-v2"],
+        strategy_support_references: ["strategy.evidence_to_requirement_mapping[1]"],
         related_application_fit_gap_ids: [],
         boundary_class: "ordinary-evidence-backed",
         human_review_required: true,
@@ -1127,7 +1132,7 @@ function createProofV2DraftConsumerFixture(): ReturnType<typeof createFixture> &
         primary_evidence_id: "EV-bounded-v2",
         supporting_evidence_ids: [],
         trusted_evidence_ids: ["EV-bounded-v2"],
-        strategy_support_references: ["strategy.mapping:g05"],
+        strategy_support_references: ["strategy.application_level_gaps[G05]"],
         related_application_fit_gap_ids: ["G05"],
         boundary_class: "bounded-claim-control",
         human_review_required: true

@@ -216,6 +216,15 @@ describe("career-os controlled resume approval and export", () => {
     expect(existsSync(path.join(fixture.registryRoot, "resume-approvals"))).toBe(false);
   });
 
+  it("approval rejects current Strategy gap-reference drift after refreshed outer hashes", () => {
+    const fixture = createBoundedOverlayFixture();
+    rewriteStrategyApplicationGap(fixture, { closest_supported_evidence_ids: ["EV-other"] });
+    relinkReviewToCurrentDraft(fixture);
+
+    expect(() => approveOverlay(fixture, "--dry-run")).toThrow(/Strategy gap reference must include the primary evidence ID/u);
+    expect(existsSync(path.join(fixture.registryRoot, "resume-approvals"))).toBe(false);
+  });
+
   it("export rejects current bounded register row drift after approval with refreshed hashes and stale Draft row", () => {
     const fixture = createBoundedOverlayFixture();
     const approval = approveOverlay(fixture, "--apply");
@@ -233,6 +242,16 @@ describe("career-os controlled resume approval and export", () => {
     relinkReviewAndApprovalToCurrentDraft(fixture, approval.output);
 
     expect(() => exportResume(fixture, approval.output, "--dry-run")).toThrow(/stale or forged/u);
+    expect(existsSync(path.join(fixture.registryRoot, "resume-exports"))).toBe(false);
+  });
+
+  it("export rejects post-approval Strategy-reference drift after refreshed outer hashes", () => {
+    const fixture = createBoundedOverlayFixture();
+    const approval = approveOverlay(fixture, "--apply");
+    rewriteStrategyApplicationGap(fixture, { human_review_required: false });
+    relinkReviewAndApprovalToCurrentDraft(fixture, approval.output);
+
+    expect(() => exportResume(fixture, approval.output, "--dry-run")).toThrow(/Strategy gap reference is missing bounded safety flags/u);
     expect(existsSync(path.join(fixture.registryRoot, "resume-exports"))).toBe(false);
   });
 
@@ -716,6 +735,14 @@ function createBoundedOverlayFixture(options: { reviewPatch?: Record<string, unk
     integrity: { material_hash: "" }
   });
   writeJson(registerPath, register);
+  const strategy = readJson<Record<string, unknown>>(fixture.paths.strategy);
+  writeJson(fixture.paths.strategy, {
+    ...strategy,
+    evidence_to_requirement_mapping: [{ requirement: "Synthetic bounded platform work", status: "evidence-backed", evidence_ids: ["EV-bounded"], notes: "Synthetic bounded support." }],
+    supported_positioning_themes: [{ theme: "Synthetic bounded platform work", status: "evidence-backed", evidence_ids: ["EV-bounded"] }],
+    recommended_resume_sections_or_emphasis: [{ section: "experience", recommendation: "Synthetic experience emphasis.", status: "evidence-backed", evidence_ids: ["EV-bounded"] }],
+    application_level_gaps: [registerGap]
+  });
   const boundedStatement = {
     statement_id: "stmt:bounded-g02",
     target_section: "experience-bullets" as const,
@@ -724,7 +751,7 @@ function createBoundedOverlayFixture(options: { reviewPatch?: Record<string, unk
     primary_evidence_id: "EV-bounded",
     supporting_evidence_ids: [],
     trusted_evidence_ids: ["EV-bounded"],
-    strategy_support_references: ["strategy.mapping:bounded"],
+    strategy_support_references: ["strategy.application_level_gaps[G02]"],
     related_application_fit_gap_ids: ["G02"],
     boundary_class: "bounded-claim-control" as const,
     human_review_required: true as const
@@ -735,6 +762,7 @@ function createBoundedOverlayFixture(options: { reviewPatch?: Record<string, unk
   };
   const draft = readJson<ResumeDraft>(fixture.paths.draft);
   draft.integrity.candidate_evidence_hash = evidenceHash;
+  draft.integrity.strategy_hash = fileHash(fixture.paths.strategy);
   draft.references.application_gap_register_id = "GAPREG-synthetic";
   draft.source_provenance.application_gap_register_path = registerPath;
   draft.role_specific_experience_bullets = [
@@ -821,6 +849,15 @@ function rewriteCurrentRegisterGap(fixture: ReturnType<typeof createBoundedOverl
 function alignDraftGapWithCurrentRegister(fixture: ReturnType<typeof createBoundedOverlayFixture>, gap: ApplicationLevelGap): void {
   const draft = readJson<ResumeDraft>(fixture.paths.draft);
   draft.application_fit_gaps = [{ ...draftGapFromRegister(gap, "GAPREG-synthetic"), included_statement_ids: ["stmt:bounded-g02"] }];
+  writeJson(fixture.paths.draft, draft);
+}
+
+function rewriteStrategyApplicationGap(fixture: ReturnType<typeof createBoundedOverlayFixture>, patch: Partial<ApplicationLevelGap>): void {
+  const strategy = readJson<{ application_level_gaps: ApplicationLevelGap[] } & Record<string, unknown>>(fixture.paths.strategy);
+  strategy.application_level_gaps = [{ ...strategy.application_level_gaps[0], ...patch }];
+  writeJson(fixture.paths.strategy, strategy);
+  const draft = readJson<ResumeDraft>(fixture.paths.draft);
+  draft.integrity.strategy_hash = fileHash(fixture.paths.strategy);
   writeJson(fixture.paths.draft, draft);
 }
 

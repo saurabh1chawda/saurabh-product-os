@@ -410,7 +410,7 @@ function buildDraft(input: {
     ...repetitionFlags(allStatements),
     ...superlativeFlags(allStatements)
   ];
-  const revisionStatements = input.revisionInput ? statementsFromRevisionInput(input.revisionInput, usableEvidence, applicationLevelGaps, input.strategy.application_level_gap_register) : emptyRevisionStatements();
+  const revisionStatements = input.revisionInput ? statementsFromRevisionInput(input.revisionInput, usableEvidence, applicationLevelGaps, input.strategy.application_level_gap_register, input.strategy) : emptyRevisionStatements();
   applicationFitGaps = withBoundedRevisionStatementIds(applicationFitGaps, revisionStatements);
   const draft: ResumeDraft = {
     schema_version: applicationFitGaps.length || input.revisionInput ? draftSchemaVersion : schemaVersion,
@@ -540,7 +540,8 @@ function statementsFromRevisionInput(
   revisionInput: ResumeRevisionInputArtifact,
   evidence: EvidenceItem[],
   applicationGaps: ApplicationLevelGap[],
-  gapRegisterReference: GapRegisterReferenceLike | undefined
+  gapRegisterReference: GapRegisterReferenceLike | undefined,
+  strategy: StrategyArtifact
 ): RevisionStatementBuckets {
   const buckets = emptyRevisionStatements();
   const evidenceById = new Map(evidence.map((item) => [item.evidence_id, item]));
@@ -556,7 +557,7 @@ function statementsFromRevisionInput(
     const source = evidenceById.get(item.primary_evidence_id);
     if (!source) throw new ResumeDraftError("invalid-revision-input", `Revision statement references unknown evidence: ${item.primary_evidence_id}`);
     const renderedText = renderRevisionStatementText(item, { proofSchemaVersion });
-    const construction = constructionFromRevisionStatement(item, evidence, proofSchemaVersion, applicationGaps, proofGapRegisterReference);
+    const construction = constructionFromRevisionStatement(item, evidence, proofSchemaVersion, applicationGaps, proofGapRegisterReference, strategy);
     buckets[item.target_section].push({
       statement_id: item.statement_id,
       text: renderedText,
@@ -586,10 +587,11 @@ function constructionFromRevisionStatement(
   evidence: EvidenceItem[],
   proofSchemaVersion: "1.0.0" | typeof constructionProofSchemaVersion,
   applicationGaps: ApplicationLevelGap[],
-  gapRegisterReference: GapRegisterReferenceLike | undefined
+  gapRegisterReference: GapRegisterReferenceLike | undefined,
+  strategy: StrategyArtifact
 ): NonNullable<DraftStatement["construction"]> {
   try {
-    return buildEvidenceConstructionProof(item, evidence, { proofSchemaVersion, currentRegisterGaps: applicationGaps, gapRegisterReference });
+    return buildEvidenceConstructionProof(item, evidence, { proofSchemaVersion, currentRegisterGaps: applicationGaps, gapRegisterReference, strategy });
   } catch (error) {
     throw new ResumeDraftError("invalid-revision-input", error instanceof Error ? error.message : String(error));
   }

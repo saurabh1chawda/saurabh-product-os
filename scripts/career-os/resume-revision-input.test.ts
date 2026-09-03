@@ -12,6 +12,7 @@ import {
   type TrustedEvidenceSource
 } from "./resume-revision-input";
 import { canonicalMetricProjection } from "./resume-construction-proof";
+import { canonicalStrategySupportReferences, type StrategySupportReferenceStatement, type StrategySupportReferenceStrategy } from "./resume-strategy-support-reference";
 
 const now = "2026-08-25T12:00:00.000Z";
 
@@ -110,6 +111,7 @@ describe("career-os resume revision input", () => {
       ...validStatement(),
       template_id: "metric-outcome",
       claim_atoms: { ...validStatement().claim_atoms, metric_value: "42", metric_unit: "%" },
+      strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]"],
       selected_metric_key: metricKey
     };
     const valid = createFixture({
@@ -130,6 +132,116 @@ describe("career-os resume revision input", () => {
       }
     });
     expect(() => validateFixture(downgraded)).toThrow(/1\.0\.0 cannot use proof v2/u);
+  });
+
+  it("validates and canonicalizes Strategy support references for revision-input 1.1", () => {
+    const fixture = createFixture({
+      revisionPatch: {
+        schema_version: "1.1.0",
+        revised_statements: [
+          {
+            ...validStatement(),
+            strategy_support_references: ["strategy.supported_positioning_themes[0]", "strategy.evidence_to_requirement_mapping[0]"]
+          }
+        ],
+        expansion_items: []
+      }
+    });
+    const current = readJson<ResumeRevisionInputArtifact>(fixture.paths.revision);
+    const input = { ...current } as Omit<ResumeRevisionInputArtifact, "integrity"> & { integrity?: unknown };
+    delete input.integrity;
+
+    const first = buildResumeRevisionInput(input, revisionContext(fixture));
+    const reordered = buildResumeRevisionInput(
+      {
+        ...input,
+        revised_statements: [
+          {
+            ...input.revised_statements[0],
+            strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]", "strategy.supported_positioning_themes[0]"]
+          }
+        ]
+      },
+      revisionContext(fixture)
+    );
+
+    expect(first.revised_statements[0].strategy_support_references).toEqual(["strategy.evidence_to_requirement_mapping[0]", "strategy.supported_positioning_themes[0]"]);
+    expect(reordered.integrity.material_hash).toBe(first.integrity.material_hash);
+  });
+
+  it("rejects invalid Strategy support reference syntax, existence and persisted ordering for revision-input 1.1", () => {
+    const valid = createFixture({ revisionPatch: { schema_version: "1.1.0", expansion_items: [] } });
+
+    for (const badReference of [
+      "strategy.mapping:product",
+      "strategy.evidence_to_requirement_mapping[01]",
+      "strategy.evidence_to_requirement_mapping[-1]",
+      "strategy.evidence_to_requirement_mapping[+1]",
+      " strategy.evidence_to_requirement_mapping[0]",
+      "strategy.evidence_to_requirement_mapping[0] ",
+      "strategy.application_level_gaps['G05']",
+      "strategy.evidence_to_requirement_mapping[*]",
+      "strategy.evidence_to_requirement_mapping[0].notes",
+      "strategy.application_level_gaps[__proto__]",
+      "strategy.evidence_to_requirement_mapping[0",
+      "strategy.evidence_to_requirement_mapping0]"
+    ]) {
+      const malformed = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: [badReference] }], expansion_items: [] } });
+      expect(() => validateFixture(malformed)).toThrow(/Unsupported Strategy support reference syntax|trimmed non-empty/u);
+    }
+
+    const outOfRange = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.evidence_to_requirement_mapping[99]"] }], expansion_items: [] } });
+    expect(() => validateFixture(outOfRange)).toThrow(/does not exist/u);
+
+    const duplicateVector = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]", "strategy.evidence_to_requirement_mapping[0]"] }], expansion_items: [] } });
+    expect(() => validateFixture(duplicateVector)).toThrow(/Duplicate Strategy support reference/u);
+
+    const noncanonical = readJson<ResumeRevisionInputArtifact>(valid.paths.revision);
+    noncanonical.revised_statements[0].strategy_support_references = ["strategy.supported_positioning_themes[0]", "strategy.evidence_to_requirement_mapping[0]"];
+    noncanonical.integrity.material_hash = hashResumeRevisionInputMaterial(noncanonical);
+    writeJson(valid.paths.revision, noncanonical);
+    expect(() => validateFixture(valid)).toThrow(/canonical order/u);
+  });
+
+  it("rejects semantically unrelated, section-only, extra irrelevant and gap-incompatible Strategy references", () => {
+    const unrelated = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.evidence_to_requirement_mapping[1]"] }], expansion_items: [] } });
+    expect(() => validateFixture(unrelated)).toThrow(/primary evidence/u);
+
+    const unrelatedTheme = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.supported_positioning_themes[1]"] }], expansion_items: [] } });
+    expect(() => validateFixture(unrelatedTheme)).toThrow(/primary evidence/u);
+
+    const wrongSection = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]", "strategy.recommended_resume_sections_or_emphasis[0]"] }], expansion_items: [] } });
+    expect(() => validateFixture(wrongSection)).toThrow(/target section/u);
+
+    const sectionOnly = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.recommended_resume_sections_or_emphasis[1]"] }], expansion_items: [] } });
+    expect(() => validateFixture(sectionOnly)).toThrow(/claim-support provenance/u);
+
+    const extraIrrelevant = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]", "strategy.supported_positioning_themes[1]"] }], expansion_items: [] } });
+    expect(() => validateFixture(extraIrrelevant)).toThrow(/primary evidence/u);
+
+    const ordinaryGap = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), strategy_support_references: ["strategy.application_level_gaps[G01]"] }], expansion_items: [] } });
+    expect(() => validateFixture(ordinaryGap)).toThrow(/only allowed for bounded product work/u);
+
+    const gapMismatch = createFixture({ revisionPatch: { schema_version: "1.1.0", revised_statements: [{ ...validStatement(), template_id: "bounded-product-work", boundary_class: "bounded-claim-control", related_application_fit_gap_ids: ["G01"], strategy_support_references: ["strategy.application_level_gaps[G05]"] }], expansion_items: [] } });
+    expect(() => validateFixture(gapMismatch)).toThrow(/related gap/u);
+  });
+
+  it("rejects duplicate Strategy gap IDs before resolving gap handles", () => {
+    const statement: StrategySupportReferenceStatement = {
+      ...validStatement(),
+      target_section: "summary",
+      template_id: "bounded-product-work" as const,
+      strategy_support_references: ["strategy.application_level_gaps[G05]"],
+      related_application_fit_gap_ids: ["G05"],
+      boundary_class: "bounded-claim-control" as const
+    };
+    const g05 = { gap_id: "G05", status: "bounded-claim", resolution_state: "bounded", human_review_required: true, positive_claim_prohibited: true, closest_supported_evidence_ids: ["EV-summary"] };
+    const g01 = { gap_id: "G01", status: "unresolved", resolution_state: "requires-human-review", human_review_required: true, positive_claim_prohibited: true, closest_supported_evidence_ids: ["EV-summary"] };
+
+    expect(() => canonicalStrategySupportReferences({ application_level_gaps: [g05, g05] }, statement, "persisted")).toThrow(/Duplicate Strategy application gap ID: G05/u);
+    expect(() => canonicalStrategySupportReferences({ application_level_gaps: [{ ...g01, gap_id: "G02" }, { ...g01, gap_id: "G02" }, g05] }, statement, "persisted")).toThrow(/Duplicate Strategy application gap ID: G02/u);
+    expect(canonicalStrategySupportReferences({ application_level_gaps: [g01, g05] }, statement, "persisted")).toEqual(["strategy.application_level_gaps[G05]"]);
+    expect(canonicalStrategySupportReferences({ application_level_gaps: [g05, g01] }, statement, "persisted")).toEqual(["strategy.application_level_gaps[G05]"]);
   });
 
   it("rejects cross-record atom composition and supporting evidence substitutes", () => {
@@ -272,11 +384,14 @@ describe("career-os resume revision input", () => {
   });
 });
 
-function validateFixture(fixture: ReturnType<typeof createFixture>) {
+type RevisionFixture = ReturnType<typeof createFixture> | ReturnType<typeof createLegacyRevisionFixture>;
+type TestStrategy = StrategySupportReferenceStrategy & { strategy_id: string; integrity: { material_hash: string } };
+
+function validateFixture(fixture: RevisionFixture) {
   return readAndValidateResumeRevisionInput({ file: fixture.paths.revision, cwd: fixture.workspace, registryRoot: fixture.registryRoot, ...revisionContext(fixture) });
 }
 
-function revisionContext(fixture: ReturnType<typeof createFixture>) {
+function revisionContext(fixture: RevisionFixture) {
   return {
     predecessorDraft: fixture.draft,
     predecessorDraftPath: fixture.paths.draft,
@@ -309,14 +424,14 @@ function validStatement() {
     primary_evidence_id: "EV-summary",
     supporting_evidence_ids: [],
     trusted_evidence_ids: ["EV-summary"],
-    strategy_support_references: ["strategy.mapping:product"],
+    strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]"],
     related_application_fit_gap_ids: [],
     boundary_class: "ordinary-evidence-backed",
     human_review_required: true
   };
 }
 
-function createFixture(options: { revisionPatch?: Record<string, unknown>; reviewPatch?: Record<string, unknown>; evidencePatch?: Record<string, unknown>; preserveRevisionHash?: boolean } = {}) {
+function createFixture(options: { revisionPatch?: Record<string, unknown>; reviewPatch?: Record<string, unknown>; evidencePatch?: Record<string, unknown>; strategyPatch?: Record<string, unknown>; preserveRevisionHash?: boolean } = {}) {
   const workspace = mkdtempSync(path.join(os.tmpdir(), "career-os-revision-input-"));
   const registryRoot = path.join(workspace, "registry");
   const paths = {
@@ -343,7 +458,29 @@ function createFixture(options: { revisionPatch?: Record<string, unknown>; revie
     integrity: { material_hash: "draft-material" }
   };
   const checklist: ReviewableChecklist = { schema_version: "1.1.0", checklist_id: "RCHK-RDRAFT-synthetic", draft_id: "RDRAFT-synthetic", items: [{ check_id: "claim-verification", status: "pending", applicable_gap_ids: [] }] };
-  const strategy = { strategy_id: "RSTRAT-synthetic", integrity: { material_hash: "strategy-material" } };
+  const strategy = mergeRecord(
+    {
+      strategy_id: "RSTRAT-synthetic",
+      evidence_to_requirement_mapping: [
+        { requirement: "Synthetic product strategy", status: "evidence-backed", evidence_ids: ["EV-summary"], notes: "Synthetic evidence-backed mapping." },
+        { requirement: "Unrelated synthetic requirement", status: "evidence-backed", evidence_ids: ["EV-support"], notes: "Synthetic unrelated mapping." }
+      ],
+      supported_positioning_themes: [
+        { theme: "Synthetic product positioning", status: "evidence-backed", evidence_ids: ["EV-summary"] },
+        { theme: "Synthetic supporting context", status: "evidence-backed", evidence_ids: ["EV-support"] }
+      ],
+      recommended_resume_sections_or_emphasis: [
+        { section: "headline", recommendation: "Synthetic headline emphasis.", status: "evidence-backed", evidence_ids: ["EV-summary"] },
+        { section: "summary", recommendation: "Synthetic summary emphasis.", status: "evidence-backed", evidence_ids: ["EV-summary"] }
+      ],
+      application_level_gaps: [
+        { gap_id: "G01", status: "unresolved", resolution_state: "requires-human-review", human_review_required: true, positive_claim_prohibited: true, closest_supported_evidence_ids: ["EV-summary"] },
+        { gap_id: "G05", status: "bounded-claim", resolution_state: "bounded", human_review_required: true, positive_claim_prohibited: true, closest_supported_evidence_ids: ["EV-summary"] }
+      ],
+      integrity: { material_hash: "strategy-material" }
+    },
+    options.strategyPatch
+  ) as TestStrategy;
   const evidence = mergeRecord(
     {
       evidence_source_id: "CEV-synthetic",
@@ -443,7 +580,11 @@ function createLegacyRevisionFixture(options: { revisionPatch?: Record<string, u
       { evidence_id: "EV-summary", statement: "Improved synthetic product strategy at Synthetic Labs during 2024-Present with measurable outcomes.", employer: "Synthetic Labs", dates: "2024-Present", status: "verified" }
     ]
   } as TrustedEvidenceSource;
-  const register = { gap_register_id: "GAPREG-synthetic-successor", integrity: { material_hash: "register-material" }, gaps: [{ gap_id: "G01" }] };
+  const register = {
+    gap_register_id: "GAPREG-synthetic-successor",
+    integrity: { material_hash: "register-material" },
+    gaps: [{ gap_id: "G01", claim_boundary: "Synthetic legacy boundary.", human_review_required: true, positive_claim_prohibited: true }]
+  };
   writeJson(paths.draft, draft);
   writeJson(paths.checklist, checklist);
   writeJson(paths.strategy, strategy);

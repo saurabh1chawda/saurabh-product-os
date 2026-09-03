@@ -33,6 +33,7 @@ import type { TrustedEvidenceItem } from "./resume-construction-proof.ts";
 import { readAndValidateResumeReviewDecision } from "./resume-review-decision.ts";
 import type { GapRegisterReferenceLike } from "./resume-construction-proof.ts";
 import { readAndValidateApplicationGapRegister, type ApplicationLevelGap } from "./application-gap-register.ts";
+import type { StrategySupportReferenceStrategy } from "./resume-strategy-support-reference.ts";
 
 type ExportState = "export_pending" | "export_generated" | "export_validation_failed" | "export_validated";
 
@@ -184,10 +185,27 @@ function validateDraftAgainstApproval(input: { cwd: string; registryRoot: string
       throw new CareerOsExportError("approval-not-exportable", "Review decision is not satisfactory for export.");
     }
     if (!approval.approver) throw new CareerOsExportError("missing-approver-id", "Draft 1.1.0 export requires stable approver identity.");
-    validateResumeApprovalCompatibility({ draft, checklist, reviewDecision, approver: approval.approver, candidateEvidence, gapRegisterContext: loadGapRegisterContext({ cwd, registryRoot, draft, candidateEvidence }) });
+    validateResumeApprovalCompatibility({
+      draft,
+      checklist,
+      reviewDecision,
+      approver: approval.approver,
+      candidateEvidence,
+      gapRegisterContext: loadGapRegisterContext({ cwd, registryRoot, draft, candidateEvidence }),
+      strategy: loadStrategyForDraft({ cwd, registryRoot, draft })
+    });
   } else if (approval.review_decision) {
     throw new CareerOsExportError("invalid-approval", "Draft 1.0.0 export approval must not include review-decision compatibility linkage.");
   }
+}
+
+function loadStrategyForDraft(input: { cwd: string; registryRoot: string; draft: ResumeDraft }): StrategySupportReferenceStrategy {
+  const strategyPath = path.resolve(input.cwd, input.draft.source_provenance.strategy_path);
+  assertInside(strategyPath, input.registryRoot, "Resume strategy");
+  if (fileHash(strategyPath) !== input.draft.integrity.strategy_hash) {
+    throw new CareerOsExportError("stale-draft", "Strategy hash changed after draft generation.");
+  }
+  return readJson<StrategySupportReferenceStrategy>(strategyPath);
 }
 
 function loadGapRegisterContext(input: { cwd: string; registryRoot: string; draft: ResumeDraft; candidateEvidence: TrustedEvidenceSource }): { reference: GapRegisterReferenceLike; currentRegisterGaps: ApplicationLevelGap[] } | null {
