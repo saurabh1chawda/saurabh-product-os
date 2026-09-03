@@ -23,6 +23,7 @@ import type { ResumeApproval, ResumeDraft, ReviewChecklist } from "./resume-expo
 import { readAndValidateApplicationGapRegister, type ApplicationLevelGap } from "./application-gap-register.ts";
 import { constructionProofSchemaVersion, validateDraftStatementConstruction, type GapRegisterReferenceLike, type RevisionBoundaryClass, type TrustedEvidenceItem } from "./resume-construction-proof.ts";
 import { checklistId, normalizeIdentity, readAndValidateResumeReviewDecision, type ResumeReviewDecisionArtifact } from "./resume-review-decision.ts";
+import type { StrategySupportReferenceStrategy } from "./resume-strategy-support-reference.ts";
 
 type ApprovalResult = {
   schema_version: "1.0.0";
@@ -60,6 +61,8 @@ type GapRegisterContext = {
   currentRegisterGaps: ApplicationLevelGap[];
 };
 
+type StrategyContext = StrategySupportReferenceStrategy & { decision_state?: { decision_reconciliation_id?: string | null } };
+
 export function runCareerOsResumeApprove(options: RunOptions = {}): ApprovalResult {
   const cwd = options.cwd ?? process.cwd();
   const flags = parseArgs(options.argv ?? process.argv.slice(2));
@@ -79,6 +82,7 @@ export function runCareerOsResumeApprove(options: RunOptions = {}): ApprovalResu
   const draft = readJson<ResumeDraft>(draftPath);
   const checklist = readJson<ReviewChecklist>(checklistPath);
   const candidateEvidence = draft.schema_version === "1.1.0" ? loadCandidateEvidenceForDraft({ cwd, registryRoot, draft, explicitPath: flags["candidate-evidence"] }) : null;
+  const strategyContext = draft.schema_version === "1.1.0" ? loadStrategyForDraft({ cwd, registryRoot, draft }) : null;
   const reviewDecisionContext = loadReviewDecisionForApproval({ cwd, registryRoot, flags, draft, draftPath, checklist, checklistPath });
   validateDraft(draft, Boolean(reviewDecisionContext));
   validateChecklist(draft, checklist, reviewDecisionContext?.reviewDecision ?? null);
@@ -89,7 +93,8 @@ export function runCareerOsResumeApprove(options: RunOptions = {}): ApprovalResu
     reviewDecision: reviewDecisionContext?.reviewDecision ?? null,
     approver,
     candidateEvidence: candidateEvidence?.evidence ?? null,
-    gapRegisterContext: loadGapRegisterContext({ cwd, registryRoot, draft, candidateEvidence: candidateEvidence?.evidence ?? null })
+    gapRegisterContext: loadGapRegisterContext({ cwd, registryRoot, draft, candidateEvidence: candidateEvidence?.evidence ?? null }),
+    strategy: strategyContext
   });
   validateConfirmations(flags);
   validateLinkedHashes(cwd, registryRoot, draft);
@@ -307,8 +312,9 @@ export function validateResumeApprovalCompatibility(input: {
   approver: { approver_id: string; display_name: string };
   candidateEvidence?: TrustedEvidenceSource | null;
   gapRegisterContext?: GapRegisterContext | null;
+  strategy?: StrategyContext | null;
 }): void {
-  const { draft, checklist, reviewDecision, approver, candidateEvidence, gapRegisterContext } = input;
+  const { draft, checklist, reviewDecision, approver, candidateEvidence, gapRegisterContext, strategy } = input;
   if (draft.evidence_gaps.length || draft.excluded_unsupported_claims.length) throw new CareerOsExportError("unsupported-content", "Approved export cannot include unresolved evidence gaps.");
   if (draft.schema_version !== "1.1.0") {
     validateLegacyReviewer(approver.display_name, draft);
@@ -321,8 +327,9 @@ export function validateResumeApprovalCompatibility(input: {
   validateStableApprover(approver, draft, reviewDecision);
   validateChecklistCoverage(checklist, reviewDecision);
   validateStatementCoverage(draft, reviewDecision);
-  validateAllConstructedStatements(draft, candidateEvidence, gapRegisterContext ?? null);
-  validateReviewDecisionCompatibility(draft, reviewDecision, candidateEvidence, gapRegisterContext ?? null);
+  if (!strategy) throw new CareerOsExportError("invalid-strategy", "Draft 1.1.0 approval requires current Strategy reference validation.");
+  validateAllConstructedStatements(draft, candidateEvidence, gapRegisterContext ?? null, strategy);
+  validateReviewDecisionCompatibility(draft, reviewDecision, candidateEvidence, gapRegisterContext ?? null, strategy);
 }
 
 function validateStableApprover(approver: { approver_id: string; display_name: string }, draft: ResumeDraft, reviewDecision: ResumeReviewDecisionArtifact): void {
@@ -362,7 +369,7 @@ function validateStatementCoverage(draft: ResumeDraft, reviewDecision: ResumeRev
   }
 }
 
-function validateReviewDecisionCompatibility(draft: ResumeDraft, reviewDecision: ResumeReviewDecisionArtifact, candidateEvidence: TrustedEvidenceSource, gapRegisterContext: GapRegisterContext | null): void {
+function validateReviewDecisionCompatibility(draft: ResumeDraft, reviewDecision: ResumeReviewDecisionArtifact, candidateEvidence: TrustedEvidenceSource, gapRegisterContext: GapRegisterContext | null, strategy: StrategyContext): void {
   const statements = statementsFromDraft(draft);
   assertNoDuplicates(reviewDecision.gap_decisions.map((item) => item.gap_id), "gap decision");
   for (const gap of draft.application_fit_gaps ?? []) {
@@ -388,7 +395,7 @@ function validateReviewDecisionCompatibility(draft: ResumeDraft, reviewDecision:
       for (const statementId of gap.included_statement_ids) {
         const statement = statements.find((item) => item.statement_id === statementId);
         if (!statement) throw new CareerOsExportError("unsupported-content", `Bounded statement ${statementId} is missing from draft.`);
-        validateEvidenceTemplateStatement(statement, candidateEvidence, gapRegisterContext, draft.application_fit_gaps, gap.gap_id, "bounded-claim-control", true);
+        validateEvidenceTemplateStatement(statement, candidateEvidence, gapRegisterContext, draft.application_fit_gaps, strategy, gap.gap_id, "bounded-claim-control", true);
       }
     }
   }
@@ -399,6 +406,7 @@ function validateEvidenceTemplateStatement(
   candidateEvidence: TrustedEvidenceSource,
   gapRegisterContext?: GapRegisterContext | null,
   draftApplicationFitGaps?: ResumeDraft["application_fit_gaps"],
+  strategy?: StrategyContext,
   gapId?: string,
   boundaryClass?: RevisionBoundaryClass,
   requireProofV2 = false
@@ -412,7 +420,8 @@ function validateEvidenceTemplateStatement(
       currentRegisterGaps: gapRegisterContext?.currentRegisterGaps,
       draftApplicationFitGaps,
       gapRegisterReference: gapRegisterContext?.reference,
-      requiredProofSchemaVersion: requireProofV2 ? constructionProofSchemaVersion : undefined
+      requiredProofSchemaVersion: requireProofV2 ? constructionProofSchemaVersion : undefined,
+      strategy
     });
   } catch (error) {
     throw new CareerOsExportError("unsupported-content", error instanceof Error ? error.message : String(error));
@@ -443,7 +452,7 @@ function validateApplicationFitGaps(draft: ResumeDraft): void {
   }
 }
 
-function validateAllConstructedStatements(draft: ResumeDraft, candidateEvidence: TrustedEvidenceSource, gapRegisterContext: GapRegisterContext | null): void {
+function validateAllConstructedStatements(draft: ResumeDraft, candidateEvidence: TrustedEvidenceSource, gapRegisterContext: GapRegisterContext | null, strategy: StrategyContext): void {
   const constructed = statementsFromDraft(draft).filter((statement) => statement.construction?.construction_mode === "evidence-template");
   if (constructed.some((statement) => statement.construction?.proof_schema_version === constructionProofSchemaVersion)
     && constructed.some((statement) => statement.construction?.proof_schema_version !== constructionProofSchemaVersion)) {
@@ -451,9 +460,18 @@ function validateAllConstructedStatements(draft: ResumeDraft, candidateEvidence:
   }
   for (const statement of statementsFromDraft(draft)) {
     if (statement.construction?.construction_mode === "evidence-template") {
-      validateEvidenceTemplateStatement(statement, candidateEvidence, gapRegisterContext, draft.application_fit_gaps);
+      validateEvidenceTemplateStatement(statement, candidateEvidence, gapRegisterContext, draft.application_fit_gaps, strategy);
     }
   }
+}
+
+function loadStrategyForDraft(input: { cwd: string; registryRoot: string; draft: ResumeDraft }): StrategyContext {
+  const strategyPath = path.resolve(input.cwd, input.draft.source_provenance.strategy_path);
+  assertInside(strategyPath, input.registryRoot, "Resume strategy");
+  if (fileHash(strategyPath) !== input.draft.integrity.strategy_hash) {
+    throw new CareerOsExportError("stale-draft", "Strategy hash changed after draft generation.");
+  }
+  return readJson<StrategyContext>(strategyPath);
 }
 
 function loadGapRegisterContext(input: { cwd: string; registryRoot: string; draft: ResumeDraft; candidateEvidence: TrustedEvidenceSource | null }): GapRegisterContext | null {

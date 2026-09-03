@@ -1,4 +1,8 @@
 import { createHash } from "node:crypto";
+import {
+  canonicalStrategySupportReferences,
+  type StrategySupportReferenceStrategy
+} from "./resume-strategy-support-reference.ts";
 
 export type RevisionTargetSection = "headline" | "summary" | "core-skills" | "experience-bullets" | "achievements" | "projects";
 export type RevisionBoundaryClass = "ordinary-evidence-backed" | "acknowledged-application-fit-gap" | "bounded-claim-control";
@@ -155,6 +159,7 @@ export type ConstructionProofOptions = {
   currentRegisterGaps?: ApplicationFitGapLike[];
   draftApplicationFitGaps?: ApplicationFitGapLike[];
   gapRegisterReference?: GapRegisterReferenceLike;
+  strategy?: StrategySupportReferenceStrategy;
 };
 
 export const revisionTemplateSupportMatrix: Record<RevisionTemplateId, TemplateSupportRule> = {
@@ -372,6 +377,7 @@ export function validateDraftStatementConstruction(input: {
   draftApplicationFitGaps?: ApplicationFitGapLike[];
   gapRegisterReference?: GapRegisterReferenceLike;
   requiredProofSchemaVersion?: ConstructionProofSchemaVersion;
+  strategy?: StrategySupportReferenceStrategy;
 }): void {
   const construction = input.statement.construction;
   if (!input.statement.statement_id) throw constructionError("Constructed statement is missing a statement ID.");
@@ -406,6 +412,10 @@ export function validateDraftStatementConstruction(input: {
   const draftApplicationFitGaps = input.draftApplicationFitGaps;
   if (proofSchemaVersion === constructionProofSchemaVersion && construction.boundary_class === "bounded-claim-control") {
     validateBoundedGapAuthorities(reconstructed, currentRegisterGaps, draftApplicationFitGaps);
+  }
+  if (proofSchemaVersion === constructionProofSchemaVersion) {
+    if (!input.strategy) throw constructionError("Current Strategy is required for proof schema 2.0.0.");
+    canonicalStrategySupportReferences(input.strategy, reconstructed, "persisted");
   }
   const expected = buildEvidenceConstructionProof(reconstructed, input.evidenceItems, {
     proofSchemaVersion,

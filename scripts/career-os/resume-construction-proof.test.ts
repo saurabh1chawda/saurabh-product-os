@@ -31,6 +31,69 @@ describe("career-os resume construction proof", () => {
     expect(proof.construction_proof_hash).toMatch(/^[a-f0-9]{64}$/u);
   });
 
+  it("requires current Strategy when validating proof v2 constructions", () => {
+    const evidence = metricEvidence();
+    const selectedMetric = canonicalMetricProjection(evidence[0]);
+    const statement = metricStatement(selectedMetric.metric_key);
+    const proof = buildEvidenceConstructionProof(statement, evidence, { proofSchemaVersion: constructionProofSchemaVersion });
+    const text = renderRevisionStatementText(statement, { proofSchemaVersion: constructionProofSchemaVersion });
+
+    expect(() =>
+      validateDraftStatementConstruction({
+        statement: { statement_id: statement.statement_id, text, construction: proof },
+        evidenceItems: evidence,
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: metricStrategy()
+      })
+    ).not.toThrow();
+
+    expect(() =>
+      validateDraftStatementConstruction({
+        statement: { statement_id: statement.statement_id, text, construction: proof },
+        evidenceItems: evidence,
+        requiredProofSchemaVersion: constructionProofSchemaVersion
+      })
+    ).toThrow(/Current Strategy is required/u);
+
+    const staleStatement = { ...statement, strategy_support_references: ["strategy.mapping:metric"] };
+    const staleProof = buildEvidenceConstructionProof(staleStatement, evidence, { proofSchemaVersion: constructionProofSchemaVersion });
+    expect(() =>
+      validateDraftStatementConstruction({
+        statement: { statement_id: staleStatement.statement_id, text, construction: staleProof },
+        evidenceItems: evidence,
+        requiredProofSchemaVersion: constructionProofSchemaVersion
+      })
+    ).toThrow(/Current Strategy is required/u);
+    expect(() =>
+      validateDraftStatementConstruction({
+        statement: { statement_id: staleStatement.statement_id, text, construction: staleProof },
+        evidenceItems: evidence,
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: metricStrategy()
+      })
+    ).toThrow(/Unsupported Strategy support reference syntax/u);
+  });
+
+  it("preserves proof v1 validation without Strategy and rejects unknown proof versions", () => {
+    const evidence = metricEvidence();
+    const statement = actionStatement();
+    const proof = buildEvidenceConstructionProof(statement, evidence);
+
+    expect(() =>
+      validateDraftStatementConstruction({
+        statement: { statement_id: statement.statement_id, text: renderRevisionStatementText(statement), construction: proof },
+        evidenceItems: evidence
+      })
+    ).not.toThrow();
+
+    expect(() =>
+      validateDraftStatementConstruction({
+        statement: { statement_id: statement.statement_id, text: renderRevisionStatementText(statement), construction: { ...proof, proof_schema_version: "9.9.9" as "2.0.0" } },
+        evidenceItems: evidence
+      })
+    ).toThrow(/Unsupported construction proof schema version/u);
+  });
+
   it("rejects forged metric projections", () => {
     const evidence = metricEvidence();
     const selectedMetric = canonicalMetricProjection(evidence[0]);
@@ -56,7 +119,8 @@ describe("career-os resume construction proof", () => {
       validateDraftStatementConstruction({
         statement: { statement_id: statement.statement_id, text, construction: proof },
         evidenceItems: [{ ...evidence[0], metric: { value: "42", unit: "%", state: "altered state" } }],
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: metricStrategy()
       })
     ).toThrow(/canonical key|stale|forged/u);
 
@@ -68,7 +132,8 @@ describe("career-os resume construction proof", () => {
           construction: { ...proof, selected_metric_projection: { ...proof.selected_metric_projection!, projection_hash: "0".repeat(64) } }
         },
         evidenceItems: evidence,
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: metricStrategy()
       })
     ).toThrow(/stale or forged/u);
 
@@ -76,7 +141,8 @@ describe("career-os resume construction proof", () => {
       validateDraftStatementConstruction({
         statement: { statement_id: statement.statement_id, text: "Improved synthetic product strategy by 43% for Synthetic Labs to measurable outcomes.", construction: proof },
         evidenceItems: evidence,
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: metricStrategy()
       })
     ).toThrow(/text no longer matches/u);
 
@@ -84,7 +150,8 @@ describe("career-os resume construction proof", () => {
       validateDraftStatementConstruction({
         statement: { statement_id: statement.statement_id, text, construction: proof },
         evidenceItems: [{ ...evidence[0], statement: "Reduced unrelated operational friction at Synthetic Labs.", metric: { value: "42", unit: "%", state: "claimed in source" } }],
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: metricStrategy()
       })
     ).toThrow(/Unsupported action|coherent primary evidence clause/u);
   });
@@ -139,6 +206,7 @@ describe("career-os resume construction proof", () => {
 
   it.each([
     ["unknown gap", [{ ...boundedGap(), gap_id: "G99" }], /Unknown bounded application-fit gap/u],
+    ["duplicate current-register rows", [boundedGap(), boundedGap()], /Duplicate current application gap register gap ID/u],
     ["unresolved gap", [{ ...boundedGap(), status: "unresolved", resolution_state: "requires-human-review" }], /not a bounded claim/u],
     ["missing safety flags", [{ ...boundedGap(), human_review_required: false }], /safety flags/u],
     ["wrong evidence", [{ ...boundedGap(), closest_supported_evidence_ids: ["EV-other"] }], /not permitted/u]
@@ -164,7 +232,8 @@ describe("career-os resume construction proof", () => {
         currentRegisterGaps: [{ ...boundedGap(), ...gapPatch }],
         draftApplicationFitGaps: [draftBoundedGap()],
         gapRegisterReference: gapRegisterReference(),
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: boundedStrategy()
       })
     ).toThrow(expected);
   });
@@ -181,7 +250,8 @@ describe("career-os resume construction proof", () => {
         currentRegisterGaps: [boundedGap()],
         draftApplicationFitGaps: [draftBoundedGap()],
         gapRegisterReference: gapRegisterReference(),
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: boundedStrategy()
       })
     ).toThrow(/stale or forged/u);
 
@@ -192,7 +262,8 @@ describe("career-os resume construction proof", () => {
         currentRegisterGaps: [boundedGap()],
         draftApplicationFitGaps: [draftBoundedGap()],
         gapRegisterReference: { ...gapRegisterReference(), file_hash: "0".repeat(64) },
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: boundedStrategy()
       })
     ).toThrow(/stale or forged/u);
   });
@@ -225,7 +296,8 @@ describe("career-os resume construction proof", () => {
         currentRegisterGaps: [boundedGap()],
         draftApplicationFitGaps: [draftBoundedGap()],
         gapRegisterReference: gapRegisterReference(),
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: boundedStrategy()
       })
     ).toThrow(/text no longer matches/u);
 
@@ -233,7 +305,8 @@ describe("career-os resume construction proof", () => {
       validateDraftStatementConstruction({
         statement: { statement_id: statement.statement_id, text: renderRevisionStatementText(statement), construction: { ...proof, proof_schema_version: undefined } },
         evidenceItems: evidence,
-        requiredProofSchemaVersion: constructionProofSchemaVersion
+        requiredProofSchemaVersion: constructionProofSchemaVersion,
+        strategy: boundedStrategy()
       })
     ).toThrow(/proof schema version/u);
 
@@ -286,7 +359,7 @@ function metricStatement(selectedMetricKey: string, claimPatch: Partial<Revision
     primary_evidence_id: "EV-metric",
     supporting_evidence_ids: [],
     trusted_evidence_ids: ["EV-metric"],
-    strategy_support_references: ["strategy.mapping:metric"],
+    strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]"],
     related_application_fit_gap_ids: [],
     boundary_class: "ordinary-evidence-backed",
     human_review_required: true,
@@ -314,7 +387,7 @@ function boundedStatement(): RevisionStatementLike {
     primary_evidence_id: "EV-bounded",
     supporting_evidence_ids: [],
     trusted_evidence_ids: ["EV-bounded"],
-    strategy_support_references: ["strategy.mapping:bounded"],
+    strategy_support_references: ["strategy.application_level_gaps[G05]"],
     related_application_fit_gap_ids: ["G05"],
     boundary_class: "bounded-claim-control",
     human_review_required: true
@@ -358,5 +431,45 @@ function boundedContext() {
     proofSchemaVersion: constructionProofSchemaVersion,
     currentRegisterGaps: [boundedGap()],
     gapRegisterReference: gapRegisterReference()
+  };
+}
+
+function actionStatement(): RevisionStatementLike {
+  return {
+    statement_id: "stmt:action",
+    target_section: "summary",
+    template_id: "action-outcome",
+    claim_atoms: {
+      action: "Improved",
+      object: "synthetic product strategy",
+      employer: "Synthetic Labs",
+      dates: "2024-Present",
+      outcome: "measurable outcomes"
+    },
+    primary_evidence_id: "EV-metric",
+    supporting_evidence_ids: [],
+    trusted_evidence_ids: ["EV-metric"],
+    strategy_support_references: ["strategy.evidence_to_requirement_mapping[0]"],
+    related_application_fit_gap_ids: [],
+    boundary_class: "ordinary-evidence-backed",
+    human_review_required: true
+  };
+}
+
+function metricStrategy() {
+  return {
+    evidence_to_requirement_mapping: [{ status: "evidence-backed", evidence_ids: ["EV-metric"] }],
+    supported_positioning_themes: [],
+    recommended_resume_sections_or_emphasis: [],
+    application_level_gaps: []
+  };
+}
+
+function boundedStrategy() {
+  return {
+    evidence_to_requirement_mapping: [],
+    supported_positioning_themes: [],
+    recommended_resume_sections_or_emphasis: [],
+    application_level_gaps: [boundedGap()]
   };
 }
